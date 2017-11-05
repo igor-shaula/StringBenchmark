@@ -7,24 +7,60 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private boolean isJobRunning;
+
+    private EditText etIterationsNumber;
+    private TextView tvExplanationForTheFAB;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        etIterationsNumber = findViewById(R.id.tiedNumberOfIterations);
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FloatingActionButton fab = findViewById(R.id.fab);
+        tvExplanationForTheFAB = findViewById(R.id.tvExplanationForTheFAB);
+
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                runPerformanceAppraisal();
+                if (isJobRunning) {
+                    stopCurrentJob();
+                } else {
+                    startNewJob();
+                }
             }
         });
+    }
+
+    private void stopCurrentJob() {
+        interruptPerformanceTest();
+        isJobRunning = false;
+        etIterationsNumber.setEnabled(true);
+        tvExplanationForTheFAB.setText(R.string.explanationForReadyFAB);
+        fab.setImageResource(android.R.drawable.ic_media_play);
+    }
+
+    private void startNewJob() {
+        runPerformanceAppraisal();
+        isJobRunning = true;
+        etIterationsNumber.setEnabled(false);
+        tvExplanationForTheFAB.setText(R.string.explanationForBusyFAB);
+        fab.setImageResource(android.R.drawable.ic_media_pause);
+    }
+
+    private void interruptPerformanceTest() {
+
     }
 
     private void runPerformanceAppraisal() {
