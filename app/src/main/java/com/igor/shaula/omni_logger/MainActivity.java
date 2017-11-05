@@ -1,5 +1,6 @@
 package com.igor.shaula.omni_logger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -60,10 +61,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void interruptPerformanceTest() {
-
+        stopService(new Intent(this, TestingIntentService.class));
     }
 
     private void runPerformanceAppraisal() {
+        int count = 0;
+        try {
+            count = Integer.parseInt(etIterationsNumber.getText().toString());
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+        if (count > 0) {
+            startService(new Intent(this, TestingIntentService.class)
+                    .putExtra(C.Intent.NAME_COUNT, count));
+        }
                 /*
                     String[] sourceArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
                     String longForTest = "";
