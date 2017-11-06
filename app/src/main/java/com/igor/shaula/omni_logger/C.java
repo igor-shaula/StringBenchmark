@@ -27,8 +27,7 @@ public final class C {
 
         public static final int TOAST = 1000;
         public static final int SNACKBAR = 1001;
-        public static final int AUDIO = 0x0;
-        public static final int VIDEO = 0x1;
+        public static final int PREPARATION = 0x0;
     }
 
     public static final class Prefs {
@@ -41,7 +40,10 @@ public final class C {
 
     public static final class Intent {
 
+        public static final String ACTION = "from intent-service to activity";
+
         public static final String NAME_COUNT = "domain for passing through intent";
+        public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
 
         static final String TYPE = "type";
         static final String NO_COMMAND = "no_command";

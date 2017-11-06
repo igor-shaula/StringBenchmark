@@ -1,10 +1,15 @@
 package com.igor.shaula.omni_logger;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +18,29 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String CN = "MainActivity";
+
+    //    private static Handler UI_HANDLER = new Handler(Looper.getMainLooper());
+
     private boolean isJobRunning;
 
     private EditText etIterationsNumber;
+    private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
     private FloatingActionButton fab;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int nanoTimeOfPreparation = intent.getIntExtra(C.Intent.NAME_PREPARATION_TIME, 0);
+            final String existingText = tvResultOfPreparation.getText().toString();
+            final String textForUI = existingText + C.SPACE + nanoTimeOfPreparation;
+            tvResultOfPreparation.setText(textForUI);
+            Log.d("receiver", "Got message: " + nanoTimeOfPreparation);
+        }
+    };
+
+    // LIFECYCLE ===================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        tvResultOfPreparation = findViewById(R.id.tvResultOfPreparation);
         tvExplanationForTheFAB = findViewById(R.id.tvExplanationForTheFAB);
 
         fab = findViewById(R.id.fab);
@@ -42,6 +66,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mMessageReceiver, new IntentFilter(C.Intent.ACTION));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
     private void stopCurrentJob() {
@@ -75,40 +112,21 @@ public class MainActivity extends AppCompatActivity {
             startService(new Intent(this, TestingIntentService.class)
                     .putExtra(C.Intent.NAME_COUNT, count));
         }
-                /*
-                    String[] sourceArray = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
-                    String longForTest = "";
-                    {
-                        long nanoTime = System.nanoTime();
-                        System.out.println("before preparing the string for logger @ " + nanoTime);
-                        for (int i = 0; i < 10_000; i++) {
-                            for (String string : sourceArray) {
-                                longForTest += string;
-                            }
-                        }
-                        System.out.println("after preparing the string for logger @ " + (System.nanoTime() - nanoTime));
-                        // 918760833 - for 1_000 iterations - almost 1 second
-                        // 67333459506 - for 10_000 iterations - 67 seconds
-                        // 67461031537 - for 10_000 iterations - 67 seconds
-                    }
-                    {
-                        long nanoTime = System.nanoTime();
-                        System.out.println("starting standard logger @ " + nanoTime);
-                        Log.v("LOG", longForTest);
-                        System.out.println("ending standard logger @ " + (System.nanoTime() - nanoTime));
-                        // 186875 ns - for 1000 iterations
-                        // 602605 ns - for 10_000 iterations
-                        // 618177 ns - for 10_000 iterations
-                    }
-                    {
-                        long nanoTime = System.nanoTime();
-                        System.out.println("starting custom logger @ " + nanoTime);
-                        VAL.v("VAL", longForTest);
-                        System.out.println("ending custom logger @ " + (System.nanoTime() - nanoTime));
-                        // 347604 ns - for 1000 iterations
-                        // 1262656 ns - for 10_000 iterations
-                        // 4720677 ns - for 10_000 iterations
-                    }
+        Log.d(CN, "runPerformanceAppraisal() finished");
+        // preparing to catch the result of preparing the burden - via Handler on the main thread \\
+//        new Handler() {
+//            //        new Handler(new Handler.Callback() {
+//            @Override
+//            public void handleMessage(Message message) {
+//                Log.d(CN, "handleMessage: nanoTime of creation = " + message.arg2);
+//                if (message.arg1 == C.Choice.PREPARATION) {
+//                    final String existingText = tvResultOfPreparation.getText().toString();
+//                    final String textForUI = existingText + C.SPACE + message.arg2;
+//                    tvResultOfPreparation.setText(textForUI);
+//                }
+//            }
+//        };
+/*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
                     VAL.v("", "", "");

@@ -34,4 +34,12 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tvResultOfPreparation"
+        style="@style/MatchWrap"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="@string/resultOfPreparation"/>
+
 </LinearLayout>

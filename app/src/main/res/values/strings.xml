@@ -7,5 +7,6 @@
     <string name="number_of_loop_iterations">Number of loop iterations</string>
     <string name="defaultNumberOfLoopIterations">1000</string>
     <string name="loopIterationsExplanation">Each loop iteration ads new 10 one-symbol Strings to the tested one</string>
+    <string name="resultOfPreparation">Time expended on preparation for test:</string>
 
 </resources>
