@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,27 +18,40 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.igor.shaula.omni_logger.utils.C;
+import com.igor.shaula.omni_logger.utils.U;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String CN = "MainActivity";
+
+    private static final char[] CHARS = {'-', '\\', '|', '/', '-'};
 
     //    private static Handler UI_HANDLER = new Handler(Looper.getMainLooper());
 
     private boolean isJobRunning;
 
+    private int counter;
+
+    @NonNull
+    private String pendingPreparationResult = "";
+
+    @Nullable
+    private Timer twisterTimer;
     private EditText etIterationsNumber;
     private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
-    private FloatingActionButton fab;
 
+    private FloatingActionButton fab;
+    @NonNull
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int nanoTimeOfPreparation = intent.getIntExtra(C.Intent.NAME_PREPARATION_TIME, 0);
-            final String existingText = tvResultOfPreparation.getText().toString();
-            final String textForUI = existingText + C.SPACE + nanoTimeOfPreparation;
-            tvResultOfPreparation.setText(textForUI);
-            Log.d("receiver", "Got message: " + nanoTimeOfPreparation);
+            stopCurrentJob();
+            showPreparationsResult(intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0));
         }
     };
 
@@ -81,20 +96,50 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
-    private void stopCurrentJob() {
-        interruptPerformanceTest();
-        isJobRunning = false;
-        etIterationsNumber.setEnabled(true);
-        tvExplanationForTheFAB.setText(R.string.explanationForReadyFAB);
-        fab.setImageResource(android.R.drawable.ic_media_play);
+    // MENU ========================================================================================
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // PAYLOAD =====================================================================================
 
     private void startNewJob() {
         runPerformanceAppraisal();
         isJobRunning = true;
-        etIterationsNumber.setEnabled(false);
-        tvExplanationForTheFAB.setText(R.string.explanationForBusyFAB);
-        fab.setImageResource(android.R.drawable.ic_media_pause);
+        toggleJobActiveUiState(true);
+    }
+
+    private void stopCurrentJob() {
+        interruptPerformanceTest();
+        isJobRunning = false;
+        toggleJobActiveUiState(false);
+    }
+
+    private void toggleJobActiveUiState(boolean isJobRunning) {
+        etIterationsNumber.setEnabled(!isJobRunning);
+        tvExplanationForTheFAB.setText(isJobRunning ?
+                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
+        fab.setImageResource(isJobRunning ?
+                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
     }
 
     private void interruptPerformanceTest() {
@@ -111,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
         if (count > 0) {
             startService(new Intent(this, TestingIntentService.class)
                     .putExtra(C.Intent.NAME_COUNT, count));
+            pendingPreparationResult = "";
+            showTextyTwister();
         }
         Log.d(CN, "runPerformanceAppraisal() finished");
         // preparing to catch the result of preparing the burden - via Handler on the main thread \\
@@ -142,25 +189,48 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void showTextyTwister() {
+        final int[] index = new int[1];
+        final String[] textForUI = new String[1];
+        final TimerTask twisterTask = new TimerTask() {
+            @Override
+            public void run() {
+                // 0 - 1 - 2 - 3 - 0 - 1 - 2 - 3 - 0 - ...
+                index[0] = counter % CHARS.length;
+                textForUI[0] = String.valueOf(CHARS[index[0]]);
+                updateResultOnMainThread(textForUI[0]);
+            }
+        };
+        twisterTimer = new Timer(true);
+        twisterTimer.schedule(twisterTask, 0, 80);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void updateResultOnMainThread(@NonNull final String result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (pendingPreparationResult.isEmpty()) {
+                    tvResultOfPreparation.setText(result);
+                    counter++;
+                } else {
+                    tvResultOfPreparation.setText(pendingPreparationResult);
+                }
+            }
+        }); // runOnUiThread \\
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void showPreparationsResult(long nanoTimeOfPreparation) {
+        stopTwisterTimer();
+        pendingPreparationResult = U.adaptForUser(this, nanoTimeOfPreparation);
+        updateResultOnMainThread("");
+        Log.d("receiver", "Got message: " + nanoTimeOfPreparation);
+    }
+
+    private void stopTwisterTimer() {
+        if (twisterTimer != null) {
+            twisterTimer.cancel(); // purge() behaves very strangely - so i decided to avoid it
         }
-
-        return super.onOptionsItemSelected(item);
+        twisterTimer = null;
+        counter = 0;
     }
 }

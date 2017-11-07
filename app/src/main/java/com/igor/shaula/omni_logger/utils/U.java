@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.omni_logger.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.igor.shaula.omni_logger.R;
 import com.igor.shaula.omni_logger.annotations.MeDoc;
 import com.igor.shaula.omni_logger.annotations.TypeDoc;
 
@@ -229,5 +230,27 @@ public final class U {
         }
         toast = Toast.makeText(context.getApplicationContext(), string, duration);
         toast.show();
+    }
+
+    @NonNull
+    public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
+        String result = "";
+
+        if (nanoTimeValue < 1000) {
+            result += nanoTimeValue + C.SPACE + context.getString(R.string.nanos);
+
+        } else if (nanoTimeValue >= 1000 && nanoTimeValue < 1000_000) {
+            result += nanoTimeValue / 1000 + C.DOT + nanoTimeValue % 1000 +
+                    C.SPACE + context.getString(R.string.micros);
+
+        } else if (nanoTimeValue >= 1000_000 && nanoTimeValue < 1000_000_000) {
+            result += nanoTimeValue / 1000_000 + C.DOT + nanoTimeValue % 1000 +
+                    C.SPACE + context.getString(R.string.millis);
+
+        } else {
+            result += nanoTimeValue / 1000_000_000 + C.DOT + nanoTimeValue % 1000 +
+                    C.SPACE + context.getString(R.string.seconds);
+        }
+        return result;
     }
 }

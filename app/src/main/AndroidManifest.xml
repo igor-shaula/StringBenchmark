@@ -6,9 +6,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- we really need large heap here -->
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -24,6 +27,7 @@
             android:name=".TestingIntentService"
             android:exported="false">
         </service>
+
     </application>
 
 </manifest>

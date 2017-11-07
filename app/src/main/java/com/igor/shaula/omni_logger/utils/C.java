@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.omni_logger.utils;
 
 import com.igor.shaula.omni_logger.annotations.TypeDoc;
 

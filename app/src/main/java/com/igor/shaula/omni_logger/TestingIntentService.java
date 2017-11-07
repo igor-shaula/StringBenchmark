@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.igor.shaula.omni_logger.annotations.MeDoc;
+import com.igor.shaula.omni_logger.utils.C;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -118,13 +119,8 @@ public class TestingIntentService extends IntentService {
         // 67333459506 - for 10_000 iterations - 67 seconds
         // 67461031537 - for 10_000 iterations - 67 seconds
 
-        final int timeDeltaInt = (int) nanoTimeDelta;
-        // we need to check that type conversion has given reasonable result \\
-        if (timeDeltaInt > 0 & timeDeltaInt < Integer.MAX_VALUE) {
-            notifyUserAboutPreparationFinish(timeDeltaInt);
-        } else {
-            Log.e(CN, "prepareInitialBurden: timeDeltaInt is wrong: " + timeDeltaInt);
-        }
+        notifyUserAboutPreparationFinish(nanoTimeDelta);
+
         Log.v(CN, "prepareInitialBurden = " + longStringForTest);
 
 /*        {
@@ -147,22 +143,21 @@ public class TestingIntentService extends IntentService {
         }*/
     }
 
-    private void notifyUserAboutPreparationFinish(int timeDeltaInt) {
+    private void notifyUserAboutPreparationFinish(long nanoTimeDelta) {
 /*
-        Log.d(CN, "prepareInitialBurden() finished with: timeDeltaInt = [" + timeDeltaInt + "]");
+        Log.d(CN, "prepareInitialBurden() finished with: nanoTimeDelta = [" + nanoTimeDelta + "]");
         // for passing info about burden creation it's decided to use Handler & Message \\
         final Message message = Message.obtain(UI_HANDLER);
         message.arg1 = C.Choice.PREPARATION;
-        message.arg2 = timeDeltaInt;
+        message.arg2 = nanoTimeDelta;
 //            UI_HANDLER.sendMessage(message);
         UI_HANDLER.handleMessage(message);
 
-        Log.d(CN, "prepareInitialBurden() obtained message with: timeDeltaInt = [" + UI_HANDLER.obtainMessage().arg2 + "]");
+        Log.d(CN, "prepareInitialBurden() obtained message with: nanoTimeDelta = [" + UI_HANDLER.obtainMessage().arg2 + "]");
 */
-
         final Intent intent = new Intent(C.Intent.ACTION);
         // You can also include some extra data.
-        intent.putExtra(C.Intent.NAME_PREPARATION_TIME, timeDeltaInt);
+        intent.putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

@@ -1,12 +1,20 @@
 <resources>
 
     <string name="app_name">OmniLogger</string>
+
     <string name="action_settings">Settings</string>
+
     <string name="explanationForReadyFAB">To launch logging benchmark\nsimply tap this red button >>></string>
     <string name="explanationForBusyFAB">To stop logging benchmark\nsimply tap the red button again</string>
-    <string name="number_of_loop_iterations">Number of loop iterations</string>
-    <string name="defaultNumberOfLoopIterations">1000</string>
-    <string name="loopIterationsExplanation">Each loop iteration ads new 10 one-symbol Strings to the tested one</string>
+    <string name="number_of_loop_iterations">Number of 10-symbol Strings</string>
+    <string name="defaultNumberOfLoopIterations">1000000</string>
+    <string name="loopIterationsExplanation">Each loop iteration ads a new 10-symbol String\n
+        to the tested mega-long String for processing</string>
     <string name="resultOfPreparation">Time expended on preparation for test:</string>
+    <string name="nanos">nano-sec.</string>
+    <string name="micros">micro-sec.</string>
+    <string name="millis">milli-sec.</string>
+    <string name="seconds">sec.</string>
+    <string name="star">*</string>
 
 </resources>
