@@ -40,11 +40,12 @@ public final class C {
 
     public static final class Intent {
 
-        public static final String ACTION = "from intent-service to activity";
+        public static final String ACTION_START_BURDEN_PREPARATION = "from activity to intent-service";
+        public static final String ACTION_GET_PREPARATION_RESULT = "from intent-service to activity";
 
         public static final String NAME_COUNT = "domain for passing through intent";
-        public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
 
+        public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
         static final String TYPE = "type";
         static final String NO_COMMAND = "no_command";
     }

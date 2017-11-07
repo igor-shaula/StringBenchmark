@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final char[] CHARS = {'-', '\\', '|', '/', '-'};
 
-    //    private static Handler UI_HANDLER = new Handler(Looper.getMainLooper());
-
     private boolean isJobRunning;
 
     private int counter;
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
     @NonNull
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             stopCurrentJob();
@@ -87,13 +85,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mMessageReceiver, new IntentFilter(C.Intent.ACTION));
+                .registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_PREPARATION_RESULT));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
     }
 
     // MENU ========================================================================================
@@ -155,24 +153,13 @@ public class MainActivity extends AppCompatActivity {
         }
         if (count > 0) {
             startService(new Intent(this, TestingIntentService.class)
+                    .setAction(C.Intent.ACTION_START_BURDEN_PREPARATION)
                     .putExtra(C.Intent.NAME_COUNT, count));
             pendingPreparationResult = "";
             showTextyTwister();
         }
         Log.d(CN, "runPerformanceAppraisal() finished");
-        // preparing to catch the result of preparing the burden - via Handler on the main thread \\
-//        new Handler() {
-//            //        new Handler(new Handler.Callback() {
-//            @Override
-//            public void handleMessage(Message message) {
-//                Log.d(CN, "handleMessage: nanoTime of creation = " + message.arg2);
-//                if (message.arg1 == C.Choice.PREPARATION) {
-//                    final String existingText = tvResultOfPreparation.getText().toString();
-//                    final String textForUI = existingText + C.SPACE + message.arg2;
-//                    tvResultOfPreparation.setText(textForUI);
-//                }
-//            }
-//        };
+        // TODO: 07.11.2017 realize variant with using Handler to get the results back from service \\
 /*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
