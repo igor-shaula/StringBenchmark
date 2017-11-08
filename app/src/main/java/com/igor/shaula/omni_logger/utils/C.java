@@ -27,7 +27,12 @@ public final class C {
 
         public static final int TOAST = 1000;
         public static final int SNACKBAR = 1001;
-        public static final int PREPARATION = 0x0;
+        public static final int PREPARATION = 0x1;
+        public static final int TEST_SYSTEM_LOG = 0x10;
+        public static final int TEST_SAL = 0x11;
+        public static final int TEST_DAL = 0x12;
+        public static final int TEST_VAL = 0x13;
+        public static final int DESTROYED = 0x100;
     }
 
     public static final class Prefs {
@@ -42,10 +47,19 @@ public final class C {
 
         public static final String ACTION_START_BURDEN_PREPARATION = "from activity to intent-service";
         public static final String ACTION_GET_PREPARATION_RESULT = "from intent-service to activity";
+        public static final String ACTION_START_ALL_TESTS = "start all tests moving on one-by-one";
+        public static final String ACTION_GET_SYSTEM_LOG_TEST_RESULT = "standard system log test";
+        public static final String ACTION_GET_SAL_TEST_RESULT = "single argument log wrapper test";
+        public static final String ACTION_GET_DAL_TEST_RESULT = "double argument log wrapper test";
+        public static final String ACTION_GET_VAL_TEST_RESULT = "var-args number log wrapper test";
+        public static final String ACTION_ON_SERVICE_STOPPED = "invoked after service's destruction";
 
         public static final String NAME_COUNT = "domain for passing through intent";
-
         public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
+        public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";
+        public static final String NAME_SAL_TIME = "time of single-arg log wrapper work";
+        public static final String NAME_DAL_TIME = "time of double-arg log wrapper work";
+        public static final String NAME_VAL_TIME = "time of var-args log wrapper work";
         static final String TYPE = "type";
         static final String NO_COMMAND = "no_command";
     }

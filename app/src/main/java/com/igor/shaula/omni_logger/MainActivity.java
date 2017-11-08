@@ -39,17 +39,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Nullable
     private Timer twisterTimer;
+
     private EditText etIterationsNumber;
     private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
-
     private FloatingActionButton fab;
+
+    // TODO: 07.11.2017 realize variant with using Handler to get the results back from service \\
     @NonNull
     private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            stopCurrentJob();
-            showPreparationsResult(intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0));
+            // we assume that intent here cannot be null by default \\
+            selectInfoToShow(intent);
         }
     };
 
@@ -84,8 +86,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_PREPARATION_RESULT));
+        final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_PREPARATION_RESULT));
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT));
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SAL_TEST_RESULT));
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_DAL_TEST_RESULT));
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_VAL_TEST_RESULT));
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_ON_SERVICE_STOPPED));
     }
 
     @Override
@@ -122,14 +129,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void startNewJob() {
         runPerformanceAppraisal();
-        isJobRunning = true;
-        toggleJobActiveUiState(true);
+        toggleJobState(true);
     }
 
     private void stopCurrentJob() {
         interruptPerformanceTest();
-        isJobRunning = false;
-        toggleJobActiveUiState(false);
+        toggleJobState(false);
+    }
+
+    private void toggleJobState(boolean isRunning) {
+        isJobRunning = isRunning;
+        toggleJobActiveUiState(isRunning);
     }
 
     private void toggleJobActiveUiState(boolean isJobRunning) {
@@ -152,14 +162,11 @@ public class MainActivity extends AppCompatActivity {
             nfe.printStackTrace();
         }
         if (count > 0) {
-            startService(new Intent(this, TestingIntentService.class)
-                    .setAction(C.Intent.ACTION_START_BURDEN_PREPARATION)
-                    .putExtra(C.Intent.NAME_COUNT, count));
+            TestingIntentService.prepareTheBurdenForTest(this, count);
             pendingPreparationResult = "";
             showTextyTwister();
         }
         Log.d(CN, "runPerformanceAppraisal() finished");
-        // TODO: 07.11.2017 realize variant with using Handler to get the results back from service \\
 /*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
@@ -206,11 +213,69 @@ public class MainActivity extends AppCompatActivity {
         }); // runOnUiThread \\
     }
 
-    private void showPreparationsResult(long nanoTimeOfPreparation) {
-        stopTwisterTimer();
-        pendingPreparationResult = U.adaptForUser(this, nanoTimeOfPreparation);
-        updateResultOnMainThread("");
-        Log.d("receiver", "Got message: " + nanoTimeOfPreparation);
+    private void selectInfoToShow(@NonNull Intent intent) {
+        final String intentAction = intent.getAction();
+        if (intentAction == null) {
+            return;
+        }
+        final int whatInfoToShow;
+        final long resultNanoTime;
+        switch (intentAction) {
+            case C.Intent.ACTION_GET_PREPARATION_RESULT:
+                whatInfoToShow = C.Choice.PREPARATION;
+                resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
+                TestingIntentService.launchAllMeasurements(this);
+                break;
+            case C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT:
+                whatInfoToShow = C.Choice.TEST_SYSTEM_LOG;
+                resultNanoTime = intent.getLongExtra(C.Intent.NAME_SYSTEM_LOG_TIME, 0);
+                break;
+            case C.Intent.ACTION_GET_SAL_TEST_RESULT:
+                whatInfoToShow = C.Choice.TEST_SAL;
+                resultNanoTime = intent.getLongExtra(C.Intent.NAME_SAL_TIME, 0);
+                break;
+            case C.Intent.ACTION_GET_DAL_TEST_RESULT:
+                whatInfoToShow = C.Choice.TEST_DAL;
+                resultNanoTime = intent.getLongExtra(C.Intent.NAME_DAL_TIME, 0);
+                break;
+            case C.Intent.ACTION_GET_VAL_TEST_RESULT:
+                whatInfoToShow = C.Choice.TEST_VAL;
+                resultNanoTime = intent.getLongExtra(C.Intent.NAME_VAL_TIME, 0);
+                break;
+            case C.Intent.ACTION_ON_SERVICE_STOPPED:
+                toggleJobState(false);
+                return;
+            default:
+                Log.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
+                return;
+        }
+        Log.d("selectInfoToShow", "whatInfoToShow = " + whatInfoToShow);
+        Log.d("selectInfoToShow", "resultNanoTime = " + resultNanoTime);
+        showPreparationsResult(whatInfoToShow, resultNanoTime);
+    }
+
+    private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
+        switch (whatInfoToShow) {
+            case C.Choice.PREPARATION:
+                stopTwisterTimer();
+                pendingPreparationResult = U.adaptForUser(this, resultNanoTime);
+                updateResultOnMainThread("");
+                break;
+            case C.Choice.TEST_SYSTEM_LOG:
+
+                break;
+            case C.Choice.TEST_SAL:
+
+                break;
+            case C.Choice.TEST_DAL:
+
+                break;
+            case C.Choice.TEST_VAL:
+
+                break;
+            default:
+                Log.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
+        }
     }
 
     private void stopTwisterTimer() {
