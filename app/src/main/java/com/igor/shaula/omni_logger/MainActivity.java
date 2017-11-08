@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText etIterationsNumber;
     private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
+    private TextView tvResultForStandardLog;
+    private TextView tvResultForSAL;
+    private TextView tvResultForDAL;
+    private TextView tvResultForVAL;
     private FloatingActionButton fab;
 
     // TODO: 07.11.2017 realize variant with using Handler to get the results back from service \\
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         tvResultOfPreparation = findViewById(R.id.tvResultOfPreparation);
         tvExplanationForTheFAB = findViewById(R.id.tvExplanationForTheFAB);
+        tvResultForStandardLog = findViewById(R.id.tvResultForStandardLog);
+        tvResultForSAL = findViewById(R.id.tvResultForSAL);
+        tvResultForDAL = findViewById(R.id.tvResultForDAL);
+        tvResultForVAL = findViewById(R.id.tvResultForVAL);
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -262,16 +270,16 @@ public class MainActivity extends AppCompatActivity {
                 updateResultOnMainThread("");
                 break;
             case C.Choice.TEST_SYSTEM_LOG:
-
+                tvResultForStandardLog.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             case C.Choice.TEST_SAL:
-
+                tvResultForSAL.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             case C.Choice.TEST_DAL:
-
+                tvResultForDAL.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             case C.Choice.TEST_VAL:
-
+                tvResultForVAL.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             default:
                 Log.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);

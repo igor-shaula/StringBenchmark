@@ -16,5 +16,11 @@
     <string name="millis">milli-sec.</string>
     <string name="seconds">sec.</string>
     <string name="star">*</string>
+    <string name="resultOfStandardLog">Standard Android Log:</string>
+    <string name="resultOfSAL">My single-arg Log wrapper:</string>
+    <string name="resultOfDAL">My double-args Log wrapper:</string>
+    <string name="resultOfVAL">My variable-args Log wrapper:</string>
+    <string name="dash">-</string>
+    <string name="resultsForLoggingTests">Results for the tests:</string>
 
 </resources>
