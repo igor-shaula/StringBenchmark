@@ -10,7 +10,7 @@
     <string name="defaultNumberOfLoopIterations">1000000</string>
     <string name="loopIterationsExplanation">Each loop iteration ads a new 10-symbol String\n
         to the tested mega-long String for processing</string>
-    <string name="resultOfPreparation">Time expended on preparation for test:</string>
+    <string name="resultOfPreparation">Time expended on preparation for tests:</string>
     <string name="nanos">nano-sec.</string>
     <string name="micros">micro-sec.</string>
     <string name="millis">milli-sec.</string>
@@ -21,6 +21,6 @@
     <string name="resultOfDAL">My double-args Log wrapper:</string>
     <string name="resultOfVAL">My variable-args Log wrapper:</string>
     <string name="dash">-</string>
-    <string name="resultsForLoggingTests">Results for the tests:</string>
+    <string name="resultsForLoggingTests">Results for logging 10 given Strings on:</string>
 
 </resources>

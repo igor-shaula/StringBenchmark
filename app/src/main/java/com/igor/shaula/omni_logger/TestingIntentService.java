@@ -11,8 +11,9 @@ import android.util.Log;
 
 import com.igor.shaula.omni_logger.annotations.MeDoc;
 import com.igor.shaula.omni_logger.annotations.TypeDoc;
-import com.igor.shaula.omni_logger.double_args_log_wrapper.DAL;
-import com.igor.shaula.omni_logger.single_arg_log_wrapper.SAL;
+import com.igor.shaula.omni_logger.log_wrappers.double_args_logger.DAL;
+import com.igor.shaula.omni_logger.log_wrappers.single_arg_logger.SAL;
+import com.igor.shaula.omni_logger.log_wrappers.var_args_logger.VAL;
 import com.igor.shaula.omni_logger.utils.C;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "06-11-2017", purpose = "" +
@@ -211,13 +212,25 @@ public class TestingIntentService extends IntentService {
         // double-args Log wrapper performance test \\
         {
             final long nanoTime = System.nanoTime();
-            System.out.println("starting standard logger @ " + nanoTime);
+            System.out.println("starting DAL @ " + nanoTime);
             for (int i = 0; i < howManyTimesToDoLogging; i++) {
                 DAL.v(CN, longStringForTest);
             }
             long nanoTimeDelta = System.nanoTime() - nanoTime;
-            System.out.println("ending standard logger @ " + nanoTimeDelta);
+            System.out.println("ending DAL @ " + nanoTimeDelta);
             sendInfoToUI(C.Choice.TEST_DAL, nanoTimeDelta);
+        }
+        // variable-args Log wrapper performance test \\
+        {
+            final long nanoTime = System.nanoTime();
+            System.out.println("starting VAL @ " + nanoTime);
+            for (int i = 0; i < howManyTimesToDoLogging; i++) {
+//                VAL.v(longStringForTest);
+                VAL.v(CN, longStringForTest);
+            }
+            long nanoTimeDelta = System.nanoTime() - nanoTime;
+            System.out.println("ending VAL @ " + nanoTimeDelta);
+            sendInfoToUI(C.Choice.TEST_VAL, nanoTimeDelta);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger.var_args_log_wrapper;
+package com.igor.shaula.omni_logger.log_wrappers.var_args_logger;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +15,7 @@ import com.igor.shaula.omni_logger.annotations.TypeDoc;
 
 public final class VAL {
 
-    private static final boolean USE_LOGGING = false;
+    private static final boolean USE_LOGGING = true;
 
     private static final String CONTAINER_IS_NULL = "<NULL>";
     private static final String CONTAINER_IS_EMPTY = "<EMPTY>";
@@ -95,10 +95,11 @@ public final class VAL {
             starting from 1 (not from 0) - to properly initialize logResult during the first iteration \
             ending at the penultimate iteration - to exclude useless DIVIDER in the end of logResult \
 */
+            final StringBuilder logResultBuilder = new StringBuilder(logResult);
             for (int i = 1; i < length - 1; i++) {
-                // TODO: 29.09.2017 optimize with StringBuilder - because we concatenate inside the loop \
-                logResult += processOneString(strings[i]) + DIVIDER;
+                logResultBuilder.append(processOneString(strings[i])).append(DIVIDER);
             }
+            logResult = logResultBuilder.toString();
             logResult += processOneString(strings[length - 1]);
         }
         return logResult;

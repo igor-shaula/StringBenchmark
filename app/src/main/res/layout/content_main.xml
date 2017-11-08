@@ -37,8 +37,8 @@
     <TextView
         style="@style/MatchWrap"
         android:layout_margin="16dp"
-        android:gravity="center"
-        android:text="@string/resultOfPreparation"/>
+        android:text="@string/resultOfPreparation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:id="@+id/tvResultOfPreparation"
@@ -48,8 +48,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <TextView
-        style="@style/WrapWrap"
+        style="@style/MatchWrap"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:text="@string/resultsForLoggingTests"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 

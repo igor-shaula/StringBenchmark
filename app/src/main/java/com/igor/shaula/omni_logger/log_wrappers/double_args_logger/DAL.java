@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger.double_args_log_wrapper;
+package com.igor.shaula.omni_logger.log_wrappers.double_args_logger;
 
 import android.support.annotation.NonNull;
 import android.util.Log;

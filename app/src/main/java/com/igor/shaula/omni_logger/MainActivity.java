@@ -138,6 +138,14 @@ public class MainActivity extends AppCompatActivity {
     private void startNewJob() {
         runPerformanceAppraisal();
         toggleJobState(true);
+        restoreResultViewStates();
+    }
+
+    private void restoreResultViewStates() {
+        tvResultForStandardLog.setText(getString(R.string.star));
+        tvResultForSAL.setText(getString(R.string.star));
+        tvResultForDAL.setText(getString(R.string.star));
+        tvResultForVAL.setText(getString(R.string.star));
     }
 
     private void stopCurrentJob() {
