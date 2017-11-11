@@ -39,6 +39,11 @@ public final class VAL {
         isLogAllowed = true;
     }
 
+    // very nice & fast to write in case of using LL-like templates \\
+    public static void l(@Nullable final String... strings) {
+        v(strings);
+    }
+
     public static void v(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
             l(Log.VERBOSE, processAllStrings(strings));
@@ -99,27 +104,28 @@ public final class VAL {
         System.out.println(message);
     }
 */
-    // TODO: 11.11.2017 try & measure StringBuilder's optimization with {new StringBuilder(2)} \\
 
+    // TODO: 12.11.2017 test with creating StringBuilder with initial string instead of capacity \\
     @NonNull
     private static String processAllStrings(@Nullable final String... strings) {
-        String logResult; // logResult = VarArgsResult
+        final String logResult; // logResult = VarArgsResult \\
         if (strings == null) {
             logResult = CONTAINER_IS_NULL;
         } else if (strings.length == 0) {
             logResult = CONTAINER_IS_EMPTY;
-        } else if (strings.length == 1) {
+        } else if (strings.length == 1) { // saving time by avoiding StringBuilder creation \\
             logResult = processOneString(strings[0]);
-        } else {
-            // avoiding String concatenations with minimum of strings.length > 1 containers \\
-            final StringBuilder logResultBuilder = new StringBuilder(2);
-            // this saves a bit of processor speed & is needed outside the loop - after it ends \\
-            final int lengthReducedBy1 = strings.length - 1;
-            for (int i = 0; i < lengthReducedBy1; i++) {
-                logResultBuilder.append(processOneString(strings[i])).append(DIVIDER);
+        } else { // as (strings.length cannot bew < 0) -> (strings.length >= 2) in this case \\
+            final int minimumCapacity = strings[0].length() + DIVIDER.length() + strings[1].length();
+            // as minimum number of args here is 2 -> we're preparing StringBuilder just for it \\
+            final StringBuilder logResultBuilder = new StringBuilder(minimumCapacity);
+            // the starting string doesn't need the DIVIDER before it - so it's taken out of loop \\
+            logResultBuilder.append(processOneString(strings[0]));
+            // this loop is expected to do at least one iteration & starts from the second string \\
+            for (int i = 1, argsLength = strings.length; i < argsLength; i++) {
+                // as we have already wrote initial string - here we should start with DIVIDER \\
+                logResultBuilder.append(DIVIDER).append(processOneString(strings[i]));
             }
-            // the last iteration in loop is avoided for proper closing without DIVIDER \\
-            logResultBuilder.append(processOneString(strings[lengthReducedBy1]));
             logResult = logResultBuilder.toString();
         }
         return logResult;
@@ -127,7 +133,7 @@ public final class VAL {
 
     @NonNull
     private static String processOneString(@Nullable final String theString) {
-        String result;
+        final String result;
         if (theString == null) {
             result = L_NULL;
         } else if (theString.isEmpty()) {
