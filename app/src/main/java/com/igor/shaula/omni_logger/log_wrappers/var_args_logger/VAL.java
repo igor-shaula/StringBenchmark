@@ -28,7 +28,7 @@ public final class VAL {
     private static boolean isLogAllowed = true;
 
     private VAL() {
-        // should not create any instances of this class \
+        // should not create any instances of this class \\
     }
 
     public static void silence() {
@@ -111,17 +111,11 @@ public final class VAL {
         } else if (strings.length == 1) {
             logResult = processOneString(strings[0]);
         } else {
-            // preparing the obvious optimization for avoiding String concatenations \\
-            final StringBuilder logResultBuilder = new StringBuilder(processOneString(strings[0]));
-            // as in this block we assume tha there are more than one String - DIVIDER is needed now \\
-            logResultBuilder.append(DIVIDER);
-            // this saves a bit of processor speed - anyway it's better than no optimization \
+            // avoiding String concatenations with minimum of strings.length > 1 containers \\
+            final StringBuilder logResultBuilder = new StringBuilder(2);
+            // this saves a bit of processor speed & is needed outside the loop - after it ends \\
             final int lengthReducedBy1 = strings.length - 1;
-/*
-            starting from 1 (not from 0) - to properly initialize logResult during the first iteration \
-            ending at the penultimate iteration - to exclude useless DIVIDER in the end of logResult \
-*/
-            for (int i = 1; i < lengthReducedBy1; i++) {
+            for (int i = 0; i < lengthReducedBy1; i++) {
                 logResultBuilder.append(processOneString(strings[i])).append(DIVIDER);
             }
             // the last iteration in loop is avoided for proper closing without DIVIDER \\
