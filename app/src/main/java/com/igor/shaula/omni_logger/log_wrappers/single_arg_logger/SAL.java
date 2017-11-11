@@ -1,11 +1,12 @@
 package com.igor.shaula.omni_logger.log_wrappers.single_arg_logger;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.igor.shaula.omni_logger.annotations.TypeDoc;
 
-@TypeDoc(createdBy = "Igor Shaula", createdOn = "21-10-2017", purpose = "" +
+@SuppressWarnings({"WeakerAccess", "unused"})
+@TypeDoc(createdBy = "Igor Shaula", createdOn = "21-10-2017", modifiedOn = "12-11-2017", purpose = "" +
         "the most minimalistic & useful wrapper for local logging," +
         "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
         "every method here takes only one argument," +
@@ -13,69 +14,69 @@ import com.igor.shaula.omni_logger.annotations.TypeDoc;
 
 public final class SAL {
 
-    private static final boolean IS_LOG_SHOWN = true;
-
     private static final String TAG_23 = "SingleArgsLogTag";
+    // global constant switcher to be touched from this class only \\
+    private static final boolean USE_LOGGING = true;
+    // dynamic local switcher - can be helpful to toggle logging from other classes \\
+    private static boolean isLogAllowed = true;
 
     private SAL() {
-        // should not create any instances of this class \
+        // should not create any instances of this class \\
     }
 
-    @SuppressWarnings("unused")
-    public static void l(@NonNull String message) {
+    public static void silence() {
+        isLogAllowed = false;
+    }
+
+    public static void restore() {
+        isLogAllowed = true;
+    }
+
+    // very nice & fast to write in case of using LL-like templates \\
+    public static void l(@Nullable final String message) {
         v(message);
     }
 
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    public static void v(@NonNull String message) {
-        if (IS_LOG_SHOWN) {
+    public static void v(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
             Log.v(TAG_23, message);
         }
     }
 
-    // usually used for tracing method chains - in the very beginning of a method \
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    public static void d(@NonNull String message) {
-        if (IS_LOG_SHOWN) {
+    public static void d(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
             Log.d(TAG_23, message);
         }
     }
 
-    // SAL.i("message") - this is main & typical call for logger in my code - i just like it \
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    public static void i(@NonNull String message) {
-        if (IS_LOG_SHOWN) {
+    public static void i(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
             Log.i(TAG_23, message);
         }
     }
 
-    // amount of these logs should be as minimal as possible - italic letter 'w' resembles 'v' \
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    public static void w(@NonNull String message) {
-        if (IS_LOG_SHOWN) {
+    public static void w(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
             Log.w(TAG_23, message);
         }
     }
 
-    // SAL.e("exception") - for logging all exceptions and errors \
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    public static void e(@NonNull String message) {
-        if (IS_LOG_SHOWN) {
+    public static void e(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
             Log.e(TAG_23, message);
         }
     }
 
-    // SAL.a("assert") - for things that should not ever happen \
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    public static void a(@NonNull String message) {
-        if (IS_LOG_SHOWN) {
+    public static void a(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
             Log.wtf(TAG_23, message);
         }
     }
 
     // simplest and fastest - even without TAG_23 - may be used to measure speed of doing job \
-    @SuppressWarnings("unused")
-    public static void f(@NonNull String message) {
-        System.out.println(message);
+    public static void f(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            System.out.println(message);
+        }
     }
 }

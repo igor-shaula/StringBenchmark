@@ -12,18 +12,17 @@ import com.igor.shaula.omni_logger.annotations.TypeDoc;
         "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
         "every method here takes any number of arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
+
 public final class VAL {
 
-    // global constant switcher to be touched from this class only \\
-    private static final boolean USE_LOGGING = true;
-
+    private static final String TAG_23 = "VariableArgsLogTag";
+    private static final String DIVIDER = " ` ";
     private static final String CONTAINER_IS_NULL = "{LogVarArgs:NULL}";
     private static final String CONTAINER_IS_EMPTY = "{LogVarArgs:EMPTY}";
     private static final String L_NULL = "{null}";
     private static final String L_EMPTY = "{empty}";
-    private static final String TAG_23 = "VariableArgsLogTag";
-    private static final String DIVIDER = " ` ";
-
+    // global constant switcher to be touched from this class only \\
+    private static final boolean USE_LOGGING = true;
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
 
@@ -46,64 +45,64 @@ public final class VAL {
 
     public static void v(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
-            l(Log.VERBOSE, processAllStrings(strings));
+            passTo(Log.VERBOSE, processAllStrings(strings));
         }
     }
 
     public static void d(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
-            l(Log.DEBUG, processAllStrings(strings));
+            passTo(Log.DEBUG, processAllStrings(strings));
         }
     }
 
     public static void i(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
-            l(Log.INFO, processAllStrings(strings));
+            passTo(Log.INFO, processAllStrings(strings));
         }
     }
 
     public static void w(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
-            l(Log.WARN, processAllStrings(strings));
+            passTo(Log.WARN, processAllStrings(strings));
         }
     }
 
     public static void e(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
-            l(Log.ERROR, processAllStrings(strings));
+            passTo(Log.ERROR, processAllStrings(strings));
         }
     }
 
     public static void a(@Nullable final String... strings) {
         if (USE_LOGGING && isLogAllowed) {
-            l(Log.ASSERT, processAllStrings(strings));
+            passTo(Log.ASSERT, processAllStrings(strings));
         }
     }
 
-    private static void l(final int level, @NonNull final String logResult) {
-        if (level == Log.VERBOSE) {
+    // simplest and fastest - even without TAG_23 - may be used to measure speed of doing job \
+    public static void f(@NonNull final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            System.out.println(message);
+        }
+    }
+
+    private static void passTo(final int logLevel, @NonNull final String logResult) {
+        if (logLevel == Log.VERBOSE) {
             Log.v(TAG_23, logResult);
-        } else if (level == Log.DEBUG) {
+        } else if (logLevel == Log.DEBUG) {
             Log.v(TAG_23, logResult);
-        } else if (level == Log.INFO) {
+        } else if (logLevel == Log.INFO) {
             Log.v(TAG_23, logResult);
-        } else if (level == Log.WARN) {
+        } else if (logLevel == Log.WARN) {
             Log.v(TAG_23, logResult);
-        } else if (level == Log.ERROR) {
+        } else if (logLevel == Log.ERROR) {
             Log.v(TAG_23, logResult);
-        } else if (level == Log.ASSERT) {
+        } else if (logLevel == Log.ASSERT) {
             Log.wtf(TAG_23, logResult);
         } else {
             System.out.println(logResult);
         }
     }
-
-/*
-    @MeDoc("simplest and fastest - even without TAG_23 - may be used to measure speed of doing job")
-    public static void f(@NonNull String message) {
-        System.out.println(message);
-    }
-*/
 
     // TODO: 12.11.2017 test with creating StringBuilder with initial string instead of capacity \\
     @NonNull
