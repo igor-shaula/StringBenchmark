@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SAL_TEST_RESULT));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_DAL_TEST_RESULT));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_VAL_TEST_RESULT));
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_ON_SERVICE_STOPPED));
     }
 
@@ -234,8 +235,8 @@ public class MainActivity extends AppCompatActivity {
         if (intentAction == null) {
             return;
         }
-        final int whatInfoToShow;
-        final long resultNanoTime;
+        int whatInfoToShow = 0;
+        long resultNanoTime = 0;
         switch (intentAction) {
             case C.Intent.ACTION_GET_PREPARATION_RESULT:
                 whatInfoToShow = C.Choice.PREPARATION;
@@ -258,6 +259,10 @@ public class MainActivity extends AppCompatActivity {
                 whatInfoToShow = C.Choice.TEST_VAL;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_VAL_TIME, 0);
                 break;
+            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
+                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
+                showPreparationsResult(oneIterationResults);
+                break;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 toggleJobState(false);
                 return;
@@ -268,6 +273,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d("selectInfoToShow", "whatInfoToShow = " + whatInfoToShow);
         Log.d("selectInfoToShow", "resultNanoTime = " + resultNanoTime);
         showPreparationsResult(whatInfoToShow, resultNanoTime);
+    }
+
+    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
+        if (oneIterationResults == null || oneIterationResults.length != 4) {
+            return;
+        }
+        tvResultForStandardLog.setText(U.adaptForUser(this, oneIterationResults[0]));
+        tvResultForSAL.setText(U.adaptForUser(this, oneIterationResults[1]));
+        tvResultForDAL.setText(U.adaptForUser(this, oneIterationResults[2]));
+        tvResultForVAL.setText(U.adaptForUser(this, oneIterationResults[3]));
     }
 
     private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {

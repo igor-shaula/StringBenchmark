@@ -82,7 +82,7 @@ public class TestingIntentService extends IntentService {
                 prepareInitialBurden(intent.getIntExtra(C.Intent.NAME_COUNT, 0));
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
-                startPerformanceAppraisal(10);
+                measurePerformanceInLoop(intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1));
                 break;
             default:
                 Log.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
@@ -142,7 +142,6 @@ public class TestingIntentService extends IntentService {
             }
         }
         longStringForTest = longStringForTestBuilder.toString();
-//        final String longStringForTest = longStringForTestBuilder.toString();
         long nanoTimeDelta = System.nanoTime() - nanoTime;
         System.out.println("after preparing the string for logger @ " + nanoTimeDelta);
 
@@ -184,53 +183,54 @@ public class TestingIntentService extends IntentService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
     }
+    // TODO: 13.11.2017 add measurements for System.out.println(...) \\
 
     // measure results after making this method synchronized \\
-    private void startPerformanceAppraisal(final int howManyTimesToDoLogging) {
+    private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
         // standard system Log performance test \\
-        {
-            final long nanoTime = System.nanoTime();
-            System.out.println("starting standard logger @ " + nanoTime);
-            for (int i = 0; i < howManyTimesToDoLogging; i++) {
-                Log.v(CN, longStringForTest);
-            }
-            long nanoTimeDelta = System.nanoTime() - nanoTime;
-            System.out.println("ending standard logger @ " + nanoTimeDelta);
-            sendInfoToUI(C.Choice.TEST_SYSTEM_LOG, nanoTimeDelta);
+        long logNanoTime, salNanoTime, dalNanoTime, valNanoTime;
+        long logNanoDelta = 0, salNanoDelta = 0, dalNanoDelta = 0, valNanoDelta = 0;
+        long[] oneIterationResults = new long[4];
+
+        for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
+
+            // measuring standard Android's Log time \\
+            logNanoTime = System.nanoTime();
+            Log.v("StandardAndroidLogTag", longStringForTest);
+            logNanoDelta = System.nanoTime() - logNanoTime;
+//            sendInfoToUI(C.Choice.TEST_SYSTEM_LOG, logNanoDelta);
+            oneIterationResults[0] = logNanoDelta;
+
+            // measuring SingleArgLogger's time \\
+            salNanoTime = System.nanoTime();
+            SAL.v(longStringForTest);
+            salNanoDelta = System.nanoTime() - salNanoTime;
+//            sendInfoToUI(C.Choice.TEST_SAL, salNanoDelta);
+            oneIterationResults[1] = salNanoDelta;
+
+            // measuring DoubleArgsLogger's time \\
+            dalNanoTime = System.nanoTime();
+            DAL.v(CN, longStringForTest);
+            dalNanoDelta = System.nanoTime() - dalNanoTime;
+//            sendInfoToUI(C.Choice.TEST_DAL, dalNanoDelta);
+            oneIterationResults[2] = dalNanoDelta;
+
+            // measuring VariableArgsLogger's time \\
+            valNanoTime = System.nanoTime();
+            VAL.v(CN, longStringForTest);
+            valNanoDelta = System.nanoTime() - valNanoTime;
+//            sendInfoToUI(C.Choice.TEST_VAL, valNanoDelta);
+            oneIterationResults[3] = valNanoDelta;
+
+            sendInfoToUI(oneIterationResults);
         }
-        // single-arg Log wrapper performance test \\
-        {
-            final long nanoTime = System.nanoTime();
-            System.out.println("starting SAL @ " + nanoTime);
-            for (int i = 0; i < howManyTimesToDoLogging; i++) {
-                SAL.v(longStringForTest);
-            }
-            long nanoTimeDelta = System.nanoTime() - nanoTime;
-            System.out.println("ending SAL @ " + nanoTimeDelta);
-            sendInfoToUI(C.Choice.TEST_SAL, nanoTimeDelta);
-        }
-        // double-args Log wrapper performance test \\
-        {
-            final long nanoTime = System.nanoTime();
-            System.out.println("starting DAL @ " + nanoTime);
-            for (int i = 0; i < howManyTimesToDoLogging; i++) {
-                DAL.v(CN, longStringForTest);
-            }
-            long nanoTimeDelta = System.nanoTime() - nanoTime;
-            System.out.println("ending DAL @ " + nanoTimeDelta);
-            sendInfoToUI(C.Choice.TEST_DAL, nanoTimeDelta);
-        }
-        // variable-args Log wrapper performance test \\
-        {
-            final long nanoTime = System.nanoTime();
-            System.out.println("starting VAL @ " + nanoTime);
-            for (int i = 0; i < howManyTimesToDoLogging; i++) {
-//                VAL.v(longStringForTest);
-                VAL.v(CN, longStringForTest);
-            }
-            long nanoTimeDelta = System.nanoTime() - nanoTime;
-            System.out.println("ending VAL @ " + nanoTimeDelta);
-            sendInfoToUI(C.Choice.TEST_VAL, nanoTimeDelta);
-        }
+        // for experiment's clarity it's better to initiate garbage-collector before the next step \\
+        System.gc();
+    }
+
+    private void sendInfoToUI(long[] oneIterationResults) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(
+                new Intent(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS)
+                        .putExtra(C.Intent.NAME_ALL_TIME, oneIterationResults));
     }
 }

@@ -53,13 +53,15 @@ public final class C {
         public static final String ACTION_GET_DAL_TEST_RESULT = "double argument log wrapper test";
         public static final String ACTION_GET_VAL_TEST_RESULT = "var-args number log wrapper test";
         public static final String ACTION_ON_SERVICE_STOPPED = "invoked after service's destruction";
-
+        public static final String ACTION_GET_ONE_ITERATION_RESULTS = "results after one iteration";
         public static final String NAME_COUNT = "domain for passing through intent";
         public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
         public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";
         public static final String NAME_SAL_TIME = "time of single-arg log wrapper work";
         public static final String NAME_DAL_TIME = "time of double-arg log wrapper work";
         public static final String NAME_VAL_TIME = "time of var-args log wrapper work";
+        public static final String NAME_ITERATIONS = "number of iterations for testing every variant";
+        public static final String NAME_ALL_TIME = "array with results for every variant per iteration";
         static final String TYPE = "type";
         static final String NO_COMMAND = "no_command";
     }
