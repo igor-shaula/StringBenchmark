@@ -183,14 +183,13 @@ public class TestingIntentService extends IntentService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
     }
-    // TODO: 13.11.2017 add measurements for System.out.println(...) \\
 
     // measure results after making this method synchronized \\
     private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
         // standard system Log performance test \\
-        long logNanoTime, salNanoTime, dalNanoTime, valNanoTime;
-        long logNanoDelta = 0, salNanoDelta = 0, dalNanoDelta = 0, valNanoDelta = 0;
-        long[] oneIterationResults = new long[4];
+        long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime;
+        long logNanoDelta = 0, salNanoDelta = 0, dalNanoDelta = 0, valNanoDelta = 0, soutNanoDelta = 0;
+        long[] oneIterationResults = new long[5];
 
         for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
 
@@ -221,6 +220,13 @@ public class TestingIntentService extends IntentService {
             valNanoDelta = System.nanoTime() - valNanoTime;
 //            sendInfoToUI(C.Choice.TEST_VAL, valNanoDelta);
             oneIterationResults[3] = valNanoDelta;
+
+            // measuring standard Android's Log time \\
+            soutNanoTime = System.nanoTime();
+            System.out.println(longStringForTest);
+            soutNanoDelta = System.nanoTime() - soutNanoTime;
+//            sendInfoToUI(C.Choice.TEST_SYSTEM_LOG, logNanoDelta);
+            oneIterationResults[4] = soutNanoDelta;
 
             sendInfoToUI(oneIterationResults);
         }

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
     private TextView tvResultForVAL;
+    private TextView tvResultForSystemOutPrintln;
     private FloatingActionButton fab;
 
     // TODO: 07.11.2017 realize variant with using Handler to get the results back from service \\
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         tvResultForSAL = findViewById(R.id.tvResultForSAL);
         tvResultForDAL = findViewById(R.id.tvResultForDAL);
         tvResultForVAL = findViewById(R.id.tvResultForVAL);
+        tvResultForSystemOutPrintln = findViewById(R.id.tvResultForSystemOutPrintln);
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         tvResultForSAL.setText(getString(R.string.star));
         tvResultForDAL.setText(getString(R.string.star));
         tvResultForVAL.setText(getString(R.string.star));
+        tvResultForSystemOutPrintln.setText(getString(R.string.star));
     }
 
     private void stopCurrentJob() {
@@ -235,8 +238,8 @@ public class MainActivity extends AppCompatActivity {
         if (intentAction == null) {
             return;
         }
-        int whatInfoToShow = 0;
-        long resultNanoTime = 0;
+        final int whatInfoToShow;
+        final long resultNanoTime;
         switch (intentAction) {
             case C.Intent.ACTION_GET_PREPARATION_RESULT:
                 whatInfoToShow = C.Choice.PREPARATION;
@@ -244,25 +247,29 @@ public class MainActivity extends AppCompatActivity {
                 TestingIntentService.launchAllMeasurements(this);
                 break;
             case C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT:
+                // currently not used \\
                 whatInfoToShow = C.Choice.TEST_SYSTEM_LOG;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_SYSTEM_LOG_TIME, 0);
                 break;
             case C.Intent.ACTION_GET_SAL_TEST_RESULT:
+                // currently not used \\
                 whatInfoToShow = C.Choice.TEST_SAL;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_SAL_TIME, 0);
                 break;
             case C.Intent.ACTION_GET_DAL_TEST_RESULT:
+                // currently not used \\
                 whatInfoToShow = C.Choice.TEST_DAL;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_DAL_TIME, 0);
                 break;
             case C.Intent.ACTION_GET_VAL_TEST_RESULT:
+                // currently not used \\
                 whatInfoToShow = C.Choice.TEST_VAL;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_VAL_TIME, 0);
                 break;
             case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
                 long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
                 showPreparationsResult(oneIterationResults);
-                break;
+                return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 toggleJobState(false);
                 return;
@@ -270,22 +277,23 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
                 return;
         }
-        Log.d("selectInfoToShow", "whatInfoToShow = " + whatInfoToShow);
-        Log.d("selectInfoToShow", "resultNanoTime = " + resultNanoTime);
         showPreparationsResult(whatInfoToShow, resultNanoTime);
     }
 
     private void showPreparationsResult(@Nullable long[] oneIterationResults) {
-        if (oneIterationResults == null || oneIterationResults.length != 4) {
+        if (oneIterationResults == null || oneIterationResults.length != 5) {
             return;
         }
         tvResultForStandardLog.setText(U.adaptForUser(this, oneIterationResults[0]));
         tvResultForSAL.setText(U.adaptForUser(this, oneIterationResults[1]));
         tvResultForDAL.setText(U.adaptForUser(this, oneIterationResults[2]));
         tvResultForVAL.setText(U.adaptForUser(this, oneIterationResults[3]));
+        tvResultForSystemOutPrintln.setText(U.adaptForUser(this, oneIterationResults[4]));
     }
 
     private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
+        Log.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
+        Log.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
         switch (whatInfoToShow) {
             case C.Choice.PREPARATION:
                 stopTwisterTimer();

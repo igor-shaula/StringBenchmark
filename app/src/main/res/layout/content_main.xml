@@ -107,4 +107,17 @@
 
     </TableRow>
 
+    <TableRow style="@style/MatchWrap.Margin_BothSides_Default">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/resultOfSystemOutPrintln"/>
+
+        <TextView
+            android:id="@+id/tvResultForSystemOutPrintln"
+            style="@style/MatchWrap.Gravity_End"
+            android:text="@string/star"/>
+
+    </TableRow>
+
 </LinearLayout>
