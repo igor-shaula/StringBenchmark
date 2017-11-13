@@ -98,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_PREPARATION_RESULT));
-        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT));
-        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SAL_TEST_RESULT));
-        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_DAL_TEST_RESULT));
-        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_VAL_TEST_RESULT));
+//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT));
+//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SAL_TEST_RESULT));
+//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_DAL_TEST_RESULT));
+//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_VAL_TEST_RESULT));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_ON_SERVICE_STOPPED));
     }
@@ -246,26 +246,22 @@ public class MainActivity extends AppCompatActivity {
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
                 TestingIntentService.launchAllMeasurements(this);
                 break;
-            case C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT:
-                // currently not used \\
-                whatInfoToShow = C.Choice.TEST_SYSTEM_LOG;
-                resultNanoTime = intent.getLongExtra(C.Intent.NAME_SYSTEM_LOG_TIME, 0);
-                break;
-            case C.Intent.ACTION_GET_SAL_TEST_RESULT:
-                // currently not used \\
-                whatInfoToShow = C.Choice.TEST_SAL;
-                resultNanoTime = intent.getLongExtra(C.Intent.NAME_SAL_TIME, 0);
-                break;
-            case C.Intent.ACTION_GET_DAL_TEST_RESULT:
-                // currently not used \\
-                whatInfoToShow = C.Choice.TEST_DAL;
-                resultNanoTime = intent.getLongExtra(C.Intent.NAME_DAL_TIME, 0);
-                break;
-            case C.Intent.ACTION_GET_VAL_TEST_RESULT:
-                // currently not used \\
-                whatInfoToShow = C.Choice.TEST_VAL;
-                resultNanoTime = intent.getLongExtra(C.Intent.NAME_VAL_TIME, 0);
-                break;
+//            case C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT:
+//                whatInfoToShow = C.Choice.TEST_SYSTEM_LOG;
+//                resultNanoTime = intent.getLongExtra(C.Intent.NAME_SYSTEM_LOG_TIME, 0);
+//                break;
+//            case C.Intent.ACTION_GET_SAL_TEST_RESULT:
+//                whatInfoToShow = C.Choice.TEST_SAL;
+//                resultNanoTime = intent.getLongExtra(C.Intent.NAME_SAL_TIME, 0);
+//                break;
+//            case C.Intent.ACTION_GET_DAL_TEST_RESULT:
+//                whatInfoToShow = C.Choice.TEST_DAL;
+//                resultNanoTime = intent.getLongExtra(C.Intent.NAME_DAL_TIME, 0);
+//                break;
+//            case C.Intent.ACTION_GET_VAL_TEST_RESULT:
+//                whatInfoToShow = C.Choice.TEST_VAL;
+//                resultNanoTime = intent.getLongExtra(C.Intent.NAME_VAL_TIME, 0);
+//                break;
             case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
                 long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
                 showPreparationsResult(oneIterationResults);

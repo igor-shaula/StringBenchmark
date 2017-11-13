@@ -23,14 +23,11 @@ public class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 
-//    @NonNull
-//    private String longStringForTest = "";
-
     public TestingIntentService() {
         super(CN);
     }
 
-    public static void prepareTheBurdenForTest(@NonNull Context context, int count) {
+    public static void prepareTheBurdenForTest(@NonNull Context context, final int count) {
         // count is assured to be > 0 - by this method's invocation condition \\
         context.startService(new Intent(context, TestingIntentService.class)
                 .setAction(C.Intent.ACTION_START_BURDEN_PREPARATION)
@@ -94,6 +91,7 @@ public class TestingIntentService extends IntentService {
         Log.d(CN, "onDestroy");
         sendInfoToUI(C.Choice.DESTROYED, -1);
         super.onDestroy();
+        // TODO: 13.11.2017 also make service stopping at once the stop button was pressed in UI \\
     }
 
     @Override
@@ -133,8 +131,8 @@ public class TestingIntentService extends IntentService {
         final String[] initialStringSource = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
         // for now it's decided to leave this String array here, not moving it into constants \\
 
-        long nanoTime = System.nanoTime();
-//        System.out.println("before preparing the string for logger @ " + nanoTime);
+        // as StringBuilder is a part of String creation process - it has to be counted in time \\
+        final long nanoTime = System.nanoTime();
         final StringBuilder longStringForTestBuilder = new StringBuilder();
         for (int i = 0; i < count; i++) {
             for (String string : initialStringSource) {
@@ -142,10 +140,11 @@ public class TestingIntentService extends IntentService {
             }
         }
         final String longStringForTest = longStringForTestBuilder.toString();
-        long nanoTimeDelta = System.nanoTime() - nanoTime;
-//        System.out.println("after preparing the string for logger @ " + nanoTimeDelta);
+        final long nanoTimeDelta = System.nanoTime() - nanoTime;
+
         // saving this created string into the App for the case if IntentService gets destroyed early \\
         ((App) getApplication()).setLongStringForTest(longStringForTest);
+
         sendInfoToUI(C.Choice.PREPARATION, nanoTimeDelta);
 
         Log.v(CN, "prepareInitialBurden = " + longStringForTest);
@@ -158,22 +157,22 @@ public class TestingIntentService extends IntentService {
                 intent = new Intent(C.Intent.ACTION_GET_PREPARATION_RESULT)
                         .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta);
                 break;
-            case C.Choice.TEST_SYSTEM_LOG:
-                intent = new Intent(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT)
-                        .putExtra(C.Intent.NAME_SYSTEM_LOG_TIME, nanoTimeDelta);
-                break;
-            case C.Choice.TEST_SAL:
-                intent = new Intent(C.Intent.ACTION_GET_SAL_TEST_RESULT)
-                        .putExtra(C.Intent.NAME_SAL_TIME, nanoTimeDelta);
-                break;
-            case C.Choice.TEST_DAL:
-                intent = new Intent(C.Intent.ACTION_GET_DAL_TEST_RESULT)
-                        .putExtra(C.Intent.NAME_DAL_TIME, nanoTimeDelta);
-                break;
-            case C.Choice.TEST_VAL:
-                intent = new Intent(C.Intent.ACTION_GET_VAL_TEST_RESULT)
-                        .putExtra(C.Intent.NAME_VAL_TIME, nanoTimeDelta);
-                break;
+//            case C.Choice.TEST_SYSTEM_LOG:
+//                intent = new Intent(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT)
+//                        .putExtra(C.Intent.NAME_SYSTEM_LOG_TIME, nanoTimeDelta);
+//                break;
+//            case C.Choice.TEST_SAL:
+//                intent = new Intent(C.Intent.ACTION_GET_SAL_TEST_RESULT)
+//                        .putExtra(C.Intent.NAME_SAL_TIME, nanoTimeDelta);
+//                break;
+//            case C.Choice.TEST_DAL:
+//                intent = new Intent(C.Intent.ACTION_GET_DAL_TEST_RESULT)
+//                        .putExtra(C.Intent.NAME_DAL_TIME, nanoTimeDelta);
+//                break;
+//            case C.Choice.TEST_VAL:
+//                intent = new Intent(C.Intent.ACTION_GET_VAL_TEST_RESULT)
+//                        .putExtra(C.Intent.NAME_VAL_TIME, nanoTimeDelta);
+//                break;
             case C.Choice.DESTROYED:
                 intent = new Intent(C.Intent.ACTION_ON_SERVICE_STOPPED);
                 break;
@@ -201,44 +200,39 @@ public class TestingIntentService extends IntentService {
             logNanoTime = System.nanoTime();
             Log.v("StandardAndroidLogTag", longStringForTest);
             logNanoDelta = System.nanoTime() - logNanoTime;
-//            sendInfoToUI(C.Choice.TEST_SYSTEM_LOG, logNanoDelta);
             oneIterationResults[0] = logNanoDelta;
 
             // measuring SingleArgLogger's time \\
             salNanoTime = System.nanoTime();
             SAL.v(longStringForTest);
             salNanoDelta = System.nanoTime() - salNanoTime;
-//            sendInfoToUI(C.Choice.TEST_SAL, salNanoDelta);
             oneIterationResults[1] = salNanoDelta;
 
             // measuring DoubleArgsLogger's time \\
             dalNanoTime = System.nanoTime();
             DAL.v(CN, longStringForTest);
             dalNanoDelta = System.nanoTime() - dalNanoTime;
-//            sendInfoToUI(C.Choice.TEST_DAL, dalNanoDelta);
             oneIterationResults[2] = dalNanoDelta;
 
             // measuring VariableArgsLogger's time \\
             valNanoTime = System.nanoTime();
             VAL.v(CN, longStringForTest);
             valNanoDelta = System.nanoTime() - valNanoTime;
-//            sendInfoToUI(C.Choice.TEST_VAL, valNanoDelta);
             oneIterationResults[3] = valNanoDelta;
 
             // measuring standard Android's Log time \\
             soutNanoTime = System.nanoTime();
             System.out.println(longStringForTest);
             soutNanoDelta = System.nanoTime() - soutNanoTime;
-//            sendInfoToUI(C.Choice.TEST_SYSTEM_LOG, logNanoDelta);
             oneIterationResults[4] = soutNanoDelta;
 
             sendInfoToUI(oneIterationResults);
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
-//        System.gc();
+        System.gc();
     }
 
-    private void sendInfoToUI(long[] oneIterationResults) {
+    private void sendInfoToUI(@NonNull long[] oneIterationResults) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(
                 new Intent(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS)
                         .putExtra(C.Intent.NAME_ALL_TIME, oneIterationResults));
