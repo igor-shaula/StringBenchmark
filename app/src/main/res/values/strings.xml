@@ -21,6 +21,6 @@
     <string name="resultOfDAL">My double-args Log wrapper:</string>
     <string name="resultOfVAL">My variable-args Log wrapper:</string>
     <string name="resultOfSystemOutPrintln">Good old System.out.println(…):</string>
-    <string name="resultsForLoggingTests">Results for logging 1 given String on:</string>
+    <string name="resultsForLoggingTests">Results for logging the string on:</string>
 
 </resources>

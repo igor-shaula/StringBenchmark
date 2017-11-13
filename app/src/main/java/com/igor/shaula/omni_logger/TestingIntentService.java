@@ -23,8 +23,8 @@ public class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 
-    @NonNull
-    private String longStringForTest = "";
+//    @NonNull
+//    private String longStringForTest = "";
 
     public TestingIntentService() {
         super(CN);
@@ -134,17 +134,18 @@ public class TestingIntentService extends IntentService {
         // for now it's decided to leave this String array here, not moving it into constants \\
 
         long nanoTime = System.nanoTime();
-        System.out.println("before preparing the string for logger @ " + nanoTime);
+//        System.out.println("before preparing the string for logger @ " + nanoTime);
         final StringBuilder longStringForTestBuilder = new StringBuilder();
         for (int i = 0; i < count; i++) {
             for (String string : initialStringSource) {
                 longStringForTestBuilder.append(string);
             }
         }
-        longStringForTest = longStringForTestBuilder.toString();
+        final String longStringForTest = longStringForTestBuilder.toString();
         long nanoTimeDelta = System.nanoTime() - nanoTime;
-        System.out.println("after preparing the string for logger @ " + nanoTimeDelta);
-
+//        System.out.println("after preparing the string for logger @ " + nanoTimeDelta);
+        // saving this created string into the App for the case if IntentService gets destroyed early \\
+        ((App) getApplication()).setLongStringForTest(longStringForTest);
         sendInfoToUI(C.Choice.PREPARATION, nanoTimeDelta);
 
         Log.v(CN, "prepareInitialBurden = " + longStringForTest);
@@ -191,6 +192,9 @@ public class TestingIntentService extends IntentService {
         long logNanoDelta = 0, salNanoDelta = 0, dalNanoDelta = 0, valNanoDelta = 0, soutNanoDelta = 0;
         long[] oneIterationResults = new long[5];
 
+        final String longStringForTest = ((App) getApplication()).getLongStringForTest();
+        // longStringForTest may be null - but it's normally processed by all logging variants \\
+
         for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
 
             // measuring standard Android's Log time \\
@@ -231,7 +235,7 @@ public class TestingIntentService extends IntentService {
             sendInfoToUI(oneIterationResults);
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
-        System.gc();
+//        System.gc();
     }
 
     private void sendInfoToUI(long[] oneIterationResults) {
