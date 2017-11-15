@@ -62,6 +62,7 @@ public final class C {
         public static final String NAME_VAL_TIME = "time of var-args log wrapper work";
         public static final String NAME_ITERATIONS = "number of iterations for testing every variant";
         public static final String NAME_ALL_TIME = "array with results for every variant per iteration";
+        public static final String NAME_ITERATION_NUMBER = "iteration number";
         static final String TYPE = "type";
         static final String NO_COMMAND = "no_command";
     }

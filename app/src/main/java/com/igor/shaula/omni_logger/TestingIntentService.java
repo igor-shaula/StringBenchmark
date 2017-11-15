@@ -157,22 +157,6 @@ public class TestingIntentService extends IntentService {
                 intent = new Intent(C.Intent.ACTION_GET_PREPARATION_RESULT)
                         .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta);
                 break;
-//            case C.Choice.TEST_SYSTEM_LOG:
-//                intent = new Intent(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT)
-//                        .putExtra(C.Intent.NAME_SYSTEM_LOG_TIME, nanoTimeDelta);
-//                break;
-//            case C.Choice.TEST_SAL:
-//                intent = new Intent(C.Intent.ACTION_GET_SAL_TEST_RESULT)
-//                        .putExtra(C.Intent.NAME_SAL_TIME, nanoTimeDelta);
-//                break;
-//            case C.Choice.TEST_DAL:
-//                intent = new Intent(C.Intent.ACTION_GET_DAL_TEST_RESULT)
-//                        .putExtra(C.Intent.NAME_DAL_TIME, nanoTimeDelta);
-//                break;
-//            case C.Choice.TEST_VAL:
-//                intent = new Intent(C.Intent.ACTION_GET_VAL_TEST_RESULT)
-//                        .putExtra(C.Intent.NAME_VAL_TIME, nanoTimeDelta);
-//                break;
             case C.Choice.DESTROYED:
                 intent = new Intent(C.Intent.ACTION_ON_SERVICE_STOPPED);
                 break;
@@ -226,15 +210,17 @@ public class TestingIntentService extends IntentService {
             soutNanoDelta = System.nanoTime() - soutNanoTime;
             oneIterationResults[4] = soutNanoDelta;
 
-            sendInfoToUI(oneIterationResults);
+            sendInfoToUI(oneIterationResults, i);
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();
     }
 
-    private void sendInfoToUI(@NonNull long[] oneIterationResults) {
+    private void sendInfoToUI(@NonNull long[] oneIterationResults, int i) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(
                 new Intent(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS)
-                        .putExtra(C.Intent.NAME_ALL_TIME, oneIterationResults));
+                        .putExtra(C.Intent.NAME_ALL_TIME, oneIterationResults)
+                        .putExtra(C.Intent.NAME_ITERATION_NUMBER, i)
+        );
     }
 }
