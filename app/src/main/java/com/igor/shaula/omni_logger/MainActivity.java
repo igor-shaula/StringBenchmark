@@ -11,17 +11,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.igor.shaula.omni_logger.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.omni_logger.utils.C;
 import com.igor.shaula.omni_logger.utils.U;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isJobRunning;
 
     private int counter;
-
-//    @NonNull
-//    private List<TimeForAllVariants> timeForAllVariantsList = new LinkedList();
+    @NonNull
+    private List<long[]> totalResultList = new LinkedList<>();
 
     @NonNull
     private String pendingPreparationResult = "";
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             pendingPreparationResult = "";
             showTextyTwister();
         }
-        Log.d(CN, "runPerformanceAppraisal() finished");
+        DAL.d(CN, "runPerformanceAppraisal() finished");
 /*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
@@ -248,20 +248,43 @@ public class MainActivity extends AppCompatActivity {
             case C.Intent.ACTION_GET_PREPARATION_RESULT:
                 whatInfoToShow = C.Choice.PREPARATION;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
-                TestingIntentService.launchAllMeasurements(this);
+                // immediately launching the next job - the main job of testing speed of variants \\
+                TestingIntentService.launchAllMeasurements(this, 10);
                 break;
             case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
                 long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
-                showPreparationsResult(oneIterationResults);
+                storeToIntegralResult(oneIterationResults);
+                showPreparationsResult(calculateMedianResult());
                 return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 toggleJobState(false);
                 return;
             default:
-                Log.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
+                DAL.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
                 return;
         }
         showPreparationsResult(whatInfoToShow, resultNanoTime);
+    }
+
+    private void storeToIntegralResult(@NonNull long[] oneIterationResults) {
+        totalResultList.add(oneIterationResults);
+    }
+
+    @NonNull
+    private long[] calculateMedianResult() {
+        long[] medianArray = new long[5];
+        if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
+            // avoiding division by zero in the loop just after this check \\
+            return medianArray;
+        }
+        for (long[] array : totalResultList) {
+//            median = 0; // avoiding the situation when old value can influence on the new one \\
+            for (int i = 0; i < array.length; i++) {
+                // i hope we'll avoid exceeding the max value for type long \\
+                medianArray[i] = (medianArray[i] + array[i]) / totalResultList.size();
+            }
+        }
+        return medianArray;
     }
 
     private void showPreparationsResult(@Nullable long[] oneIterationResults) {
@@ -276,8 +299,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
-        Log.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
-        Log.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
+        DAL.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
+        DAL.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
         switch (whatInfoToShow) {
             case C.Choice.PREPARATION:
                 stopTwisterTimer();
@@ -297,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
                 tvResultForVAL.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             default:
-                Log.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
+                DAL.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
         }
     }
 

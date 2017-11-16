@@ -23,10 +23,9 @@ public class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 
+    // placing variables here avoids creation of those in each test's loop iteration \\
     @SuppressWarnings("FieldCanBeLocal")
     private long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime; // volatile ???
-
-    // SYSTEM CALLBACKS ============================================================================
 
     public TestingIntentService() {
         super(CN);
@@ -36,45 +35,50 @@ public class TestingIntentService extends IntentService {
         // count is assured to be > 0 - by this method's invocation condition \\
         context.startService(new Intent(context, TestingIntentService.class)
                 .setAction(C.Intent.ACTION_START_BURDEN_PREPARATION)
-                .putExtra(C.Intent.NAME_COUNT, count));
+                .putExtra(C.Intent.NAME_COUNT, count)
+        );
     }
 
-    public static void launchAllMeasurements(@NonNull Context context) {
+    public static void launchAllMeasurements(@NonNull Context context, int howManyIterations) {
         context.startService(new Intent(context, TestingIntentService.class)
-                .setAction(C.Intent.ACTION_START_ALL_TESTS));
+                .setAction(C.Intent.ACTION_START_ALL_TESTS)
+                .putExtra(C.Intent.NAME_ITERATIONS, howManyIterations)
+        );
     }
+
+    // SYSTEM CALLBACKS ============================================================================
 
     @Override
     public void onCreate() {
-        Log.d(CN, "onCreate");
+        DAL.d(CN, "onCreate");
         super.onCreate();
     }
 
     @Override
     public void onStart(@Nullable Intent intent, int startId) {
-        Log.d(CN, "onStart ` intent = " + intent);
-        Log.d(CN, "onStart ` startId = " + startId);
+        DAL.d(CN, "onStart ` intent = " + intent);
+        DAL.d(CN, "onStart ` startId = " + startId);
         super.onStart(intent, startId);
     }
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        Log.d(CN, "onStartCommand ` intent = " + intent);
-        Log.d(CN, "onStartCommand ` flags = " + flags);
-        Log.d(CN, "onStartCommand ` startId = " + startId);
+        DAL.d(CN, "onStartCommand ` intent = " + intent);
+        DAL.d(CN, "onStartCommand ` flags = " + flags);
+        DAL.d(CN, "onStartCommand ` startId = " + startId);
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d(CN, "onHandleIntent ` intent = " + intent);
+        DAL.d(CN, "onHandleIntent ` intent = " + intent);
         if (intent == null) {
-            Log.w(CN, "onHandleIntent ` intent is null");
+            DAL.w(CN, "onHandleIntent ` intent is null");
             return;
         }
         final String intentAction = intent.getAction();
         if (intentAction == null) {
-            Log.w(CN, "onHandleIntent ` intentAction is null");
+            DAL.w(CN, "onHandleIntent ` intentAction is null");
             return;
         }
         switch (intentAction) {
@@ -85,13 +89,13 @@ public class TestingIntentService extends IntentService {
                 measurePerformanceInLoop(intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1));
                 break;
             default:
-                Log.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
+                DAL.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
         }
     }
 
     @Override
     public void onDestroy() {
-        Log.d(CN, "onDestroy");
+        DAL.d(CN, "onDestroy");
         sendInfoToUI(C.Choice.DESTROYED, -1);
         super.onDestroy();
         // TODO: 13.11.2017 also make service stopping at once the stop button was pressed in UI \\
@@ -99,34 +103,34 @@ public class TestingIntentService extends IntentService {
 
     @Override
     public void onLowMemory() {
-        Log.d(CN, "onLowMemory");
+        DAL.d(CN, "onLowMemory");
         super.onLowMemory();
     }
 
-    // PAYLOAD =====================================================================================
-
     @Override
     public void onTrimMemory(int level) {
-        Log.d(CN, "onTrimMemory ` level = " + level);
+        DAL.d(CN, "onTrimMemory ` level = " + level);
         super.onTrimMemory(level);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(CN, "onConfigurationChanged ` newConfig = " + newConfig);
+        DAL.d(CN, "onConfigurationChanged ` newConfig = " + newConfig);
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        Log.d(CN, "onTaskRemoved ` rootIntent = " + rootIntent);
+        DAL.d(CN, "onTaskRemoved ` rootIntent = " + rootIntent);
         super.onTaskRemoved(rootIntent);
     }
+
+    // PAYLOAD =====================================================================================
 
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
     private void prepareInitialBurden(int count) {
         if (count <= 0) {
-            Log.w(CN, "prepareInitialBurden ` count <= 0" + count);
+            DAL.w(CN, "prepareInitialBurden ` count <= 0" + count);
             sendInfoToUI(C.Choice.PREPARATION, -1);
             return;
         }
@@ -150,7 +154,7 @@ public class TestingIntentService extends IntentService {
 
         sendInfoToUI(C.Choice.PREPARATION, nanoTimeDelta);
 
-        Log.v(CN, "prepareInitialBurden = " + longStringForTest);
+        DAL.v(CN, "prepareInitialBurden = " + longStringForTest);
     }
 
     private void sendInfoToUI(int whichWay, long nanoTimeDelta) {

@@ -2,7 +2,7 @@ package com.igor.shaula.omni_logger.utils;
 
 import com.igor.shaula.omni_logger.annotations.TypeDoc;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "31-08-2017",
         purpose = "unified all constants keeper")
 
