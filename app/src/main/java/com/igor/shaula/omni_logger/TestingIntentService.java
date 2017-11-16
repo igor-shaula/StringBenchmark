@@ -23,6 +23,11 @@ public class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 
+    @SuppressWarnings("FieldCanBeLocal")
+    private long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime; // volatile ???
+
+    // SYSTEM CALLBACKS ============================================================================
+
     public TestingIntentService() {
         super(CN);
     }
@@ -38,8 +43,6 @@ public class TestingIntentService extends IntentService {
         context.startService(new Intent(context, TestingIntentService.class)
                 .setAction(C.Intent.ACTION_START_ALL_TESTS));
     }
-
-    // SYSTEM CALLBACKS ============================================================================
 
     @Override
     public void onCreate() {
@@ -100,6 +103,8 @@ public class TestingIntentService extends IntentService {
         super.onLowMemory();
     }
 
+    // PAYLOAD =====================================================================================
+
     @Override
     public void onTrimMemory(int level) {
         Log.d(CN, "onTrimMemory ` level = " + level);
@@ -117,8 +122,6 @@ public class TestingIntentService extends IntentService {
         Log.d(CN, "onTaskRemoved ` rootIntent = " + rootIntent);
         super.onTaskRemoved(rootIntent);
     }
-
-    // PAYLOAD =====================================================================================
 
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
     private void prepareInitialBurden(int count) {
@@ -168,52 +171,59 @@ public class TestingIntentService extends IntentService {
         }
     }
 
-    // measure results after making this method synchronized \\
     private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
-        // standard system Log performance test \\
-        long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime;
-        long logNanoDelta = 0, salNanoDelta = 0, dalNanoDelta = 0, valNanoDelta = 0, soutNanoDelta = 0;
-        long[] oneIterationResults = new long[5];
 
+        final long[] oneIterationResults = new long[5];
         final String longStringForTest = ((App) getApplication()).getLongStringForTest();
         // longStringForTest may be null - but it's normally processed by all logging variants \\
 
         for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
 
-            // measuring standard Android's Log time \\
-            logNanoTime = System.nanoTime();
-            Log.v("StandardAndroidLogTag", longStringForTest);
-            logNanoDelta = System.nanoTime() - logNanoTime;
-            oneIterationResults[0] = logNanoDelta;
-
-            // measuring SingleArgLogger's time \\
-            salNanoTime = System.nanoTime();
-            SAL.v(longStringForTest);
-            salNanoDelta = System.nanoTime() - salNanoTime;
-            oneIterationResults[1] = salNanoDelta;
-
-            // measuring DoubleArgsLogger's time \\
-            dalNanoTime = System.nanoTime();
-            DAL.v(CN, longStringForTest);
-            dalNanoDelta = System.nanoTime() - dalNanoTime;
-            oneIterationResults[2] = dalNanoDelta;
-
-            // measuring VariableArgsLogger's time \\
-            valNanoTime = System.nanoTime();
-            VAL.v(CN, longStringForTest);
-            valNanoDelta = System.nanoTime() - valNanoTime;
-            oneIterationResults[3] = valNanoDelta;
-
-            // measuring standard Android's Log time \\
-            soutNanoTime = System.nanoTime();
-            System.out.println(longStringForTest);
-            soutNanoDelta = System.nanoTime() - soutNanoTime;
-            oneIterationResults[4] = soutNanoDelta;
+            oneIterationResults[0] = runLogMethod(longStringForTest);
+            oneIterationResults[1] = runSalMethod(longStringForTest);
+            oneIterationResults[2] = runDalMethod(longStringForTest);
+            oneIterationResults[3] = runValMethod(longStringForTest);
+            oneIterationResults[4] = runSoutMethod(longStringForTest);
 
             sendInfoToUI(oneIterationResults, i);
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();
+    }
+
+    private long runLogMethod(@Nullable String longStringForTest) {
+        // measuring standard Android's Log time \\
+        logNanoTime = System.nanoTime();
+        Log.v("StandardAndroidLogTag", longStringForTest);
+        return System.nanoTime() - logNanoTime;
+    }
+
+    private long runSalMethod(@Nullable String longStringForTest) {
+        // measuring SingleArgLogger's time \\
+        salNanoTime = System.nanoTime();
+        SAL.v(longStringForTest);
+        return System.nanoTime() - salNanoTime;
+    }
+
+    private long runDalMethod(@Nullable String longStringForTest) {
+        // measuring DoubleArgsLogger's time \\
+        dalNanoTime = System.nanoTime();
+        DAL.v(CN, longStringForTest);
+        return System.nanoTime() - dalNanoTime;
+    }
+
+    private long runValMethod(@Nullable String longStringForTest) {
+        // measuring VariableArgsLogger's time \\
+        valNanoTime = System.nanoTime();
+        VAL.v(CN, longStringForTest);
+        return System.nanoTime() - valNanoTime;
+    }
+
+    private long runSoutMethod(@Nullable String longStringForTest) {
+        // measuring standard Android's Log time \\
+        soutNanoTime = System.nanoTime();
+        System.out.println(longStringForTest);
+        return System.nanoTime() - soutNanoTime;
     }
 
     private void sendInfoToUI(@NonNull long[] oneIterationResults, int i) {
