@@ -6,8 +6,10 @@
 
     <string name="explanationForReadyFAB">To launch logging benchmark\nsimply tap this red button >>></string>
     <string name="explanationForBusyFAB">To stop logging benchmark\nsimply tap the red button again</string>
-    <string name="number_of_loop_iterations">Number of 10-symbol Strings</string>
-    <string name="defaultNumberOfLoopIterations">1000000</string>
+    <string name="numberOfStrings">Number of given string repetitions</string>
+    <string name="numberOfLoopIterations">Number of testing loop iterations</string>
+    <string name="defaultNumberOfStrings">100</string>
+    <string name="defaultNumberOfLoopIterations">2</string>
     <string name="loopIterationsExplanation">Each loop iteration ads a new 10-symbol String\n
         to the tested mega-long String for processing</string>
     <string name="resultOfPreparation">Time expended on preparation for tests:</string>

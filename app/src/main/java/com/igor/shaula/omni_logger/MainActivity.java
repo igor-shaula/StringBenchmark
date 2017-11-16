@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     @Nullable
     private Timer twisterTimer;
 
-    private EditText etIterationsNumber;
+    private EditText etStringsQuantity;
+    private EditText etIterationsQuantity;
     private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
     private TextView tvResultForStandardLog;
@@ -71,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etIterationsNumber = findViewById(R.id.tiedNumberOfIterations);
+        etStringsQuantity = findViewById(R.id.tiedNumberOfStrings);
+        etIterationsQuantity = findViewById(R.id.tiedNumberOfLoopIterations);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -142,23 +144,13 @@ public class MainActivity extends AppCompatActivity {
 
     // PAYLOAD =====================================================================================
 
-    private void startNewJob() {
-        runPerformanceAppraisal();
-        toggleJobState(true);
-        restoreResultViewStates();
-    }
-
-    private void restoreResultViewStates() {
-        tvResultForStandardLog.setText(getString(R.string.star));
-        tvResultForSAL.setText(getString(R.string.star));
-        tvResultForDAL.setText(getString(R.string.star));
-        tvResultForVAL.setText(getString(R.string.star));
-        tvResultForSystemOutPrintln.setText(getString(R.string.star));
-    }
-
     private void stopCurrentJob() {
         interruptPerformanceTest();
         toggleJobState(false);
+    }
+
+    private void interruptPerformanceTest() {
+        stopService(new Intent(this, TestingIntentService.class));
     }
 
     private void toggleJobState(boolean isRunning) {
@@ -167,21 +159,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void toggleJobActiveUiState(boolean isJobRunning) {
-        etIterationsNumber.setEnabled(!isJobRunning);
+        etStringsQuantity.setEnabled(!isJobRunning);
+        etIterationsQuantity.setEnabled(!isJobRunning);
         tvExplanationForTheFAB.setText(isJobRunning ?
                 R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
         fab.setImageResource(isJobRunning ?
                 android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
     }
 
-    private void interruptPerformanceTest() {
-        stopService(new Intent(this, TestingIntentService.class));
+    private void startNewJob() {
+        runTestBurdenPreparation();
+        toggleJobState(true);
+        restoreResultViewStates();
     }
 
-    private void runPerformanceAppraisal() {
+    private void runTestBurdenPreparation() {
         int count = 0;
         try {
-            count = Integer.parseInt(etIterationsNumber.getText().toString());
+            count = Integer.parseInt(etStringsQuantity.getText().toString());
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         }
@@ -190,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             pendingPreparationResult = "";
             showTextyTwister();
         }
-        DAL.d(CN, "runPerformanceAppraisal() finished");
+        DAL.d(CN, "runTestBurdenPreparation() finished");
 /*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
@@ -223,6 +218,14 @@ public class MainActivity extends AppCompatActivity {
         twisterTimer.schedule(twisterTask, 0, 80);
     }
 
+    private void restoreResultViewStates() {
+        tvResultForStandardLog.setText(getString(R.string.star));
+        tvResultForSAL.setText(getString(R.string.star));
+        tvResultForDAL.setText(getString(R.string.star));
+        tvResultForVAL.setText(getString(R.string.star));
+        tvResultForSystemOutPrintln.setText(getString(R.string.star));
+    }
+
     private void updateResultOnMainThread(@NonNull final String result) {
         runOnUiThread(new Runnable() {
             @Override
@@ -249,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 whatInfoToShow = C.Choice.PREPARATION;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
                 // immediately launching the next job - the main job of testing speed of variants \\
-                TestingIntentService.launchAllMeasurements(this, 10);
+                prepareMainJob();
                 break;
             case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
                 long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
@@ -264,6 +267,20 @@ public class MainActivity extends AppCompatActivity {
                 return;
         }
         showPreparationsResult(whatInfoToShow, resultNanoTime);
+    }
+
+    private void prepareMainJob() {
+        int count = 0;
+        try {
+            count = Integer.parseInt(etIterationsQuantity.getText().toString());
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+        if (count > 0) {
+            totalResultList.clear();
+            TestingIntentService.launchAllMeasurements(this, count);
+        }
+        DAL.d(CN, "prepareMainJob() finished");
     }
 
     private void storeToIntegralResult(@NonNull long[] oneIterationResults) {
