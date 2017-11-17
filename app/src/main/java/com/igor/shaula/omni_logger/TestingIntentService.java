@@ -91,9 +91,7 @@ public class TestingIntentService extends IntentService {
             case C.Intent.ACTION_START_ALL_TESTS:
                 int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
                 measurePerformanceInLoop(howManyIterations);
-                L.restore();
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
-                L.silence();
                 break;
             default:
                 L.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
@@ -183,8 +181,7 @@ public class TestingIntentService extends IntentService {
     }
 
     private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
-        L.restore();
-//        final long[] oneIterationResults = new long[5];
+//        final long[] oneIterationResults = new long[5]; // initially this was a mistake!!! \\
         final String longStringForTest = ((App) getApplication()).getLongStringForTest();
         // longStringForTest may be null - but it's normally processed by all logging variants \\
 
@@ -201,9 +198,8 @@ public class TestingIntentService extends IntentService {
                     " oneIterationResults = " + Arrays.toString(oneIterationResults));
             sendInfoToUI(oneIterationResults, i);
             // we'll compare both variants' behavior & performance \\
-            ((App)getApplication()).transportOneIterationsResult(oneIterationResults);
+            ((App) getApplication()).transportOneIterationsResult(oneIterationResults);
         }
-        L.silence();
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();
     }

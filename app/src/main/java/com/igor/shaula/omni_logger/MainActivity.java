@@ -292,10 +292,8 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
     @Override
     public void transportOneIterationsResult(@NonNull long[] oneIterationsResult) {
-        L.restore();
         L.w("transportOneIterationsResult",
                 " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
-        L.silence();
         storeToIntegralResult(oneIterationsResult);
         final long[] results = calculateMedianResult();
         runOnUiThread(new Runnable() {
@@ -312,7 +310,6 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
     @NonNull
     private long[] calculateMedianResult() {
-        L.restore();
         L.w("calculateMedianResult", "totalResultList.size = " + totalResultList.size());
         long[] medianArray = new long[5];
         if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
@@ -339,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         medianArray[3] = sumForVAL / totalResultList.size();
         medianArray[4] = sumForSout / totalResultList.size();
 
-        L.silence();
         return medianArray;
     }
 
