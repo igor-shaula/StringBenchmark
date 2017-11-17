@@ -15,7 +15,7 @@ import com.igor.shaula.omni_logger.annotations.TypeDoc;
 
 public final class L {
 
-    private static final String TAG_23 = "DoubleArgsLogTag";
+    private static final String TAG_23 = "APP_LOG";
     private static final String DIVIDER = " ` ";
     // global constant switcher to be touched from this class only \\
     private static final boolean USE_LOGGING = true;

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements App.Callback {
 
     private static final String CN = "MainActivity";
 
@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ((App) getApplication()).setCallback(this);
 
         etStringsQuantity = findViewById(R.id.tiedNumberOfStrings);
         etIterationsQuantity = findViewById(R.id.tiedNumberOfLoopIterations);
@@ -256,15 +258,13 @@ public class MainActivity extends AppCompatActivity {
                 prepareMainJob();
                 break;
             case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
-                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
-//                long[] oneIterationResults;
-//                if (firstIterationPassed) {
-//                    oneIterationResults = new long[] {200, 210, 220, 230, 240};
-//                } else {
-//                    oneIterationResults = new long[]{100, 110, 120, 130, 140};
-//                }
-                storeToIntegralResult(oneIterationResults);
-                showPreparationsResult(calculateMedianResult());
+//                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
+//                L.restore();
+//                L.w("selectInfoToShow",
+//                        " oneIterationResults = " + Arrays.toString(oneIterationResults));
+//                L.silence();
+//                storeToIntegralResult(oneIterationResults);
+//                showPreparationsResult(calculateMedianResult());
                 return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 toggleJobState(false);
@@ -288,6 +288,22 @@ public class MainActivity extends AppCompatActivity {
             TestingIntentService.launchAllMeasurements(this, count);
         }
         L.d(CN, "prepareMainJob() finished");
+    }
+
+    @Override
+    public void transportOneIterationsResult(@NonNull long[] oneIterationsResult) {
+        L.restore();
+        L.w("transportOneIterationsResult",
+                " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
+        L.silence();
+        storeToIntegralResult(oneIterationsResult);
+        final long[] results = calculateMedianResult();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showPreparationsResult(results);
+            }
+        });
     }
 
     private void storeToIntegralResult(@NonNull long[] oneIterationResults) {
@@ -316,13 +332,6 @@ public class MainActivity extends AppCompatActivity {
             sumForDAL += array[2];
             sumForVAL += array[3];
             sumForSout += array[4];
-/*            for (int i = 0; i < array.length; i++) {
-                DAL.w("calculateMedianResult", "i = " + i);
-                DAL.w("calculateMedianResult", "before calculation: " + medianArray[i]);
-                // i hope we'll avoid exceeding the max value for type long \\
-                medianArray[i] = (medianArray[i] + array[i]) / totalResultList.size();
-                DAL.w("calculateMedianResult", "after calculation: " + medianArray[i]);
-            }*/
         }
         medianArray[0] = sumForLog / totalResultList.size();
         medianArray[1] = sumForSAL / totalResultList.size();

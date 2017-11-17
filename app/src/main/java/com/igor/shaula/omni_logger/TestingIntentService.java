@@ -17,6 +17,8 @@ import com.igor.shaula.omni_logger.log_wrappers.var_args_logger.VAL;
 import com.igor.shaula.omni_logger.utils.C;
 import com.igor.shaula.omni_logger.utils.L;
 
+import java.util.Arrays;
+
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "06-11-2017", purpose = "" +
         "simplest way of performing heavy jobs queue on the separate thread")
 
@@ -87,7 +89,11 @@ public class TestingIntentService extends IntentService {
                 prepareInitialBurden(intent.getIntExtra(C.Intent.NAME_COUNT, 0));
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
-                measurePerformanceInLoop(intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1));
+                int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
+                measurePerformanceInLoop(howManyIterations);
+                L.restore();
+                L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
+                L.silence();
                 break;
             default:
                 L.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
@@ -177,21 +183,27 @@ public class TestingIntentService extends IntentService {
     }
 
     private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
-
-        final long[] oneIterationResults = new long[5];
+        L.restore();
+//        final long[] oneIterationResults = new long[5];
         final String longStringForTest = ((App) getApplication()).getLongStringForTest();
         // longStringForTest may be null - but it's normally processed by all logging variants \\
 
         for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
 
+            final long[] oneIterationResults = new long[5];
             oneIterationResults[0] = runLogMethod(longStringForTest);
             oneIterationResults[1] = runSalMethod(longStringForTest);
             oneIterationResults[2] = runDalMethod(longStringForTest);
             oneIterationResults[3] = runValMethod(longStringForTest);
             oneIterationResults[4] = runSoutMethod(longStringForTest);
 
+            L.w("measurePerformanceInLoop", "i = " + i +
+                    " oneIterationResults = " + Arrays.toString(oneIterationResults));
             sendInfoToUI(oneIterationResults, i);
+            // we'll compare both variants' behavior & performance \\
+            ((App)getApplication()).transportOneIterationsResult(oneIterationResults);
         }
+        L.silence();
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();
     }
@@ -231,7 +243,10 @@ public class TestingIntentService extends IntentService {
         return System.nanoTime() - soutNanoTime;
     }
 
+    @MeDoc("actually iterative passing data via intent works very strange - we cannot rely on it")
     private void sendInfoToUI(@NonNull long[] oneIterationResults, int i) {
+        L.w("sendInfoToUI", "i = " + i +
+                " oneIterationResults = " + Arrays.toString(oneIterationResults));
         LocalBroadcastManager.getInstance(this).sendBroadcast(
                 new Intent(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS)
                         .putExtra(C.Intent.NAME_ALL_TIME, oneIterationResults)
