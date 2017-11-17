@@ -4,7 +4,7 @@ import android.app.Application;
 import android.support.annotation.Nullable;
 
 import com.igor.shaula.omni_logger.annotations.TypeDoc;
-import com.igor.shaula.omni_logger.log_wrappers.double_args_logger.DAL;
+import com.igor.shaula.omni_logger.utils.L;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "13-11-2017", purpose = "" +
         "fastest & easiest way of preserving the burden from being destroyed with IntentService")
@@ -26,6 +26,6 @@ public final class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DAL.silence();
+        L.silence();
     }
 }

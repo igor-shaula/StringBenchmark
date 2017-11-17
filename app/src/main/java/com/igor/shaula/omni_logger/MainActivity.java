@@ -17,10 +17,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.igor.shaula.omni_logger.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.omni_logger.utils.C;
+import com.igor.shaula.omni_logger.utils.L;
 import com.igor.shaula.omni_logger.utils.U;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             pendingPreparationResult = "";
             showTextyTwister();
         }
-        DAL.d(CN, "runTestBurdenPreparation() finished");
+        L.d(CN, "runTestBurdenPreparation() finished");
 /*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
@@ -256,6 +257,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
                 long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
+//                long[] oneIterationResults;
+//                if (firstIterationPassed) {
+//                    oneIterationResults = new long[] {200, 210, 220, 230, 240};
+//                } else {
+//                    oneIterationResults = new long[]{100, 110, 120, 130, 140};
+//                }
                 storeToIntegralResult(oneIterationResults);
                 showPreparationsResult(calculateMedianResult());
                 return;
@@ -263,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                 toggleJobState(false);
                 return;
             default:
-                DAL.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
+                L.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
                 return;
         }
         showPreparationsResult(whatInfoToShow, resultNanoTime);
@@ -280,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             totalResultList.clear();
             TestingIntentService.launchAllMeasurements(this, count);
         }
-        DAL.d(CN, "prepareMainJob() finished");
+        L.d(CN, "prepareMainJob() finished");
     }
 
     private void storeToIntegralResult(@NonNull long[] oneIterationResults) {
@@ -289,18 +296,41 @@ public class MainActivity extends AppCompatActivity {
 
     @NonNull
     private long[] calculateMedianResult() {
+        L.restore();
+        L.w("calculateMedianResult", "totalResultList.size = " + totalResultList.size());
         long[] medianArray = new long[5];
         if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
             // avoiding division by zero in the loop just after this check \\
             return medianArray;
         }
+        long sumForLog = 0;
+        long sumForSAL = 0;
+        long sumForDAL = 0;
+        long sumForVAL = 0;
+        long sumForSout = 0;
         for (long[] array : totalResultList) {
-//            median = 0; // avoiding the situation when old value can influence on the new one \\
-            for (int i = 0; i < array.length; i++) {
+            L.w("calculateMedianResult", "" + Arrays.toString(array));
+            // i hope we'll avoid exceeding the max value for type long \\
+            sumForLog += array[0];
+            sumForSAL += array[1];
+            sumForDAL += array[2];
+            sumForVAL += array[3];
+            sumForSout += array[4];
+/*            for (int i = 0; i < array.length; i++) {
+                DAL.w("calculateMedianResult", "i = " + i);
+                DAL.w("calculateMedianResult", "before calculation: " + medianArray[i]);
                 // i hope we'll avoid exceeding the max value for type long \\
                 medianArray[i] = (medianArray[i] + array[i]) / totalResultList.size();
-            }
+                DAL.w("calculateMedianResult", "after calculation: " + medianArray[i]);
+            }*/
         }
+        medianArray[0] = sumForLog / totalResultList.size();
+        medianArray[1] = sumForSAL / totalResultList.size();
+        medianArray[2] = sumForDAL / totalResultList.size();
+        medianArray[3] = sumForVAL / totalResultList.size();
+        medianArray[4] = sumForSout / totalResultList.size();
+
+        L.silence();
         return medianArray;
     }
 
@@ -316,8 +346,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
-        DAL.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
-        DAL.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
+        L.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
+        L.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
         switch (whatInfoToShow) {
             case C.Choice.PREPARATION:
                 stopTwisterTimer();
@@ -337,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
                 tvResultForVAL.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             default:
-                DAL.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
+                L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
         }
     }
 

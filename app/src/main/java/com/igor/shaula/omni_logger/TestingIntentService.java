@@ -15,6 +15,7 @@ import com.igor.shaula.omni_logger.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.omni_logger.log_wrappers.single_arg_logger.SAL;
 import com.igor.shaula.omni_logger.log_wrappers.var_args_logger.VAL;
 import com.igor.shaula.omni_logger.utils.C;
+import com.igor.shaula.omni_logger.utils.L;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "06-11-2017", purpose = "" +
         "simplest way of performing heavy jobs queue on the separate thread")
@@ -50,35 +51,35 @@ public class TestingIntentService extends IntentService {
 
     @Override
     public void onCreate() {
-        DAL.d(CN, "onCreate");
+        L.d(CN, "onCreate");
         super.onCreate();
     }
 
     @Override
     public void onStart(@Nullable Intent intent, int startId) {
-        DAL.d(CN, "onStart ` intent = " + intent);
-        DAL.d(CN, "onStart ` startId = " + startId);
+        L.d(CN, "onStart ` intent = " + intent);
+        L.d(CN, "onStart ` startId = " + startId);
         super.onStart(intent, startId);
     }
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        DAL.d(CN, "onStartCommand ` intent = " + intent);
-        DAL.d(CN, "onStartCommand ` flags = " + flags);
-        DAL.d(CN, "onStartCommand ` startId = " + startId);
+        L.d(CN, "onStartCommand ` intent = " + intent);
+        L.d(CN, "onStartCommand ` flags = " + flags);
+        L.d(CN, "onStartCommand ` startId = " + startId);
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        DAL.d(CN, "onHandleIntent ` intent = " + intent);
+        L.d(CN, "onHandleIntent ` intent = " + intent);
         if (intent == null) {
-            DAL.w(CN, "onHandleIntent ` intent is null");
+            L.w(CN, "onHandleIntent ` intent is null");
             return;
         }
         final String intentAction = intent.getAction();
         if (intentAction == null) {
-            DAL.w(CN, "onHandleIntent ` intentAction is null");
+            L.w(CN, "onHandleIntent ` intentAction is null");
             return;
         }
         switch (intentAction) {
@@ -89,13 +90,13 @@ public class TestingIntentService extends IntentService {
                 measurePerformanceInLoop(intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1));
                 break;
             default:
-                DAL.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
+                L.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
         }
     }
 
     @Override
     public void onDestroy() {
-        DAL.d(CN, "onDestroy");
+        L.d(CN, "onDestroy");
         sendInfoToUI(C.Choice.DESTROYED, -1);
         super.onDestroy();
         // TODO: 13.11.2017 also make service stopping at once the stop button was pressed in UI \\
@@ -103,25 +104,25 @@ public class TestingIntentService extends IntentService {
 
     @Override
     public void onLowMemory() {
-        DAL.d(CN, "onLowMemory");
+        L.d(CN, "onLowMemory");
         super.onLowMemory();
     }
 
     @Override
     public void onTrimMemory(int level) {
-        DAL.d(CN, "onTrimMemory ` level = " + level);
+        L.d(CN, "onTrimMemory ` level = " + level);
         super.onTrimMemory(level);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        DAL.d(CN, "onConfigurationChanged ` newConfig = " + newConfig);
+        L.d(CN, "onConfigurationChanged ` newConfig = " + newConfig);
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        DAL.d(CN, "onTaskRemoved ` rootIntent = " + rootIntent);
+        L.d(CN, "onTaskRemoved ` rootIntent = " + rootIntent);
         super.onTaskRemoved(rootIntent);
     }
 
@@ -130,7 +131,7 @@ public class TestingIntentService extends IntentService {
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
     private void prepareInitialBurden(int count) {
         if (count <= 0) {
-            DAL.w(CN, "prepareInitialBurden ` count <= 0" + count);
+            L.w(CN, "prepareInitialBurden ` count <= 0" + count);
             sendInfoToUI(C.Choice.PREPARATION, -1);
             return;
         }
@@ -154,7 +155,7 @@ public class TestingIntentService extends IntentService {
 
         sendInfoToUI(C.Choice.PREPARATION, nanoTimeDelta);
 
-        DAL.v(CN, "prepareInitialBurden = " + longStringForTest);
+        L.v(CN, "prepareInitialBurden = " + longStringForTest);
     }
 
     private void sendInfoToUI(int whichWay, long nanoTimeDelta) {
