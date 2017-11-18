@@ -6,16 +6,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llIncludedContent"
     style="@style/MatchMatch"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="60dp"
+    android:paddingBottom="100dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.igor.shaula.omni_logger.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <TextView
         style="@style/MatchWrap"
-        android:layout_margin="16dp"
         android:gravity="center"
         android:text="@string/loopIterationsExplanation"/>
 
@@ -51,13 +52,14 @@
 
     <TextView
         style="@style/MatchWrap"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/resultOfPreparation"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:id="@+id/tvResultOfPreparation"
         style="@style/WrapWrap"
+        android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:text="@string/star"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
@@ -66,73 +68,52 @@
         style="@style/MatchWrap"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:text="@string/resultsForLoggingTests"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-    <TableRow style="@style/MatchWrap.Margin_BothSides_Default">
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfStandardLog"/>
 
-        <TextView
-            style="@style/WrapWrap"
-            android:text="@string/resultOfStandardLog"/>
+    <TextView
+        android:id="@+id/tvResultForStandardLog"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
 
-        <TextView
-            android:id="@+id/tvResultForStandardLog"
-            style="@style/MatchWrap.Gravity_End"
-            android:text="@string/star"/>
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfSAL"/>
 
-    </TableRow>
+    <TextView
+        android:id="@+id/tvResultForSAL"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
 
-    <TableRow style="@style/MatchWrap.Margin_BothSides_Default">
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfDAL"/>
 
-        <TextView
-            style="@style/WrapWrap"
-            android:text="@string/resultOfSAL"/>
+    <TextView
+        android:id="@+id/tvResultForDAL"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
 
-        <TextView
-            android:id="@+id/tvResultForSAL"
-            style="@style/MatchWrap.Gravity_End"
-            android:text="@string/star"/>
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfVAL"/>
 
-    </TableRow>
+    <TextView
+        android:id="@+id/tvResultForVAL"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
 
-    <TableRow style="@style/MatchWrap.Margin_BothSides_Default">
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfSystemOutPrintln"/>
 
-        <TextView
-            style="@style/WrapWrap"
-            android:text="@string/resultOfDAL"/>
-
-        <TextView
-            android:id="@+id/tvResultForDAL"
-            style="@style/MatchWrap.Gravity_End"
-            android:text="@string/star"/>
-
-    </TableRow>
-
-    <TableRow style="@style/MatchWrap.Margin_BothSides_Default">
-
-        <TextView
-            style="@style/WrapWrap"
-            android:text="@string/resultOfVAL"/>
-
-        <TextView
-            android:id="@+id/tvResultForVAL"
-            style="@style/MatchWrap.Gravity_End"
-            android:text="@string/star"/>
-
-    </TableRow>
-
-    <TableRow style="@style/MatchWrap.Margin_BothSides_Default">
-
-        <TextView
-            style="@style/WrapWrap"
-            android:text="@string/resultOfSystemOutPrintln"/>
-
-        <TextView
-            android:id="@+id/tvResultForSystemOutPrintln"
-            style="@style/MatchWrap.Gravity_End"
-            android:text="@string/star"/>
-
-    </TableRow>
+    <TextView
+        android:id="@+id/tvResultForSystemOutPrintln"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
 
 </LinearLayout>
