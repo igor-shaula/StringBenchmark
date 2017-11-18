@@ -104,7 +104,6 @@ public final class VAL {
         }
     }
 
-    // TODO: 12.11.2017 test with creating StringBuilder with initial string instead of capacity \\
     @NonNull
     private static String processAllStrings(@Nullable final String... strings) {
         final String logResult; // logResult = VarArgsResult \\
@@ -114,7 +113,7 @@ public final class VAL {
             logResult = CONTAINER_IS_EMPTY;
         } else if (strings.length == 1) { // saving time by avoiding StringBuilder creation \\
             logResult = processOneString(strings[0]);
-        } else { // as (strings.length cannot bew < 0) -> (strings.length >= 2) in this case \\
+        } else { // as [strings.length cannot be < 0] -> in this case [strings.length >= 2] \\
             final int minimumCapacity = strings[0].length() + DIVIDER.length() + strings[1].length();
             // as minimum number of args here is 2 -> we're preparing StringBuilder just for it \\
             final StringBuilder logResultBuilder = new StringBuilder(minimumCapacity);

@@ -10,7 +10,6 @@
     android:paddingBottom="100dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    android:paddingTop="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.igor.shaula.omni_logger.MainActivity"
     tools:showIn="@layout/activity_main">
@@ -18,7 +17,27 @@
     <TextView
         style="@style/MatchWrap"
         android:gravity="center"
-        android:text="@string/loopIterationsExplanation"/>
+        android:text="@string/startingExplanation"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/darker_gray"/>
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/MatchWrap"
+        android:gravity="center">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tiedTheString"
+            style="@style/WrapWrap"
+            android:gravity="center"
+            android:hint="@string/hintTestBasis"
+            android:minWidth="200dp"
+            android:text="@string/defaultString"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         style="@style/MatchWrap"
@@ -28,7 +47,7 @@
             android:id="@+id/tiedNumberOfStrings"
             style="@style/WrapWrap"
             android:gravity="center"
-            android:hint="@string/numberOfStrings"
+            android:hint="@string/hintNumberOfStrings"
             android:inputType="number"
             android:minWidth="200dp"
             android:text="@string/defaultNumberOfStrings"/>
@@ -43,7 +62,7 @@
             android:id="@+id/tiedNumberOfLoopIterations"
             style="@style/WrapWrap"
             android:gravity="center"
-            android:hint="@string/numberOfLoopIterations"
+            android:hint="@string/hintNumberOfLoopIterations"
             android:inputType="number"
             android:minWidth="200dp"
             android:text="@string/defaultNumberOfLoopIterations"/>

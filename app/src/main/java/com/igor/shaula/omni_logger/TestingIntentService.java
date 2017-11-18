@@ -31,7 +31,6 @@ public class TestingIntentService extends IntentService {
     // placing variables here avoids creation of those in each test's loop iteration \\
     @SuppressWarnings("FieldCanBeLocal")
     private long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime;
-    // TODO: 18.11.2017 decide if it's right & wise to put these variables into hot testing methods \\
 
     public TestingIntentService() {
         super(CN);
@@ -106,7 +105,6 @@ public class TestingIntentService extends IntentService {
         L.d(CN, "onDestroy");
         sendInfoToUI(C.Choice.DESTROYED, -1);
         super.onDestroy();
-        // TODO: 13.11.2017 also make service stopping at once the stop button was pressed in UI \\
     }
 
     @Override
@@ -142,7 +140,6 @@ public class TestingIntentService extends IntentService {
             sendInfoToUI(C.Choice.PREPARATION, -1);
             return;
         }
-        // TODO: 06.11.2017 later add the ability to set initial String roaster by the user itself \\
         final String[] initialStringSource = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
         // for now it's decided to leave this String array here, not moving it into constants \\
 
@@ -186,13 +183,9 @@ public class TestingIntentService extends IntentService {
     private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
 
         final App appLink = (App) getApplication();
-        final String longStringForTest = appLink.getLongStringForTest();
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
+        final String longStringForTest = appLink.getLongStringForTest();
         final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
-
-        // TODO: 18.11.2017 add logic to handle dynamically changed quantity of variants \\
-
-        // TODO: 18.11.2017 make random sorting for run-methods to improve the results' validity \\
 
         for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
             oneIterationResults.clear();
