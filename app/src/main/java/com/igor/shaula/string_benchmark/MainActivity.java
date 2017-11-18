@@ -113,9 +113,21 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
-                L.restore();
-                L.l(CN, "onTextChanged");
-                L.silence();
+                restoreResultViewStates();
+                tvResultOfPreparation.setText(C.STAR);
+            }
+        });
+        etStringsQuantity.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged() {
+                restoreResultViewStates();
+                tvResultOfPreparation.setText(C.STAR);
+            }
+        });
+        etIterationsQuantity.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged() {
+                restoreResultViewStates();
             }
         });
 
@@ -216,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     }
 
     private void toggleJobActiveUiState(boolean isJobRunning) {
+        etBasicString.setEnabled(!isJobRunning);
         etStringsQuantity.setEnabled(!isJobRunning);
         etIterationsQuantity.setEnabled(!isJobRunning);
         tvExplanationForTheFAB.setText(isJobRunning ?
@@ -277,11 +290,11 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     }
 
     private void restoreResultViewStates() {
-        tvResultForLog.setText(getString(R.string.star));
-        tvResultForSAL.setText(getString(R.string.star));
-        tvResultForDAL.setText(getString(R.string.star));
-        tvResultForVAL.setText(getString(R.string.star));
-        tvResultForSout.setText(getString(R.string.star));
+        tvResultForLog.setText(C.STAR);
+        tvResultForSAL.setText(C.STAR);
+        tvResultForDAL.setText(C.STAR);
+        tvResultForVAL.setText(C.STAR);
+        tvResultForSout.setText(C.STAR);
     }
 
     private void updateResultOnMainThread(@NonNull final String result) {

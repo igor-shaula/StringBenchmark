@@ -15,8 +15,9 @@ public final class C {
     public static final String SLASH = "/";
     public static final String DOT = ".";
     public static final String COMMA = ",";
-    public static final String UNDERSCORE = "_";
+    public static final String STAR = "*";
     public static final String DASH = "-";
+    public static final String UNDERSCORE = "_";
 
     public static final int ALL_PERMISSIONS_REQUEST = 3000;
 
