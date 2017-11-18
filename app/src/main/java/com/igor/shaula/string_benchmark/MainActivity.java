@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
     private TextView tvStartingExplanation;
     private EditText etBasicString;
-    private EditText etStringsQuantity;
-    private EditText etIterationsQuantity;
+    private EditText etStringsAmount;
+    private EditText etIterationsAmount;
     private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
     private TextView tvResultForLog;
@@ -79,24 +80,31 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
         ((App) getApplication()).setLinkToMainActivity(this); // register for receiving portions of result \\
 
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         tvStartingExplanation = findViewById(R.id.tvStartingExplanation);
 
+        final TextInputLayout tilBasicString = findViewById(R.id.tilBasicString);
+        final TextInputLayout tilStringsAmount = findViewById(R.id.tilStringsAmount);
+        final TextInputLayout tilIterationsAmount = findViewById(R.id.tilIterationsAmount);
+
         etBasicString = findViewById(R.id.tiedBasicString);
-        etStringsQuantity = findViewById(R.id.tiedNumberOfStrings);
-        etIterationsQuantity = findViewById(R.id.tiedNumberOfLoopIterations);
+        etStringsAmount = findViewById(R.id.tiedStringsAmount);
+        etIterationsAmount = findViewById(R.id.tiedIterationsAmount);
 
         etBasicString.setSelection(etBasicString.getText().length());
-        etStringsQuantity.setSelection(etStringsQuantity.getText().length());
-        etIterationsQuantity.setSelection(etIterationsQuantity.getText().length());
+        etStringsAmount.setSelection(etStringsAmount.getText().length());
+        etIterationsAmount.setSelection(etIterationsAmount.getText().length());
 
-        etIterationsQuantity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        etIterationsAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     // disabling this view's focused state somehow - we have to pass it somewhere \\
                     etBasicString.clearFocus();
-                    etStringsQuantity.clearFocus();
-                    etIterationsQuantity.clearFocus();
+                    etStringsAmount.clearFocus();
+                    etIterationsAmount.clearFocus();
                     tvStartingExplanation.requestFocus();
                     // also should close keyboard right now \\
                     final InputMethodManager imm = (InputMethodManager)
@@ -113,26 +121,58 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
+                final int basicStringLength = etBasicString.getText().length();
+                if (basicStringLength != 0) {
+                    // 1 \\
+                    final String testBasisAltHint = MainActivity.this.getString(R.string.testBasisAltHint)
+                            + C.SPACE + basicStringLength;
+                    tilBasicString.setHint(testBasisAltHint);
+                    // 2 \\
+                    final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
+                    final String altStringRepetitionsHint =
+                            MainActivity.this.getString(R.string.stringsAmountHint)
+                                    + C.SPACE + stringsAmountAltHint * basicStringLength;
+                    tilStringsAmount.setHint(altStringRepetitionsHint);
+                } else {
+                    tilBasicString.setHint(MainActivity.this.getString(R.string.testBasisHint));
+                }
                 restoreResultViewStates();
                 tvResultOfPreparation.setText(C.STAR);
             }
         });
-        etStringsQuantity.addTextChangedListener(new SimpleTextWatcher() {
+        etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
+                // safely parsing here - because inputType is number in layout \\
+                final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
+                if (stringsAmountAltHint != 0) {
+                    final String altStringRepetitionsHint =
+                            MainActivity.this.getString(R.string.stringsAmountHint)
+                                    + C.SPACE + stringsAmountAltHint * etBasicString.getText().length();
+                    tilStringsAmount.setHint(altStringRepetitionsHint);
+                } else {
+                    tilStringsAmount.setHint(MainActivity.this.getString(R.string.stringsAmountAltHint));
+                }
                 restoreResultViewStates();
                 tvResultOfPreparation.setText(C.STAR);
             }
         });
-        etIterationsQuantity.addTextChangedListener(new SimpleTextWatcher() {
+        etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
+                final int iterationsAmount = Integer.parseInt(etIterationsAmount.getText().toString());
+                if (iterationsAmount != 0) {
+                    tilIterationsAmount.setHint(MainActivity.this.getString(R.string.iterationsAmountHint));
+                } else {
+                    tilIterationsAmount.setHint(MainActivity.this.getString(R.string.iterationsAmountAltHint));
+                }
                 restoreResultViewStates();
+/*
+                no need to reset shown value of tvResultOfPreparation here because
+                testing loop iterations number has no effect on burden creation time \\
+*/
             }
         });
-
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         tvResultOfPreparation = findViewById(R.id.tvResultOfPreparation);
         tvExplanationForTheFAB = findViewById(R.id.tvExplanationForTheFAB);
@@ -153,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
                 }
             }
         });
-    }
+    } // onCreate \\
 
     @Override
     protected void onStart() {
@@ -229,8 +269,8 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
     private void toggleJobActiveUiState(boolean isJobRunning) {
         etBasicString.setEnabled(!isJobRunning);
-        etStringsQuantity.setEnabled(!isJobRunning);
-        etIterationsQuantity.setEnabled(!isJobRunning);
+        etStringsAmount.setEnabled(!isJobRunning);
+        etIterationsAmount.setEnabled(!isJobRunning);
         tvExplanationForTheFAB.setText(isJobRunning ?
                 R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
         fab.setImageResource(isJobRunning ?
@@ -247,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         final String basicString = etBasicString.getText().toString();
         int count = 0;
         try {
-            count = Integer.parseInt(etStringsQuantity.getText().toString());
+            count = Integer.parseInt(etStringsAmount.getText().toString());
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         }
@@ -347,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     private void prepareMainJob() {
         int count;
         try {
-            count = Integer.parseInt(etIterationsQuantity.getText().toString());
+            count = Integer.parseInt(etIterationsAmount.getText().toString());
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
             count = 0;

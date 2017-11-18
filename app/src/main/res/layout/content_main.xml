@@ -29,39 +29,45 @@
         android:layout_marginBottom="8dp"
         android:background="@android:color/darker_gray"/>
 
-    <android.support.design.widget.TextInputLayout style="@style/MatchWrap">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilBasicString"
+        style="@style/MatchWrap">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tiedBasicString"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/hintTestBasis"
+            android:hint="@string/testBasisHint"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="text"
             android:text="@string/defaultString"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout style="@style/MatchWrap">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilStringsAmount"
+        style="@style/MatchWrap">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/tiedNumberOfStrings"
+            android:id="@+id/tiedStringsAmount"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/hintNumberOfStrings"
+            android:hint="@string/stringsAmountHint"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="number"
             android:text="@string/defaultNumberOfStrings"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout style="@style/MatchWrap">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilIterationsAmount"
+        style="@style/MatchWrap">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/tiedNumberOfLoopIterations"
+            android:id="@+id/tiedIterationsAmount"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/hintNumberOfLoopIterations"
+            android:hint="@string/iterationsAmountHint"
             android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="number"
             android:text="@string/defaultNumberOfLoopIterations"/>
