@@ -64,6 +64,7 @@ public final class C {
         public static final String ACTION_GET_VAL_TEST_RESULT = "var-args number log wrapper test";
         public static final String ACTION_ON_SERVICE_STOPPED = "invoked after service's destruction";
         public static final String ACTION_GET_ONE_ITERATION_RESULTS = "results after one iteration";
+        public static final String NAME_BASIC_STRING = "string used as a basis for creating burden";
         public static final String NAME_COUNT = "domain for passing through intent";
         public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
         public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";

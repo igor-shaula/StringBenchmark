@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     @Nullable
     private Timer twisterTimer;
 
+    private EditText etBasicString;
     private EditText etStringsQuantity;
     private EditText etIterationsQuantity;
     private TextView tvResultOfPreparation;
@@ -72,11 +73,13 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((App) getApplication()).setCallback(this);
+        ((App) getApplication()).setLinkToMainActivity(this); // register for receiving portions of result \\
 
+        etBasicString = findViewById(R.id.tiedBasicString);
         etStringsQuantity = findViewById(R.id.tiedNumberOfStrings);
-        etStringsQuantity.setSelection(etStringsQuantity.getText().length());
         etIterationsQuantity = findViewById(R.id.tiedNumberOfLoopIterations);
+        etBasicString.setSelection(etBasicString.getText().length());
+        etStringsQuantity.setSelection(etStringsQuantity.getText().length());
         etIterationsQuantity.setSelection(etIterationsQuantity.getText().length());
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -117,9 +120,22 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        interruptPerformanceTest();
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        // possibly launched test is meant to continue running in this case \\
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
+        ((App) getApplication()).setLinkToMainActivity(null); // preventing possible memory leak here \\
     }
 
     // MENU ========================================================================================
@@ -178,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     }
 
     private void runTestBurdenPreparation() {
+        final String basicString = etBasicString.getText().toString();
         int count = 0;
         try {
             count = Integer.parseInt(etStringsQuantity.getText().toString());
@@ -185,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
             nfe.printStackTrace();
         }
         if (count > 0) {
-            TestingIntentService.prepareTheBurdenForTest(this, count);
+            TestingIntentService.prepareTheBurdenForTest(this, basicString, count);
             pendingPreparationResult = "";
             showTextyTwister();
         }
@@ -278,16 +295,16 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     }
 
     private void prepareMainJob() {
-        int count = 0;
+        int count;
         try {
             count = Integer.parseInt(etIterationsQuantity.getText().toString());
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
+            count = 0;
         }
-        if (count > 0) {
-            totalResultList.clear();
-            TestingIntentService.launchAllMeasurements(this, count);
-        }
+        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
+        totalResultList.clear();
+        TestingIntentService.launchAllMeasurements(this, count);
         L.d(CN, "prepareMainJob() finished");
     }
 

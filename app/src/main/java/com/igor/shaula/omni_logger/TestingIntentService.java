@@ -36,10 +36,13 @@ public class TestingIntentService extends IntentService {
         super(CN);
     }
 
-    public static void prepareTheBurdenForTest(@NonNull Context context, final int count) {
+    public static void prepareTheBurdenForTest(@NonNull Context context,
+                                               final String basicString,
+                                               final int count) {
         // count is assured to be > 0 - by this method's invocation condition \\
         context.startService(new Intent(context, TestingIntentService.class)
                 .setAction(C.Intent.ACTION_START_BURDEN_PREPARATION)
+                .putExtra(C.Intent.NAME_BASIC_STRING, basicString)
                 .putExtra(C.Intent.NAME_COUNT, count)
         );
     }
@@ -88,10 +91,14 @@ public class TestingIntentService extends IntentService {
         }
         switch (intentAction) {
             case C.Intent.ACTION_START_BURDEN_PREPARATION:
-                prepareInitialBurden(intent.getIntExtra(C.Intent.NAME_COUNT, 0));
+                final String basicString = intent.getStringExtra(C.Intent.NAME_BASIC_STRING);
+                final int howManyStrings = intent.getIntExtra(C.Intent.NAME_COUNT, 0);
+                prepareInitialBurden(basicString, howManyStrings);
+                L.w(CN, "onHandleIntent ` basicString = " + basicString);
+                L.w(CN, "onHandleIntent ` howManyStrings = " + howManyStrings);
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
-                int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
+                final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
                 measurePerformanceInLoop(howManyIterations);
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
                 break;
@@ -134,22 +141,23 @@ public class TestingIntentService extends IntentService {
     // PAYLOAD =====================================================================================
 
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
-    private void prepareInitialBurden(int count) {
+    private void prepareInitialBurden(@Nullable String stringExtra, int count) {
         if (count <= 0) {
             L.w(CN, "prepareInitialBurden ` count <= 0" + count);
             sendInfoToUI(C.Choice.PREPARATION, -1);
             return;
         }
-        final String[] initialStringSource = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+//        final String[] initialStringSource = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
         // for now it's decided to leave this String array here, not moving it into constants \\
 
         // as StringBuilder is a part of String creation process - it has to be counted in time \\
         final long nanoTime = System.nanoTime();
-        final StringBuilder longStringForTestBuilder = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            for (String string : initialStringSource) {
-                longStringForTestBuilder.append(string);
-            }
+        final StringBuilder longStringForTestBuilder = new StringBuilder(stringExtra);
+        for (int i = 1; i < count; i++) { // initial string with i = 0 is already in StringBuilder \\
+            longStringForTestBuilder.append(stringExtra);
+//            for (String string : initialStringSource) {
+//                longStringForTestBuilder.append(string);
+//            }
         }
         final String longStringForTest = longStringForTestBuilder.toString();
         final long nanoTimeDelta = System.nanoTime() - nanoTime;
@@ -180,14 +188,14 @@ public class TestingIntentService extends IntentService {
         }
     }
 
-    private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
+    private void measurePerformanceInLoop(final int howManyIterations) {
 
         final App appLink = (App) getApplication();
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = appLink.getLongStringForTest();
         final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
 
-        for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
+        for (int i = 0; i < howManyIterations; i++) {
             oneIterationResults.clear();
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_SAL, runSalMethod(longStringForTest));
