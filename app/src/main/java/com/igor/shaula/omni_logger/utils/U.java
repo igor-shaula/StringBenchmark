@@ -234,23 +234,46 @@ public final class U {
 
     @NonNull
     public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
-        String result = "";
+//        String result = "";
+        final StringBuilder stringBuilder;
 
         if (nanoTimeValue < 1000) {
-            result += nanoTimeValue + C.SPACE + context.getString(R.string.nanos);
+//            result += nanoTimeValue + C.SPACE + context.getString(R.string.nanos);
+            stringBuilder = new StringBuilder()
+                    .append(nanoTimeValue)
+                    .append(C.SPACE)
+                    .append(context.getString(R.string.nanos));
 
         } else if (nanoTimeValue >= 1000 && nanoTimeValue < 1000_000) {
-            result += nanoTimeValue / 1000 + C.DOT + nanoTimeValue % 1000 +
-                    C.SPACE + context.getString(R.string.micros);
+//            result += nanoTimeValue / 1000 + C.DOT + nanoTimeValue % 1000 +
+//                    C.SPACE + context.getString(R.string.micros);
+            stringBuilder = new StringBuilder()
+                    .append(nanoTimeValue / 1000)
+                    .append(C.DOT)
+                    .append(nanoTimeValue % 1000)
+                    .append(C.SPACE)
+                    .append(context.getString(R.string.micros));
 
         } else if (nanoTimeValue >= 1000_000 && nanoTimeValue < 1000_000_000) {
-            result += nanoTimeValue / 1000_000 + C.DOT + nanoTimeValue % 1000 +
-                    C.SPACE + context.getString(R.string.millis);
+//            result += nanoTimeValue / 1000_000 + C.DOT + nanoTimeValue % 1000 +
+//                    C.SPACE + context.getString(R.string.millis);
+            stringBuilder = new StringBuilder()
+                    .append(nanoTimeValue / 1000_000)
+                    .append(C.DOT)
+                    .append(nanoTimeValue % 1000_000) // initially was 1000 \\
+                    .append(C.SPACE)
+                    .append(context.getString(R.string.millis));
 
         } else {
-            result += nanoTimeValue / 1000_000_000 + C.DOT + nanoTimeValue % 1000 +
-                    C.SPACE + context.getString(R.string.seconds);
+//            result += nanoTimeValue / 1000_000_000 + C.DOT + nanoTimeValue % 1000 +
+//                    C.SPACE + context.getString(R.string.seconds);
+            stringBuilder = new StringBuilder()
+                    .append(nanoTimeValue / 1000_000_000)
+                    .append(C.DOT)
+                    .append(nanoTimeValue % 1000_000_000) // initially was 1000 \\
+                    .append(C.SPACE)
+                    .append(context.getString(R.string.seconds));
         }
-        return result;
+        return stringBuilder.toString();
     }
 }

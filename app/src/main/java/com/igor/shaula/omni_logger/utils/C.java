@@ -35,6 +35,17 @@ public final class C {
         public static final int DESTROYED = 0x100;
     }
 
+    // TODO: 18.11.2017 later place this into App class and add ability to change the index \\
+    public static final class Order {
+
+        public static final int INDEX_OF_LOG = 0;
+        public static final int INDEX_OF_SAL = 1;
+        public static final int INDEX_OF_DAL = 2;
+        public static final int INDEX_OF_VAL = 3;
+        public static final int INDEX_OF_SOUT = 4;
+        public static final int VARIANTS_TOTAL = 5;
+    }
+
     public static final class Prefs {
 
         public static final String KEY_PREFERENCES = "preferences for com.autoxloo.simulcast";

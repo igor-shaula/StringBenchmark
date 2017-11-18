@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     private EditText etIterationsQuantity;
     private TextView tvResultOfPreparation;
     private TextView tvExplanationForTheFAB;
-    private TextView tvResultForStandardLog;
+    private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
     private TextView tvResultForVAL;
-    private TextView tvResultForSystemOutPrintln;
+    private TextView tvResultForSout;
     private FloatingActionButton fab;
 
     // TODO: 07.11.2017 realize variant with using Handler to get the results back from service \\
     @NonNull
-    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // we assume that intent here cannot be null by default \\
@@ -76,18 +76,20 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         ((App) getApplication()).setCallback(this);
 
         etStringsQuantity = findViewById(R.id.tiedNumberOfStrings);
+        etStringsQuantity.setSelection(etStringsQuantity.getText().length());
         etIterationsQuantity = findViewById(R.id.tiedNumberOfLoopIterations);
+        etIterationsQuantity.setSelection(etIterationsQuantity.getText().length());
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         tvResultOfPreparation = findViewById(R.id.tvResultOfPreparation);
         tvExplanationForTheFAB = findViewById(R.id.tvExplanationForTheFAB);
-        tvResultForStandardLog = findViewById(R.id.tvResultForStandardLog);
+        tvResultForLog = findViewById(R.id.tvResultForStandardLog);
         tvResultForSAL = findViewById(R.id.tvResultForSAL);
         tvResultForDAL = findViewById(R.id.tvResultForDAL);
         tvResultForVAL = findViewById(R.id.tvResultForVAL);
-        tvResultForSystemOutPrintln = findViewById(R.id.tvResultForSystemOutPrintln);
+        tvResultForSout = findViewById(R.id.tvResultForSystemOutPrintln);
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -222,11 +224,11 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     }
 
     private void restoreResultViewStates() {
-        tvResultForStandardLog.setText(getString(R.string.star));
+        tvResultForLog.setText(getString(R.string.star));
         tvResultForSAL.setText(getString(R.string.star));
         tvResultForDAL.setText(getString(R.string.star));
         tvResultForVAL.setText(getString(R.string.star));
-        tvResultForSystemOutPrintln.setText(getString(R.string.star));
+        tvResultForSout.setText(getString(R.string.star));
     }
 
     private void updateResultOnMainThread(@NonNull final String result) {
@@ -257,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
                 // immediately launching the next job - the main job of testing speed of variants \\
                 prepareMainJob();
                 break;
-            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
+//            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
 //                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
 //                L.restore();
 //                L.w("selectInfoToShow",
@@ -265,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 //                L.silence();
 //                storeToIntegralResult(oneIterationResults);
 //                showPreparationsResult(calculateMedianResult());
-                return;
+//                return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 toggleJobState(false);
                 return;
@@ -310,11 +312,12 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
     @NonNull
     private long[] calculateMedianResult() {
-        L.w("calculateMedianResult", "totalResultList.size = " + totalResultList.size());
-        long[] medianArray = new long[5];
+        final int listSize = totalResultList.size();
+        L.w("calculateMedianResult", "listSize = " + listSize);
+        final long[] medianArray = new long[C.Order.VARIANTS_TOTAL];
         if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
             // avoiding division by zero in the loop just after this check \\
-            return medianArray;
+            return medianArray; // empty here \\
         }
         long sumForLog = 0;
         long sumForSAL = 0;
@@ -324,30 +327,30 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
         for (long[] array : totalResultList) {
             L.w("calculateMedianResult", "" + Arrays.toString(array));
             // i hope we'll avoid exceeding the max value for type long \\
-            sumForLog += array[0];
-            sumForSAL += array[1];
-            sumForDAL += array[2];
-            sumForVAL += array[3];
-            sumForSout += array[4];
+            sumForLog += array[C.Order.INDEX_OF_LOG];
+            sumForSAL += array[C.Order.INDEX_OF_SAL];
+            sumForDAL += array[C.Order.INDEX_OF_DAL];
+            sumForVAL += array[C.Order.INDEX_OF_VAL];
+            sumForSout += array[C.Order.INDEX_OF_SOUT];
         }
-        medianArray[0] = sumForLog / totalResultList.size();
-        medianArray[1] = sumForSAL / totalResultList.size();
-        medianArray[2] = sumForDAL / totalResultList.size();
-        medianArray[3] = sumForVAL / totalResultList.size();
-        medianArray[4] = sumForSout / totalResultList.size();
+        medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
+        medianArray[C.Order.INDEX_OF_SAL] = sumForSAL / listSize;
+        medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
+        medianArray[C.Order.INDEX_OF_VAL] = sumForVAL / listSize;
+        medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
 
         return medianArray;
     }
 
     private void showPreparationsResult(@Nullable long[] oneIterationResults) {
-        if (oneIterationResults == null || oneIterationResults.length != 5) {
+        if (oneIterationResults == null || oneIterationResults.length != C.Order.VARIANTS_TOTAL) {
             return;
         }
-        tvResultForStandardLog.setText(U.adaptForUser(this, oneIterationResults[0]));
-        tvResultForSAL.setText(U.adaptForUser(this, oneIterationResults[1]));
-        tvResultForDAL.setText(U.adaptForUser(this, oneIterationResults[2]));
-        tvResultForVAL.setText(U.adaptForUser(this, oneIterationResults[3]));
-        tvResultForSystemOutPrintln.setText(U.adaptForUser(this, oneIterationResults[4]));
+        tvResultForLog.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_LOG]));
+        tvResultForSAL.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_SAL]));
+        tvResultForDAL.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_DAL]));
+        tvResultForVAL.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_VAL]));
+        tvResultForSout.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_SOUT]));
     }
 
     private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
@@ -360,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
                 updateResultOnMainThread("");
                 break;
             case C.Choice.TEST_SYSTEM_LOG:
-                tvResultForStandardLog.setText(U.adaptForUser(this, resultNanoTime));
+                tvResultForLog.setText(U.adaptForUser(this, resultNanoTime));
                 break;
             case C.Choice.TEST_SAL:
                 tvResultForSAL.setText(U.adaptForUser(this, resultNanoTime));

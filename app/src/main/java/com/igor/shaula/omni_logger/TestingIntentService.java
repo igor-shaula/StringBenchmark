@@ -17,7 +17,9 @@ import com.igor.shaula.omni_logger.log_wrappers.var_args_logger.VAL;
 import com.igor.shaula.omni_logger.utils.C;
 import com.igor.shaula.omni_logger.utils.L;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "06-11-2017", purpose = "" +
         "simplest way of performing heavy jobs queue on the separate thread")
@@ -28,7 +30,8 @@ public class TestingIntentService extends IntentService {
 
     // placing variables here avoids creation of those in each test's loop iteration \\
     @SuppressWarnings("FieldCanBeLocal")
-    private long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime; // volatile ???
+    private long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime;
+    // TODO: 18.11.2017 decide if it's right & wise to put these variables into hot testing methods \\
 
     public TestingIntentService() {
         super(CN);
@@ -181,24 +184,31 @@ public class TestingIntentService extends IntentService {
     }
 
     private void measurePerformanceInLoop(final int numberOfIterationsForAllVariants) {
-//        final long[] oneIterationResults = new long[5]; // initially this was a mistake!!! \\
-        final String longStringForTest = ((App) getApplication()).getLongStringForTest();
-        // longStringForTest may be null - but it's normally processed by all logging variants \\
+
+        final App appLink = (App) getApplication();
+        final String longStringForTest = appLink.getLongStringForTest();
+        // longStringForTest may be null - but it's normally processed by all our logging variants \\
+        final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
+
+        // TODO: 18.11.2017 add logic to handle dynamically changed quantity of variants \\
+
+        // TODO: 18.11.2017 make random sorting for run-methods to improve the results' validity \\
 
         for (int i = 0; i < numberOfIterationsForAllVariants; i++) {
-
-            final long[] oneIterationResults = new long[5];
-            oneIterationResults[0] = runLogMethod(longStringForTest);
-            oneIterationResults[1] = runSalMethod(longStringForTest);
-            oneIterationResults[2] = runDalMethod(longStringForTest);
-            oneIterationResults[3] = runValMethod(longStringForTest);
-            oneIterationResults[4] = runSoutMethod(longStringForTest);
-
+            oneIterationResults.clear();
+            oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_SAL, runSalMethod(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_VAL, runValMethod(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
+/*
+            // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +
-                    " oneIterationResults = " + Arrays.toString(oneIterationResults));
-            sendInfoToUI(oneIterationResults, i);
-            // we'll compare both variants' behavior & performance \\
-            ((App) getApplication()).transportOneIterationsResult(oneIterationResults);
+                    " oneIterationResults = " + oneIterationResults);
+//                    " oneIterationResults = " + Arrays.toString(oneIterationResults));
+*/
+            appLink.transportOneIterationsResult(oneIterationResults);
+//            sendInfoToUI(oneIterationResults, i);
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();
@@ -239,6 +249,7 @@ public class TestingIntentService extends IntentService {
         return System.nanoTime() - soutNanoTime;
     }
 
+    @SuppressWarnings("unused")
     @MeDoc("actually iterative passing data via intent works very strange - we cannot rely on it")
     private void sendInfoToUI(@NonNull long[] oneIterationResults, int i) {
         L.w("sendInfoToUI", "i = " + i +
