@@ -1,6 +1,6 @@
-package com.igor.shaula.omni_logger.utils;
+package com.igor.shaula.string_benchmark.utils;
 
-import com.igor.shaula.omni_logger.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "31-08-2017",

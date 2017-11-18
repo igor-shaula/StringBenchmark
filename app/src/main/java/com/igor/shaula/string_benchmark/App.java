@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.string_benchmark;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
@@ -6,8 +6,8 @@ import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.omni_logger.annotations.TypeDoc;
-import com.igor.shaula.omni_logger.utils.L;
+import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.utils.L;
 
 import java.util.List;
 

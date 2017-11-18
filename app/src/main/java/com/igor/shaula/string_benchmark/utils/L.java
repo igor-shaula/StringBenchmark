@@ -1,10 +1,10 @@
-package com.igor.shaula.omni_logger.log_wrappers.double_args_logger;
+package com.igor.shaula.string_benchmark.utils;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.igor.shaula.omni_logger.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "08-2017", modifiedOn = "12-11-2017", purpose = "" +
@@ -13,16 +13,16 @@ import com.igor.shaula.omni_logger.annotations.TypeDoc;
         "every method here takes only two arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
 
-public final class DAL {
+public final class L {
 
-    private static final String TAG_23 = "DoubleArgsLogTag";
+    private static final String TAG_23 = "APP_LOG";
     private static final String DIVIDER = " ` ";
     // global constant switcher to be touched from this class only \\
     private static final boolean USE_LOGGING = true;
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
 
-    private DAL() {
+    private L() {
         // should not create any instances of this class \\
     }
 

@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger.utils;
+package com.igor.shaula.string_benchmark.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -15,9 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.igor.shaula.omni_logger.R;
-import com.igor.shaula.omni_logger.annotations.MeDoc;
-import com.igor.shaula.omni_logger.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.R;
+import com.igor.shaula.string_benchmark.annotations.MeDoc;
+import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 import java.util.Collection;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.string_benchmark;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -9,13 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.igor.shaula.omni_logger.annotations.MeDoc;
-import com.igor.shaula.omni_logger.annotations.TypeDoc;
-import com.igor.shaula.omni_logger.log_wrappers.double_args_logger.DAL;
-import com.igor.shaula.omni_logger.log_wrappers.single_arg_logger.SAL;
-import com.igor.shaula.omni_logger.log_wrappers.var_args_logger.VAL;
-import com.igor.shaula.omni_logger.utils.C;
-import com.igor.shaula.omni_logger.utils.L;
+import com.igor.shaula.string_benchmark.annotations.MeDoc;
+import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.log_wrappers.double_args_logger.DAL;
+import com.igor.shaula.string_benchmark.log_wrappers.single_arg_logger.SAL;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger.VAL;
+import com.igor.shaula.string_benchmark.utils.C;
+import com.igor.shaula.string_benchmark.utils.L;
 
 import java.util.ArrayList;
 import java.util.Arrays;

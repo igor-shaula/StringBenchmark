@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger.annotations;
+package com.igor.shaula.string_benchmark.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

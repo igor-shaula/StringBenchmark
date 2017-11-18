@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.string_benchmark;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,9 +17,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.igor.shaula.omni_logger.utils.C;
-import com.igor.shaula.omni_logger.utils.L;
-import com.igor.shaula.omni_logger.utils.U;
+import com.igor.shaula.string_benchmark.utils.C;
+import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.Arrays;
 import java.util.LinkedList;

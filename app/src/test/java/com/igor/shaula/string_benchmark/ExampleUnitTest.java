@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.string_benchmark;
 
 import org.junit.Test;
 

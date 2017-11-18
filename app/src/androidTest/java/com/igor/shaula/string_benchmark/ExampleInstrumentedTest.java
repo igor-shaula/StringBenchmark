@@ -1,4 +1,4 @@
-package com.igor.shaula.omni_logger;
+package com.igor.shaula.string_benchmark;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.igor.shaula.omni_logger", appContext.getPackageName());
+        assertEquals("com.igor.shaula.string_benchmark", appContext.getPackageName());
     }
 }
