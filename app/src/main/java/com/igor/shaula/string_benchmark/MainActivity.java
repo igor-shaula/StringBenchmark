@@ -11,9 +11,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
     @Nullable
     private Timer twisterTimer;
 
+    private TextView tvStartingExplanation;
     private EditText etBasicString;
     private EditText etStringsQuantity;
     private EditText etIterationsQuantity;
@@ -75,12 +79,45 @@ public class MainActivity extends AppCompatActivity implements App.Callback {
 
         ((App) getApplication()).setLinkToMainActivity(this); // register for receiving portions of result \\
 
+        tvStartingExplanation = findViewById(R.id.tvStartingExplanation);
+
         etBasicString = findViewById(R.id.tiedBasicString);
         etStringsQuantity = findViewById(R.id.tiedNumberOfStrings);
         etIterationsQuantity = findViewById(R.id.tiedNumberOfLoopIterations);
+
         etBasicString.setSelection(etBasicString.getText().length());
         etStringsQuantity.setSelection(etStringsQuantity.getText().length());
         etIterationsQuantity.setSelection(etIterationsQuantity.getText().length());
+
+        etIterationsQuantity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // disabling this view's focused state somehow - we have to pass it somewhere \\
+                    etBasicString.clearFocus();
+                    etStringsQuantity.clearFocus();
+                    etIterationsQuantity.clearFocus();
+                    tvStartingExplanation.requestFocus();
+                    // also should close keyboard right now \\
+                    final InputMethodManager imm = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(tvStartingExplanation.getWindowToken(), 0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        etBasicString.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged() {
+                L.restore();
+                L.l(CN, "onTextChanged");
+                L.silence();
+            }
+        });
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

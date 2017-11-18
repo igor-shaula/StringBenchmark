@@ -249,7 +249,7 @@ public final class U {
 //                    C.SPACE + context.getString(R.string.micros);
             stringBuilder = new StringBuilder()
                     .append(nanoTimeValue / 1000)
-                    .append(C.DOT)
+                    .append(C.COMMA)
                     .append(nanoTimeValue % 1000)
                     .append(C.SPACE)
                     .append(context.getString(R.string.micros));
@@ -259,7 +259,7 @@ public final class U {
 //                    C.SPACE + context.getString(R.string.millis);
             stringBuilder = new StringBuilder()
                     .append(nanoTimeValue / 1000_000)
-                    .append(C.DOT)
+                    .append(C.COMMA)
                     .append(nanoTimeValue % 1000_000) // initially was 1000 \\
                     .append(C.SPACE)
                     .append(context.getString(R.string.millis));
@@ -269,7 +269,7 @@ public final class U {
 //                    C.SPACE + context.getString(R.string.seconds);
             stringBuilder = new StringBuilder()
                     .append(nanoTimeValue / 1000_000_000)
-                    .append(C.DOT)
+                    .append(C.COMMA)
                     .append(nanoTimeValue % 1000_000_000) // initially was 1000 \\
                     .append(C.SPACE)
                     .append(context.getString(R.string.seconds));

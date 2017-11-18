@@ -11,8 +11,9 @@
     <string name="hintNumberOfStrings">Repetitions of given string</string>
     <string name="hintNumberOfLoopIterations">Test iterations number</string>
     <string name="defaultString">0123456789</string>
-    <string name="defaultNumberOfStrings">100</string>
-    <string name="defaultNumberOfLoopIterations">2</string>
+    <string name="defaultNumberOfStrings">100000</string>
+    <!--<string name="defaultNumberOfStrings">100.000</string>-->
+    <string name="defaultNumberOfLoopIterations">100</string>
     <string name="startingExplanation">Each loop iteration ads a new copy of basic string\n
         to the tested mega-long string,\n
         which forms a burden for processing</string>

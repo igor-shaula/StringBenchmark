@@ -16,7 +16,10 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
+        android:id="@+id/tvStartingExplanation"
         style="@style/MatchWrap"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center"
         android:text="@string/startingExplanation"/>
 
@@ -26,46 +29,41 @@
         android:layout_marginBottom="8dp"
         android:background="@android:color/darker_gray"/>
 
-    <android.support.design.widget.TextInputLayout
-        style="@style/MatchWrap"
-        android:gravity="center">
+    <android.support.design.widget.TextInputLayout style="@style/MatchWrap">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tiedBasicString"
-            style="@style/WrapWrap"
+            style="@style/MatchWrap"
             android:gravity="center"
             android:hint="@string/hintTestBasis"
-            android:minWidth="200dp"
+            android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
+            android:inputType="text"
             android:text="@string/defaultString"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        style="@style/MatchWrap"
-        android:gravity="center">
+    <android.support.design.widget.TextInputLayout style="@style/MatchWrap">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tiedNumberOfStrings"
-            style="@style/WrapWrap"
+            style="@style/MatchWrap"
             android:gravity="center"
             android:hint="@string/hintNumberOfStrings"
+            android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="number"
-            android:minWidth="200dp"
             android:text="@string/defaultNumberOfStrings"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        style="@style/MatchWrap"
-        android:gravity="center">
+    <android.support.design.widget.TextInputLayout style="@style/MatchWrap">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tiedNumberOfLoopIterations"
-            style="@style/WrapWrap"
+            style="@style/MatchWrap"
             android:gravity="center"
             android:hint="@string/hintNumberOfLoopIterations"
+            android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="number"
-            android:minWidth="200dp"
             android:text="@string/defaultNumberOfLoopIterations"/>
 
     </android.support.design.widget.TextInputLayout>
