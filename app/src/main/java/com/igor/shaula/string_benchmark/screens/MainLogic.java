@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.igor.shaula.string_benchmark.App;
 import com.igor.shaula.string_benchmark.DataTransport;
+import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.L;
 
@@ -49,6 +50,12 @@ public final class MainLogic implements MainHub.LogicLink, App.Callback {
         this.dataTransport = dataTransport;
         uiLink.setLogicLink(this);
         dataTransport.setDataConsumer(this); // register for receiving portions of result \\
+    }
+
+    @MeDoc("invoked in activity's onStop")
+    @Override
+    public void unLinkDataTransport() {
+        dataTransport.setDataConsumer(null); // preventing possible memory leak here \\
     }
 
     @Override

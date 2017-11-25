@@ -8,6 +8,8 @@ public interface DataTransport {
 
     void setDataConsumer(@Nullable MainHub.LogicLink logicLink);
 
+    void setDataConsumer(@Nullable App.Callback mainActivity);
+
     @Nullable
     public String getLongStringForTest();
 }

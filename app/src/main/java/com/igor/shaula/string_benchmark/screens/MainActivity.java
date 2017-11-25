@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.igor.shaula.string_benchmark.App;
-import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.TestingIntentService;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -38,6 +37,10 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         }
     };
 
+    @SuppressWarnings("NullableProblems") // initialized in OnCreate & lasts all the lifetime \\
+    @NonNull
+    private MainHub.LogicLink logicLink;
+
     // LIFECYCLE ===================================================================================
 
     @Override
@@ -46,18 +49,19 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
         setContentView(R.layout.activity_main);
 
-        final MainHub.UiLink uiLink = new MainUi(findViewById(R.id.mainActivityRootView));
-        final DataTransport dataTransport = (App) getApplication();
-        final MainHub.LogicLink logicLink = new MainLogic(this, uiLink, dataTransport);
-
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    } // onCreate \\
+        logicLink = new MainLogic(this,
+                new MainUi(findViewById(R.id.mainActivityRootView)),
+                (App) getApplication()
+        );
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
+        // only setting the basement for more abstract interface communication used later \\
         final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        // for now it's decided to use local receiver, but any other variant can ve used \\
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_PREPARATION_RESULT));
 //        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT));
 //        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SAL_TEST_RESULT));
@@ -70,6 +74,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        // stopping service & clearing used resources \\
         interruptPerformanceTest();
     }
 
@@ -83,7 +88,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
-        ((App) getApplication()).setDataConsumer(null); // preventing possible memory leak here \\
+        logicLink.unLinkDataTransport();
     }
 
     // MENU ========================================================================================

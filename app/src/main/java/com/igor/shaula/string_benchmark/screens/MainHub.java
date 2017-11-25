@@ -15,5 +15,6 @@ public interface MainHub {
 
     interface LogicLink {
 
+        void unLinkDataTransport();
     }
 }
