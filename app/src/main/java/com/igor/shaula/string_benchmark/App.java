@@ -15,7 +15,7 @@ import java.util.List;
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "13-11-2017", purpose = "" +
         "fastest & easiest way of preserving the burden from being destroyed with IntentService")
 
-public final class App extends Application {
+public final class App extends Application implements DataTransport {
 
     private static final String CN = "App";
 
@@ -94,10 +94,12 @@ public final class App extends Application {
     }
     // GETTERS & SETTERS ===========================================================================
 
-    public void setLinkToMainActivity(@Nullable Callback mainActivity) {
+    @Override
+    public void setDataConsumer(@Nullable Callback mainActivity) {
         this.linkToMainActivity = mainActivity;
     }
 
+    @Override
     @Nullable
     public String getLongStringForTest() {
         return longStringForTest;

@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.igor.shaula.string_benchmark.App;
+import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.TestingIntentService;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -24,7 +25,7 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public final class MainActivity extends AppCompatActivity implements App.Callback, MainHub.SystemLink {
+public final class MainActivity extends AppCompatActivity implements MainHub.SystemLink {
 
     private static final String CN = "MainActivity";
 
@@ -42,11 +43,12 @@ public final class MainActivity extends AppCompatActivity implements App.Callbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        ((App) getApplication()).setLinkToMainActivity(this); // register for receiving portions of result \\
-
         final MainHub.UiLink uiLink = new MainUi(findViewById(R.id.mainActivityRootView));
+        final DataTransport dataTransport = (App) getApplication();
+        final MainHub.LogicLink logicLink = new MainLogic(this, uiLink, dataTransport);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,7 +83,7 @@ public final class MainActivity extends AppCompatActivity implements App.Callbac
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
-        ((App) getApplication()).setLinkToMainActivity(null); // preventing possible memory leak here \\
+        ((App) getApplication()).setDataConsumer(null); // preventing possible memory leak here \\
     }
 
     // MENU ========================================================================================
@@ -253,20 +255,6 @@ public final class MainActivity extends AppCompatActivity implements App.Callbac
         totalResultList.clear();
         TestingIntentService.launchAllMeasurements(this, count);
         L.d(CN, "prepareMainJob() finished");
-    }
-
-    @Override
-    public void transportOneIterationsResult(@NonNull long[] oneIterationsResult) {
-        L.w("transportOneIterationsResult",
-                " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
-        storeToIntegralResult(oneIterationsResult);
-        final long[] results = calculateMedianResult();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showPreparationsResult(results);
-            }
-        });
     }
 
     private void storeToIntegralResult(@NonNull long[] oneIterationResults) {

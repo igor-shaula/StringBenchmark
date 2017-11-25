@@ -24,6 +24,10 @@ public final class MainUi implements MainHub.UiLink {
     @NonNull
     private final View rootView;
 
+    @SuppressWarnings("NullableProblems") // invoked in the Logic's constructor \\
+    @NonNull
+    private MainHub.LogicLink logicLink;
+
     private TextView tvStartingExplanation;
     private EditText etBasicString;
     private EditText etStringsAmount;
@@ -40,6 +44,11 @@ public final class MainUi implements MainHub.UiLink {
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
         rootContext = rootView.getContext();
+    }
+
+    @Override
+    public void setLogicLink(@NonNull MainHub.LogicLink logicLink) {
+        this.logicLink = logicLink;
     }
 
     public void init() {
