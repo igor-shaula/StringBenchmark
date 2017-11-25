@@ -7,31 +7,20 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.App;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.TestingIntentService;
-import com.igor.shaula.string_benchmark.screens.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,119 +46,10 @@ public final class MainActivity extends AppCompatActivity implements App.Callbac
 
         ((App) getApplication()).setLinkToMainActivity(this); // register for receiving portions of result \\
 
+        final MainHub.UiLink uiLink = new MainUi(findViewById(R.id.mainActivityRootView));
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        tvStartingExplanation = findViewById(R.id.tvStartingExplanation);
-
-        final TextInputLayout tilBasicString = findViewById(R.id.tilBasicString);
-        final TextInputLayout tilStringsAmount = findViewById(R.id.tilStringsAmount);
-        final TextInputLayout tilIterationsAmount = findViewById(R.id.tilIterationsAmount);
-
-        etBasicString = findViewById(R.id.tiedBasicString);
-        etStringsAmount = findViewById(R.id.tiedStringsAmount);
-        etIterationsAmount = findViewById(R.id.tiedIterationsAmount);
-
-        etBasicString.setSelection(etBasicString.getText().length());
-        etStringsAmount.setSelection(etStringsAmount.getText().length());
-        etIterationsAmount.setSelection(etIterationsAmount.getText().length());
-
-        etIterationsAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // disabling this view's focused state somehow - we have to pass it somewhere \\
-                    etBasicString.clearFocus();
-                    etStringsAmount.clearFocus();
-                    etIterationsAmount.clearFocus();
-                    tvStartingExplanation.requestFocus();
-                    // also should close keyboard right now \\
-                    final InputMethodManager imm = (InputMethodManager)
-                            getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(tvStartingExplanation.getWindowToken(), 0);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        etBasicString.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged() {
-                final int basicStringLength = etBasicString.getText().length();
-                if (basicStringLength != 0) {
-                    // 1 \\
-                    final String testBasisAltHint = MainActivity.this.getString(R.string.testBasisAltHint)
-                            + C.SPACE + basicStringLength;
-                    tilBasicString.setHint(testBasisAltHint);
-                    // 2 \\
-                    final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
-                    final String altStringRepetitionsHint =
-                            MainActivity.this.getString(R.string.stringsAmountHint)
-                                    + C.SPACE + stringsAmountAltHint * basicStringLength;
-                    tilStringsAmount.setHint(altStringRepetitionsHint);
-                } else {
-                    tilBasicString.setHint(MainActivity.this.getString(R.string.testBasisHint));
-                }
-                restoreResultViewStates();
-                tvResultOfPreparation.setText(C.STAR);
-            }
-        });
-        etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged() {
-                // safely parsing here - because inputType is number in layout \\
-                final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
-                if (stringsAmountAltHint != 0) {
-                    final String altStringRepetitionsHint =
-                            MainActivity.this.getString(R.string.stringsAmountHint)
-                                    + C.SPACE + stringsAmountAltHint * etBasicString.getText().length();
-                    tilStringsAmount.setHint(altStringRepetitionsHint);
-                } else {
-                    tilStringsAmount.setHint(MainActivity.this.getString(R.string.stringsAmountAltHint));
-                }
-                restoreResultViewStates();
-                tvResultOfPreparation.setText(C.STAR);
-            }
-        });
-        etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged() {
-                final int iterationsAmount = Integer.parseInt(etIterationsAmount.getText().toString());
-                if (iterationsAmount != 0) {
-                    tilIterationsAmount.setHint(MainActivity.this.getString(R.string.iterationsAmountHint));
-                } else {
-                    tilIterationsAmount.setHint(MainActivity.this.getString(R.string.iterationsAmountAltHint));
-                }
-                restoreResultViewStates();
-/*
-                no need to reset shown value of tvResultOfPreparation here because
-                testing loop iterations number has no effect on burden creation time \\
-*/
-            }
-        });
-
-        tvResultOfPreparation = findViewById(R.id.tvResultOfPreparation);
-        tvExplanationForTheFAB = findViewById(R.id.tvExplanationForTheFAB);
-        tvResultForLog = findViewById(R.id.tvResultForStandardLog);
-        tvResultForSAL = findViewById(R.id.tvResultForSAL);
-        tvResultForDAL = findViewById(R.id.tvResultForDAL);
-        tvResultForVAL = findViewById(R.id.tvResultForVAL);
-        tvResultForSout = findViewById(R.id.tvResultForSystemOutPrintln);
-
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isJobRunning) {
-                    stopCurrentJob();
-                } else {
-                    startNewJob();
-                }
-            }
-        });
     } // onCreate \\
 
     @Override
