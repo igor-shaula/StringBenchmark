@@ -39,33 +39,6 @@ public final class MainActivity extends AppCompatActivity implements App.Callbac
 
     private static final String CN = "MainActivity";
 
-    private static final char[] CHARS = {'-', '\\', '|', '/', '-'};
-
-    private boolean isJobRunning;
-
-    private int counter;
-    @NonNull
-    private List<long[]> totalResultList = new LinkedList<>();
-
-    @NonNull
-    private String pendingPreparationResult = "";
-
-    @Nullable
-    private Timer twisterTimer;
-
-    private TextView tvStartingExplanation;
-    private EditText etBasicString;
-    private EditText etStringsAmount;
-    private EditText etIterationsAmount;
-    private TextView tvResultOfPreparation;
-    private TextView tvExplanationForTheFAB;
-    private TextView tvResultForLog;
-    private TextView tvResultForSAL;
-    private TextView tvResultForDAL;
-    private TextView tvResultForVAL;
-    private TextView tvResultForSout;
-    private FloatingActionButton fab;
-
     @NonNull
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
