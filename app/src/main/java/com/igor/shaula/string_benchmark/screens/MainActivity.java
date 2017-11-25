@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark;
+package com.igor.shaula.string_benchmark.screens;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,6 +21,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.igor.shaula.string_benchmark.App;
+import com.igor.shaula.string_benchmark.R;
+import com.igor.shaula.string_benchmark.TestingIntentService;
+import com.igor.shaula.string_benchmark.screens.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -31,7 +35,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements App.Callback {
+public final class MainActivity extends AppCompatActivity implements App.Callback, MainHub.SystemLink {
 
     private static final String CN = "MainActivity";
 

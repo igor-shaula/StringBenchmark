@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    tools:context="com.igor.shaula.string_benchmark.MainActivity">
+    tools:context="com.igor.shaula.string_benchmark.screens.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         style="@style/MatchWrap"

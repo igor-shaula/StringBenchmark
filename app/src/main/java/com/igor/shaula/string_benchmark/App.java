@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.List;
 
@@ -114,21 +115,12 @@ public final class App extends Application {
 
     public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult) {
         if (linkToMainActivity != null) {
-            linkToMainActivity.transportOneIterationsResult(convertIntoArray(oneIterationsResult));
+            linkToMainActivity.transportOneIterationsResult(U.convertIntoArray(oneIterationsResult));
+            // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
     }
 
-    @NonNull
-    private long[] convertIntoArray(@NonNull List<Long> list) {
-        final int size = list.size();
-        long[] array = new long[size];
-        for (int i = 0; i < size; i++) {
-            array[i] = list.get(i);
-        }
-        return array;
-    }
-
-    interface Callback { // implemented by MainActivity \\
+    public interface Callback { // implemented by MainActivity \\
 
         void transportOneIterationsResult(@NonNull long[] oneIterationsResult);
 

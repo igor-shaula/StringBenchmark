@@ -12,7 +12,7 @@
     android:paddingStart="16dp"
     android:paddingTop="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.igor.shaula.string_benchmark.MainActivity"
+    tools:context="com.igor.shaula.string_benchmark.screens.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <TextView

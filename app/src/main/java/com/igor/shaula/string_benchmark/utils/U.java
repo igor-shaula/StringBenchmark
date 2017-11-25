@@ -181,6 +181,16 @@ public final class U {
         return resultList;
     }
 
+    @NonNull
+    public static long[] convertIntoArray(@NonNull List<Long> list) {
+        final int size = list.size();
+        long[] array = new long[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = list.get(i);
+        }
+        return array;
+    }
+
     public static void printLogFor(@Nullable Intent intent) {
         if (intent == null) {
             Log.i(CN, "printLogFor ` intent == null");
