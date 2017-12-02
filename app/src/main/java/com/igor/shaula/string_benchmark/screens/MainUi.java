@@ -14,10 +14,11 @@ import android.widget.TextView;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.screens.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
+import com.igor.shaula.string_benchmark.utils.U;
 
 public final class MainUi implements MainHub.UiLink {
 
-    private static final String CN = "MainUi";
+//    private static final String CN = "MainUi";
 
     @NonNull
     private final Context rootContext;
@@ -51,6 +52,21 @@ public final class MainUi implements MainHub.UiLink {
         this.logicLink = logicLink;
     }
 
+    @Override
+    public void showPreparationsResultOnMainThread(final long[] oneIterationResults) {
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
+                tvResultForSAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SAL]));
+                tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
+                tvResultForVAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL]));
+                tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
+            }
+        });
+    }
+
+    @Override
     public void init() {
 
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
@@ -94,17 +110,17 @@ public final class MainUi implements MainHub.UiLink {
                 final int basicStringLength = etBasicString.getText().length();
                 if (basicStringLength != 0) {
                     // 1 \\
-                    final String testBasisAltHint = MainActivity.this.getString(R.string.testBasisAltHint)
+                    final String testBasisAltHint = rootContext.getString(R.string.testBasisAltHint)
                             + C.SPACE + basicStringLength;
                     tilBasicString.setHint(testBasisAltHint);
                     // 2 \\
                     final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
                     final String altStringRepetitionsHint =
-                            MainActivity.this.getString(R.string.stringsAmountHint)
+                            rootContext.getString(R.string.stringsAmountHint)
                                     + C.SPACE + stringsAmountAltHint * basicStringLength;
                     tilStringsAmount.setHint(altStringRepetitionsHint);
                 } else {
-                    tilBasicString.setHint(MainActivity.this.getString(R.string.testBasisHint));
+                    tilBasicString.setHint(rootContext.getString(R.string.testBasisHint));
                 }
                 restoreResultViewStates();
                 tvResultOfPreparation.setText(C.STAR);
@@ -117,11 +133,11 @@ public final class MainUi implements MainHub.UiLink {
                 final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
                 if (stringsAmountAltHint != 0) {
                     final String altStringRepetitionsHint =
-                            MainActivity.this.getString(R.string.stringsAmountHint)
+                            rootContext.getString(R.string.stringsAmountHint)
                                     + C.SPACE + stringsAmountAltHint * etBasicString.getText().length();
                     tilStringsAmount.setHint(altStringRepetitionsHint);
                 } else {
-                    tilStringsAmount.setHint(MainActivity.this.getString(R.string.stringsAmountAltHint));
+                    tilStringsAmount.setHint(rootContext.getString(R.string.stringsAmountAltHint));
                 }
                 restoreResultViewStates();
                 tvResultOfPreparation.setText(C.STAR);
@@ -132,9 +148,9 @@ public final class MainUi implements MainHub.UiLink {
             public void onTextChanged() {
                 final int iterationsAmount = Integer.parseInt(etIterationsAmount.getText().toString());
                 if (iterationsAmount != 0) {
-                    tilIterationsAmount.setHint(MainActivity.this.getString(R.string.iterationsAmountHint));
+                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHint));
                 } else {
-                    tilIterationsAmount.setHint(MainActivity.this.getString(R.string.iterationsAmountAltHint));
+                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountAltHint));
                 }
                 restoreResultViewStates();
 /*
@@ -156,12 +172,75 @@ public final class MainUi implements MainHub.UiLink {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isJobRunning) {
-                    stopCurrentJob();
-                } else {
-                    startNewJob();
-                }
+                logicLink.onFabClick();
             }
         });
+    }
+
+    @Override
+    public void toggleJobActiveUiState(boolean isJobRunning) {
+        etBasicString.setEnabled(!isJobRunning);
+        etStringsAmount.setEnabled(!isJobRunning);
+        etIterationsAmount.setEnabled(!isJobRunning);
+        tvExplanationForTheFAB.setText(isJobRunning ?
+                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
+        fab.setImageResource(isJobRunning ?
+                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
+    }
+
+    @Override
+    public void restoreResultViewStates() {
+        tvResultForLog.setText(C.STAR);
+        tvResultForSAL.setText(C.STAR);
+        tvResultForDAL.setText(C.STAR);
+        tvResultForVAL.setText(C.STAR);
+        tvResultForSout.setText(C.STAR);
+    }
+
+    @Override
+    public String getIterationsAmount() {
+        return etIterationsAmount.getText().toString();
+    }
+
+    @Override
+    public void updateResultForLog(long resultNanoTime) {
+        tvResultForLog.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForSAL(long resultNanoTime) {
+        tvResultForSAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForDAL(long resultNanoTime) {
+        tvResultForDAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForVAL(long resultNanoTime) {
+        tvResultForVAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updatePreparationResultOnMainThread(final @NonNull String result) {
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                tvResultOfPreparation.setText(result);
+            }
+        });
+    }
+
+    @NonNull
+    @Override
+    public String getBasicString() {
+        return etBasicString.getText().toString();
+    }
+
+    @NonNull
+    @Override
+    public String getRepetitionsCount() {
+        return etStringsAmount.getText().toString();
     }
 }

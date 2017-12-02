@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,14 +19,12 @@ import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public final class MainActivity extends AppCompatActivity implements MainHub.SystemLink {
 
     private static final String CN = "MainActivity";
-
+    @SuppressWarnings("NullableProblems") // initialized in OnCreate & lasts all the lifetime \\
+    @NonNull
+    private MainHub.LogicLink logicLink;
     @NonNull
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
@@ -36,10 +33,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             selectInfoToShow(intent);
         }
     };
-
-    @SuppressWarnings("NullableProblems") // initialized in OnCreate & lasts all the lifetime \\
-    @NonNull
-    private MainHub.LogicLink logicLink;
 
     // LIFECYCLE ===================================================================================
 
@@ -75,7 +68,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     public void onBackPressed() {
         super.onBackPressed();
         // stopping service & clearing used resources \\
-        interruptPerformanceTest();
+        logicLink.interruptPerformanceTest();
     }
 
     @Override
@@ -115,105 +108,28 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         return super.onOptionsItemSelected(item);
     }
 
-    // PAYLOAD =====================================================================================
-
-    private void stopCurrentJob() {
-        interruptPerformanceTest();
-        toggleJobState(false);
-    }
-
-    private void interruptPerformanceTest() {
+    @Override
+    public void stopTestingService() {
         stopService(new Intent(this, TestingIntentService.class));
     }
 
-    private void toggleJobState(boolean isRunning) {
-        isJobRunning = isRunning;
-        toggleJobActiveUiState(isRunning);
+    @Override
+    public void launchPreparation(@NonNull String basicString, int count) {
+        TestingIntentService.prepareTheBurdenForTest(this, basicString, count);
     }
 
-    private void toggleJobActiveUiState(boolean isJobRunning) {
-        etBasicString.setEnabled(!isJobRunning);
-        etStringsAmount.setEnabled(!isJobRunning);
-        etIterationsAmount.setEnabled(!isJobRunning);
-        tvExplanationForTheFAB.setText(isJobRunning ?
-                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
-        fab.setImageResource(isJobRunning ?
-                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
+    @Override
+    public void launchAllMeasurements(int count) {
+        TestingIntentService.launchAllMeasurements(this, count);
     }
 
-    private void startNewJob() {
-        runTestBurdenPreparation();
-        toggleJobState(true);
-        restoreResultViewStates();
+    @NonNull
+    @Override
+    public String getAdaptedString(long resultNanoTime) {
+        return U.adaptForUser(this, resultNanoTime);
     }
 
-    private void runTestBurdenPreparation() {
-        final String basicString = etBasicString.getText().toString();
-        int count = 0;
-        try {
-            count = Integer.parseInt(etStringsAmount.getText().toString());
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
-        if (count > 0) {
-            TestingIntentService.prepareTheBurdenForTest(this, basicString, count);
-            pendingPreparationResult = "";
-            showTextyTwister();
-        }
-        L.d(CN, "runTestBurdenPreparation() finished");
-/*
-                    VAL.v("" + getString(R.string.vero_test).length());
-                    VAL.v("", "");
-                    VAL.v("", "", "");
-                    VAL.v();
-                    VAL.v((String[]) null);
-                    VAL.v(null, null);
-                    VAL.v(null, null, null);
-                    VAL.v(this.toString(), null, null);
-                    VAL.v("1");
-                    VAL.v("1", "2");
-                    VAL.v("1", "2", "3");
-                    VAL.v("", "", "", "");
-*/
-    }
-
-    private void showTextyTwister() {
-        final int[] index = new int[1];
-        final String[] textForUI = new String[1];
-        final TimerTask twisterTask = new TimerTask() {
-            @Override
-            public void run() {
-                // 0 - 1 - 2 - 3 - 0 - 1 - 2 - 3 - 0 - ...
-                index[0] = counter % CHARS.length;
-                textForUI[0] = String.valueOf(CHARS[index[0]]);
-                updateResultOnMainThread(textForUI[0]);
-            }
-        };
-        twisterTimer = new Timer(true);
-        twisterTimer.schedule(twisterTask, 0, 80);
-    }
-
-    private void restoreResultViewStates() {
-        tvResultForLog.setText(C.STAR);
-        tvResultForSAL.setText(C.STAR);
-        tvResultForDAL.setText(C.STAR);
-        tvResultForVAL.setText(C.STAR);
-        tvResultForSout.setText(C.STAR);
-    }
-
-    private void updateResultOnMainThread(@NonNull final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (pendingPreparationResult.isEmpty()) {
-                    tvResultOfPreparation.setText(result);
-                    counter++;
-                } else {
-                    tvResultOfPreparation.setText(pendingPreparationResult);
-                }
-            }
-        }); // runOnUiThread \\
-    }
+    // PAYLOAD =====================================================================================
 
     private void selectInfoToShow(@NonNull Intent intent) {
         final String intentAction = intent.getAction();
@@ -227,7 +143,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 whatInfoToShow = C.Choice.PREPARATION;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
                 // immediately launching the next job - the main job of testing speed of variants \\
-                prepareMainJob();
+                logicLink.prepareMainJob();
                 break;
 //            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
 //                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
@@ -236,111 +152,16 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 //                        " oneIterationResults = " + Arrays.toString(oneIterationResults));
 //                L.silence();
 //                storeToIntegralResult(oneIterationResults);
-//                showPreparationsResult(calculateMedianResult());
+//                showPreparationsResultOnMainThread(calculateMedianResult());
 //                return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
-                toggleJobState(false);
+                logicLink.toggleJobState(false);
                 return;
             default:
                 L.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
                 return;
         }
-        showPreparationsResult(whatInfoToShow, resultNanoTime);
-    }
-
-    private void prepareMainJob() {
-        int count;
-        try {
-            count = Integer.parseInt(etIterationsAmount.getText().toString());
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            count = 0;
-        }
-        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
-        totalResultList.clear();
-        TestingIntentService.launchAllMeasurements(this, count);
-        L.d(CN, "prepareMainJob() finished");
-    }
-
-    private void storeToIntegralResult(@NonNull long[] oneIterationResults) {
-        totalResultList.add(oneIterationResults);
-    }
-
-    @NonNull
-    private long[] calculateMedianResult() {
-        final int listSize = totalResultList.size();
-        L.w("calculateMedianResult", "listSize = " + listSize);
-        final long[] medianArray = new long[C.Order.VARIANTS_TOTAL];
-        if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
-            // avoiding division by zero in the loop just after this check \\
-            return medianArray; // empty here \\
-        }
-        long sumForLog = 0;
-        long sumForSAL = 0;
-        long sumForDAL = 0;
-        long sumForVAL = 0;
-        long sumForSout = 0;
-        for (long[] array : totalResultList) {
-            L.w("calculateMedianResult", "" + Arrays.toString(array));
-            // i hope we'll avoid exceeding the max value for type long \\
-            sumForLog += array[C.Order.INDEX_OF_LOG];
-            sumForSAL += array[C.Order.INDEX_OF_SAL];
-            sumForDAL += array[C.Order.INDEX_OF_DAL];
-            sumForVAL += array[C.Order.INDEX_OF_VAL];
-            sumForSout += array[C.Order.INDEX_OF_SOUT];
-        }
-        medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
-        medianArray[C.Order.INDEX_OF_SAL] = sumForSAL / listSize;
-        medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
-        medianArray[C.Order.INDEX_OF_VAL] = sumForVAL / listSize;
-        medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
-
-        return medianArray;
-    }
-
-    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
-        if (oneIterationResults == null || oneIterationResults.length != C.Order.VARIANTS_TOTAL) {
-            return;
-        }
-        tvResultForLog.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_LOG]));
-        tvResultForSAL.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_SAL]));
-        tvResultForDAL.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_DAL]));
-        tvResultForVAL.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_VAL]));
-        tvResultForSout.setText(U.adaptForUser(this, oneIterationResults[C.Order.INDEX_OF_SOUT]));
-    }
-
-    private void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
-        L.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
-        L.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
-        switch (whatInfoToShow) {
-            case C.Choice.PREPARATION:
-                stopTwisterTimer();
-                pendingPreparationResult = U.adaptForUser(this, resultNanoTime);
-                updateResultOnMainThread("");
-                break;
-            case C.Choice.TEST_SYSTEM_LOG:
-                tvResultForLog.setText(U.adaptForUser(this, resultNanoTime));
-                break;
-            case C.Choice.TEST_SAL:
-                tvResultForSAL.setText(U.adaptForUser(this, resultNanoTime));
-                break;
-            case C.Choice.TEST_DAL:
-                tvResultForDAL.setText(U.adaptForUser(this, resultNanoTime));
-                break;
-            case C.Choice.TEST_VAL:
-                tvResultForVAL.setText(U.adaptForUser(this, resultNanoTime));
-                break;
-            default:
-                L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
-        }
-    }
-
-    private void stopTwisterTimer() {
-        if (twisterTimer != null) {
-            twisterTimer.cancel(); // purge() behaves very strangely - so i decided to avoid it
-        }
-        twisterTimer = null;
-        counter = 0;
+        logicLink.showPreparationsResult(whatInfoToShow, resultNanoTime);
     }
 
     // TODO: 18.11.2017 use android.os.CpuUsageInfo

@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -20,7 +21,7 @@ public final class App extends Application implements DataTransport {
     private static final String CN = "App";
 
     @Nullable
-    private Callback linkToMainActivity;
+    private Consumer linkToConsumer;
     @Nullable
     private String longStringForTest = ""; // ma be rather long & heavy \\
 
@@ -92,11 +93,12 @@ public final class App extends Application implements DataTransport {
         L.silence();
         super.onTerminate();
     }
+
     // GETTERS & SETTERS ===========================================================================
 
     @Override
-    public void setDataConsumer(@Nullable Callback mainActivity) {
-        this.linkToMainActivity = mainActivity;
+    public void setDataConsumer(@Nullable Consumer consumer) {
+        this.linkToConsumer = consumer;
     }
 
     @Override
@@ -105,27 +107,23 @@ public final class App extends Application implements DataTransport {
         return longStringForTest;
     }
 
+    @MeDoc("invoked from working IntentService as for now")
     public void setLongStringForTest(@Nullable String longStringForTest) {
         this.longStringForTest = longStringForTest;
     }
 
+    @MeDoc("should be invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull long[] oneIterationsResult) {
-        if (linkToMainActivity != null) {
-            linkToMainActivity.transportOneIterationsResult(oneIterationsResult);
+        if (linkToConsumer != null) {
+            linkToConsumer.onNewIterationResult(oneIterationsResult);
         }
     }
 
+    @MeDoc("invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult) {
-        if (linkToMainActivity != null) {
-            linkToMainActivity.transportOneIterationsResult(U.convertIntoArray(oneIterationsResult));
+        if (linkToConsumer != null) {
+            linkToConsumer.onNewIterationResult(U.convertIntoArray(oneIterationsResult));
             // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
-    }
-
-    public interface Callback { // implemented by MainActivity \\
-
-        void transportOneIterationsResult(@NonNull long[] oneIterationsResult);
-
-//        void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult);
     }
 }
