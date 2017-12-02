@@ -183,7 +183,7 @@ public final class MainUi implements MainHub.UiLink {
                             + C.SPACE + basicStringLength;
                     tilBasicString.setHint(testBasisAltHint);
                     // 2 \\
-                    final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
+                    final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
                     final String altStringRepetitionsHint =
                             rootContext.getString(R.string.stringsAmountHint)
                                     + C.SPACE + stringsAmountAltHint * basicStringLength;
@@ -199,7 +199,7 @@ public final class MainUi implements MainHub.UiLink {
             @Override
             public void onTextChanged() {
                 // safely parsing here - because inputType is number in layout \\
-                final int stringsAmountAltHint = Integer.parseInt(etStringsAmount.getText().toString());
+                final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
                 if (stringsAmountAltHint != 0) {
                     final String altStringRepetitionsHint =
                             rootContext.getString(R.string.stringsAmountHint)
@@ -215,7 +215,7 @@ public final class MainUi implements MainHub.UiLink {
         etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
-                final int iterationsAmount = Integer.parseInt(etIterationsAmount.getText().toString());
+                final int iterationsAmount = U.convertIntoInt(etIterationsAmount.getText().toString());
                 if (iterationsAmount != 0) {
                     tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHint));
                 } else {

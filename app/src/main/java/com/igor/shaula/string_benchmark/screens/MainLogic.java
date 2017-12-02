@@ -96,16 +96,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     @Override
     public void prepareMainJob() {
-        int count;
-        try {
-            count = Integer.parseInt(uiLink.getIterationsAmount());
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            count = 0;
-        }
-        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
         totalResultList.clear();
-        systemLink.launchAllMeasurements(count);
+        int count = U.convertIntoInt(uiLink.getIterationsAmount());
+        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
+        if (count > 0) {
+            systemLink.launchAllMeasurements(count);
+        }
         L.d(CN, "prepareMainJob() finished");
     }
 
@@ -178,19 +174,14 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     private void runTestBurdenPreparation() {
-        final String basicString = uiLink.getBasicString();
-        int count = 0;
-        try {
-            count = Integer.parseInt(uiLink.getRepetitionsCount());
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
+        int count = U.convertIntoInt(uiLink.getRepetitionsCount());
         if (count > 0) {
-            systemLink.launchPreparation(basicString, count);
+            systemLink.launchPreparation(uiLink.getBasicString(), count);
             pendingPreparationResult = "";
             showTextyTwister();
         }
         L.d(CN, "runTestBurdenPreparation() finished");
+        // TODO: 02.12.2017 wright unit-tests with this kind of content \\
 /*
                     VAL.v("" + getString(R.string.vero_test).length());
                     VAL.v("", "");
