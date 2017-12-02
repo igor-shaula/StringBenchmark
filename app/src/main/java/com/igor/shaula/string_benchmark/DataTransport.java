@@ -3,17 +3,21 @@ package com.igor.shaula.string_benchmark;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public interface DataTransport {
+import java.util.List;
 
-    void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer);
+public interface DataTransport { // currently implemented by App as a quickest decision \\
 
     @Nullable
     String getLongStringForTest();
 
-    interface IterationResultConsumer { // implemented by MainActivity \\
+    void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer);
+
+    void setLongStringForTest(@Nullable String longStringForTest);
+
+    void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult);
+
+    interface IterationResultConsumer { // implemented by LogicLink \\
 
         void onNewIterationResult(@NonNull long[] oneIterationsResult);
-
-//        void onNewIterationResult(@NonNull List<Long> oneIterationsResult);
     }
 }

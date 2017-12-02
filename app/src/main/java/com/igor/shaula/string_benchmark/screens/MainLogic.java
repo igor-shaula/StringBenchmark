@@ -113,11 +113,11 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         }
     }
 
-    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
-        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
-            uiLink.showPreparationsResultOnMainThread(oneIterationResults);
-        }
-    }
+//    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
+//        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
+//            uiLink.showPreparationsResultOnMainThread(oneIterationResults);
+//        }
+//    }
 
     @MeDoc("invoked in activity's onStop")
     @Override

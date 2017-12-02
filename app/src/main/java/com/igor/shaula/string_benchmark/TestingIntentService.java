@@ -138,7 +138,7 @@ public class TestingIntentService extends IntentService {
         super.onTaskRemoved(rootIntent);
     }
 
-    // PAYLOAD =====================================================================================
+    // PRIVATE PAYLOAD =============================================================================
 
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
     private void prepareInitialBurden(@Nullable String stringExtra, int count) {
@@ -147,23 +147,17 @@ public class TestingIntentService extends IntentService {
             sendInfoToUI(C.Choice.PREPARATION, -1);
             return;
         }
-//        final String[] initialStringSource = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
-        // for now it's decided to leave this String array here, not moving it into constants \\
-
         // as StringBuilder is a part of String creation process - it has to be counted in time \\
         final long nanoTime = System.nanoTime();
         final StringBuilder longStringForTestBuilder = new StringBuilder(stringExtra);
         for (int i = 1; i < count; i++) { // initial string with i = 0 is already in StringBuilder \\
             longStringForTestBuilder.append(stringExtra);
-//            for (String string : initialStringSource) {
-//                longStringForTestBuilder.append(string);
-//            }
         }
         final String longStringForTest = longStringForTestBuilder.toString();
         final long nanoTimeDelta = System.nanoTime() - nanoTime;
 
         // saving this created string into the App for the case if IntentService gets destroyed early \\
-        ((App) getApplication()).setLongStringForTest(longStringForTest);
+        ((DataTransport) getApplication()).setLongStringForTest(longStringForTest);
 
         sendInfoToUI(C.Choice.PREPARATION, nanoTimeDelta);
 
@@ -190,7 +184,7 @@ public class TestingIntentService extends IntentService {
 
     private void measurePerformanceInLoop(final int howManyIterations) {
 
-        final App appLink = (App) getApplication();
+        final DataTransport appLink = (DataTransport) getApplication();
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = appLink.getLongStringForTest();
         final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
@@ -206,10 +200,8 @@ public class TestingIntentService extends IntentService {
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +
                     " oneIterationResults = " + oneIterationResults);
-//                    " oneIterationResults = " + Arrays.toString(oneIterationResults));
 */
             appLink.transportOneIterationsResult(oneIterationResults);
-//            sendInfoToUI(oneIterationResults, i);
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();

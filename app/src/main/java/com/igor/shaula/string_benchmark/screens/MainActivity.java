@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.igor.shaula.string_benchmark.App;
+import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.TestingIntentService;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -44,7 +44,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
         logicLink = new MainLogic(this,
                 new MainUi(findViewById(R.id.mainActivityRootView)),
-                (App) getApplication()
+                (DataTransport) getApplication()
         );
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
@@ -129,7 +129,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         stopService(new Intent(this, TestingIntentService.class));
     }
 
-    // PAYLOAD =====================================================================================
+    // PRIVATE =====================================================================================
 
     private void selectInfoToShow(@NonNull Intent intent) {
         final String intentAction = intent.getAction();

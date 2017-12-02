@@ -97,28 +97,23 @@ public final class App extends Application implements DataTransport {
     // GETTERS & SETTERS ===========================================================================
 
     @Override
-    public void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer) {
-        this.linkToIterationResultConsumer = iterationResultConsumer;
-    }
-
-    @Override
     @Nullable
     public String getLongStringForTest() {
         return longStringForTest;
     }
 
+    @Override
+    public void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer) {
+        this.linkToIterationResultConsumer = iterationResultConsumer;
+    }
+
+    @Override
     @MeDoc("invoked from working IntentService as for now")
     public void setLongStringForTest(@Nullable String longStringForTest) {
         this.longStringForTest = longStringForTest;
     }
 
-    @MeDoc("should be invoked from working IntentService as for now")
-    public void transportOneIterationsResult(@NonNull long[] oneIterationsResult) {
-        if (linkToIterationResultConsumer != null) {
-            linkToIterationResultConsumer.onNewIterationResult(oneIterationsResult);
-        }
-    }
-
+    @Override
     @MeDoc("invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult) {
         if (linkToIterationResultConsumer != null) {
