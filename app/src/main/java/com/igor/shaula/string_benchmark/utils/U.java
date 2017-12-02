@@ -30,8 +30,10 @@ import java.util.List;
 
 public final class U {
 
+    public static final String ZERO = "0";
+    public static final String TWO_ZEROES = "00";
+    public static final String THREE_ZEROES = "000";
     private static final String CN = "U";
-
     @Nullable
     private static Toast toast; // needed to enable cancellation for the previous toast \
 
@@ -251,30 +253,32 @@ public final class U {
 //        String result = "";
         final StringBuilder stringBuilder;
 
-        if (nanoTimeValue < 1000) {
+        if (nanoTimeValue < 1_000) {
 //            result += nanoTimeValue + C.SPACE + context.getString(R.string.nanos);
             stringBuilder = new StringBuilder()
                     .append(nanoTimeValue)
                     .append(C.SPACE)
                     .append(context.getString(R.string.nanos));
 
-        } else if (nanoTimeValue >= 1000 && nanoTimeValue < 1000_000) {
+        } else if (nanoTimeValue >= 1_000 && nanoTimeValue < 1_000_000) {
 //            result += nanoTimeValue / 1000 + C.DOT + nanoTimeValue % 1000 +
 //                    C.SPACE + context.getString(R.string.micros);
             stringBuilder = new StringBuilder()
-                    .append(nanoTimeValue / 1000)
-                    .append(C.COMMA)
-                    .append(nanoTimeValue % 1000)
+//                    .append(nanoTimeValue / 1000)
+//                    .append(C.COMMA)
+                    .append(getReadableNumber(nanoTimeValue))
+//                    .append(nanoTimeValue % 1000)
                     .append(C.SPACE)
                     .append(context.getString(R.string.micros));
 
-        } else if (nanoTimeValue >= 1000_000 && nanoTimeValue < 1000_000_000) {
+        } else if (nanoTimeValue >= 1_000_000 && nanoTimeValue < 1_000_000_000) {
 //            result += nanoTimeValue / 1000_000 + C.DOT + nanoTimeValue % 1000 +
 //                    C.SPACE + context.getString(R.string.millis);
             stringBuilder = new StringBuilder()
-                    .append(nanoTimeValue / 1000_000)
-                    .append(C.COMMA)
-                    .append(nanoTimeValue % 1000_000) // initially was 1000 \\
+//                    .append(nanoTimeValue / 1000_000)
+//                    .append(C.COMMA)
+                    .append(getReadableNumber(nanoTimeValue)) // initially was 1000 \\
+//                    .append(nanoTimeValue % 1000_000) // initially was 1000 \\
                     .append(C.SPACE)
                     .append(context.getString(R.string.millis));
 
@@ -282,12 +286,63 @@ public final class U {
 //            result += nanoTimeValue / 1000_000_000 + C.DOT + nanoTimeValue % 1000 +
 //                    C.SPACE + context.getString(R.string.seconds);
             stringBuilder = new StringBuilder()
-                    .append(nanoTimeValue / 1000_000_000)
-                    .append(C.COMMA)
-                    .append(nanoTimeValue % 1000_000_000) // initially was 1000 \\
+//                    .append(nanoTimeValue / 1000_000_000)
+//                    .append(C.COMMA)
+                    .append(getReadableNumber(nanoTimeValue)) // initially was 1000 \\
+//                    .append(nanoTimeValue % 1000_000_000) // initially was 1000 \\
                     .append(C.SPACE)
                     .append(context.getString(R.string.seconds));
         }
+//        return stringBuilder.toString().replaceFirst(C.COMMA, C.DOT);
         return stringBuilder.toString();
+    }
+
+    @NonNull
+    static String getReadableNumber(long input) {
+        // as we need special format with dots & zeroes - standard Java formatters won't fit here \\
+        final int howManySeparators = getNumberOfSeparatorsForNumber(input);
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        long meltingByThousand = input;
+        for (int i = 0; i <= howManySeparators; i++) {
+            final long divisionRest = meltingByThousand % 1000;
+            if (divisionRest == 0) {
+                stringBuilder.insert(0, THREE_ZEROES);
+            } else {
+                stringBuilder.insert(0, String.valueOf(meltingByThousand % 1000));
+            }
+            meltingByThousand = meltingByThousand / 1000;
+            if (i < howManySeparators) {
+                stringBuilder.insert(0, C.DOT);
+            }
+        }
+        return reduceZeroes(replaceFirstDotWithComma(stringBuilder.toString()));
+    }
+
+    static int getNumberOfSeparatorsForNumber(long l) {
+        int separatorsCount = 0;
+        long howManyThousands = l; // we just need to start from something \\
+        do {
+            howManyThousands = howManyThousands / 1000;
+            if (howManyThousands > 0) {
+                separatorsCount++;
+            }
+        } while (howManyThousands > 999);
+        return separatorsCount;
+    }
+
+    @NonNull
+    private static String reduceZeroes(@NonNull String s) {
+        if (s.startsWith(TWO_ZEROES)) {
+            s = s.replaceFirst(TWO_ZEROES, ZERO);
+            return reduceZeroes(s);
+        } else {
+            return s;
+        }
+    }
+
+    @NonNull
+    private static String replaceFirstDotWithComma(@NonNull String s) {
+        return s.replaceFirst("\\D", C.COMMA);
     }
 }
