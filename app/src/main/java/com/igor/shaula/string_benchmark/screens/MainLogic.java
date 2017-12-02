@@ -1,5 +1,6 @@
 package com.igor.shaula.string_benchmark.screens;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -69,10 +71,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         if (backWasPressedOnce) {
             // stopping service & clearing used resources \\
             interruptPerformanceTest();
+            systemLink.finishItself();
+            U.immediatelyDisableToast();
         } else {
-            uiLink.informUser(C.TOAST, R.string.pressBackAgainToExit, 0);
+            uiLink.informUser(C.Choice.TOAST, R.string.pressBackAgainToExit, 0);
             backWasPressedOnce = true;
-            new android.os.Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     backWasPressedOnce = false;

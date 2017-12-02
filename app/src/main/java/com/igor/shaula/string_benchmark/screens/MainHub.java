@@ -14,6 +14,8 @@ public interface MainHub {
         void launchAllMeasurements(int testRepetitionsCount);
 
         void stopTestingService();
+
+        void finishItself();
     }
 
     interface UiLink {
@@ -46,6 +48,8 @@ public interface MainHub {
         void updateResultForVAL(long resultNanoTime);
 
         void init();
+
+        void informUser(int whichWay, int stringId, int duration);
     }
 
     interface LogicLink {

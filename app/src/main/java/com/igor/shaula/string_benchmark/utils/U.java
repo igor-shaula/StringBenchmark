@@ -231,6 +231,12 @@ public final class U {
         } else {
             duration = Toast.LENGTH_LONG;
         }
+        immediatelyDisableToast();
+        toast = Toast.makeText(context.getApplicationContext(), string, duration);
+        toast.show();
+    }
+
+    public static void immediatelyDisableToast() {
         if (toast != null) {
             toast.cancel();
             toast = null;
@@ -238,8 +244,6 @@ public final class U {
 //        } else {
 //            L.l(CN, "showToast ` toast was null");
         }
-        toast = Toast.makeText(context.getApplicationContext(), string, duration);
-        toast.show();
     }
 
     @NonNull

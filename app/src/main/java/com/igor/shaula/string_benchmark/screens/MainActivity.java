@@ -66,7 +66,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         logicLink.onBackPressed();
     }
 
@@ -126,6 +126,12 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @Override
     public void stopTestingService() {
         stopService(new Intent(this, TestingIntentService.class));
+    }
+
+    @Override
+    public void finishItself() {
+        L.w(CN, "finishItself");
+        finish();
     }
 
     // PRIVATE =====================================================================================

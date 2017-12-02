@@ -14,11 +14,12 @@ import android.widget.TextView;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.screens.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
+import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
 public final class MainUi implements MainHub.UiLink {
 
-//    private static final String CN = "MainUi";
+    private static final String CN = "MainUi";
 
     @NonNull
     private final Context rootContext;
@@ -244,4 +245,16 @@ public final class MainUi implements MainHub.UiLink {
             }
         });
     } // init \\
+
+    @Override
+    public void informUser(int typeOfNotification, int stringId, int duration) {
+        final String message = rootContext.getString(stringId);
+        if (C.Choice.TOAST == typeOfNotification) {
+            U.showToast(rootContext, message, duration);
+        } else if (C.Choice.SNACKBAR == typeOfNotification) {
+            U.showSnackbar(rootView, message, duration);
+        } else {
+            L.w(CN, message);
+        }
+    }
 }
