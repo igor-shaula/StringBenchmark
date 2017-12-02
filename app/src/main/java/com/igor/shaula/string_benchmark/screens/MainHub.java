@@ -52,6 +52,8 @@ public interface MainHub {
 
         void toggleJobState(boolean isRunning);
 
+        void onBackPressed();
+
         void onFabClick();
 
         void prepareMainJob();

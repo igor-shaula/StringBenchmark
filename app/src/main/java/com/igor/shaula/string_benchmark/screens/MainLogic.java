@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.igor.shaula.string_benchmark.DataTransport;
+import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -32,6 +33,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private final DataTransport dataTransport;
 
     private boolean isJobRunning;
+    private boolean backWasPressedOnce;
 
     private int counter;
     @NonNull
@@ -60,6 +62,23 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     public void toggleJobState(boolean isRunning) {
         isJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backWasPressedOnce) {
+            // stopping service & clearing used resources \\
+            interruptPerformanceTest();
+        } else {
+            uiLink.informUser(C.TOAST, R.string.pressBackAgainToExit, 0);
+            backWasPressedOnce = true;
+            new android.os.Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backWasPressedOnce = false;
+                }
+            }, C.Delay.EXIT_WITH_BACK_MILLIS);
+        }
     }
 
     @Override

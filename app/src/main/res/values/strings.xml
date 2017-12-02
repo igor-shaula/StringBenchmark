@@ -32,5 +32,6 @@
     <string name="resultOfVAL">My variable-args Log wrapper:</string>
     <string name="resultOfSystemOutPrintln">Good old System.out.println(…):</string>
     <string name="resultsForLoggingTests">Results for logging the string on:</string>
+    <string name="pressBackAgainToExit">Press Back button again to exit</string>
 
 </resources>

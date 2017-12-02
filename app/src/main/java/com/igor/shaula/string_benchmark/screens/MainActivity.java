@@ -67,8 +67,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // stopping service & clearing used resources \\
-        logicLink.interruptPerformanceTest();
+        logicLink.onBackPressed();
     }
 
     @Override
