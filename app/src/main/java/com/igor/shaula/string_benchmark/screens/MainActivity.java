@@ -99,34 +99,34 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void stopTestingService() {
-        stopService(new Intent(this, TestingIntentService.class));
-    }
-
-    @Override
-    public void launchPreparation(@NonNull String basicString, int count) {
-        TestingIntentService.prepareTheBurdenForTest(this, basicString, count);
-    }
-
-    @Override
-    public void launchAllMeasurements(int count) {
-        TestingIntentService.launchAllMeasurements(this, count);
-    }
+    // FROM SystemLink =============================================================================
 
     @NonNull
     @Override
     public String getAdaptedString(long resultNanoTime) {
         return U.adaptForUser(this, resultNanoTime);
+    }
+
+    @Override
+    public void launchPreparation(@NonNull String basicString, int basicStringsCount) {
+        TestingIntentService.prepareTheBurdenForTest(this, basicString, basicStringsCount);
+    }
+
+    @Override
+    public void launchAllMeasurements(int testRepetitionsCount) {
+        TestingIntentService.launchAllMeasurements(this, testRepetitionsCount);
+    }
+
+    @Override
+    public void stopTestingService() {
+        stopService(new Intent(this, TestingIntentService.class));
     }
 
     // PAYLOAD =====================================================================================

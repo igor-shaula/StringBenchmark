@@ -3,13 +3,11 @@ package com.igor.shaula.string_benchmark.screens;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.string_benchmark.App;
 import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
-import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -20,7 +18,7 @@ import java.util.TimerTask;
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
         comment = "logic should not have any Android-specific imports & dependencies - only pure Java")
 
-public final class MainLogic implements MainHub.LogicLink, App.Consumer {
+public final class MainLogic implements MainHub.LogicLink, DataTransport.IterationResultConsumer {
 
     private static final String CN = "MainLogic";
 
@@ -56,41 +54,12 @@ public final class MainLogic implements MainHub.LogicLink, App.Consumer {
         uiLink.init();
     }
 
-    @MeDoc("invoked in activity's onStop")
-    @Override
-    public void unLinkDataTransport() {
-        dataTransport.setDataConsumer(null); // preventing possible memory leak here \\
-    }
-
-    @Override
-    public void onNewIterationResult(@NonNull long[] oneIterationsResult) {
-        L.w("onNewIterationResult",
-                " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
-        storeToIntegralResult(oneIterationsResult);
-        final long[] results = calculateMedianResult();
-        uiLink.showPreparationsResultOnMainThread(results);
-    }
+    // FROM LogicLink ==============================================================================
 
     @Override
     public void toggleJobState(boolean isRunning) {
         isJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
-    }
-
-    private void startNewJob() {
-        runTestBurdenPreparation();
-        toggleJobState(true);
-        uiLink.restoreResultViewStates();
-    }
-
-    private void stopCurrentJob() {
-        interruptPerformanceTest();
-        toggleJobState(false);
-    }
-
-    @Override
-    public void interruptPerformanceTest() {
-        systemLink.stopTestingService();
     }
 
     @Override
@@ -100,6 +69,89 @@ public final class MainLogic implements MainHub.LogicLink, App.Consumer {
         } else {
             startNewJob();
         }
+    }
+
+    @Override
+    public void prepareMainJob() {
+        int count;
+        try {
+            count = Integer.parseInt(uiLink.getIterationsAmount());
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            count = 0;
+        }
+        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
+        totalResultList.clear();
+        systemLink.launchAllMeasurements(count);
+        L.d(CN, "prepareMainJob() finished");
+    }
+
+    @Override
+    public void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
+        L.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
+        L.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
+        switch (whatInfoToShow) {
+            case C.Choice.PREPARATION:
+                stopTwisterTimer();
+                pendingPreparationResult = systemLink.getAdaptedString(resultNanoTime);
+                updatePreparationResult("");
+                break;
+            case C.Choice.TEST_SYSTEM_LOG:
+                uiLink.updateResultForLog(resultNanoTime);
+                break;
+            case C.Choice.TEST_SAL:
+                uiLink.updateResultForSAL(resultNanoTime);
+                break;
+            case C.Choice.TEST_DAL:
+                uiLink.updateResultForDAL(resultNanoTime);
+                break;
+            case C.Choice.TEST_VAL:
+                uiLink.updateResultForVAL(resultNanoTime);
+                break;
+            default:
+                L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
+        }
+    }
+
+    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
+        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
+            uiLink.showPreparationsResultOnMainThread(oneIterationResults);
+        }
+    }
+
+    @MeDoc("invoked in activity's onStop")
+    @Override
+    public void unLinkDataTransport() {
+        dataTransport.setDataConsumer(null); // preventing possible memory leak here \\
+    }
+
+    @Override
+    public void interruptPerformanceTest() {
+        systemLink.stopTestingService();
+    }
+
+    // FROM IterationResultConsumer ================================================================
+
+    @Override
+    public void onNewIterationResult(@NonNull long[] oneIterationsResult) {
+        L.w("onNewIterationResult",
+                " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
+        totalResultList.add(oneIterationsResult);
+        final long[] results = calculateMedianResult();
+        uiLink.showPreparationsResultOnMainThread(results);
+    }
+
+    // PRIVATE =====================================================================================
+
+    private void stopCurrentJob() {
+        interruptPerformanceTest();
+        toggleJobState(false);
+    }
+
+    private void startNewJob() {
+        runTestBurdenPreparation();
+        toggleJobState(true);
+        uiLink.restoreResultViewStates();
     }
 
     private void runTestBurdenPreparation() {
@@ -148,25 +200,6 @@ public final class MainLogic implements MainHub.LogicLink, App.Consumer {
         twisterTimer.schedule(twisterTask, 0, 80);
     }
 
-    @Override
-    public void prepareMainJob() {
-        int count;
-        try {
-            count = Integer.parseInt(uiLink.getIterationsAmount());
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            count = 0;
-        }
-        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
-        totalResultList.clear();
-        systemLink.launchAllMeasurements(count);
-        L.d(CN, "prepareMainJob() finished");
-    }
-
-    private void storeToIntegralResult(@NonNull long[] oneIterationResults) {
-        totalResultList.add(oneIterationResults);
-    }
-
     @NonNull
     private long[] calculateMedianResult() {
         final int listSize = totalResultList.size();
@@ -197,39 +230,6 @@ public final class MainLogic implements MainHub.LogicLink, App.Consumer {
         medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
 
         return medianArray;
-    }
-
-    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
-        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
-            uiLink.showPreparationsResultOnMainThread(oneIterationResults);
-        }
-    }
-
-    @Override
-    public void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
-        L.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
-        L.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
-        switch (whatInfoToShow) {
-            case C.Choice.PREPARATION:
-                stopTwisterTimer();
-                pendingPreparationResult = systemLink.getAdaptedString(resultNanoTime);
-                updatePreparationResult("");
-                break;
-            case C.Choice.TEST_SYSTEM_LOG:
-                uiLink.updateResultForLog(resultNanoTime);
-                break;
-            case C.Choice.TEST_SAL:
-                uiLink.updateResultForSAL(resultNanoTime);
-                break;
-            case C.Choice.TEST_DAL:
-                uiLink.updateResultForDAL(resultNanoTime);
-                break;
-            case C.Choice.TEST_VAL:
-                uiLink.updateResultForVAL(resultNanoTime);
-                break;
-            default:
-                L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
-        }
     }
 
     private void updatePreparationResult(@NonNull final String result) {

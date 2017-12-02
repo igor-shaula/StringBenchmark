@@ -6,23 +6,17 @@ public interface MainHub {
 
     interface SystemLink {
 
-        void stopTestingService();
-
-        void launchPreparation(@NonNull String basicString, int count);
-
-        void launchAllMeasurements(int count);
-
         @NonNull
         String getAdaptedString(long resultNanoTime);
+
+        void launchPreparation(@NonNull String basicString, int basicStringsCount);
+
+        void launchAllMeasurements(int testRepetitionsCount);
+
+        void stopTestingService();
     }
 
     interface UiLink {
-
-        void setLogicLink(@NonNull LogicLink logicLink);
-
-        void showPreparationsResultOnMainThread(long[] results);
-
-        void toggleJobActiveUiState(boolean isRunning);
 
         @NonNull
         String getBasicString();
@@ -30,9 +24,18 @@ public interface MainHub {
         @NonNull
         String getRepetitionsCount();
 
+        @NonNull
+        String getIterationsAmount();
+
+        void setLogicLink(@NonNull LogicLink logicLink);
+
+        void toggleJobActiveUiState(boolean isRunning);
+
         void restoreResultViewStates();
 
-        String getIterationsAmount();
+        void showPreparationsResultOnMainThread(@NonNull long[] results);
+
+        void updatePreparationResultOnMainThread(@NonNull String result);
 
         void updateResultForLog(long resultNanoTime);
 
@@ -42,23 +45,21 @@ public interface MainHub {
 
         void updateResultForVAL(long resultNanoTime);
 
-        void updatePreparationResultOnMainThread(String result);
-
         void init();
     }
 
     interface LogicLink {
 
-        void unLinkDataTransport();
-
-        void interruptPerformanceTest();
+        void toggleJobState(boolean isRunning);
 
         void onFabClick();
 
         void prepareMainJob();
 
-        void toggleJobState(boolean isRunning);
-
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
+
+        void unLinkDataTransport();
+
+        void interruptPerformanceTest();
     }
 }

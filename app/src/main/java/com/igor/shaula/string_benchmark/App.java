@@ -21,7 +21,7 @@ public final class App extends Application implements DataTransport {
     private static final String CN = "App";
 
     @Nullable
-    private Consumer linkToConsumer;
+    private IterationResultConsumer linkToIterationResultConsumer;
     @Nullable
     private String longStringForTest = ""; // ma be rather long & heavy \\
 
@@ -97,8 +97,8 @@ public final class App extends Application implements DataTransport {
     // GETTERS & SETTERS ===========================================================================
 
     @Override
-    public void setDataConsumer(@Nullable Consumer consumer) {
-        this.linkToConsumer = consumer;
+    public void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer) {
+        this.linkToIterationResultConsumer = iterationResultConsumer;
     }
 
     @Override
@@ -114,15 +114,15 @@ public final class App extends Application implements DataTransport {
 
     @MeDoc("should be invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull long[] oneIterationsResult) {
-        if (linkToConsumer != null) {
-            linkToConsumer.onNewIterationResult(oneIterationsResult);
+        if (linkToIterationResultConsumer != null) {
+            linkToIterationResultConsumer.onNewIterationResult(oneIterationsResult);
         }
     }
 
     @MeDoc("invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult) {
-        if (linkToConsumer != null) {
-            linkToConsumer.onNewIterationResult(U.convertIntoArray(oneIterationsResult));
+        if (linkToIterationResultConsumer != null) {
+            linkToIterationResultConsumer.onNewIterationResult(U.convertIntoArray(oneIterationsResult));
             // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
     }

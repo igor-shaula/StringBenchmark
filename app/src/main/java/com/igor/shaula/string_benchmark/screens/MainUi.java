@@ -47,13 +47,31 @@ public final class MainUi implements MainHub.UiLink {
         rootContext = rootView.getContext();
     }
 
+    @NonNull
+    @Override
+    public String getBasicString() {
+        return etBasicString.getText().toString();
+    }
+
+    @NonNull
+    @Override
+    public String getRepetitionsCount() {
+        return etStringsAmount.getText().toString();
+    }
+
+    @NonNull
+    @Override
+    public String getIterationsAmount() {
+        return etIterationsAmount.getText().toString();
+    }
+
     @Override
     public void setLogicLink(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
     }
 
     @Override
-    public void showPreparationsResultOnMainThread(final long[] oneIterationResults) {
+    public void showPreparationsResultOnMainThread(@NonNull final long[] oneIterationResults) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
@@ -64,6 +82,56 @@ public final class MainUi implements MainHub.UiLink {
                 tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
             }
         });
+    }
+
+    @Override
+    public void toggleJobActiveUiState(boolean isJobRunning) {
+        etBasicString.setEnabled(!isJobRunning);
+        etStringsAmount.setEnabled(!isJobRunning);
+        etIterationsAmount.setEnabled(!isJobRunning);
+        tvExplanationForTheFAB.setText(isJobRunning ?
+                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
+        fab.setImageResource(isJobRunning ?
+                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
+    }
+
+    @Override
+    public void restoreResultViewStates() {
+        tvResultForLog.setText(C.STAR);
+        tvResultForSAL.setText(C.STAR);
+        tvResultForDAL.setText(C.STAR);
+        tvResultForVAL.setText(C.STAR);
+        tvResultForSout.setText(C.STAR);
+    }
+
+    @Override
+    public void updatePreparationResultOnMainThread(final @NonNull String result) {
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                tvResultOfPreparation.setText(result);
+            }
+        });
+    }
+
+    @Override
+    public void updateResultForLog(long resultNanoTime) {
+        tvResultForLog.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForSAL(long resultNanoTime) {
+        tvResultForSAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForDAL(long resultNanoTime) {
+        tvResultForDAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForVAL(long resultNanoTime) {
+        tvResultForVAL.setText(U.adaptForUser(rootContext, resultNanoTime));
     }
 
     @Override
@@ -175,72 +243,5 @@ public final class MainUi implements MainHub.UiLink {
                 logicLink.onFabClick();
             }
         });
-    }
-
-    @Override
-    public void toggleJobActiveUiState(boolean isJobRunning) {
-        etBasicString.setEnabled(!isJobRunning);
-        etStringsAmount.setEnabled(!isJobRunning);
-        etIterationsAmount.setEnabled(!isJobRunning);
-        tvExplanationForTheFAB.setText(isJobRunning ?
-                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
-        fab.setImageResource(isJobRunning ?
-                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
-    }
-
-    @Override
-    public void restoreResultViewStates() {
-        tvResultForLog.setText(C.STAR);
-        tvResultForSAL.setText(C.STAR);
-        tvResultForDAL.setText(C.STAR);
-        tvResultForVAL.setText(C.STAR);
-        tvResultForSout.setText(C.STAR);
-    }
-
-    @Override
-    public String getIterationsAmount() {
-        return etIterationsAmount.getText().toString();
-    }
-
-    @Override
-    public void updateResultForLog(long resultNanoTime) {
-        tvResultForLog.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForSAL(long resultNanoTime) {
-        tvResultForSAL.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForDAL(long resultNanoTime) {
-        tvResultForDAL.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForVAL(long resultNanoTime) {
-        tvResultForVAL.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updatePreparationResultOnMainThread(final @NonNull String result) {
-        rootView.post(new Runnable() {
-            @Override
-            public void run() {
-                tvResultOfPreparation.setText(result);
-            }
-        });
-    }
-
-    @NonNull
-    @Override
-    public String getBasicString() {
-        return etBasicString.getText().toString();
-    }
-
-    @NonNull
-    @Override
-    public String getRepetitionsCount() {
-        return etStringsAmount.getText().toString();
-    }
+    } // init \\
 }

@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 
 public interface DataTransport {
 
-    void setDataConsumer(@Nullable App.Consumer consumer);
+    void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer);
 
     @Nullable
     String getLongStringForTest();
 
-    interface Consumer { // implemented by MainActivity \\
+    interface IterationResultConsumer { // implemented by MainActivity \\
 
         void onNewIterationResult(@NonNull long[] oneIterationsResult);
 
