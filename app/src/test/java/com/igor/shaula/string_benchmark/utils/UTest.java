@@ -3,20 +3,24 @@ package com.igor.shaula.string_benchmark.utils;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class UTest {
 
-    @Test
-    public void adaptForUser() {
-        assertEquals(4, 2 + 2);
-    }
-
-    // createReadableString ------------------------------------------------------------------------
+    // createReadableString ========================================================================
 
     @Test
     public void createReadableString_0() {
         assertEquals("0", U.createReadableString(0));
+    }
+
+    @Test
+    public void createReadableString_9() {
+        assertEquals("9", U.createReadableString(9));
+    }
+
+    @Test
+    public void createReadableString_99() {
+        assertEquals("99", U.createReadableString(99));
     }
 
     @Test
@@ -25,21 +29,51 @@ public class UTest {
     }
 
     @Test
-    public void createReadableString_1000() {
-        assertEquals("1" + C.COMMA + "000", U.createReadableString(1_000));
+    public void createReadableString_9000() {
+        assertEquals("9,000", U.createReadableString(9000));
+    }
+
+    @Test
+    public void createReadableString_99000() {
+        assertEquals("99,000", U.createReadableString(99000));
     }
 
     @Test
     public void createReadableString_999000() {
-        assertEquals("999" + C.COMMA + "000", U.createReadableString(999_000));
+        assertEquals("999,000", U.createReadableString(999000));
     }
 
     @Test
-    public void createReadableString_999000555() {
-        assertEquals("999" + C.COMMA + "000" + C.DOT + "555", U.createReadableString(999_000_555));
+    public void createReadableString_9990009() {
+        assertEquals("9,990.009", U.createReadableString(9990009));
     }
 
-    // defineSeparatorsCount -----------------------------------------------------------------------
+    @Test
+    public void createReadableString_99900099() {
+        assertEquals("99,900.099", U.createReadableString(99900099));
+    }
+
+    @Test
+    public void createReadableString_999000999() {
+        assertEquals("999,000.999", U.createReadableString(999000999));
+    }
+
+    @Test
+    public void createReadableString_9990009990() {
+        assertEquals("9,990.009.990", U.createReadableString(9990009990L));
+    }
+
+    @Test
+    public void createReadableString_99900099900() {
+        assertEquals("99,900.099.900", U.createReadableString(99900099900L));
+    }
+
+    @Test
+    public void createReadableString_999000999000() {
+        assertEquals("999,000.999.000", U.createReadableString(999000999000L));
+    }
+
+    // defineSeparatorsCount =======================================================================
 
     @Test
     public void defineSeparatorsCount_0() {
@@ -71,9 +105,51 @@ public class UTest {
         assertEquals(2, U.defineSeparatorsCount(1_000_000));
     }
 
+    // reduceStartingZeroes ========================================================================
+
     @Test
-    public void defineSeparatorsCount_MillionAlt() {
-        assertNotEquals(1, U.defineSeparatorsCount(1_000_000));
+    public void reduceStartingZeroes_() {
+        assertEquals("", U.reduceStartingZeroes(""));
+    }
+
+    @Test
+    public void reduceStartingZeroes_0() {
+        assertEquals("", U.reduceStartingZeroes("0"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_00() {
+        assertEquals("", U.reduceStartingZeroes("00"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_000() {
+        assertEquals("0", U.reduceStartingZeroes("000"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_not() {
+        assertEquals("-", U.reduceStartingZeroes("-"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_not0() {
+        assertEquals("-0", U.reduceStartingZeroes("-0"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_not00() {
+        assertEquals("-00", U.reduceStartingZeroes("-00"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_0not() {
+        assertEquals("-", U.reduceStartingZeroes("0-"));
+    }
+
+    @Test
+    public void reduceStartingZeroes_00not() {
+        assertEquals("-", U.reduceStartingZeroes("00-"));
     }
 
     // replaceFirstDotWithComma ====================================================================

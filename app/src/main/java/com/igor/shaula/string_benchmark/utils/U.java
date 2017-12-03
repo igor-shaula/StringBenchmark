@@ -240,83 +240,73 @@ public final class U {
         if (toast != null) {
             toast.cancel();
             toast = null;
-//            L.l(CN, "showToast ` toast cancelled");
-//        } else {
-//            L.l(CN, "showToast ` toast was null");
         }
     }
 
     @NonNull
     public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
-//        String result = "";
-        final StringBuilder stringBuilder;
+        final StringBuilder stringBuilder = new StringBuilder();
 
         if (nanoTimeValue < 1_000) {
-//            result += nanoTimeValue + C.SPACE + context.getString(R.string.nanos);
-            stringBuilder = new StringBuilder()
+            stringBuilder
                     .append(nanoTimeValue)
                     .append(C.SPACE)
                     .append(context.getString(R.string.nanos));
 
         } else if (nanoTimeValue >= 1_000 && nanoTimeValue < 1_000_000) {
-//            result += nanoTimeValue / 1000 + C.DOT + nanoTimeValue % 1000 +
-//                    C.SPACE + context.getString(R.string.micros);
-            stringBuilder = new StringBuilder()
-//                    .append(nanoTimeValue / 1000)
-//                    .append(C.COMMA)
+            stringBuilder
                     .append(createReadableString(nanoTimeValue))
-//                    .append(nanoTimeValue % 1000)
                     .append(C.SPACE)
                     .append(context.getString(R.string.micros));
 
         } else if (nanoTimeValue >= 1_000_000 && nanoTimeValue < 1_000_000_000) {
-//            result += nanoTimeValue / 1000_000 + C.DOT + nanoTimeValue % 1000 +
-//                    C.SPACE + context.getString(R.string.millis);
-            stringBuilder = new StringBuilder()
-//                    .append(nanoTimeValue / 1000_000)
-//                    .append(C.COMMA)
-                    .append(createReadableString(nanoTimeValue)) // initially was 1000 \\
-//                    .append(nanoTimeValue % 1000_000) // initially was 1000 \\
+            stringBuilder
+                    .append(createReadableString(nanoTimeValue))
                     .append(C.SPACE)
                     .append(context.getString(R.string.millis));
 
         } else {
-//            result += nanoTimeValue / 1000_000_000 + C.DOT + nanoTimeValue % 1000 +
-//                    C.SPACE + context.getString(R.string.seconds);
-            stringBuilder = new StringBuilder()
-//                    .append(nanoTimeValue / 1000_000_000)
-//                    .append(C.COMMA)
-                    .append(createReadableString(nanoTimeValue)) // initially was 1000 \\
-//                    .append(nanoTimeValue % 1000_000_000) // initially was 1000 \\
+            stringBuilder
+                    .append(createReadableString(nanoTimeValue))
                     .append(C.SPACE)
                     .append(context.getString(R.string.seconds));
         }
-//        return stringBuilder.toString().replaceFirst(C.COMMA, C.DOT);
         return stringBuilder.toString();
     }
 
+    @MeDoc("converts number into the specially formatted string that is comfortable for viewing")
     @NonNull
     static String createReadableString(long l) {
         // as we need special format with dots & zeroes - standard Java formatters won't fit here \\
         final int howManySeparators = defineSeparatorsCount(l);
         final StringBuilder stringBuilder = new StringBuilder();
-
+        // defining the changing-per-iteration working number \\
         long meltingByThousand = l;
         for (int i = 0; i <= howManySeparators; i++) {
-            final long divisionRest = meltingByThousand % 1000;
-            if (divisionRest == 0) {
+            // creating the string from the number's tail \\
+            final long divisionsModulo = meltingByThousand % 1000;
+            // filling any possible gaps with zeroes \\
+            if (divisionsModulo == 0) {
                 stringBuilder.insert(0, C.THREE_ZEROES);
-            } else {
-                stringBuilder.insert(0, String.valueOf(meltingByThousand % 1000));
+            } else if (0 < divisionsModulo && divisionsModulo < 10) {
+                stringBuilder.insert(0, C.TWO_ZEROES + String.valueOf(divisionsModulo));
+            } else if (10 <= divisionsModulo && divisionsModulo < 100) {
+                stringBuilder.insert(0, C.ZERO + String.valueOf(divisionsModulo));
+            } else if (100 <= divisionsModulo && divisionsModulo < 1000) {
+                stringBuilder.insert(0, String.valueOf(divisionsModulo));
             }
+            // updating the number's tail for the next possible iteration \\
             meltingByThousand = meltingByThousand / 1000;
+            // now inserting the dot - only when current iteration is completed \\
             if (i < howManySeparators) {
+                // dot is not needed when l < 1000 - nothing to separate here \\
                 stringBuilder.insert(0, C.DOT);
             }
         }
-        return reduceZeroes(replaceFirstDotWithComma(stringBuilder.toString()));
+        return reduceStartingZeroes(replaceFirstDotWithComma(stringBuilder.toString()));
     }
 
+    @MeDoc("counts the number of needed separators between digits divided by three per group")
     static int defineSeparatorsCount(long l) {
         int separatorsCount = 0;
         long howManyThousands = l; // we just need to start from something \\
@@ -329,16 +319,18 @@ public final class U {
         return separatorsCount;
     }
 
+    @MeDoc("eliminates all possible excess zeroes at the beginning of the string to a single zero")
     @NonNull
-    private static String reduceZeroes(@NonNull String s) {
+    static String reduceStartingZeroes(@NonNull String s) {
         if (s.startsWith(C.TWO_ZEROES)) {
-            s = s.replaceFirst(C.TWO_ZEROES, C.ZERO);
-            return reduceZeroes(s);
-        } else {
-            return s;
+            s = s.replaceFirst(C.TWO_ZEROES, "");
+        } else if (s.startsWith(C.ZERO)) {
+            s = s.replaceFirst(C.ZERO, "");
         }
+        return s;
     }
 
+    @MeDoc("replaces only the first met dot with comma - of course if this dot exists in the string")
     @NonNull
     static String replaceFirstDotWithComma(@NonNull String s) {
         return s.replaceFirst(C.REGEX_NOT_DIGIT, C.COMMA);
