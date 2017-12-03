@@ -30,10 +30,8 @@ import java.util.List;
 
 public final class U {
 
-    public static final String ZERO = "0";
-    public static final String TWO_ZEROES = "00";
-    public static final String THREE_ZEROES = "000";
     private static final String CN = "U";
+
     @Nullable
     private static Toast toast; // needed to enable cancellation for the previous toast \
 
@@ -266,7 +264,7 @@ public final class U {
             stringBuilder = new StringBuilder()
 //                    .append(nanoTimeValue / 1000)
 //                    .append(C.COMMA)
-                    .append(getReadableNumber(nanoTimeValue))
+                    .append(createReadableString(nanoTimeValue))
 //                    .append(nanoTimeValue % 1000)
                     .append(C.SPACE)
                     .append(context.getString(R.string.micros));
@@ -277,7 +275,7 @@ public final class U {
             stringBuilder = new StringBuilder()
 //                    .append(nanoTimeValue / 1000_000)
 //                    .append(C.COMMA)
-                    .append(getReadableNumber(nanoTimeValue)) // initially was 1000 \\
+                    .append(createReadableString(nanoTimeValue)) // initially was 1000 \\
 //                    .append(nanoTimeValue % 1000_000) // initially was 1000 \\
                     .append(C.SPACE)
                     .append(context.getString(R.string.millis));
@@ -288,7 +286,7 @@ public final class U {
             stringBuilder = new StringBuilder()
 //                    .append(nanoTimeValue / 1000_000_000)
 //                    .append(C.COMMA)
-                    .append(getReadableNumber(nanoTimeValue)) // initially was 1000 \\
+                    .append(createReadableString(nanoTimeValue)) // initially was 1000 \\
 //                    .append(nanoTimeValue % 1000_000_000) // initially was 1000 \\
                     .append(C.SPACE)
                     .append(context.getString(R.string.seconds));
@@ -298,16 +296,16 @@ public final class U {
     }
 
     @NonNull
-    static String getReadableNumber(long input) {
+    static String createReadableString(long l) {
         // as we need special format with dots & zeroes - standard Java formatters won't fit here \\
-        final int howManySeparators = getNumberOfSeparatorsForNumber(input);
+        final int howManySeparators = defineSeparatorsCount(l);
         final StringBuilder stringBuilder = new StringBuilder();
 
-        long meltingByThousand = input;
+        long meltingByThousand = l;
         for (int i = 0; i <= howManySeparators; i++) {
             final long divisionRest = meltingByThousand % 1000;
             if (divisionRest == 0) {
-                stringBuilder.insert(0, THREE_ZEROES);
+                stringBuilder.insert(0, C.THREE_ZEROES);
             } else {
                 stringBuilder.insert(0, String.valueOf(meltingByThousand % 1000));
             }
@@ -319,7 +317,7 @@ public final class U {
         return reduceZeroes(replaceFirstDotWithComma(stringBuilder.toString()));
     }
 
-    static int getNumberOfSeparatorsForNumber(long l) {
+    static int defineSeparatorsCount(long l) {
         int separatorsCount = 0;
         long howManyThousands = l; // we just need to start from something \\
         do {
@@ -333,8 +331,8 @@ public final class U {
 
     @NonNull
     private static String reduceZeroes(@NonNull String s) {
-        if (s.startsWith(TWO_ZEROES)) {
-            s = s.replaceFirst(TWO_ZEROES, ZERO);
+        if (s.startsWith(C.TWO_ZEROES)) {
+            s = s.replaceFirst(C.TWO_ZEROES, C.ZERO);
             return reduceZeroes(s);
         } else {
             return s;
@@ -342,7 +340,7 @@ public final class U {
     }
 
     @NonNull
-    private static String replaceFirstDotWithComma(@NonNull String s) {
-        return s.replaceFirst("\\D", C.COMMA);
+    static String replaceFirstDotWithComma(@NonNull String s) {
+        return s.replaceFirst(C.REGEX_NOT_DIGIT, C.COMMA);
     }
 }

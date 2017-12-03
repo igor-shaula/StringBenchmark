@@ -18,8 +18,10 @@ public final class C {
     public static final String STAR = "*";
     public static final String DASH = "-";
     public static final String UNDERSCORE = "_";
-
-    public static final int ALL_PERMISSIONS_REQUEST = 3000;
+    public static final String ZERO = "0";
+    public static final String TWO_ZEROES = "00";
+    public static final String THREE_ZEROES = "000";
+    public static final String REGEX_NOT_DIGIT = "\\D";
 
     private C() {
         // should not create any instances of this class \

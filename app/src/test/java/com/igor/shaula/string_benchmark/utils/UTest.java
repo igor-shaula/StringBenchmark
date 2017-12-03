@@ -12,66 +12,124 @@ public class UTest {
         assertEquals(4, 2 + 2);
     }
 
-    // getReadableNumber ---------------------------------------------------------------------------
+    // createReadableString ------------------------------------------------------------------------
 
     @Test
-    public void getReadableNumber0() {
-        assertEquals("0", U.getReadableNumber(0));
+    public void createReadableString_0() {
+        assertEquals("0", U.createReadableString(0));
     }
 
     @Test
-    public void getReadableNumber999() {
-        assertEquals("999", U.getReadableNumber(999));
+    public void createReadableString_999() {
+        assertEquals("999", U.createReadableString(999));
     }
 
     @Test
-    public void getReadableNumber1000() {
-        assertEquals("1" + C.COMMA + "000", U.getReadableNumber(1_000));
+    public void createReadableString_1000() {
+        assertEquals("1" + C.COMMA + "000", U.createReadableString(1_000));
     }
 
     @Test
-    public void getReadableNumber999000() {
-        assertEquals("999" + C.COMMA + "000", U.getReadableNumber(999_000));
+    public void createReadableString_999000() {
+        assertEquals("999" + C.COMMA + "000", U.createReadableString(999_000));
     }
 
     @Test
-    public void getReadableNumber999000555() {
-        assertEquals("999" + C.COMMA + "000" + C.DOT + "555", U.getReadableNumber(999_000_555));
-    }
-    // getNumberOfSeparatorsForNumber --------------------------------------------------------------
-
-    @Test
-    public void getNumberOfSeparatorsForNumber0() {
-        assertEquals(0, U.getNumberOfSeparatorsForNumber(0));
+    public void createReadableString_999000555() {
+        assertEquals("999" + C.COMMA + "000" + C.DOT + "555", U.createReadableString(999_000_555));
     }
 
+    // defineSeparatorsCount -----------------------------------------------------------------------
+
     @Test
-    public void getNumberOfSeparatorsForNumber1() {
-        assertEquals(0, U.getNumberOfSeparatorsForNumber(1));
+    public void defineSeparatorsCount_0() {
+        assertEquals(0, U.defineSeparatorsCount(0));
     }
 
     @Test
-    public void getNumberOfSeparatorsForNumber10() {
-        assertEquals(0, U.getNumberOfSeparatorsForNumber(10));
+    public void defineSeparatorsCount_1() {
+        assertEquals(0, U.defineSeparatorsCount(1));
     }
 
     @Test
-    public void getNumberOfSeparatorsForNumber100() {
-        assertEquals(0, U.getNumberOfSeparatorsForNumber(100));
+    public void defineSeparatorsCount_10() {
+        assertEquals(0, U.defineSeparatorsCount(10));
     }
 
     @Test
-    public void getNumberOfSeparatorsForNumber1000() {
-        assertEquals(1, U.getNumberOfSeparatorsForNumber(1_000));
+    public void defineSeparatorsCount_100() {
+        assertEquals(0, U.defineSeparatorsCount(100));
     }
 
     @Test
-    public void getNumberOfSeparatorsForNumberMillion() {
-        assertEquals(2, U.getNumberOfSeparatorsForNumber(1_000_000));
+    public void defineSeparatorsCount_1000() {
+        assertEquals(1, U.defineSeparatorsCount(1_000));
     }
 
     @Test
-    public void getNumberOfSeparatorsForNumberMillionAlt() {
-        assertNotEquals(1, U.getNumberOfSeparatorsForNumber(1_000_000));
+    public void defineSeparatorsCount_Million() {
+        assertEquals(2, U.defineSeparatorsCount(1_000_000));
+    }
+
+    @Test
+    public void defineSeparatorsCount_MillionAlt() {
+        assertNotEquals(1, U.defineSeparatorsCount(1_000_000));
+    }
+
+    // replaceFirstDotWithComma ====================================================================
+
+    @Test
+    public void replaceFirstDotWithComma_0() {
+        assertEquals("0", U.replaceFirstDotWithComma("0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_dot() {
+        assertEquals(",", U.replaceFirstDotWithComma("."));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_dotDot() {
+        assertEquals(",.", U.replaceFirstDotWithComma(".."));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_space() {
+        assertEquals(",", U.replaceFirstDotWithComma(" "));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_dot0() {
+        assertEquals(",0", U.replaceFirstDotWithComma(".0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0dot() {
+        assertEquals("0,", U.replaceFirstDotWithComma("0."));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_00() {
+        assertEquals("00", U.replaceFirstDotWithComma("00"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0dot0() {
+        assertEquals("0,0", U.replaceFirstDotWithComma("0.0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0aSymbol0() {
+        assertEquals("0,0", U.replaceFirstDotWithComma("0-0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0dot0dot0() {
+        assertEquals("0,0.0", U.replaceFirstDotWithComma("0.0.0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0aSymbol0dot0() {
+        assertEquals("0,0.0", U.replaceFirstDotWithComma("0-0.0"));
     }
 }
