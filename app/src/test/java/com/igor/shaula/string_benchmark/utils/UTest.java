@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UTest {
 
-    // createReadableStringForTime ========================================================================
+    // createReadableStringForTime =================================================================
 
     @Test
     public void createReadableString_0() {
@@ -71,6 +71,130 @@ public class UTest {
     @Test
     public void createReadableString_999000999000() {
         assertEquals("999,000.999.000", U.createReadableStringForTime(999000999000L));
+    }
+
+    // replaceFirstDotWithComma ====================================================================
+
+    @Test
+    public void replaceFirstDotWithComma_0() {
+        assertEquals("0", U.replaceFirstDotWithComma("0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_dot() {
+        assertEquals(",", U.replaceFirstDotWithComma("."));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_dotDot() {
+        assertEquals(",.", U.replaceFirstDotWithComma(".."));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_space() {
+        assertEquals(",", U.replaceFirstDotWithComma(" "));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_dot0() {
+        assertEquals(",0", U.replaceFirstDotWithComma(".0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0dot() {
+        assertEquals("0,", U.replaceFirstDotWithComma("0."));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_00() {
+        assertEquals("00", U.replaceFirstDotWithComma("00"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0dot0() {
+        assertEquals("0,0", U.replaceFirstDotWithComma("0.0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0aSymbol0() {
+        assertEquals("0,0", U.replaceFirstDotWithComma("0-0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0dot0dot0() {
+        assertEquals("0,0.0", U.replaceFirstDotWithComma("0.0.0"));
+    }
+
+    @Test
+    public void replaceFirstDotWithComma_0aSymbol0dot0() {
+        assertEquals("0,0.0", U.replaceFirstDotWithComma("0-0.0"));
+    }
+
+    // createReadableStringForLong =================================================================
+
+    @Test
+    public void createReadableStringForLong_0() {
+        assertEquals("0", U.createReadableStringForLong(0));
+    }
+
+    @Test
+    public void createReadableStringForLong_9() {
+        assertEquals("9", U.createReadableStringForLong(9));
+    }
+
+    @Test
+    public void createReadableStringForLong_99() {
+        assertEquals("99", U.createReadableStringForLong(99));
+    }
+
+    @Test
+    public void createReadableStringForLong_999() {
+        assertEquals("999", U.createReadableStringForLong(999));
+    }
+
+    @Test
+    public void createReadableStringForLong_9000() {
+        assertEquals("9.000", U.createReadableStringForLong(9000));
+    }
+
+    @Test
+    public void createReadableStringForLong_99000() {
+        assertEquals("99.000", U.createReadableStringForLong(99000));
+    }
+
+    @Test
+    public void createReadableStringForLong_999000() {
+        assertEquals("999.000", U.createReadableStringForLong(999000));
+    }
+
+    @Test
+    public void createReadableStringForLong_9990009() {
+        assertEquals("9.990.009", U.createReadableStringForLong(9990009));
+    }
+
+    @Test
+    public void createReadableStringForLong_99900099() {
+        assertEquals("99.900.099", U.createReadableStringForLong(99900099));
+    }
+
+    @Test
+    public void createReadableStringForLong_999000999() {
+        assertEquals("999.000.999", U.createReadableStringForLong(999000999));
+    }
+
+    @Test
+    public void createReadableStringForLong_9990009990() {
+        assertEquals("9.990.009.990", U.createReadableStringForLong(9990009990L));
+    }
+
+    @Test
+    public void createReadableStringForLong_99900099900() {
+        assertEquals("99.900.099.900", U.createReadableStringForLong(99900099900L));
+    }
+
+    @Test
+    public void createReadableStringForLong_999000999000() {
+        assertEquals("999.000.999.000", U.createReadableStringForLong(999000999000L));
     }
 
     // defineSeparatorsCount =======================================================================
@@ -150,62 +274,5 @@ public class UTest {
     @Test
     public void reduceStartingZeroes_00not() {
         assertEquals("-", U.reduceStartingZeroes("00-"));
-    }
-
-    // replaceFirstDotWithComma ====================================================================
-
-    @Test
-    public void replaceFirstDotWithComma_0() {
-        assertEquals("0", U.replaceFirstDotWithComma("0"));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_dot() {
-        assertEquals(",", U.replaceFirstDotWithComma("."));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_dotDot() {
-        assertEquals(",.", U.replaceFirstDotWithComma(".."));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_space() {
-        assertEquals(",", U.replaceFirstDotWithComma(" "));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_dot0() {
-        assertEquals(",0", U.replaceFirstDotWithComma(".0"));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_0dot() {
-        assertEquals("0,", U.replaceFirstDotWithComma("0."));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_00() {
-        assertEquals("00", U.replaceFirstDotWithComma("00"));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_0dot0() {
-        assertEquals("0,0", U.replaceFirstDotWithComma("0.0"));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_0aSymbol0() {
-        assertEquals("0,0", U.replaceFirstDotWithComma("0-0"));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_0dot0dot0() {
-        assertEquals("0,0.0", U.replaceFirstDotWithComma("0.0.0"));
-    }
-
-    @Test
-    public void replaceFirstDotWithComma_0aSymbol0dot0() {
-        assertEquals("0,0.0", U.replaceFirstDotWithComma("0-0.0"));
     }
 }

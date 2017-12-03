@@ -156,16 +156,16 @@ public final class MainUi implements MainHub.UiLink {
                 } else {
                     // 1 \\
                     final String testBasisAltHint = rootContext.getString(R.string.testBasisHintBusy)
-                            + C.SPACE + U.createReadableStringForQuantity(basicStringLength);
+                            + C.SPACE + U.createReadableStringForLong(basicStringLength);
                     tilBasicString.setHint(testBasisAltHint);
                     // 2 \\
                     final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
                     final String altStringRepetitionsHint =
                             rootContext.getString(R.string.stringsAmountHintBusy) + C.SPACE +
-                                    U.createReadableStringForQuantity(
+                                    U.createReadableStringForLong(
                                             stringsAmountAltHint * basicStringLength
                                     );
-//                    tilStringsAmount.setHint(altStringRepetitionsHint);
+                    tilStringsAmount.setHint(altStringRepetitionsHint);
                 }
                 restoreResultViewStates();
                 tvResultOfPreparation.setText(C.STAR);
@@ -181,7 +181,7 @@ public final class MainUi implements MainHub.UiLink {
                 } else {
                     final String altStringRepetitionsHint =
                             rootContext.getString(R.string.stringsAmountHintBusy) + C.SPACE +
-                                    U.createReadableStringForQuantity(
+                                    U.createReadableStringForLong(
                                             stringsAmountAltHint * etBasicString.getText().length()
                                     );
                     tilStringsAmount.setHint(altStringRepetitionsHint);
