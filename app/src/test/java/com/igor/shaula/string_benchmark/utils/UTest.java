@@ -6,71 +6,71 @@ import static org.junit.Assert.assertEquals;
 
 public class UTest {
 
-    // createReadableString ========================================================================
+    // createReadableStringForTime ========================================================================
 
     @Test
     public void createReadableString_0() {
-        assertEquals("0", U.createReadableString(0));
+        assertEquals("0", U.createReadableStringForTime(0));
     }
 
     @Test
     public void createReadableString_9() {
-        assertEquals("9", U.createReadableString(9));
+        assertEquals("9", U.createReadableStringForTime(9));
     }
 
     @Test
     public void createReadableString_99() {
-        assertEquals("99", U.createReadableString(99));
+        assertEquals("99", U.createReadableStringForTime(99));
     }
 
     @Test
     public void createReadableString_999() {
-        assertEquals("999", U.createReadableString(999));
+        assertEquals("999", U.createReadableStringForTime(999));
     }
 
     @Test
     public void createReadableString_9000() {
-        assertEquals("9,000", U.createReadableString(9000));
+        assertEquals("9,000", U.createReadableStringForTime(9000));
     }
 
     @Test
     public void createReadableString_99000() {
-        assertEquals("99,000", U.createReadableString(99000));
+        assertEquals("99,000", U.createReadableStringForTime(99000));
     }
 
     @Test
     public void createReadableString_999000() {
-        assertEquals("999,000", U.createReadableString(999000));
+        assertEquals("999,000", U.createReadableStringForTime(999000));
     }
 
     @Test
     public void createReadableString_9990009() {
-        assertEquals("9,990.009", U.createReadableString(9990009));
+        assertEquals("9,990.009", U.createReadableStringForTime(9990009));
     }
 
     @Test
     public void createReadableString_99900099() {
-        assertEquals("99,900.099", U.createReadableString(99900099));
+        assertEquals("99,900.099", U.createReadableStringForTime(99900099));
     }
 
     @Test
     public void createReadableString_999000999() {
-        assertEquals("999,000.999", U.createReadableString(999000999));
+        assertEquals("999,000.999", U.createReadableStringForTime(999000999));
     }
 
     @Test
     public void createReadableString_9990009990() {
-        assertEquals("9,990.009.990", U.createReadableString(9990009990L));
+        assertEquals("9,990.009.990", U.createReadableStringForTime(9990009990L));
     }
 
     @Test
     public void createReadableString_99900099900() {
-        assertEquals("99,900.099.900", U.createReadableString(99900099900L));
+        assertEquals("99,900.099.900", U.createReadableStringForTime(99900099900L));
     }
 
     @Test
     public void createReadableString_999000999000() {
-        assertEquals("999,000.999.000", U.createReadableString(999000999000L));
+        assertEquals("999,000.999.000", U.createReadableStringForTime(999000999000L));
     }
 
     // defineSeparatorsCount =======================================================================

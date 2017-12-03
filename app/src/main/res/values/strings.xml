@@ -7,25 +7,24 @@
 
     <string name="explanationForReadyFAB">To launch logging benchmark\nsimply tap this red button >>></string>
     <string name="explanationForBusyFAB">To stop logging benchmark\nsimply tap the red button again</string>
-    <string name="testBasisHint">Given string is the test\'s basis</string>
-    <string name="testBasisAltHint">Test\'s basis length is</string>
-    <string name="stringsAmountHint">Total length of given string will be</string>
-    <string name="stringsAmountAltHint">Zero iterations will make the total string empty</string>
-    <string name="iterationsAmountHint">Numbers from 100 to 10.000 usually are enough</string>
-    <string name="iterationsAmountAltHint">Zero is set! (more loop iterations -> more precise results)</string>
-    <string name="defaultString">0123456789</string>
-    <string name="defaultNumberOfStrings">100000</string>
-    <!--<string name="defaultNumberOfStrings">100.000</string>-->
-    <string name="defaultNumberOfLoopIterations">100</string>
+
+    <string name="testBasisHintEmpty">Test\'s basic string is currently empty</string>
+    <string name="testBasisHintBusy">Test\'s basic string length is</string>
+    <string name="stringsAmountHintEmpty">Zero iterations will make the total string empty</string>
+    <string name="stringsAmountHintBusy">Total length of given string will be</string>
+    <string name="iterationsAmountHintEmpty">Zero is set! (more loop iterations -> more precise results)</string>
+    <string name="iterationsAmountHintBusy">Numbers from 100 to 10.000 are usually enough</string>
+
     <string name="startingExplanation">Each loop iteration ads a new copy of basic string\n
         to the tested mega-long string,\n
         which forms a burden for processing</string>
-    <string name="resultOfPreparation">Time expended on preparation for tests:</string>
     <string name="nanos">nano-sec.</string>
     <string name="micros">micro-sec.</string>
     <string name="millis">milli-sec.</string>
     <string name="seconds">sec.</string>
     <string name="star">*</string>
+
+    <string name="resultOfPreparation">Time expended on preparation for tests:</string>
     <string name="resultOfStandardLog">Standard Android Log:</string>
     <string name="resultOfSAL">My single-arg Log wrapper:</string>
     <string name="resultOfDAL">My double-args Log wrapper:</string>

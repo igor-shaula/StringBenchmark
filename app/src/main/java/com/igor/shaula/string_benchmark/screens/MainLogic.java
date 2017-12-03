@@ -56,6 +56,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         uiLink.setLogicLink(this);
         dataTransport.setDataConsumer(this); // register for receiving portions of result \\
         uiLink.init();
+        uiLink.setInitialValues();
     }
 
     // FROM LogicLink ==============================================================================

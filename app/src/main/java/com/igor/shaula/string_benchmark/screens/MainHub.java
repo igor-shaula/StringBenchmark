@@ -49,6 +49,8 @@ public interface MainHub {
 
         void init();
 
+        void setInitialValues();
+
         void informUser(int whichWay, int stringId, int duration);
     }
 

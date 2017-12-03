@@ -255,28 +255,30 @@ public final class U {
 
         } else if (nanoTimeValue >= 1_000 && nanoTimeValue < 1_000_000) {
             stringBuilder
-                    .append(createReadableString(nanoTimeValue))
+                    .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
                     .append(context.getString(R.string.micros));
 
         } else if (nanoTimeValue >= 1_000_000 && nanoTimeValue < 1_000_000_000) {
             stringBuilder
-                    .append(createReadableString(nanoTimeValue))
+                    .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
                     .append(context.getString(R.string.millis));
 
         } else {
             stringBuilder
-                    .append(createReadableString(nanoTimeValue))
+                    .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
                     .append(context.getString(R.string.seconds));
         }
         return stringBuilder.toString();
     }
 
-    @MeDoc("converts number into the specially formatted string that is comfortable for viewing")
+    // TODO: 03.12.2017 check all numeric-related methods with using negative values \\
+
+    @MeDoc("converts long number into the specially formatted string for showing test results")
     @NonNull
-    static String createReadableString(long l) {
+    static String createReadableStringForTime(long l) {
         // as we need special format with dots & zeroes - standard Java formatters won't fit here \\
         final int howManySeparators = defineSeparatorsCount(l);
         final StringBuilder stringBuilder = new StringBuilder();
@@ -291,7 +293,7 @@ public final class U {
             } else if (0 < divisionsModulo && divisionsModulo < 10) {
                 stringBuilder.insert(0, C.TWO_ZEROES + String.valueOf(divisionsModulo));
             } else if (10 <= divisionsModulo && divisionsModulo < 100) {
-                stringBuilder.insert(0, C.ZERO + String.valueOf(divisionsModulo));
+                stringBuilder.insert(0, C.ONE_ZERO + String.valueOf(divisionsModulo));
             } else if (100 <= divisionsModulo && divisionsModulo < 1000) {
                 stringBuilder.insert(0, String.valueOf(divisionsModulo));
             }
@@ -304,6 +306,37 @@ public final class U {
             }
         }
         return reduceStartingZeroes(replaceFirstDotWithComma(stringBuilder.toString()));
+    }
+
+    @MeDoc("converts positive integer number into formatted string for showing quantities")
+    public static String createReadableStringForQuantity(long l) {
+        // as we need special format with dots & zeroes - standard Java formatters won't fit here \\
+        final int howManySeparators = defineSeparatorsCount(l);
+        final StringBuilder stringBuilder = new StringBuilder();
+        // defining the changing-per-iteration working number \\
+        long meltingByThousand = l;
+        for (int i = 0; i <= howManySeparators; i++) {
+            // creating the string from the number's tail \\
+            final long divisionsModulo = meltingByThousand % 1000;
+            // filling any possible gaps with zeroes \\
+            if (divisionsModulo == 0) {
+                stringBuilder.insert(0, C.THREE_ZEROES);
+            } else if (0 < divisionsModulo && divisionsModulo < 10) {
+                stringBuilder.insert(0, C.TWO_ZEROES + String.valueOf(divisionsModulo));
+            } else if (10 <= divisionsModulo && divisionsModulo < 100) {
+                stringBuilder.insert(0, C.ONE_ZERO + String.valueOf(divisionsModulo));
+            } else if (100 <= divisionsModulo && divisionsModulo < 1000) {
+                stringBuilder.insert(0, String.valueOf(divisionsModulo));
+            }
+            // updating the number's tail for the next possible iteration \\
+            meltingByThousand = meltingByThousand / 1000;
+            // now inserting the dot - only when current iteration is completed \\
+            if (i < howManySeparators) {
+                // dot is not needed when l < 1000 - nothing to separate here \\
+                stringBuilder.insert(0, C.DOT);
+            }
+        }
+        return reduceStartingZeroes(stringBuilder.toString());
     }
 
     @MeDoc("counts the number of needed separators between digits divided by three per group")
@@ -324,8 +357,8 @@ public final class U {
     static String reduceStartingZeroes(@NonNull String s) {
         if (s.startsWith(C.TWO_ZEROES)) {
             s = s.replaceFirst(C.TWO_ZEROES, "");
-        } else if (s.startsWith(C.ZERO)) {
-            s = s.replaceFirst(C.ZERO, "");
+        } else if (s.startsWith(C.ONE_ZERO)) {
+            s = s.replaceFirst(C.ONE_ZERO, "");
         }
         return s;
     }

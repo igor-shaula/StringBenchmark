@@ -20,7 +20,6 @@ import com.igor.shaula.string_benchmark.utils.U;
 public final class MainUi implements MainHub.UiLink {
 
     private static final String CN = "MainUi";
-
     @NonNull
     private final Context rootContext;
     @NonNull
@@ -140,18 +139,73 @@ public final class MainUi implements MainHub.UiLink {
 
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
 
-        final TextInputLayout tilBasicString = rootView.findViewById(R.id.tilBasicString);
-        final TextInputLayout tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
-        final TextInputLayout tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
-
         etBasicString = rootView.findViewById(R.id.tiedBasicString);
         etStringsAmount = rootView.findViewById(R.id.tiedStringsAmount);
         etIterationsAmount = rootView.findViewById(R.id.tiedIterationsAmount);
 
-        etBasicString.setSelection(etBasicString.getText().length());
-        etStringsAmount.setSelection(etStringsAmount.getText().length());
-        etIterationsAmount.setSelection(etIterationsAmount.getText().length());
+        final TextInputLayout tilBasicString = rootView.findViewById(R.id.tilBasicString);
+        final TextInputLayout tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
+        final TextInputLayout tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
 
+        etBasicString.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged() {
+                final int basicStringLength = etBasicString.getText().length();
+                if (basicStringLength == 0) {
+                    tilBasicString.setHint(rootContext.getString(R.string.testBasisHintEmpty));
+                } else {
+                    // 1 \\
+                    final String testBasisAltHint = rootContext.getString(R.string.testBasisHintBusy)
+                            + C.SPACE + U.createReadableStringForQuantity(basicStringLength);
+                    tilBasicString.setHint(testBasisAltHint);
+                    // 2 \\
+                    final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
+                    final String altStringRepetitionsHint =
+                            rootContext.getString(R.string.stringsAmountHintBusy) + C.SPACE +
+                                    U.createReadableStringForQuantity(
+                                            stringsAmountAltHint * basicStringLength
+                                    );
+//                    tilStringsAmount.setHint(altStringRepetitionsHint);
+                }
+                restoreResultViewStates();
+                tvResultOfPreparation.setText(C.STAR);
+            }
+        });
+        etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged() {
+                // safely parsing here - because inputType is number in layout \\
+                final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
+                if (stringsAmountAltHint == 0) {
+                    tilStringsAmount.setHint(rootContext.getString(R.string.stringsAmountHintEmpty));
+                } else {
+                    final String altStringRepetitionsHint =
+                            rootContext.getString(R.string.stringsAmountHintBusy) + C.SPACE +
+                                    U.createReadableStringForQuantity(
+                                            stringsAmountAltHint * etBasicString.getText().length()
+                                    );
+                    tilStringsAmount.setHint(altStringRepetitionsHint);
+                }
+                restoreResultViewStates();
+                tvResultOfPreparation.setText(C.STAR);
+            }
+        });
+        etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged() {
+                final int iterationsAmount = U.convertIntoInt(etIterationsAmount.getText().toString());
+                if (iterationsAmount == 0) {
+                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHintEmpty));
+                } else {
+                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHintBusy));
+                }
+                restoreResultViewStates();
+/*
+                no need to reset shown value of tvResultOfPreparation here because
+                testing loop iterations number has no effect on burden creation time \\
+*/
+            }
+        });
         etIterationsAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -173,62 +227,6 @@ public final class MainUi implements MainHub.UiLink {
             }
         });
 
-        etBasicString.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged() {
-                final int basicStringLength = etBasicString.getText().length();
-                if (basicStringLength != 0) {
-                    // 1 \\
-                    final String testBasisAltHint = rootContext.getString(R.string.testBasisAltHint)
-                            + C.SPACE + basicStringLength;
-                    tilBasicString.setHint(testBasisAltHint);
-                    // 2 \\
-                    final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
-                    final String altStringRepetitionsHint =
-                            rootContext.getString(R.string.stringsAmountHint)
-                                    + C.SPACE + stringsAmountAltHint * basicStringLength;
-                    tilStringsAmount.setHint(altStringRepetitionsHint);
-                } else {
-                    tilBasicString.setHint(rootContext.getString(R.string.testBasisHint));
-                }
-                restoreResultViewStates();
-                tvResultOfPreparation.setText(C.STAR);
-            }
-        });
-        etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged() {
-                // safely parsing here - because inputType is number in layout \\
-                final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
-                if (stringsAmountAltHint != 0) {
-                    final String altStringRepetitionsHint =
-                            rootContext.getString(R.string.stringsAmountHint)
-                                    + C.SPACE + stringsAmountAltHint * etBasicString.getText().length();
-                    tilStringsAmount.setHint(altStringRepetitionsHint);
-                } else {
-                    tilStringsAmount.setHint(rootContext.getString(R.string.stringsAmountAltHint));
-                }
-                restoreResultViewStates();
-                tvResultOfPreparation.setText(C.STAR);
-            }
-        });
-        etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged() {
-                final int iterationsAmount = U.convertIntoInt(etIterationsAmount.getText().toString());
-                if (iterationsAmount != 0) {
-                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHint));
-                } else {
-                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountAltHint));
-                }
-                restoreResultViewStates();
-/*
-                no need to reset shown value of tvResultOfPreparation here because
-                testing loop iterations number has no effect on burden creation time \\
-*/
-            }
-        });
-
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
         tvExplanationForTheFAB = rootView.findViewById(R.id.tvExplanationForTheFAB);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
@@ -245,6 +243,16 @@ public final class MainUi implements MainHub.UiLink {
             }
         });
     } // init \\
+
+    @Override
+    public void setInitialValues() {
+        etBasicString.setText(C.INITIAL_BASIC_STRING);
+        etStringsAmount.setText(C.INITIAL_STRING_REPETITIONS);
+        etIterationsAmount.setText(C.INITIAL_TEST_ITERATIONS);
+        etBasicString.setSelection(etBasicString.getText().length());
+        etStringsAmount.setSelection(etStringsAmount.getText().length());
+        etIterationsAmount.setSelection(etIterationsAmount.getText().length());
+    }
 
     @Override
     public void informUser(int typeOfNotification, int stringId, int duration) {

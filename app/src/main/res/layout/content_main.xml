@@ -37,10 +37,9 @@
             android:id="@+id/tiedBasicString"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/testBasisHint"
+            android:hint="@string/testBasisHintEmpty"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="text"
-            android:text="@string/defaultString"/>
+            android:inputType="text"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -52,10 +51,9 @@
             android:id="@+id/tiedStringsAmount"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/stringsAmountHint"
+            android:hint="@string/stringsAmountHintBusy"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="number"
-            android:text="@string/defaultNumberOfStrings"/>
+            android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -67,10 +65,9 @@
             android:id="@+id/tiedIterationsAmount"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/iterationsAmountHint"
+            android:hint="@string/iterationsAmountHintBusy"
             android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="number"
-            android:text="@string/defaultNumberOfLoopIterations"/>
+            android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
 
