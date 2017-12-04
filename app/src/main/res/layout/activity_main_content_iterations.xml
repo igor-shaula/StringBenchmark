@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchMatch"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        style="@style/MatchWrap"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/resultsForLoggingTests"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfStandardLog"/>
+
+    <TextView
+        android:id="@+id/tvResultForStandardLog"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfSAL"/>
+
+    <TextView
+        android:id="@+id/tvResultForSAL"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfDAL"/>
+
+    <TextView
+        android:id="@+id/tvResultForDAL"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfVAL"/>
+
+    <TextView
+        android:id="@+id/tvResultForVAL"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfSystemOutPrintln"/>
+
+    <TextView
+        android:id="@+id/tvResultForSystemOutPrintln"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"/>
+
+</LinearLayout>

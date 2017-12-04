@@ -56,11 +56,13 @@ public interface MainHub {
 
     interface LogicLink {
 
+        boolean isBurdenReady();
+
         void toggleJobState(boolean isRunning);
 
         void onBackPressed();
 
-        void onFabClick();
+        void onPrepareBurdenClick();
 
         void prepareMainJob();
 

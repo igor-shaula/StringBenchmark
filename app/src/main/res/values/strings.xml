@@ -24,6 +24,9 @@
     <string name="seconds">sec.</string>
     <string name="star">*</string>
 
+    <string name="prepareBurdenButtonText">Assemble the burden</string>
+    <string name="viewBurdenButtonText">View created burden</string>
+
     <string name="resultOfPreparation">Time expended on preparation for tests:</string>
     <string name="resultOfStandardLog">Standard Android Log:</string>
     <string name="resultOfSAL">My single-arg Log wrapper:</string>

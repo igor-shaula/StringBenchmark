@@ -2,12 +2,12 @@ package com.igor.shaula.string_benchmark.screens;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,7 +17,7 @@ import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
-public final class MainUi implements MainHub.UiLink {
+public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 
     private static final String CN = "MainUi";
     @NonNull
@@ -34,13 +34,15 @@ public final class MainUi implements MainHub.UiLink {
     private EditText etStringsAmount;
     private EditText etIterationsAmount;
     private TextView tvResultOfPreparation;
-    private TextView tvExplanationForTheFAB;
+    private Button bPrepareBurden;
+    private Button bViewBurden;
+    //    private TextView tvExplanationForTheFAB;
     private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
     private TextView tvResultForVAL;
     private TextView tvResultForSout;
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -89,10 +91,12 @@ public final class MainUi implements MainHub.UiLink {
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
         etIterationsAmount.setEnabled(!isJobRunning);
-        tvExplanationForTheFAB.setText(isJobRunning ?
-                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
-        fab.setImageResource(isJobRunning ?
-                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
+//        tvExplanationForTheFAB.setText(isJobRunning ?
+//                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
+//        fab.setImageResource(isJobRunning ?
+//                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
+        bPrepareBurden.setEnabled(!isJobRunning);
+        bViewBurden.setEnabled(!isJobRunning && logicLink.isBurdenReady());
     }
 
     @Override
@@ -227,21 +231,27 @@ public final class MainUi implements MainHub.UiLink {
             }
         });
 
+        bPrepareBurden = rootView.findViewById(R.id.bPrepareBurden);
+        bViewBurden = rootView.findViewById(R.id.bViewBurden);
+
+        bPrepareBurden.setOnClickListener(this);
+        bViewBurden.setOnClickListener(this);
+
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
-        tvExplanationForTheFAB = rootView.findViewById(R.id.tvExplanationForTheFAB);
+//        tvExplanationForTheFAB = rootView.findViewById(R.id.tvExplanationForTheFAB);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForSAL = rootView.findViewById(R.id.tvResultForSAL);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
         tvResultForVAL = rootView.findViewById(R.id.tvResultForVAL);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
 
-        fab = rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logicLink.onFabClick();
-            }
-        });
+//        fab = rootView.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                logicLink.onPrepareBurdenClick();
+//            }
+//        });
     } // init \\
 
     @Override
@@ -263,6 +273,18 @@ public final class MainUi implements MainHub.UiLink {
             U.showSnackbar(rootView, message, duration);
         } else {
             L.w(CN, message);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bPrepareBurden:
+                logicLink.onPrepareBurdenClick();
+                break;
+            case R.id.bViewBurden:
+
+                break;
         }
     }
 }

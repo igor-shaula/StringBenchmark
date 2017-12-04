@@ -24,30 +24,40 @@
         style="@style/MatchWrap"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <include layout="@layout/content_main"/>
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="vertical">
+
+            <include layout="@layout/activity_main_content_burden"/>
+
+            <include layout="@layout/activity_main_content_iterations"/>
+
+        </LinearLayout>
 
     </ScrollView>
 
-    <LinearLayout
-        style="@style/MatchWrap"
-        android:layout_gravity="bottom|end"
-        android:background="@color/colorPrimary"
-        android:gravity="center">
+    <!--
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_gravity="bottom|end"
+            android:background="@color/colorPrimary"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/tvExplanationForTheFAB"
-            style="@style/WeightWidth"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/explanationForReadyFAB"
-            android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/tvExplanationForTheFAB"
+                style="@style/WeightWidth"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:text="@string/explanationForReadyFAB"
+                android:textColor="@android:color/white"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            style="@style/WrapWrap"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@android:drawable/ic_media_play"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                style="@style/WrapWrap"
+                android:layout_margin="@dimen/fab_margin"
+                app:srcCompat="@android:drawable/ic_media_play"/>
 
-    </LinearLayout>
+        </LinearLayout>
+    -->
 
 </android.support.design.widget.CoordinatorLayout>

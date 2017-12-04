@@ -34,16 +34,17 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     @NonNull
     private final DataTransport dataTransport;
 
-    private boolean isJobRunning;
     private boolean backWasPressedOnce;
+    private boolean isJobRunning;
+    private boolean isBurdenReady;
 
     private int counter;
+
     @NonNull
     private List<long[]> totalResultList = new LinkedList<>();
 
     @NonNull
     private String pendingPreparationResult = "";
-
     @Nullable
     private Timer twisterTimer;
 
@@ -60,6 +61,11 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     // FROM LogicLink ==============================================================================
+
+    @Override
+    public boolean isBurdenReady() {
+        return isBurdenReady;
+    }
 
     @Override
     public void toggleJobState(boolean isRunning) {
@@ -87,7 +93,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     @Override
-    public void onFabClick() {
+    public void onPrepareBurdenClick() {
         if (isJobRunning) {
             stopCurrentJob();
         } else {
@@ -169,6 +175,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     private void startNewJob() {
+        isBurdenReady = false;
         runTestBurdenPreparation();
         toggleJobState(true);
         uiLink.restoreResultViewStates();
@@ -254,6 +261,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         } else {
             uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
         }
+        isBurdenReady = true;
     }
 
     private void stopTwisterTimer() {

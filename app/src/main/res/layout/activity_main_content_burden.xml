@@ -3,17 +3,12 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llIncludedContent"
-    style="@style/MatchMatch"
+    style="@style/MatchWrap"
     android:orientation="vertical"
-    android:paddingBottom="100dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
     android:paddingTop="16dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.igor.shaula.string_benchmark.screens.MainActivity"
-    tools:showIn="@layout/activity_main">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
         android:id="@+id/tvStartingExplanation"
@@ -51,7 +46,7 @@
             android:id="@+id/tiedStringsAmount"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/stringsAmountHintBusy"
+            android:hint="@string/stringsAmountHintEmpty"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="number"/>
 
@@ -65,15 +60,56 @@
             android:id="@+id/tiedIterationsAmount"
             style="@style/MatchWrap"
             android:gravity="center"
-            android:hint="@string/iterationsAmountHintBusy"
+            android:hint="@string/iterationsAmountHintEmpty"
             android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
             android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
 
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/bPrepareBurden"
+            style="@android:style/Widget.Button.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/prepareBurdenButtonText"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"/>
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/bViewBurden"
+            style="@android:style/Widget.Button.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/viewBurdenButtonText"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvProgressBar"
+        style="@style/MatchWrap"
+        android:layout_gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimary"/>
+
     <TextView
         style="@style/MatchWrap"
-        android:layout_marginTop="16dp"
         android:text="@string/resultOfPreparation"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
@@ -84,57 +120,5 @@
         android:layout_marginBottom="16dp"
         android:text="@string/star"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-    <TextView
-        style="@style/MatchWrap"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/resultsForLoggingTests"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfStandardLog"/>
-
-    <TextView
-        android:id="@+id/tvResultForStandardLog"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfSAL"/>
-
-    <TextView
-        android:id="@+id/tvResultForSAL"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfDAL"/>
-
-    <TextView
-        android:id="@+id/tvResultForDAL"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfVAL"/>
-
-    <TextView
-        android:id="@+id/tvResultForVAL"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfSystemOutPrintln"/>
-
-    <TextView
-        android:id="@+id/tvResultForSystemOutPrintln"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
 
 </LinearLayout>
