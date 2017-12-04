@@ -113,6 +113,12 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         return U.adaptForUser(this, resultNanoTime);
     }
 
+    @NonNull
+    @Override
+    public String findStringById(int stringId) {
+        return getString(stringId);
+    }
+
     @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {
         TestingIntentService.prepareTheBurdenForTest(this, basicString, basicStringsCount);

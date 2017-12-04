@@ -9,6 +9,9 @@ public interface MainHub {
         @NonNull
         String getAdaptedString(long resultNanoTime);
 
+        @NonNull
+        String findStringById(int stringId);
+
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
         void launchAllMeasurements(int testRepetitionsCount);
@@ -21,21 +24,31 @@ public interface MainHub {
     interface UiLink {
 
         @NonNull
-        String getBasicString();
+        String getBasicStringText();
 
         @NonNull
-        String getRepetitionsCount();
+        String getStringsAmountText();
 
         @NonNull
-        String getIterationsAmount();
+        String getIterationsAmountText();
 
         void setLogicLink(@NonNull LogicLink logicLink);
 
+        void setInitialValues();
+
         void toggleJobActiveUiState(boolean isRunning);
 
-        void restoreResultViewStates();
+        void resetResultViewStates();
+
+        void resetResultOfPreparation();
 
         void showPreparationsResultOnMainThread(@NonNull long[] results);
+
+        void updateBasicStringHint(@NonNull String s);
+
+        void updateStringsAmountHint(@NonNull String s);
+
+        void updateIterationAmountHint(@NonNull String s);
 
         void updatePreparationResultOnMainThread(@NonNull String result);
 
@@ -47,11 +60,9 @@ public interface MainHub {
 
         void updateResultForVAL(long resultNanoTime);
 
-        void init();
-
-        void setInitialValues();
-
         void informUser(int whichWay, int stringId, int duration);
+
+        void init();
     }
 
     interface LogicLink {
@@ -61,6 +72,12 @@ public interface MainHub {
         void toggleJobState(boolean isRunning);
 
         void onBackPressed();
+
+        void onBasicStringChanged();
+
+        void onStringsAmountChanged();
+
+        void onIterationsAmountChanged();
 
         void onPrepareBurdenClick();
 

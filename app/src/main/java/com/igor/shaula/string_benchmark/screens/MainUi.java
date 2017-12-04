@@ -30,19 +30,20 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private MainHub.LogicLink logicLink;
 
     private TextView tvStartingExplanation;
+    private TextInputLayout tilBasicString;
+    private TextInputLayout tilStringsAmount;
+    private TextInputLayout tilIterationsAmount;
     private EditText etBasicString;
     private EditText etStringsAmount;
     private EditText etIterationsAmount;
     private TextView tvResultOfPreparation;
     private Button bPrepareBurden;
     private Button bViewBurden;
-    //    private TextView tvExplanationForTheFAB;
     private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
     private TextView tvResultForVAL;
     private TextView tvResultForSout;
-//    private FloatingActionButton fab;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -51,25 +52,35 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 
     @NonNull
     @Override
-    public String getBasicString() {
+    public String getBasicStringText() {
         return etBasicString.getText().toString();
     }
 
     @NonNull
     @Override
-    public String getRepetitionsCount() {
+    public String getStringsAmountText() {
         return etStringsAmount.getText().toString();
     }
 
     @NonNull
     @Override
-    public String getIterationsAmount() {
+    public String getIterationsAmountText() {
         return etIterationsAmount.getText().toString();
     }
 
     @Override
     public void setLogicLink(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
+    }
+
+    @Override
+    public void setInitialValues() {
+        etBasicString.setText(C.INITIAL_BASIC_STRING);
+        etBasicString.setSelection(C.INITIAL_BASIC_STRING.length());
+        etStringsAmount.setText(C.INITIAL_STRING_REPETITIONS);
+        etStringsAmount.setSelection(C.INITIAL_STRING_REPETITIONS.length());
+        etIterationsAmount.setText(C.INITIAL_TEST_ITERATIONS);
+        etIterationsAmount.setSelection(C.INITIAL_TEST_ITERATIONS.length());
     }
 
     @Override
@@ -91,21 +102,37 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
         etIterationsAmount.setEnabled(!isJobRunning);
-//        tvExplanationForTheFAB.setText(isJobRunning ?
-//                R.string.explanationForBusyFAB : R.string.explanationForReadyFAB);
-//        fab.setImageResource(isJobRunning ?
-//                android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
         bPrepareBurden.setEnabled(!isJobRunning);
         bViewBurden.setEnabled(!isJobRunning && logicLink.isBurdenReady());
     }
 
     @Override
-    public void restoreResultViewStates() {
+    public void resetResultViewStates() {
         tvResultForLog.setText(C.STAR);
         tvResultForSAL.setText(C.STAR);
         tvResultForDAL.setText(C.STAR);
         tvResultForVAL.setText(C.STAR);
         tvResultForSout.setText(C.STAR);
+    }
+
+    @Override
+    public void resetResultOfPreparation() {
+        tvResultOfPreparation.setText(C.STAR);
+    }
+
+    @Override
+    public void updateBasicStringHint(@NonNull String s) {
+        tilBasicString.setHint(s);
+    }
+
+    @Override
+    public void updateStringsAmountHint(@NonNull String s) {
+        tilStringsAmount.setHint(s);
+    }
+
+    @Override
+    public void updateIterationAmountHint(@NonNull String s) {
+        tilIterationsAmount.setHint(s);
     }
 
     @Override
@@ -139,75 +166,46 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
+    public void informUser(int typeOfNotification, int stringId, int duration) {
+        final String message = rootContext.getString(stringId);
+        if (C.Choice.TOAST == typeOfNotification) {
+            U.showToast(rootContext, message, duration);
+        } else if (C.Choice.SNACKBAR == typeOfNotification) {
+            U.showSnackbar(rootView, message, duration);
+        } else {
+            L.w(CN, message);
+        }
+    }
+
+    @Override
     public void init() {
 
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
+
+        tilBasicString = rootView.findViewById(R.id.tilBasicString);
+        tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
+        tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
 
         etBasicString = rootView.findViewById(R.id.tiedBasicString);
         etStringsAmount = rootView.findViewById(R.id.tiedStringsAmount);
         etIterationsAmount = rootView.findViewById(R.id.tiedIterationsAmount);
 
-        final TextInputLayout tilBasicString = rootView.findViewById(R.id.tilBasicString);
-        final TextInputLayout tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
-        final TextInputLayout tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
-
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
-                final int basicStringLength = etBasicString.getText().length();
-                if (basicStringLength == 0) {
-                    tilBasicString.setHint(rootContext.getString(R.string.testBasisHintEmpty));
-                } else {
-                    // 1 \\
-                    final String testBasisAltHint = rootContext.getString(R.string.testBasisHintBusy)
-                            + C.SPACE + U.createReadableStringForLong(basicStringLength);
-                    tilBasicString.setHint(testBasisAltHint);
-                    // 2 \\
-                    final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
-                    final String altStringRepetitionsHint =
-                            rootContext.getString(R.string.stringsAmountHintBusy) + C.SPACE +
-                                    U.createReadableStringForLong(
-                                            stringsAmountAltHint * basicStringLength
-                                    );
-                    tilStringsAmount.setHint(altStringRepetitionsHint);
-                }
-                restoreResultViewStates();
-                tvResultOfPreparation.setText(C.STAR);
+                logicLink.onBasicStringChanged();
             }
         });
         etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
-                // safely parsing here - because inputType is number in layout \\
-                final int stringsAmountAltHint = U.convertIntoInt(etStringsAmount.getText().toString());
-                if (stringsAmountAltHint == 0) {
-                    tilStringsAmount.setHint(rootContext.getString(R.string.stringsAmountHintEmpty));
-                } else {
-                    final String altStringRepetitionsHint =
-                            rootContext.getString(R.string.stringsAmountHintBusy) + C.SPACE +
-                                    U.createReadableStringForLong(
-                                            stringsAmountAltHint * etBasicString.getText().length()
-                                    );
-                    tilStringsAmount.setHint(altStringRepetitionsHint);
-                }
-                restoreResultViewStates();
-                tvResultOfPreparation.setText(C.STAR);
+                logicLink.onStringsAmountChanged();
             }
         });
         etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
-                final int iterationsAmount = U.convertIntoInt(etIterationsAmount.getText().toString());
-                if (iterationsAmount == 0) {
-                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHintEmpty));
-                } else {
-                    tilIterationsAmount.setHint(rootContext.getString(R.string.iterationsAmountHintBusy));
-                }
-                restoreResultViewStates();
-/*
-                no need to reset shown value of tvResultOfPreparation here because
-                testing loop iterations number has no effect on burden creation time \\
-*/
+                logicLink.onIterationsAmountChanged();
             }
         });
         etIterationsAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -238,43 +236,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         bViewBurden.setOnClickListener(this);
 
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
-//        tvExplanationForTheFAB = rootView.findViewById(R.id.tvExplanationForTheFAB);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForSAL = rootView.findViewById(R.id.tvResultForSAL);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
         tvResultForVAL = rootView.findViewById(R.id.tvResultForVAL);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
 
-//        fab = rootView.findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                logicLink.onPrepareBurdenClick();
-//            }
-//        });
     } // init \\
-
-    @Override
-    public void setInitialValues() {
-        etBasicString.setText(C.INITIAL_BASIC_STRING);
-        etStringsAmount.setText(C.INITIAL_STRING_REPETITIONS);
-        etIterationsAmount.setText(C.INITIAL_TEST_ITERATIONS);
-        etBasicString.setSelection(etBasicString.getText().length());
-        etStringsAmount.setSelection(etStringsAmount.getText().length());
-        etIterationsAmount.setSelection(etIterationsAmount.getText().length());
-    }
-
-    @Override
-    public void informUser(int typeOfNotification, int stringId, int duration) {
-        final String message = rootContext.getString(stringId);
-        if (C.Choice.TOAST == typeOfNotification) {
-            U.showToast(rootContext, message, duration);
-        } else if (C.Choice.SNACKBAR == typeOfNotification) {
-            U.showSnackbar(rootView, message, duration);
-        } else {
-            L.w(CN, message);
-        }
-    }
 
     @Override
     public void onClick(View v) {

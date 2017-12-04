@@ -93,6 +93,61 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     @Override
+    public void onBasicStringChanged() {
+        final int basicStringLength = uiLink.getBasicStringText().length();
+        // 1 \\
+        if (basicStringLength == 0) {
+            uiLink.updateBasicStringHint(systemLink.findStringById(R.string.testBasisHintEmpty));
+        } else {
+            final String testBasisHint = systemLink.findStringById(R.string.testBasisHintBusy)
+                    + C.SPACE + U.createReadableStringForLong(basicStringLength);
+            uiLink.updateBasicStringHint(testBasisHint);
+        }
+        // 2 \\
+        final int stringsAmountHint = U.convertIntoInt(uiLink.getStringsAmountText());
+        final String altStringRepetitionsHint =
+                systemLink.findStringById(R.string.stringsAmountHintBusy) + C.SPACE +
+                        U.createReadableStringForLong(stringsAmountHint * basicStringLength);
+        uiLink.updateStringsAmountHint(altStringRepetitionsHint);
+        // 3 \\
+        uiLink.resetResultViewStates();
+        uiLink.resetResultOfPreparation();
+    }
+
+    @Override
+    public void onStringsAmountChanged() {
+        // safely parsing here - because inputType is number in layout \\
+        final int stringsAmountHint = U.convertIntoInt(uiLink.getStringsAmountText());
+        if (stringsAmountHint == 0) {
+            uiLink.updateStringsAmountHint(systemLink.findStringById(R.string.stringsAmountHintEmpty));
+        } else {
+            final String stringRepetitionsHint =
+                    systemLink.findStringById(R.string.stringsAmountHintBusy) + C.SPACE +
+                            U.createReadableStringForLong(
+                                    stringsAmountHint * uiLink.getBasicStringText().length()
+                            );
+            uiLink.updateStringsAmountHint(stringRepetitionsHint);
+        }
+        uiLink.resetResultViewStates();
+        uiLink.resetResultOfPreparation();
+    }
+
+    @Override
+    public void onIterationsAmountChanged() {
+        final int iterationsAmount = U.convertIntoInt(uiLink.getIterationsAmountText());
+        if (iterationsAmount == 0) {
+            uiLink.updateIterationAmountHint(systemLink.findStringById(R.string.iterationsAmountHintEmpty));
+        } else {
+            uiLink.updateIterationAmountHint(systemLink.findStringById(R.string.iterationsAmountHintBusy));
+        }
+        uiLink.resetResultViewStates();
+/*
+                no need to reset shown value of tvResultOfPreparation here because
+                testing loop iterations number has no effect on burden creation time \\
+*/
+    }
+
+    @Override
     public void onPrepareBurdenClick() {
         if (isJobRunning) {
             stopCurrentJob();
@@ -104,7 +159,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     @Override
     public void prepareMainJob() {
         totalResultList.clear();
-        int count = U.convertIntoInt(uiLink.getIterationsAmount());
+        int count = U.convertIntoInt(uiLink.getIterationsAmountText());
         // condition in the main loop will work only for count > 0 but any numbers are safe there \\
         if (count > 0) {
             systemLink.launchAllMeasurements(count);
@@ -178,13 +233,13 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         isBurdenReady = false;
         runTestBurdenPreparation();
         toggleJobState(true);
-        uiLink.restoreResultViewStates();
+        uiLink.resetResultViewStates();
     }
 
     private void runTestBurdenPreparation() {
-        int count = U.convertIntoInt(uiLink.getRepetitionsCount());
+        int count = U.convertIntoInt(uiLink.getStringsAmountText());
         if (count > 0) {
-            systemLink.launchPreparation(uiLink.getBasicString(), count);
+            systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
             showTextyTwister();
         }
