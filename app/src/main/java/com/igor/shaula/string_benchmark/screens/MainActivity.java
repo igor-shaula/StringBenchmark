@@ -154,7 +154,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 whatInfoToShow = C.Choice.PREPARATION;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
                 // immediately launching the next job - the main job of testing speed of variants \\
-                logicLink.prepareMainJob();
+//                logicLink.startIterationsJob();
                 break;
 //            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
 //                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
@@ -166,7 +166,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 //                showPreparationsResultOnMainThread(calculateMedianResult());
 //                return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
-                logicLink.toggleJobState(false);
+                logicLink.toggleBurdenPreparationJobState(false);
+                logicLink.toggleIterationsJobState(false);
                 return;
             default:
                 L.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);

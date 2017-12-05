@@ -35,7 +35,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private final DataTransport dataTransport;
 
     private boolean backWasPressedOnce;
-    private boolean isJobRunning;
+    private boolean isBurdenPreparationJobRunning;
+    private boolean isIterationsJobRunning;
     private boolean isBurdenReady;
 
     private int counter;
@@ -57,7 +58,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         uiLink.setLogicLink(this);
         dataTransport.setDataConsumer(this); // register for receiving portions of result \\
         uiLink.init();
-        uiLink.setInitialValues();
+        uiLink.setInitialInputFieldsValues();
     }
 
     // FROM LogicLink ==============================================================================
@@ -68,8 +69,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     @Override
-    public void toggleJobState(boolean isRunning) {
-        isJobRunning = isRunning;
+    public void toggleBurdenPreparationJobState(boolean isRunning) {
+        isBurdenPreparationJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
     }
 
@@ -149,22 +150,20 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     @Override
     public void onPrepareBurdenClick() {
-        if (isJobRunning) {
-            stopCurrentJob();
+        if (isBurdenPreparationJobRunning) {
+            stopCurrentBurdenPreparationJob();
         } else {
-            startNewJob();
+            startNewBurdenPreparationJob();
         }
     }
 
     @Override
-    public void prepareMainJob() {
-        totalResultList.clear();
-        int count = U.convertIntoInt(uiLink.getIterationsAmountText());
-        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
-        if (count > 0) {
-            systemLink.launchAllMeasurements(count);
+    public void onToggleIterationsClick() {
+        if (isIterationsJobRunning) {
+            stopCurrentIterationsJob();
+        } else {
+            startIterationsJob();
         }
-        L.d(CN, "prepareMainJob() finished");
     }
 
     @Override
@@ -224,15 +223,15 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     // PRIVATE =====================================================================================
 
-    private void stopCurrentJob() {
+    private void stopCurrentBurdenPreparationJob() {
         interruptPerformanceTest();
-        toggleJobState(false);
+        toggleBurdenPreparationJobState(false);
     }
 
-    private void startNewJob() {
+    private void startNewBurdenPreparationJob() {
         isBurdenReady = false;
         runTestBurdenPreparation();
-        toggleJobState(true);
+        toggleBurdenPreparationJobState(true);
         uiLink.resetResultViewStates();
     }
 
@@ -275,6 +274,27 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         };
         twisterTimer = new Timer(true);
         twisterTimer.schedule(twisterTask, 0, 80);
+    }
+
+    private void stopCurrentIterationsJob() {
+        interruptPerformanceTest();
+        toggleIterationsJobState(false);
+    }
+
+    @Override
+    public void toggleIterationsJobState(boolean isRunning) {
+        isIterationsJobRunning = isRunning;
+        uiLink.toggleJobActiveUiState(isRunning);
+    }
+
+    private void startIterationsJob() {
+        totalResultList.clear();
+        int count = U.convertIntoInt(uiLink.getIterationsAmountText());
+        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
+        if (count > 0) {
+            systemLink.launchAllMeasurements(count);
+        }
+        L.d(CN, "startIterationsJob() finished");
     }
 
     @NonNull

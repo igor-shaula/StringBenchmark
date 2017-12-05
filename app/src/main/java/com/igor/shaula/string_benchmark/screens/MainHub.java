@@ -34,7 +34,7 @@ public interface MainHub {
 
         void setLogicLink(@NonNull LogicLink logicLink);
 
-        void setInitialValues();
+        void setInitialInputFieldsValues();
 
         void toggleJobActiveUiState(boolean isRunning);
 
@@ -69,7 +69,9 @@ public interface MainHub {
 
         boolean isBurdenReady();
 
-        void toggleJobState(boolean isRunning);
+        void toggleBurdenPreparationJobState(boolean isRunning);
+
+        void toggleIterationsJobState(boolean isRunning);
 
         void onBackPressed();
 
@@ -81,7 +83,7 @@ public interface MainHub {
 
         void onPrepareBurdenClick();
 
-        void prepareMainJob();
+        void onToggleIterationsClick();
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 

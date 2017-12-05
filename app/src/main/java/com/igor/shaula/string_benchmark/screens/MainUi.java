@@ -29,16 +29,21 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     @NonNull
     private MainHub.LogicLink logicLink;
 
+    // preparation of the burden \\
     private TextView tvStartingExplanation;
     private TextInputLayout tilBasicString;
-    private TextInputLayout tilStringsAmount;
-    private TextInputLayout tilIterationsAmount;
     private EditText etBasicString;
+    private TextInputLayout tilStringsAmount;
     private EditText etStringsAmount;
-    private EditText etIterationsAmount;
-    private TextView tvResultOfPreparation;
     private Button bPrepareBurden;
     private Button bViewBurden;
+    private TextView tvResultOfPreparation;
+
+    // iterations \\
+    private TextInputLayout tilIterationsAmount;
+    private EditText etIterationsAmount;
+    private Button bToggleIterations;
+    private Button bViewAllResults;
     private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
@@ -74,7 +79,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void setInitialValues() {
+    public void setInitialInputFieldsValues() {
         etBasicString.setText(C.INITIAL_BASIC_STRING);
         etBasicString.setSelection(C.INITIAL_BASIC_STRING.length());
         etStringsAmount.setText(C.INITIAL_STRING_REPETITIONS);
@@ -182,26 +187,32 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
 
+        // burden preparation block \\
         tilBasicString = rootView.findViewById(R.id.tilBasicString);
-        tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
-        tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
-
         etBasicString = rootView.findViewById(R.id.tiedBasicString);
-        etStringsAmount = rootView.findViewById(R.id.tiedStringsAmount);
-        etIterationsAmount = rootView.findViewById(R.id.tiedIterationsAmount);
-
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
                 logicLink.onBasicStringChanged();
             }
         });
+        tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
+        etStringsAmount = rootView.findViewById(R.id.tiedStringsAmount);
         etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
                 logicLink.onStringsAmountChanged();
             }
         });
+        bPrepareBurden = rootView.findViewById(R.id.bPrepareBurden);
+        bPrepareBurden.setOnClickListener(this);
+        bViewBurden = rootView.findViewById(R.id.bViewBurden);
+        bViewBurden.setOnClickListener(this);
+        tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
+
+        // iterations block \\
+        tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
+        etIterationsAmount = rootView.findViewById(R.id.tiedIterationsAmount);
         etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged() {
@@ -228,14 +239,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 return false;
             }
         });
-
-        bPrepareBurden = rootView.findViewById(R.id.bPrepareBurden);
-        bViewBurden = rootView.findViewById(R.id.bViewBurden);
-
-        bPrepareBurden.setOnClickListener(this);
-        bViewBurden.setOnClickListener(this);
-
-        tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
+        bToggleIterations = rootView.findViewById(R.id.bToggleIterations);
+        bToggleIterations.setOnClickListener(this);
+        bViewAllResults = rootView.findViewById(R.id.bViewAllResults);
+        bViewAllResults.setOnClickListener(this);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForSAL = rootView.findViewById(R.id.tvResultForSAL);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
@@ -251,6 +258,12 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 logicLink.onPrepareBurdenClick();
                 break;
             case R.id.bViewBurden:
+
+                break;
+            case R.id.bToggleIterations:
+                logicLink.onToggleIterationsClick();
+                break;
+            case R.id.bViewAllResults:
 
                 break;
         }
