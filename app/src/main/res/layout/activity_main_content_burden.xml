@@ -16,12 +16,16 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:text="@string/startingExplanation"/>
+        android:text="@string/startingExplanation"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
         android:background="@android:color/darker_gray"/>
 
     <android.support.design.widget.TextInputLayout
@@ -34,7 +38,8 @@
             android:gravity="center"
             android:hint="@string/testBasisHintEmpty"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -48,21 +53,8 @@
             android:gravity="center"
             android:hint="@string/stringsAmountHintEmpty"
             android:imeOptions="flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="number"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilIterationsAmount"
-        style="@style/MatchWrap">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/tiedIterationsAmount"
-            style="@style/MatchWrap"
-            android:gravity="center"
-            android:hint="@string/iterationsAmountHintEmpty"
-            android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -102,16 +94,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvProgressBar"
         style="@style/MatchWrap"
-        android:layout_gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrimary"/>
-
-    <TextView
-        style="@style/MatchWrap"
+        android:gravity="center"
         android:text="@string/resultOfPreparation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic"/>
 
     <TextView
         android:id="@+id/tvResultOfPreparation"
@@ -119,6 +106,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:text="@string/star"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>

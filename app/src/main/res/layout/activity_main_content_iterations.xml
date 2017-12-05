@@ -3,6 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vgIterations"
     style="@style/MatchMatch"
     android:orientation="vertical"
     android:paddingBottom="16dp"
@@ -12,11 +13,88 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
+        android:id="@+id/tvIterationsExplanation"
+        style="@style/MatchWrap"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:text="@string/iterationsExplanation"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:background="@android:color/darker_gray"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilIterationsAmount"
+        style="@style/MatchWrap">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tiedIterationsAmount"
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:hint="@string/iterationsAmountHintEmpty"
+            android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/bStartIterations"
+            style="@android:style/Widget.Button.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/startIterations"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"/>
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/bViewIterationsResults"
+            style="@android:style/Widget.Button.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/viewTestResults"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvProgressBar"
+        style="@style/MatchWrap"
+        android:layout_gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
         style="@style/MatchWrap"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:gravity="center"
         android:text="@string/resultsForLoggingTests"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic"/>
 
     <TextView
         style="@style/WrapWrap"
@@ -25,7 +103,8 @@
     <TextView
         android:id="@+id/tvResultForStandardLog"
         style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         style="@style/WrapWrap"
@@ -34,7 +113,8 @@
     <TextView
         android:id="@+id/tvResultForSAL"
         style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         style="@style/WrapWrap"
@@ -43,7 +123,8 @@
     <TextView
         android:id="@+id/tvResultForDAL"
         style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         style="@style/WrapWrap"
@@ -52,7 +133,8 @@
     <TextView
         android:id="@+id/tvResultForVAL"
         style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         style="@style/WrapWrap"
@@ -61,6 +143,7 @@
     <TextView
         android:id="@+id/tvResultForSystemOutPrintln"
         style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"/>
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>
