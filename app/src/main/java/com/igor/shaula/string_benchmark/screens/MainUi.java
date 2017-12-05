@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
@@ -34,6 +35,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private MainHub.LogicLink logicLink;
 
     private ProgressDialog pdWait;
+    private ProgressBar pbViewCreatedBurden;
 
     // preparation of the burden \\
     private TextView tvStartingExplanation;
@@ -94,6 +96,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         etIterationsAmount.setSelection(C.INITIAL_TEST_ITERATIONS.length());
     }
 
+    // currently not used \\
     @Override
     public void setBusy(boolean isBusy) {
         L.i(CN, "setBusy = " + isBusy);
@@ -108,6 +111,17 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 L.e(CN, iae.getMessage());
             }
         }
+    }
+
+    @Override
+    public void toggleViewBurdenBusyStateOnMainThread(final boolean isBusy) {
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+//        bViewAllResults.setVisibility(isBusy ? View.GONE : View.VISIBLE);
+                pbViewCreatedBurden.setVisibility(isBusy ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
@@ -131,6 +145,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         etIterationsAmount.setEnabled(!isJobRunning);
         bPrepareBurden.setEnabled(!isJobRunning);
         bViewBurden.setEnabled(!isJobRunning && logicLink.isBurdenReady());
+//        pbViewCreatedBurden.invalidate();
+//        toggleViewBurdenBusyStateOnMainThread(!isJobRunning && logicLink.isBurdenReady());
+        toggleViewBurdenBusyStateOnMainThread(bViewBurden.isEnabled());
+        // TODO: 05.12.2017 solve the problem of disappearing progressBar \\
     }
 
     @Override
@@ -220,6 +238,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 
     @Override
     public void showBurdenInDialog(@NonNull String burden) {
+        // TODO: 05.12.2017 move to the Dialog from support library \\
         final String title = rootContext.getString(R.string.totalBurdenLength) + C.SPACE + U.createReadableStringForLong(burden.length());
         final AlertDialog alertDialog = new AlertDialog.Builder(rootContext)
                 .setTitle(title)
@@ -227,10 +246,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 .create();
         alertDialog
                 .show();
-        if (alertDialog.isShowing()) {
-            setBusy(false);
-        }
-        // TODO: 05.12.2017 move to the Dialog from support library \\
+        toggleViewBurdenBusyStateOnMainThread(!alertDialog.isShowing());
     }
 
     @Override
@@ -303,6 +319,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         pdWait = new ProgressDialog(rootContext);
 //        pdWait.setMessage(rootContext.getString(R.string.startingUp));
         pdWait.setIndeterminate(true);
+
+        pbViewCreatedBurden = rootView.findViewById(R.id.pbViewCreatedBurden);
 
     } // init \\
 

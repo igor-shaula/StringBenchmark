@@ -165,6 +165,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 //            if (burden.length() > 1000) {
 //                uiLink.setBusy(true);
 //            } else {
+            uiLink.toggleViewBurdenBusyStateOnMainThread(false);
             uiLink.showBurdenInDialog(burden);
 //            }
         }
@@ -355,6 +356,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
         }
         isBurdenReady = true;
+        uiLink.toggleViewBurdenBusyStateOnMainThread(true);
     }
 
     private void stopTwisterTimer() {

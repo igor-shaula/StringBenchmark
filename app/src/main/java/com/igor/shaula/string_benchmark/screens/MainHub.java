@@ -41,6 +41,8 @@ public interface MainHub {
 
         void setBusy(boolean isBusy);
 
+        void toggleViewBurdenBusyStateOnMainThread(boolean isBusy);
+
         void toggleJobActiveUiState(boolean isRunning);
 
         void resetResultViewStates();
