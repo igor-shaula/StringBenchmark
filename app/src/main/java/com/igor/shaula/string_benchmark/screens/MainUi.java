@@ -1,8 +1,11 @@
 package com.igor.shaula.string_benchmark.screens;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.screens.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -28,6 +32,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     @SuppressWarnings("NullableProblems") // invoked in the Logic's constructor \\
     @NonNull
     private MainHub.LogicLink logicLink;
+
+    private ProgressDialog pdWait;
 
     // preparation of the burden \\
     private TextView tvStartingExplanation;
@@ -89,7 +95,23 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void showPreparationsResultOnMainThread(@NonNull final long[] oneIterationResults) {
+    public void setBusy(boolean isBusy) {
+        L.i(CN, "setBusy = " + isBusy);
+        if (isBusy) {
+            pdWait.show();
+        } else if (!((Activity) rootContext).isFinishing()
+                && pdWait != null
+                && pdWait.isShowing()) {
+            try {
+                pdWait.dismiss();
+            } catch (IllegalArgumentException iae) {
+                L.e(CN, iae.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void updatePreparationsResultOnMainThread(@NonNull final long[] oneIterationResults) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
@@ -183,6 +205,35 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
+    public void showBuildInfoDialog() {
+        final String message = rootContext.getString(R.string.application) + C.SPACE
+                + rootContext.getString(R.string.app_name) + C.N
+                + rootContext.getString(R.string.versionCode) + C.SPACE + BuildConfig.VERSION_CODE + C.N
+                + rootContext.getString(R.string.versionName) + C.SPACE + BuildConfig.VERSION_NAME + C.N
+                + rootContext.getString(R.string.author) + C.SPACE + rootContext.getString(R.string.me);
+        new AlertDialog.Builder(rootContext)
+                .setTitle(rootContext.getString(R.string.aboutThisBuild))
+                .setMessage(message)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void showBurdenInDialog(@NonNull String burden) {
+        final String title = rootContext.getString(R.string.totalBurdenLength) + C.SPACE + U.createReadableStringForLong(burden.length());
+        final AlertDialog alertDialog = new AlertDialog.Builder(rootContext)
+                .setTitle(title)
+                .setMessage(burden)
+                .create();
+        alertDialog
+                .show();
+        if (alertDialog.isShowing()) {
+            setBusy(false);
+        }
+        // TODO: 05.12.2017 move to the Dialog from support library \\
+    }
+
+    @Override
     public void init() {
 
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
@@ -249,6 +300,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvResultForVAL = rootView.findViewById(R.id.tvResultForVAL);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
 
+        pdWait = new ProgressDialog(rootContext);
+//        pdWait.setMessage(rootContext.getString(R.string.startingUp));
+        pdWait.setIndeterminate(true);
+
     } // init \\
 
     @Override
@@ -258,7 +313,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 logicLink.onPrepareBurdenClick();
                 break;
             case R.id.bViewBurden:
-
+                logicLink.onViewBurdenClick();
                 break;
             case R.id.bToggleIterations:
                 logicLink.onToggleIterationsClick();

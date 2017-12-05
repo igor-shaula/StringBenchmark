@@ -7,6 +7,9 @@ public interface MainHub {
     interface SystemLink {
 
         @NonNull
+        String getBurden();
+
+        @NonNull
         String getAdaptedString(long resultNanoTime);
 
         @NonNull
@@ -36,13 +39,15 @@ public interface MainHub {
 
         void setInitialInputFieldsValues();
 
+        void setBusy(boolean isBusy);
+
         void toggleJobActiveUiState(boolean isRunning);
 
         void resetResultViewStates();
 
         void resetResultOfPreparation();
 
-        void showPreparationsResultOnMainThread(@NonNull long[] results);
+        void updatePreparationsResultOnMainThread(@NonNull long[] results);
 
         void updateBasicStringHint(@NonNull String s);
 
@@ -61,6 +66,10 @@ public interface MainHub {
         void updateResultForVAL(long resultNanoTime);
 
         void informUser(int whichWay, int stringId, int duration);
+
+        void showBuildInfoDialog();
+
+        void showBurdenInDialog(@NonNull String burden);
 
         void init();
     }
@@ -83,7 +92,11 @@ public interface MainHub {
 
         void onPrepareBurdenClick();
 
+        void onViewBurdenClick();
+
         void onToggleIterationsClick();
+
+        void showDialogWithBuildInfo();
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 

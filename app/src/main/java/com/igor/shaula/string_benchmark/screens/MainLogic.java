@@ -63,6 +63,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     // FROM LogicLink ==============================================================================
 
+    @MeDoc("used only in uiLink to sync the bViewBurden availability state")
     @Override
     public boolean isBurdenReady() {
         return isBurdenReady;
@@ -158,12 +159,29 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     @Override
+    public void onViewBurdenClick() {
+        final String burden = systemLink.getBurden();
+        if (isBurdenReady) {
+//            if (burden.length() > 1000) {
+//                uiLink.setBusy(true);
+//            } else {
+            uiLink.showBurdenInDialog(burden);
+//            }
+        }
+    }
+
+    @Override
     public void onToggleIterationsClick() {
         if (isIterationsJobRunning) {
             stopCurrentIterationsJob();
         } else {
             startIterationsJob();
         }
+    }
+
+    @Override
+    public void showDialogWithBuildInfo() {
+        uiLink.showBuildInfoDialog();
     }
 
     @Override
@@ -195,7 +213,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
 //    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
 //        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
-//            uiLink.showPreparationsResultOnMainThread(oneIterationResults);
+//            uiLink.updatePreparationsResultOnMainThread(oneIterationResults);
 //        }
 //    }
 
@@ -218,7 +236,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
                 " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
         totalResultList.add(oneIterationsResult);
         final long[] results = calculateMedianResult();
-        uiLink.showPreparationsResultOnMainThread(results);
+        uiLink.updatePreparationsResultOnMainThread(results);
     }
 
     // PRIVATE =====================================================================================

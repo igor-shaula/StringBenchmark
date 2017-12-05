@@ -11,6 +11,7 @@ public final class C {
     public static final String NULL = "null";
     public static final String TRUE = "true";
     public static final String FALSE = "false";
+    public static final String N = "\n";
     public static final String SPACE = " ";
     public static final String SLASH = "/";
     public static final String DOT = ".";

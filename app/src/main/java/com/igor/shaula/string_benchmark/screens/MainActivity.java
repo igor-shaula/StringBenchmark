@@ -99,13 +99,28 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            logicLink.showDialogWithBuildInfo();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     // FROM SystemLink =============================================================================
+
+    @NonNull
+    @Override
+    public String getBurden() {
+        final DataTransport appLink = (DataTransport) getApplication();
+        // longStringForTest may be null - but it's normally processed by all our logging variants \\
+        final String longStringForTest = appLink.getLongStringForTest();
+        if (U.isAnyOneNullOrEmpty(longStringForTest)) {
+            return "";
+        } else {
+            //noinspection ConstantConditions
+            return longStringForTest;
+        }
+    }
 
     @NonNull
     @Override
@@ -163,7 +178,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 //                        " oneIterationResults = " + Arrays.toString(oneIterationResults));
 //                L.silence();
 //                storeToIntegralResult(oneIterationResults);
-//                showPreparationsResultOnMainThread(calculateMedianResult());
+//                updatePreparationsResultOnMainThread(calculateMedianResult());
 //                return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 logicLink.toggleBurdenPreparationJobState(false);

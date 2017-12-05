@@ -3,8 +3,14 @@
     <!-- common strings -->
 
     <string name="app_name">String Benchmark</string>
-
+    <string name="application">Application:</string>
     <string name="menu_about">About</string>
+    <string name="aboutThisBuild">About this build</string>
+    <string name="versionCode">version code:</string>
+    <string name="versionName">version name:</string>
+    <string name="author">author:</string>
+    <string name="me">Igor Shaula</string>
+    <string name="totalBurdenLength">Burden length is</string>
 
     <string name="pressBackAgainToExit">Press Back button again to exit</string>
 
@@ -45,11 +51,17 @@
     <string name="stopIterations">Stop iterations</string>
     <string name="viewTestResults">View all results</string>
 
+    <string name="resultsForLoggingTests">Median results for logging the burden:</string>
+    <string name="resultsForLoggingTestsBeginning">\n(the string of</string>
+    <string name="resultsForLoggingTestsEnd">symbols total)</string>
+
     <string name="resultOfStandardLog">Standard Android Log:</string>
     <string name="resultOfSAL">My single-arg Log wrapper:</string>
     <string name="resultOfDAL">My double-args Log wrapper:</string>
     <string name="resultOfVAL">My variable-args Log wrapper:</string>
     <string name="resultOfSystemOutPrintln">Good old System.out.println(…):</string>
-    <string name="resultsForLoggingTests">Results for logging the string on:</string>
+    <string name="thisBlocksDivider"/>
+
+    <!-- something else - for new automatically created strings -->
 
 </resources>
