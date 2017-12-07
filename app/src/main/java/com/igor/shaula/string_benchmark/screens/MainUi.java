@@ -52,6 +52,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private EditText etIterationsAmount;
     private Button bToggleIterations;
     private Button bViewAllResults;
+    private TextView tvBurdenExplanation;
     private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
@@ -191,6 +192,18 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
+    public void updateBurdenLengthOnMainThread(final int length) {
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                final String burdenLengthText = rootContext.getString(R.string.totalBurdenInfo)
+                        + C.SPACE + U.createReadableStringForLong(length);
+                tvBurdenExplanation.setText(burdenLengthText);
+            }
+        });
+    }
+
+    @Override
     public void updateResultForLog(long resultNanoTime) {
         tvResultForLog.setText(U.adaptForUser(rootContext, resultNanoTime));
     }
@@ -310,6 +323,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         bToggleIterations.setOnClickListener(this);
         bViewAllResults = rootView.findViewById(R.id.bViewAllResults);
         bViewAllResults.setOnClickListener(this);
+        tvBurdenExplanation = rootView.findViewById(R.id.tvBurdenExplanation);
+        final String startingBurdenInfo = rootContext.getString(R.string.totalBurdenInfo) + C.SPACE + C.ZERO;
+        tvBurdenExplanation.setText(startingBurdenInfo);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForSAL = rootView.findViewById(R.id.tvResultForSAL);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);

@@ -304,7 +304,7 @@ public final class U {
             } else if (0 < divisionsModulo && divisionsModulo < 10) {
                 stringBuilder.insert(0, C.TWO_ZEROES + String.valueOf(divisionsModulo));
             } else if (10 <= divisionsModulo && divisionsModulo < 100) {
-                stringBuilder.insert(0, C.ONE_ZERO + String.valueOf(divisionsModulo));
+                stringBuilder.insert(0, C.ZERO + String.valueOf(divisionsModulo));
             } else if (100 <= divisionsModulo && divisionsModulo < 1000) {
                 stringBuilder.insert(0, String.valueOf(divisionsModulo));
             }
@@ -337,8 +337,8 @@ public final class U {
     static String reduceStartingZeroes(@NonNull String s) {
         if (s.startsWith(C.TWO_ZEROES)) {
             s = s.replaceFirst(C.TWO_ZEROES, "");
-        } else if (s.startsWith(C.ONE_ZERO)) {
-            s = s.replaceFirst(C.ONE_ZERO, "");
+        } else if (s.startsWith(C.ZERO)) {
+            s = s.replaceFirst(C.ZERO, "");
         }
         return s;
     }

@@ -81,6 +81,15 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvBurdenExplanation"
+        style="@style/MatchWrap"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:text="@string/totalBurdenInfo"
+        android:textColor="@android:color/black"/>
+
+    <TextView
         android:id="@+id/tvProgressBar"
         style="@style/MatchWrap"
         android:layout_gravity="center"

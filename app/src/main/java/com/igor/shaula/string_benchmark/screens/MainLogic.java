@@ -39,7 +39,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private boolean isIterationsJobRunning;
     private boolean isBurdenReady;
 
-    private int counter;
+    private int twisterCounter;
 
     @NonNull
     private List<long[]> totalResultList = new LinkedList<>();
@@ -286,7 +286,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             @Override
             public void run() {
                 // 0 - 1 - 2 - 3 - 0 - 1 - 2 - 3 - 0 - ...
-                index[0] = counter % CHARS.length;
+                index[0] = twisterCounter % CHARS.length;
                 textForUI[0] = String.valueOf(CHARS[index[0]]);
                 updatePreparationResult(textForUI[0]);
             }
@@ -351,12 +351,13 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private void updatePreparationResult(@NonNull final String result) {
         if (pendingPreparationResult.isEmpty()) {
             uiLink.updatePreparationResultOnMainThread(result);
-            counter++;
+            twisterCounter++;
         } else {
             uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
         }
         isBurdenReady = true;
         uiLink.toggleViewBurdenBusyStateOnMainThread(true);
+        uiLink.updateBurdenLengthOnMainThread(systemLink.getBurden().length());
     }
 
     private void stopTwisterTimer() {
@@ -364,6 +365,6 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             twisterTimer.cancel(); // purge() behaves very strangely - so i decided to avoid it
         }
         twisterTimer = null;
-        counter = 0;
+        twisterCounter = 0;
     }
 }

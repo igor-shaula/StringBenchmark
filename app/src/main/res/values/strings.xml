@@ -41,7 +41,7 @@
     <!-- iterations -->
 
     <string name="iterationsExplanation">
-        Burden is processed by each variant in every iteration.
+        Burden is processed by each variant in every iteration
     </string>
 
     <string name="iterationsAmountHintEmpty">No test iterations will be done!</string>
@@ -61,6 +61,7 @@
     <string name="resultOfVAL">My variable-args Log wrapper:</string>
     <string name="resultOfSystemOutPrintln">Good old System.out.println(…):</string>
     <string name="thisBlocksDivider"/>
+    <string name="totalBurdenInfo">Assembled burden length is</string>
 
     <!-- something else - for new automatically created strings -->
 

@@ -168,8 +168,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             case C.Intent.ACTION_GET_PREPARATION_RESULT:
                 whatInfoToShow = C.Choice.PREPARATION;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
-                // immediately launching the next job - the main job of testing speed of variants \\
-//                logicLink.startIterationsJob();
+                logicLink.showPreparationsResult(whatInfoToShow, resultNanoTime);
                 break;
 //            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
 //                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
@@ -186,9 +185,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 return;
             default:
                 L.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
-                return;
         }
-        logicLink.showPreparationsResult(whatInfoToShow, resultNanoTime);
     }
 
     // TODO: 18.11.2017 use android.os.CpuUsageInfo

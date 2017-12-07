@@ -59,6 +59,8 @@ public interface MainHub {
 
         void updatePreparationResultOnMainThread(@NonNull String result);
 
+        void updateBurdenLengthOnMainThread(int length);
+
         void updateResultForLog(long resultNanoTime);
 
         void updateResultForSAL(long resultNanoTime);
