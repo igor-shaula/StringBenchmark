@@ -1,5 +1,6 @@
 package com.igor.shaula.string_benchmark.screens;
 
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +41,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_linear);
+//        setContentView(R.layout.activity_main_coordinator);
 
         logicLink = new MainLogic(this,
                 new MainUi(findViewById(R.id.mainActivityRootView)),
@@ -99,7 +101,13 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about) {
+        if (id == R.id.action_showPrefsFragmentHere) {
+            logicLink.togglePrefsFragmentHere();
+            // as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
+            item.setIcon(logicLink.isPrefsFragmentShownHere() ?
+                    android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info);
+            return true;
+        } else if (id == R.id.action_about) {
             logicLink.showDialogWithBuildInfo();
             return true;
         }
@@ -132,6 +140,17 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @Override
     public String findStringById(int stringId) {
         return getString(stringId);
+    }
+
+    @Override
+    public void togglePrefsFragment(boolean shouldShow) {
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        if (shouldShow) {
+            fragmentTransaction.replace(R.id.flPrefsContainer, PrefsFragment0.getInstance(), "");
+        } else {
+            fragmentTransaction.remove(PrefsFragment0.getInstance());
+        }
+        fragmentTransaction.commit();
     }
 
     @Override

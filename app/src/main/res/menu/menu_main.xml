@@ -4,6 +4,13 @@
       tools:context="com.igor.shaula.string_benchmark.screens.MainActivity">
 
     <item
+        android:id="@+id/action_showPrefsFragmentHere"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:orderInCategory="10"
+        android:title="@string/menu_prefsFragment0"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:title="@string/menu_about"

@@ -63,6 +63,8 @@
     <string name="thisBlocksDivider"/>
     <string name="totalBurdenInfo">Assembled burden length is</string>
 
+    <string name="menu_prefsFragment0">Prefs in fragment 0</string>
+
     <!-- something else - for new automatically created strings -->
 
 </resources>

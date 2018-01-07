@@ -15,6 +15,8 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
+        void togglePrefsFragment(boolean shouldShow);
+
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
         void launchAllMeasurements(int testRepetitionsCount);
@@ -82,6 +84,8 @@ public interface MainHub {
 
         boolean isBurdenReady();
 
+        boolean isPrefsFragmentShownHere();
+
         void toggleBurdenPreparationJobState(boolean isRunning);
 
         void toggleIterationsJobState(boolean isRunning);
@@ -101,6 +105,8 @@ public interface MainHub {
         void onToggleIterationsClick();
 
         void showDialogWithBuildInfo();
+
+        void togglePrefsFragmentHere();
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 

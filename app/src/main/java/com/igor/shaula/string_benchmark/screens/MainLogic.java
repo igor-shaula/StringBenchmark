@@ -38,6 +38,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private boolean isBurdenPreparationJobRunning;
     private boolean isIterationsJobRunning;
     private boolean isBurdenReady;
+    private boolean isPrefsFragmentShownHere;
 
     private int twisterCounter;
 
@@ -67,6 +68,11 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     @Override
     public boolean isBurdenReady() {
         return isBurdenReady;
+    }
+
+    @Override
+    public boolean isPrefsFragmentShownHere() {
+        return isPrefsFragmentShownHere;
     }
 
     @Override
@@ -183,6 +189,17 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     @Override
     public void showDialogWithBuildInfo() {
         uiLink.showBuildInfoDialog();
+    }
+
+    @Override
+    public void togglePrefsFragmentHere() {
+        if (isPrefsFragmentShownHere) {
+            systemLink.togglePrefsFragment(false);
+            isPrefsFragmentShownHere = false;
+        } else {
+            systemLink.togglePrefsFragment(true);
+            isPrefsFragmentShownHere = true;
+        }
     }
 
     @Override
