@@ -107,6 +107,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             item.setIcon(logicLink.isPrefsFragmentShownHere() ?
                     android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info);
             return true;
+        } else if (id == R.id.action_showSettingsActivity){
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.action_about) {
             logicLink.showDialogWithBuildInfo();
             return true;
