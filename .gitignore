@@ -20,3 +20,7 @@ gradlew
 gradlew.bat
 /gradle/wrapper/gradle-wrapper.properties
 !/.gitignore
+.idea/caches/
+.idea/codeStyles/
+.idea/kotlinc.xml
+generated-version.txt
