@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens;
+package com.igor.shaula.string_benchmark.screens.mandatory;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -281,18 +281,18 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         L.d(CN, "runTestBurdenPreparation() finished");
         // TODO: 02.12.2017 wright unit-tests with this kind of content \\
 /*
-                    VAL.v("" + getString(R.string.vero_test).length());
-                    VAL.v("", "");
-                    VAL.v("", "", "");
-                    VAL.v();
-                    VAL.v((String[]) null);
-                    VAL.v(null, null);
-                    VAL.v(null, null, null);
-                    VAL.v(this.toString(), null, null);
-                    VAL.v("1");
-                    VAL.v("1", "2");
-                    VAL.v("1", "2", "3");
-                    VAL.v("", "", "", "");
+                    VAL0.v("" + getString(R.string.vero_test).length());
+                    VAL0.v("", "");
+                    VAL0.v("", "", "");
+                    VAL0.v();
+                    VAL0.v((String[]) null);
+                    VAL0.v(null, null);
+                    VAL0.v(null, null, null);
+                    VAL0.v(this.toString(), null, null);
+                    VAL0.v("1");
+                    VAL0.v("1", "2");
+                    VAL0.v("1", "2", "3");
+                    VAL0.v("", "", "", "");
 */
     }
 

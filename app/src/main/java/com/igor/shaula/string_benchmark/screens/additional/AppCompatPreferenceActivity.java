@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens;
+package com.igor.shaula.string_benchmark.screens.additional;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

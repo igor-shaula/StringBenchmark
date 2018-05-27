@@ -13,7 +13,7 @@ import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.string_benchmark.log_wrappers.single_arg_logger.SAL;
-import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger.VAL;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_0_initial.VAL0;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
@@ -231,7 +231,7 @@ public class TestingIntentService extends IntentService {
     private long runValMethod(@Nullable String longStringForTest) {
         // measuring VariableArgsLogger's time \\
         valNanoTime = System.nanoTime();
-        VAL.v(CN, longStringForTest);
+        VAL0.v(CN, longStringForTest);
         return System.nanoTime() - valNanoTime;
     }
 

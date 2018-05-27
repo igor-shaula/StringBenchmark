@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.log_wrappers.var_args_logger;
+package com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_0_initial;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +13,7 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
         "every method here takes any number of arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
 
-public final class VAL {
+public final class VAL0 {
 
     private static final String TAG_23 = "VariableArgsLogTag";
     private static final String DIVIDER = " ` ";
@@ -26,7 +26,7 @@ public final class VAL {
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
 
-    private VAL() {
+    private VAL0() {
         // should not create any instances of this class \\
     }
 

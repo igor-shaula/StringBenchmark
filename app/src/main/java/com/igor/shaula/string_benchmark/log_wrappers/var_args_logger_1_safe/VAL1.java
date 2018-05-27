@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.log_wrappers;
+package com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_1_safe;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +15,7 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
         "the best name for this class consists of only one letter - L - for briefness in code",
         modifiedBy = "Igor Shaula", modifiedOn = "28-02-2018")
 
-public final class L {
+public final class VAL1 {
 
     // TODO: 28.02.2018 make tag able to be set by the user, but safely - to avoid exception \\
     private static final String TAG_23 = "CHC_BBU_3_4_1";
@@ -30,7 +30,7 @@ public final class L {
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
 
-    private L() {
+    private VAL1() {
         // should not create any instances of this class \\
     }
 
@@ -142,10 +142,6 @@ public final class L {
     }
 
     private static int getStringLength(@Nullable String string) {
-        int stringLength = 0;
-        if (string != null) {
-            stringLength = string.length();
-        }
-        return stringLength;
+        return string != null ? string.length() : 0;
     }
 }

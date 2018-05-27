@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens;
+package com.igor.shaula.string_benchmark.screens.mandatory;
 
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.TestingIntentService;
+import com.igor.shaula.string_benchmark.screens.additional.PrefsFragment0;
+import com.igor.shaula.string_benchmark.screens.additional.SettingsActivity;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;

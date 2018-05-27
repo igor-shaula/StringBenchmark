@@ -15,7 +15,7 @@
         <!-- we really need large heap here -->
 
         <activity
-            android:name=".screens.MainActivity"
+            android:name=".screens.mandatory.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
@@ -32,12 +32,12 @@
         </service>
 
         <activity
-            android:name=".screens.SettingsActivity"
+            android:name=".screens.additional.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".screens.MainActivity">
+            android:parentActivityName=".screens.mandatory.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.igor.shaula.string_benchmark.screens.MainActivity"/>
+                android:value="com.igor.shaula.string_benchmark.screens.mandatory.MainActivity"/>
         </activity>
     </application>
 

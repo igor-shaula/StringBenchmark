@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens;
+package com.igor.shaula.string_benchmark.screens.mandatory;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

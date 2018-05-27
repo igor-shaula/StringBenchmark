@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens;
+package com.igor.shaula.string_benchmark.screens.additional;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
