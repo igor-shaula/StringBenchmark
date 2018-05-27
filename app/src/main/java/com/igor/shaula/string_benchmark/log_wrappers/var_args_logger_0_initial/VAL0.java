@@ -15,7 +15,7 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 public final class VAL0 {
 
-    private static final String TAG_23 = "VariableArgsLogTag";
+    private static final String TAG_23 = "VariableArgsLogTag0";
     private static final String DIVIDER = " ` ";
     private static final String CONTAINER_IS_NULL = "{LogVarArgs:NULL}";
     private static final String CONTAINER_IS_EMPTY = "{LogVarArgs:EMPTY}";
