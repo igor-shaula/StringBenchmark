@@ -33,9 +33,9 @@ public final class VAL3 {
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
     @NonNull
-    private static String tag23 = "VariableArgsLogTag2";
+    private static String tag23 = "VariableArgsLogTag3";
     @NonNull
-    private static String divider = ""; // should be restricted in length somehow to keep it usable \\
+    private static String divider = " ` "; // should be restricted in length somehow to keep it usable \\
 
     private VAL3() {
         // should not create any instances of this class \\

@@ -221,7 +221,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             case C.Choice.TEST_DAL:
                 uiLink.updateResultForDAL(resultNanoTime);
                 break;
-            case C.Choice.TEST_VAL:
+            case C.Choice.TEST_VAL_0:
                 uiLink.updateResultForVAL(resultNanoTime);
                 break;
             default:
@@ -353,13 +353,13 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             sumForLog += array[C.Order.INDEX_OF_LOG];
             sumForSAL += array[C.Order.INDEX_OF_SAL];
             sumForDAL += array[C.Order.INDEX_OF_DAL];
-            sumForVAL += array[C.Order.INDEX_OF_VAL];
+            sumForVAL += array[C.Order.INDEX_OF_VAL_0];
             sumForSout += array[C.Order.INDEX_OF_SOUT];
         }
         medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
         medianArray[C.Order.INDEX_OF_SAL] = sumForSAL / listSize;
         medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
-        medianArray[C.Order.INDEX_OF_VAL] = sumForVAL / listSize;
+        medianArray[C.Order.INDEX_OF_VAL_0] = sumForVAL / listSize;
         medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
 
         return medianArray;

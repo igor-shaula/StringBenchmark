@@ -11,15 +11,15 @@ public final class C {
     public static final String NULL = "null";
     public static final String TRUE = "true";
     public static final String FALSE = "false";
-    public static final String N = "\n";
-    public static final String SPACE = " ";
-    public static final String SLASH = "/";
-    public static final String DOT = ".";
-    public static final String COMMA = ",";
-    public static final String STAR = "*";
-    public static final String DASH = "-";
-    public static final String UNDERSCORE = "_";
-    public static final String ZERO = "0";
+    public static final char N = '\n';
+    public static final char SPACE = ' ';
+    public static final char SLASH = '/';
+    public static final char DOT = '.';
+    public static final char COMMA = ',';
+    public static final char STAR = '*';
+    public static final char DASH = '-';
+    public static final char UNDERSCORE = '_';
+    public static final char ZERO = '0';
     public static final String TWO_ZEROES = "00";
     public static final String THREE_ZEROES = "000";
     public static final String REGEX_NOT_DIGIT = "\\D";
@@ -40,7 +40,10 @@ public final class C {
         public static final int TEST_SYSTEM_LOG = 0x10;
         public static final int TEST_SAL = 0x11;
         public static final int TEST_DAL = 0x12;
-        public static final int TEST_VAL = 0x13;
+        public static final int TEST_VAL_0 = 0x130;
+        public static final int TEST_VAL_1 = 0x131;
+        public static final int TEST_VAL_2 = 0x132;
+        public static final int TEST_VAL_3 = 0x133;
         public static final int DESTROYED = 0x100;
     }
 
@@ -49,9 +52,12 @@ public final class C {
         public static final int INDEX_OF_LOG = 0;
         public static final int INDEX_OF_SAL = 1;
         public static final int INDEX_OF_DAL = 2;
-        public static final int INDEX_OF_VAL = 3;
-        public static final int INDEX_OF_SOUT = 4;
-        public static final int VARIANTS_TOTAL = 5;
+        public static final int INDEX_OF_VAL_0 = 3;
+        public static final int INDEX_OF_VAL_1 = 4;
+        public static final int INDEX_OF_VAL_2 = 5;
+        public static final int INDEX_OF_VAL_3 = 6;
+        public static final int INDEX_OF_SOUT = 7;
+        public static final int VARIANTS_TOTAL = 8;
     }
 
     public static final class Prefs {
@@ -70,7 +76,10 @@ public final class C {
         public static final String ACTION_GET_SYSTEM_LOG_TEST_RESULT = "standard system log test";
         public static final String ACTION_GET_SAL_TEST_RESULT = "single argument log wrapper test";
         public static final String ACTION_GET_DAL_TEST_RESULT = "double argument log wrapper test";
-        public static final String ACTION_GET_VAL_TEST_RESULT = "var-args number log wrapper test";
+        public static final String ACTION_GET_VAL_0_TEST_RESULT = "var-args-0 number log wrapper test";
+        public static final String ACTION_GET_VAL_1_TEST_RESULT = "var-args-1 number log wrapper test";
+        public static final String ACTION_GET_VAL_2_TEST_RESULT = "var-args-2 number log wrapper test";
+        public static final String ACTION_GET_VAL_3_TEST_RESULT = "var-args-3 number log wrapper test";
         public static final String ACTION_ON_SERVICE_STOPPED = "invoked after service's destruction";
         public static final String ACTION_GET_ONE_ITERATION_RESULTS = "results after one iteration";
         public static final String NAME_BASIC_STRING = "string used as a basis for creating burden";
@@ -79,7 +88,10 @@ public final class C {
         public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";
         public static final String NAME_SAL_TIME = "time of single-arg log wrapper work";
         public static final String NAME_DAL_TIME = "time of double-arg log wrapper work";
-        public static final String NAME_VAL_TIME = "time of var-args log wrapper work";
+        public static final String NAME_VAL_0_TIME = "time of var-args-0 log wrapper work";
+        public static final String NAME_VAL_1_TIME = "time of var-args-1 log wrapper work";
+        public static final String NAME_VAL_2_TIME = "time of var-args-2 log wrapper work";
+        public static final String NAME_VAL_3_TIME = "time of var-args-3 log wrapper work";
         public static final String NAME_ITERATIONS = "number of iterations for testing every variant";
         public static final String NAME_ALL_TIME = "array with results for every variant per iteration";
         public static final String NAME_ITERATION_NUMBER = "iteration number";

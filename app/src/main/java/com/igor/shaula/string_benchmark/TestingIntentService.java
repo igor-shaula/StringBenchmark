@@ -14,6 +14,9 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.string_benchmark.log_wrappers.single_arg_logger.SAL;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_0_initial.VAL0;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_1_safe.VAL1;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_2_configurable.VAL2;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_3_objects.VAL3;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
@@ -30,7 +33,11 @@ public class TestingIntentService extends IntentService {
 
     // placing variables here avoids creation of those in each test's loop iteration \\
     @SuppressWarnings("FieldCanBeLocal")
-    private long logNanoTime, salNanoTime, dalNanoTime, valNanoTime, soutNanoTime;
+    private long logNanoTime,
+            salNanoTime,
+            dalNanoTime,
+            val0NanoTime, val1NanoTime, val2NanoTime, val3NanoTime,
+            soutNanoTime;
 
     public TestingIntentService() {
         super(CN);
@@ -194,7 +201,10 @@ public class TestingIntentService extends IntentService {
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_SAL, runSalMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
-            oneIterationResults.add(C.Order.INDEX_OF_VAL, runValMethod(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_VAL_0, runVal0Method(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_VAL_1, runVal1Method(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_VAL_2, runVal2Method(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_VAL_3, runVal3Method(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
@@ -228,11 +238,32 @@ public class TestingIntentService extends IntentService {
         return System.nanoTime() - dalNanoTime;
     }
 
-    private long runValMethod(@Nullable String longStringForTest) {
+    private long runVal0Method(@Nullable String longStringForTest) {
         // measuring VariableArgsLogger's time \\
-        valNanoTime = System.nanoTime();
+        val0NanoTime = System.nanoTime();
         VAL0.v(CN, longStringForTest);
-        return System.nanoTime() - valNanoTime;
+        return System.nanoTime() - val0NanoTime;
+    }
+
+    private long runVal1Method(@Nullable String longStringForTest) {
+        // measuring VariableArgsLogger's time \\
+        val1NanoTime = System.nanoTime();
+        VAL1.v(CN, longStringForTest);
+        return System.nanoTime() - val1NanoTime;
+    }
+
+    private long runVal2Method(@Nullable String longStringForTest) {
+        // measuring VariableArgsLogger's time \\
+        val2NanoTime = System.nanoTime();
+        VAL2.v(CN, longStringForTest);
+        return System.nanoTime() - val2NanoTime;
+    }
+
+    private long runVal3Method(@Nullable String longStringForTest) {
+        // measuring VariableArgsLogger's time \\
+        val3NanoTime = System.nanoTime();
+        VAL3.v(CN, longStringForTest);
+        return System.nanoTime() - val3NanoTime;
     }
 
     private long runSoutMethod(@Nullable String longStringForTest) {

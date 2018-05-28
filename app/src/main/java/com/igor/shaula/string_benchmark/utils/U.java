@@ -285,7 +285,7 @@ public final class U {
     @MeDoc("replaces only the first met dot with comma - of course if this dot exists in the string")
     @NonNull
     static String replaceFirstDotWithComma(@NonNull String s) {
-        return s.replaceFirst(C.REGEX_NOT_DIGIT, C.COMMA);
+        return s.replaceFirst(C.REGEX_NOT_DIGIT, String.valueOf(C.COMMA));
     }
 
     @MeDoc("converts positive integer number into formatted string for showing quantities")
@@ -337,8 +337,8 @@ public final class U {
     static String reduceStartingZeroes(@NonNull String s) {
         if (s.startsWith(C.TWO_ZEROES)) {
             s = s.replaceFirst(C.TWO_ZEROES, "");
-        } else if (s.startsWith(C.ZERO)) {
-            s = s.replaceFirst(C.ZERO, "");
+        } else if (s.startsWith(String.valueOf(C.ZERO))) {
+            s = s.replaceFirst(String.valueOf(C.ZERO), "");
         }
         return s;
     }

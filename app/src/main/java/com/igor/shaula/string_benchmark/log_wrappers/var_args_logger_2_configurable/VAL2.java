@@ -35,7 +35,7 @@ public final class VAL2 {
     @NonNull
     private static String tag23 = "VariableArgsLogTag2";
     @NonNull
-    private static String divider = ""; // should be restricted in length somehow to keep it usable \\
+    private static String divider = " ` "; // should be restricted in length somehow to keep it usable \\
 
     private VAL2() {
         // should not create any instances of this class \\
