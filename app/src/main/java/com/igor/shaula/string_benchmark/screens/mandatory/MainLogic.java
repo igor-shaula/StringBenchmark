@@ -8,9 +8,13 @@ import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.log_wrappers.VAL4;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_3_objects.VAL3;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -303,6 +307,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
                     VAL0.v("1", "2", "3");
                     VAL0.v("", "", "", "");
 */
+        VAL4.v("the fact of posting the expression itself"); // just logging the statement here \\
+//        VAL4.vChain("expression-1").is("result"); // should be "expression = result" \\
+//        VAL4.vChain(null).is(null); // should be "expression = result" \\
+        VAL4.setConnector(" IS ");
+        VAL4.vIs("expression-2", "result");
+        VAL4.vIs(new JSONObject(), "json result");
     }
 
     private void showTextyTwister() {
