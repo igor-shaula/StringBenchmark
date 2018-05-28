@@ -222,7 +222,16 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
                 uiLink.updateResultForDAL(resultNanoTime);
                 break;
             case C.Choice.TEST_VAL_0:
-                uiLink.updateResultForVAL(resultNanoTime);
+                uiLink.updateResultForVAL0(resultNanoTime);
+                break;
+            case C.Choice.TEST_VAL_1:
+                uiLink.updateResultForVAL1(resultNanoTime);
+                break;
+            case C.Choice.TEST_VAL_2:
+                uiLink.updateResultForVAL2(resultNanoTime);
+                break;
+            case C.Choice.TEST_VAL_3:
+                uiLink.updateResultForVAL3(resultNanoTime);
                 break;
             default:
                 L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
@@ -345,7 +354,10 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         long sumForLog = 0;
         long sumForSAL = 0;
         long sumForDAL = 0;
-        long sumForVAL = 0;
+        long sumForVAL0 = 0;
+        long sumForVAL1 = 0;
+        long sumForVAL2 = 0;
+        long sumForVAL3 = 0;
         long sumForSout = 0;
         for (long[] array : totalResultList) {
             L.w("calculateMedianResult", "" + Arrays.toString(array));
@@ -353,13 +365,19 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             sumForLog += array[C.Order.INDEX_OF_LOG];
             sumForSAL += array[C.Order.INDEX_OF_SAL];
             sumForDAL += array[C.Order.INDEX_OF_DAL];
-            sumForVAL += array[C.Order.INDEX_OF_VAL_0];
+            sumForVAL0 += array[C.Order.INDEX_OF_VAL_0];
+            sumForVAL1 += array[C.Order.INDEX_OF_VAL_1];
+            sumForVAL2 += array[C.Order.INDEX_OF_VAL_2];
+            sumForVAL3 += array[C.Order.INDEX_OF_VAL_3];
             sumForSout += array[C.Order.INDEX_OF_SOUT];
         }
         medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
         medianArray[C.Order.INDEX_OF_SAL] = sumForSAL / listSize;
         medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
-        medianArray[C.Order.INDEX_OF_VAL_0] = sumForVAL / listSize;
+        medianArray[C.Order.INDEX_OF_VAL_0] = sumForVAL0 / listSize;
+        medianArray[C.Order.INDEX_OF_VAL_1] = sumForVAL1 / listSize;
+        medianArray[C.Order.INDEX_OF_VAL_2] = sumForVAL2 / listSize;
+        medianArray[C.Order.INDEX_OF_VAL_3] = sumForVAL3 / listSize;
         medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
 
         return medianArray;

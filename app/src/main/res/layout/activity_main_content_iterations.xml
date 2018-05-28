@@ -138,10 +138,40 @@
 
     <TextView
         style="@style/WrapWrap"
-        android:text="@string/resultOfVAL"/>
+        android:text="@string/resultOfVAL0"/>
 
     <TextView
-        android:id="@+id/tvResultForVAL"
+        android:id="@+id/tvResultForVAL0"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfVAL1"/>
+
+    <TextView
+        android:id="@+id/tvResultForVAL1"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfVAL2"/>
+
+    <TextView
+        android:id="@+id/tvResultForVAL2"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfVAL3"/>
+
+    <TextView
+        android:id="@+id/tvResultForVAL3"
         style="@style/MatchWrap.Gravity_End"
         android:text="@string/star"
         android:textColor="@color/colorPrimaryDark"/>

@@ -56,7 +56,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
-    private TextView tvResultForVAL;
+    private TextView tvResultForVAL0;
+    private TextView tvResultForVAL1;
+    private TextView tvResultForVAL2;
+    private TextView tvResultForVAL3;
     private TextView tvResultForSout;
 
     MainUi(@NonNull View rootView) {
@@ -133,7 +136,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
                 tvResultForSAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SAL]));
                 tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
-                tvResultForVAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_0]));
+                tvResultForVAL0.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_0]));
+                tvResultForVAL1.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_1]));
+                tvResultForVAL2.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_2]));
+                tvResultForVAL3.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_3]));
                 tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
             }
         });
@@ -157,7 +163,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvResultForLog.setText(String.valueOf(C.STAR));
         tvResultForSAL.setText(String.valueOf(C.STAR));
         tvResultForDAL.setText(String.valueOf(C.STAR));
-        tvResultForVAL.setText(String.valueOf(C.STAR));
+        tvResultForVAL0.setText(String.valueOf(C.STAR));
+        tvResultForVAL1.setText(String.valueOf(C.STAR));
+        tvResultForVAL2.setText(String.valueOf(C.STAR));
+        tvResultForVAL3.setText(String.valueOf(C.STAR));
         tvResultForSout.setText(String.valueOf(C.STAR));
     }
 
@@ -219,8 +228,23 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void updateResultForVAL(long resultNanoTime) {
-        tvResultForVAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+    public void updateResultForVAL0(long resultNanoTime) {
+        tvResultForVAL0.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForVAL1(long resultNanoTime) {
+        tvResultForVAL1.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForVAL2(long resultNanoTime) {
+        tvResultForVAL2.setText(U.adaptForUser(rootContext, resultNanoTime));
+    }
+
+    @Override
+    public void updateResultForVAL3(long resultNanoTime) {
+        tvResultForVAL3.setText(U.adaptForUser(rootContext, resultNanoTime));
     }
 
     @Override
@@ -329,7 +353,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForSAL = rootView.findViewById(R.id.tvResultForSAL);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
-        tvResultForVAL = rootView.findViewById(R.id.tvResultForVAL);
+        tvResultForVAL0 = rootView.findViewById(R.id.tvResultForVAL0);
+        tvResultForVAL1 = rootView.findViewById(R.id.tvResultForVAL1);
+        tvResultForVAL2 = rootView.findViewById(R.id.tvResultForVAL2);
+        tvResultForVAL3 = rootView.findViewById(R.id.tvResultForVAL3);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
 
         pdWait = new ProgressDialog(rootContext);
