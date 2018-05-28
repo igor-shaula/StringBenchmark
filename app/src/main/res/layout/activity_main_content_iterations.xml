@@ -108,6 +108,16 @@
 
     <TextView
         style="@style/WrapWrap"
+        android:text="@string/resultOfSystemOutPrintln"/>
+
+    <TextView
+        android:id="@+id/tvResultForSystemOutPrintln"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        style="@style/WrapWrap"
         android:text="@string/resultOfStandardLog"/>
 
     <TextView
@@ -172,16 +182,6 @@
 
     <TextView
         android:id="@+id/tvResultForVAL3"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfSystemOutPrintln"/>
-
-    <TextView
-        android:id="@+id/tvResultForSystemOutPrintln"
         style="@style/MatchWrap.Gravity_End"
         android:text="@string/star"
         android:textColor="@color/colorPrimaryDark"/>

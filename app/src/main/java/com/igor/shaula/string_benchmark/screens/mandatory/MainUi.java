@@ -53,6 +53,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private Button bToggleIterations;
     private Button bViewAllResults;
     private TextView tvBurdenExplanation;
+    private TextView tvResultForSout;
     private TextView tvResultForLog;
     private TextView tvResultForSAL;
     private TextView tvResultForDAL;
@@ -60,7 +61,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private TextView tvResultForVAL1;
     private TextView tvResultForVAL2;
     private TextView tvResultForVAL3;
-    private TextView tvResultForSout;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -133,6 +133,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         rootView.post(new Runnable() {
             @Override
             public void run() {
+                tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
                 tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
                 tvResultForSAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SAL]));
                 tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
@@ -140,7 +141,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 tvResultForVAL1.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_1]));
                 tvResultForVAL2.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_2]));
                 tvResultForVAL3.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_3]));
-                tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
             }
         });
     }
@@ -160,6 +160,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 
     @Override
     public void resetResultViewStates() {
+        tvResultForSout.setText(String.valueOf(C.STAR));
         tvResultForLog.setText(String.valueOf(C.STAR));
         tvResultForSAL.setText(String.valueOf(C.STAR));
         tvResultForDAL.setText(String.valueOf(C.STAR));
@@ -167,7 +168,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvResultForVAL1.setText(String.valueOf(C.STAR));
         tvResultForVAL2.setText(String.valueOf(C.STAR));
         tvResultForVAL3.setText(String.valueOf(C.STAR));
-        tvResultForSout.setText(String.valueOf(C.STAR));
     }
 
     @Override

@@ -198,6 +198,7 @@ public class TestingIntentService extends IntentService {
 
         for (int i = 0; i < howManyIterations; i++) {
             oneIterationResults.clear();
+            oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_SAL, runSalMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
@@ -205,7 +206,6 @@ public class TestingIntentService extends IntentService {
             oneIterationResults.add(C.Order.INDEX_OF_VAL_1, runVal1Method(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_VAL_2, runVal2Method(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_VAL_3, runVal3Method(longStringForTest));
-            oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +
@@ -215,6 +215,13 @@ public class TestingIntentService extends IntentService {
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();
+    }
+
+    private long runSoutMethod(@Nullable String longStringForTest) {
+        // measuring standard Android's Log time \\
+        soutNanoTime = System.nanoTime();
+        System.out.println(longStringForTest);
+        return System.nanoTime() - soutNanoTime;
     }
 
     private long runLogMethod(@Nullable String longStringForTest) {
@@ -264,13 +271,6 @@ public class TestingIntentService extends IntentService {
         val3NanoTime = System.nanoTime();
         VAL3.v(CN, longStringForTest);
         return System.nanoTime() - val3NanoTime;
-    }
-
-    private long runSoutMethod(@Nullable String longStringForTest) {
-        // measuring standard Android's Log time \\
-        soutNanoTime = System.nanoTime();
-        System.out.println(longStringForTest);
-        return System.nanoTime() - soutNanoTime;
     }
 
     @SuppressWarnings("unused")

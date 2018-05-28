@@ -25,8 +25,8 @@ public final class C {
     public static final String REGEX_NOT_DIGIT = "\\D";
 
     public static final String INITIAL_BASIC_STRING = "1234567890";
-    public static final String INITIAL_STRING_REPETITIONS = "100000";
-    public static final String INITIAL_TEST_ITERATIONS = "100";
+    public static final String INITIAL_STRING_REPETITIONS = "100";
+    public static final String INITIAL_TEST_ITERATIONS = "1000";
 
     private C() {
         // should not create any instances of this class \
@@ -49,14 +49,14 @@ public final class C {
 
     public static final class Order {
 
-        public static final int INDEX_OF_LOG = 0;
-        public static final int INDEX_OF_SAL = 1;
-        public static final int INDEX_OF_DAL = 2;
-        public static final int INDEX_OF_VAL_0 = 3;
-        public static final int INDEX_OF_VAL_1 = 4;
-        public static final int INDEX_OF_VAL_2 = 5;
-        public static final int INDEX_OF_VAL_3 = 6;
-        public static final int INDEX_OF_SOUT = 7;
+        public static final int INDEX_OF_SOUT = 0;
+        public static final int INDEX_OF_LOG = 1;
+        public static final int INDEX_OF_SAL = 2;
+        public static final int INDEX_OF_DAL = 3;
+        public static final int INDEX_OF_VAL_0 = 4;
+        public static final int INDEX_OF_VAL_1 = 5;
+        public static final int INDEX_OF_VAL_2 = 6;
+        public static final int INDEX_OF_VAL_3 = 7;
         public static final int VARIANTS_TOTAL = 8;
     }
 

@@ -351,6 +351,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             // avoiding division by zero in the loop just after this check \\
             return medianArray; // empty here \\
         }
+        long sumForSout = 0;
         long sumForLog = 0;
         long sumForSAL = 0;
         long sumForDAL = 0;
@@ -358,10 +359,10 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         long sumForVAL1 = 0;
         long sumForVAL2 = 0;
         long sumForVAL3 = 0;
-        long sumForSout = 0;
         for (long[] array : totalResultList) {
             L.w("calculateMedianResult", "" + Arrays.toString(array));
             // i hope we'll avoid exceeding the max value for type long \\
+            sumForSout += array[C.Order.INDEX_OF_SOUT];
             sumForLog += array[C.Order.INDEX_OF_LOG];
             sumForSAL += array[C.Order.INDEX_OF_SAL];
             sumForDAL += array[C.Order.INDEX_OF_DAL];
@@ -369,8 +370,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             sumForVAL1 += array[C.Order.INDEX_OF_VAL_1];
             sumForVAL2 += array[C.Order.INDEX_OF_VAL_2];
             sumForVAL3 += array[C.Order.INDEX_OF_VAL_3];
-            sumForSout += array[C.Order.INDEX_OF_SOUT];
         }
+        medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
         medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
         medianArray[C.Order.INDEX_OF_SAL] = sumForSAL / listSize;
         medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
@@ -378,7 +379,6 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         medianArray[C.Order.INDEX_OF_VAL_1] = sumForVAL1 / listSize;
         medianArray[C.Order.INDEX_OF_VAL_2] = sumForVAL2 / listSize;
         medianArray[C.Order.INDEX_OF_VAL_3] = sumForVAL3 / listSize;
-        medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
 
         return medianArray;
     }
