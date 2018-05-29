@@ -10,7 +10,7 @@ import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-@TypeDoc(createdBy = "Igor Shaula", createdOn = "28-05-2018", purpose = "" +
+@TypeDoc(createdBy = "Igor Shaula", createdOn = "29-05-2018", purpose = "" +
         "the most minimalistic & useful wrapper for local logging," +
         "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
         "every method here takes any number of arguments," +
@@ -22,6 +22,8 @@ public final class VAL4 {
             "given TAG was shortened to first 23 symbols to avoid IllegalArgumentException";
     private static final String DIVIDER_SHORTENED_TO_10_SYMBOLS =
             "given divider was shortened to first 10 symbols to keep separation reasonable";
+    private static final String CONNECTOR_SHORTENED_TO_10_SYMBOLS =
+            "given connector was shortened to first 10 symbols to keep separation reasonable";
     private static final String CONTAINER_IS_NULL = "{LogVarArgs:NULL}";
     private static final String CONTAINER_IS_EMPTY = "{LogVarArgs:EMPTY}";
     private static final String L_NULL = "{null}";
@@ -32,16 +34,16 @@ public final class VAL4 {
 
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
+
     @NonNull
     private static String tag23 = "VariableArgsLogTag4";
     @NonNull
     private static String divider = " ` "; // should be restricted in length somehow to keep it usable \\
+    @NonNull
+    private static String connector = " = "; // should be restricted in length somehow to keep it usable \\
 
     private VAL4() {
         // should not create any instances of this class \\
-//        if (thisInstance == null) {
-//            thisInstance = new VAL4();
-//        }
     }
 
     // CONFIGURATION ===============================================================================
@@ -89,53 +91,21 @@ public final class VAL4 {
         VAL4.divider = divider;
     }
 
-    // =============================================================================================
-
-//    @NonNull
-//    private static VAL4 thisInstance = new VAL4(); // kind of a clue to enable chaining for methods \\
-    @NonNull
-    private static String connector = " = ";
-//    @Nullable
-//    private static Object instanceToLog;
-//    private static int currentLogLevel;
-
-//    public static VAL4 vChain(@Nullable final Object object) {
-//        instanceToLog = object;
-//        currentLogLevel = Log.VERBOSE;
-//        return VAL4.thisInstance;
-//    }
-//
-//    public void is(@Nullable String result) {
-//        passToStandardLogger(currentLogLevel, createJointMessage(instanceToLog, result));
-//    }
-
-    public static void vIs(@Nullable Object expression, @Nullable String result) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.VERBOSE, createJointMessage(expression, result));
-        }
-    }
-
-    @NonNull
-    private static String createJointMessage(@Nullable Object instanceToLog, @Nullable String value) {
-        String result;
-        if (instanceToLog == null) {
-            result = L_NULL;
-        } else {
-            result = instanceToLog.toString();
-        }
-        return result + connector + value;
-    }
-
     @NonNull
     public static String getConnector() {
         return connector;
     }
 
     public static void setConnector(@NonNull String connector) {
+        // i decided to restrict connector's length to reasonable limit (to avoid too long inner connectors) \\
+        if (connector.length() > 10) {
+            VAL4.connector = connector.substring(0, 9);
+            Log.i(tag23, CONNECTOR_SHORTENED_TO_10_SYMBOLS);
+        }
         VAL4.connector = connector;
     }
 
-    // =============================================================================================
+    // STANDARD API FOR SHOWING HAPPENED FACTS =====================================================
 
     public static void v(@Nullable final Object... objects) {
         if (USE_LOGGING && isLogAllowed) {
@@ -174,30 +144,13 @@ public final class VAL4 {
     }
 
     // simplest and fastest - even without tag23 - may be used to measure speed of doing job \
-    public static void p(@NonNull final Object message) {
+    public static void p(@NonNull final Object... objects) {
         if (USE_LOGGING && isLogAllowed) {
-            System.out.println(message);
+            System.out.println(assembleResultString(objects));
         }
     }
 
-    @MeDoc("only setting accordance between custom & standard logging levels")
-    private static void passToStandardLogger(final int logLevel, @NonNull final String logResult) {
-        if (logLevel == Log.VERBOSE) { // 2 \\
-            Log.v(tag23, logResult);
-        } else if (logLevel == Log.DEBUG) { // 3 \\
-            Log.d(tag23, logResult);
-        } else if (logLevel == Log.INFO) { // 4 \\
-            Log.i(tag23, logResult);
-        } else if (logLevel == Log.WARN) { // 5 \\
-            Log.w(tag23, logResult);
-        } else if (logLevel == Log.ERROR) { // 6 \\
-            Log.e(tag23, logResult);
-        } else if (logLevel == Log.ASSERT) { // 7 \\
-            Log.wtf(tag23, logResult);
-        } else { // in fact this else will never be invoked \\
-            System.out.println(logResult);
-        }
-    }
+    // HOT METHODS FOR CONSTRUCTING MESSAGES TO BE SHOWN ===========================================
 
     @NonNull
     private static String assembleResultString(@Nullable final Object... objects) {
@@ -239,5 +192,88 @@ public final class VAL4 {
 
     private static int getStringLength(@Nullable Object string) {
         return string != null ? string.toString().length() : 0;
+    }
+
+    // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
+
+    public static void vIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.VERBOSE, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void dIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.DEBUG, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void iIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.INFO, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void wIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.WARN, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void eIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.ERROR, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void aIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.ASSERT, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void pIs(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            System.out.println(createJointMessage(someInstance, someValue));
+        }
+    }
+
+    @NonNull
+    private static String createJointMessage(@Nullable Object instanceToLog, @Nullable Object value) {
+        String result;
+        if (instanceToLog == null) { // just protecting from NPE in that simple way \\
+            result = L_NULL;
+        } else {
+            result = instanceToLog.toString();
+        }
+        return result + connector + value; // unpredictable conversion into String may happen here \\
+    }
+
+    // GENERAL PART ================================================================================
+
+    @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
+    private static void passToStandardLogger(final int logLevel, @NonNull final String logResult) {
+        if (logLevel == Log.VERBOSE) { // 2 \\
+            Log.v(tag23, logResult);
+        } else if (logLevel == Log.DEBUG) { // 3 \\
+            Log.d(tag23, logResult);
+        } else if (logLevel == Log.INFO) { // 4 \\
+            Log.i(tag23, logResult);
+        } else if (logLevel == Log.WARN) { // 5 \\
+            Log.w(tag23, logResult);
+        } else if (logLevel == Log.ERROR) { // 6 \\
+            Log.e(tag23, logResult);
+        } else if (logLevel == Log.ASSERT) { // 7 \\
+            Log.wtf(tag23, logResult);
+        } else { // in fact this else will never be invoked \\
+            System.out.println(logResult);
+        }
+    }
+
+    @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
+    public static void s(@Nullable final Object message) { // s - because it is the simplest here \\
+        if (USE_LOGGING && isLogAllowed) {
+            System.out.println(message);
+        }
     }
 }

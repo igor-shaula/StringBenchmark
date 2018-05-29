@@ -9,7 +9,6 @@ import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.log_wrappers.VAL4;
-import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_3_objects.VAL3;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -310,9 +309,14 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         VAL4.v("the fact of posting the expression itself"); // just logging the statement here \\
 //        VAL4.vChain("expression-1").is("result"); // should be "expression = result" \\
 //        VAL4.vChain(null).is(null); // should be "expression = result" \\
-        VAL4.setConnector(" IS ");
         VAL4.vIs("expression-2", "result");
+        VAL4.setConnector(" IS ");
         VAL4.vIs(new JSONObject(), "json result");
+        VAL4.p("single p");
+        VAL4.p(null);
+        VAL4.s(null);
+        VAL4.p(null, null);
+        VAL4.p("multiple ps", "_+_");
     }
 
     private void showTextyTwister() {
