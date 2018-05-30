@@ -8,7 +8,7 @@ import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.log_wrappers.VAL4;
+import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_4_extended.VAL4;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -165,6 +165,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         } else {
             startNewBurdenPreparationJob();
         }
+        // the following is temporary placed here \\
+        doSingleTesting();
     }
 
     @Override
@@ -271,26 +273,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     // PRIVATE =====================================================================================
 
-    private void stopCurrentBurdenPreparationJob() {
-        interruptPerformanceTest();
-        toggleBurdenPreparationJobState(false);
-    }
-
-    private void startNewBurdenPreparationJob() {
-        isBurdenReady = false;
-        runTestBurdenPreparation();
-        toggleBurdenPreparationJobState(true);
-        uiLink.resetResultViewStates();
-    }
-
-    private void runTestBurdenPreparation() {
-        int count = U.convertIntoInt(uiLink.getStringsAmountText());
-        if (count > 0) {
-            systemLink.launchPreparation(uiLink.getBasicStringText(), count);
-            pendingPreparationResult = "";
-            showTextyTwister();
-        }
-        L.d(CN, "runTestBurdenPreparation() finished");
+    private void doSingleTesting() {
         // TODO: 02.12.2017 wright unit-tests with this kind of content \\
 /*
                     VAL0.v("" + getString(R.string.vero_test).length());
@@ -317,6 +300,28 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         VAL4.s(null);
         VAL4.p(null, null);
         VAL4.p("multiple ps", "_+_");
+    }
+
+    private void stopCurrentBurdenPreparationJob() {
+        interruptPerformanceTest();
+        toggleBurdenPreparationJobState(false);
+    }
+
+    private void startNewBurdenPreparationJob() {
+        isBurdenReady = false;
+        runTestBurdenPreparation();
+        toggleBurdenPreparationJobState(true);
+        uiLink.resetResultViewStates();
+    }
+
+    private void runTestBurdenPreparation() {
+        int count = U.convertIntoInt(uiLink.getStringsAmountText());
+        if (count > 0) {
+            systemLink.launchPreparation(uiLink.getBasicStringText(), count);
+            pendingPreparationResult = "";
+            showTextyTwister();
+        }
+        L.d(CN, "runTestBurdenPreparation() finished");
     }
 
     private void showTextyTwister() {

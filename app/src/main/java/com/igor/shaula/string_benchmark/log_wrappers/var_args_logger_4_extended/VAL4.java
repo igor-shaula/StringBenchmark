@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.log_wrappers;
+package com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_4_extended;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -246,7 +246,7 @@ public final class VAL4 {
         } else {
             result = instanceToLog.toString();
         }
-        return result + connector + value; // unpredictable conversion into String may happen here \\
+        return result + connector + value; // no need to use StringBuilder here for only 1 operation \\
     }
 
     // GENERAL PART ================================================================================
