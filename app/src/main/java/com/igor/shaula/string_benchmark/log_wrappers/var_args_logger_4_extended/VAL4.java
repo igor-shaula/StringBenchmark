@@ -149,6 +149,100 @@ public final class VAL4 {
         }
     }
 
+    // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
+
+    public static int pV(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.VERBOSE, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pD(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.DEBUG, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pI(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.INFO, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pW(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.WARN, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pE(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.ERROR, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pA(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.ASSERT, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    // HOT METHODS FOR CONSTRUCTING MESSAGES TO BE SHOWN ===========================================
+
+    @NonNull
+    private static String assembleResultString(@Nullable final Object... objects) {
+        final String logResult; // logResult = VarArgsResult \\
+        if (objects == null) {
+            logResult = CONTAINER_IS_NULL;
+        } else if (objects.length == 0) {
+            logResult = CONTAINER_IS_EMPTY;
+        } else if (objects.length == 1) { // saving time by avoiding StringBuilder creation \\
+            logResult = processOneObject(objects[0]);
+        } else { // as [objects.length cannot be < 0] -> in this case [objects.length >= 2] \\
+            final int minimumCapacity = getStringLength(objects[0]) + divider.length() + getStringLength(objects[1]);
+            // as minimum number of args here is 2 -> we're preparing StringBuilder just for it \\
+            final StringBuilder logResultBuilder = new StringBuilder(minimumCapacity);
+            // the starting string doesn't need the divider before it - so it's taken out of loop \\
+            logResultBuilder.append(processOneObject(objects[0]));
+            // this loop is expected to do at least one iteration & starts from the second string \\
+            for (int i = 1, argsLength = objects.length; i < argsLength; i++) {
+                // as we have already wrote initial string - here we should start with divider \\
+                logResultBuilder.append(divider).append(processOneObject(objects[i]));
+            }
+            logResult = logResultBuilder.toString();
+        }
+        return logResult;
+    }
+
+    @NonNull
+    private static String processOneObject(@Nullable final Object theObject) {
+        final String result;
+        if (theObject == null) {
+            result = L_NULL;
+        } else if (theObject.toString().isEmpty()) {
+            result = L_EMPTY;
+        } else {
+            result = theObject.toString();
+        }
+        return result;
+    }
+
+    private static int getStringLength(@Nullable Object string) {
+        return string != null ? string.toString().length() : 0;
+    }
+
     // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
 
     public static void isV(@Nullable Object someInstance, @Nullable Object someValue) {
@@ -272,100 +366,6 @@ public final class VAL4 {
     public static void o(@NonNull final Object... objects) {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(assembleResultString(objects));
-        }
-    }
-
-    // HOT METHODS FOR CONSTRUCTING MESSAGES TO BE SHOWN ===========================================
-
-    @NonNull
-    private static String assembleResultString(@Nullable final Object... objects) {
-        final String logResult; // logResult = VarArgsResult \\
-        if (objects == null) {
-            logResult = CONTAINER_IS_NULL;
-        } else if (objects.length == 0) {
-            logResult = CONTAINER_IS_EMPTY;
-        } else if (objects.length == 1) { // saving time by avoiding StringBuilder creation \\
-            logResult = processOneObject(objects[0]);
-        } else { // as [objects.length cannot be < 0] -> in this case [objects.length >= 2] \\
-            final int minimumCapacity = getStringLength(objects[0]) + divider.length() + getStringLength(objects[1]);
-            // as minimum number of args here is 2 -> we're preparing StringBuilder just for it \\
-            final StringBuilder logResultBuilder = new StringBuilder(minimumCapacity);
-            // the starting string doesn't need the divider before it - so it's taken out of loop \\
-            logResultBuilder.append(processOneObject(objects[0]));
-            // this loop is expected to do at least one iteration & starts from the second string \\
-            for (int i = 1, argsLength = objects.length; i < argsLength; i++) {
-                // as we have already wrote initial string - here we should start with divider \\
-                logResultBuilder.append(divider).append(processOneObject(objects[i]));
-            }
-            logResult = logResultBuilder.toString();
-        }
-        return logResult;
-    }
-
-    @NonNull
-    private static String processOneObject(@Nullable final Object theObject) {
-        final String result;
-        if (theObject == null) {
-            result = L_NULL;
-        } else if (theObject.toString().isEmpty()) {
-            result = L_EMPTY;
-        } else {
-            result = theObject.toString();
-        }
-        return result;
-    }
-
-    private static int getStringLength(@Nullable Object string) {
-        return string != null ? string.toString().length() : 0;
-    }
-
-    // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
-
-    public static int pV(@NonNull final Object... objects) {
-        if (USE_LOGGING && isLogAllowed) {
-            return Log.println(Log.VERBOSE, tag23, assembleResultString(objects));
-        } else {
-            return -1;
-        }
-    }
-
-    public static int pD(@NonNull final Object... objects) {
-        if (USE_LOGGING && isLogAllowed) {
-            return Log.println(Log.DEBUG, tag23, assembleResultString(objects));
-        } else {
-            return -1;
-        }
-    }
-
-    public static int pI(@NonNull final Object... objects) {
-        if (USE_LOGGING && isLogAllowed) {
-            return Log.println(Log.INFO, tag23, assembleResultString(objects));
-        } else {
-            return -1;
-        }
-    }
-
-    public static int pW(@NonNull final Object... objects) {
-        if (USE_LOGGING && isLogAllowed) {
-            return Log.println(Log.WARN, tag23, assembleResultString(objects));
-        } else {
-            return -1;
-        }
-    }
-
-    public static int pE(@NonNull final Object... objects) {
-        if (USE_LOGGING && isLogAllowed) {
-            return Log.println(Log.ERROR, tag23, assembleResultString(objects));
-        } else {
-            return -1;
-        }
-    }
-
-    public static int pA(@NonNull final Object... objects) {
-        if (USE_LOGGING && isLogAllowed) {
-            return Log.println(Log.ASSERT, tag23, assembleResultString(objects));
-        } else {
-            return -1;
         }
     }
 }
