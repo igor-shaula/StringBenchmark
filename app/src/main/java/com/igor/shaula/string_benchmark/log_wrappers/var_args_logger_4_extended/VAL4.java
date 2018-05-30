@@ -104,6 +104,51 @@ public final class VAL4 {
         VAL4.connector = connector;
     }
 
+    // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
+
+    public static void v(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            Log.v(tag23, message);
+        }
+    }
+
+    public static void d(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            Log.d(tag23, message);
+        }
+    }
+
+    public static void i(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            Log.i(tag23, message);
+        }
+    }
+
+    public static void w(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            Log.w(tag23, message);
+        }
+    }
+
+    public static void e(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            Log.e(tag23, message);
+        }
+    }
+
+    public static void a(@Nullable final String message) {
+        if (USE_LOGGING && isLogAllowed) {
+            Log.wtf(tag23, message);
+        }
+    }
+
+    @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
+    public static void o(@Nullable final Object object) { // s - because it is the simplest here \\
+        if (USE_LOGGING && isLogAllowed) {
+            System.out.println(object);
+        }
+    }
+
     // STANDARD API FOR SHOWING HAPPENED FACTS =====================================================
 
     public static void v(@Nullable final Object... objects) {
@@ -273,13 +318,6 @@ public final class VAL4 {
                 break;
             default:  // in fact this else will never be invoked \\
                 System.out.println(logResult);
-        }
-    }
-
-    @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
-    public static void o(@Nullable final Object message) { // s - because it is the simplest here \\
-        if (USE_LOGGING && isLogAllowed) {
-            System.out.println(message);
         }
     }
 
