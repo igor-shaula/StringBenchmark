@@ -292,12 +292,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         VAL4.v("the fact of posting the expression itself"); // just logging the statement here \\
 //        VAL4.vChain("expression-1").is("result"); // should be "expression = result" \\
 //        VAL4.vChain(null).is(null); // should be "expression = result" \\
-        VAL4.vIs("expression-2", "result");
+        VAL4.isV("expression-2", "result");
         VAL4.setConnector(" IS ");
-        VAL4.vIs(new JSONObject(), "json result");
+        VAL4.isV(new JSONObject(), "json result");
         VAL4.pV("single p");
         VAL4.pV(null);
-        VAL4.s(null);
+        VAL4.o(null);
         VAL4.pV(null, null);
         VAL4.pV("multiple ps", "_+_");
     }

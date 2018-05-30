@@ -9,13 +9,12 @@ import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
-@TypeDoc(createdBy = "Igor Shaula", createdOn = "29-05-2018", purpose = "" +
+@TypeDoc(createdBy = "Igor Shaula", createdOn = "30-05-2018", purpose = "" +
         "the most minimalistic & useful wrapper for local logging," +
         "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
         "every method here takes any number of arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
-
+@SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
 public final class VAL4 {
 
     private static final String TAG_SHORTENED_TO_23_SYMBOLS =
@@ -144,7 +143,7 @@ public final class VAL4 {
     }
 
     // simplest and fastest - even without tag23 - may be used to measure speed of doing job \
-    public static void s(@NonNull final Object... objects) {
+    public static void o(@NonNull final Object... objects) {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(assembleResultString(objects));
         }
@@ -196,43 +195,43 @@ public final class VAL4 {
 
     // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
 
-    public static void vIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isV(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             passToStandardLogger(Log.VERBOSE, createJointMessage(someInstance, someValue));
         }
     }
 
-    public static void dIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isD(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             passToStandardLogger(Log.DEBUG, createJointMessage(someInstance, someValue));
         }
     }
 
-    public static void iIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isI(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             passToStandardLogger(Log.INFO, createJointMessage(someInstance, someValue));
         }
     }
 
-    public static void wIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isW(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             passToStandardLogger(Log.WARN, createJointMessage(someInstance, someValue));
         }
     }
 
-    public static void eIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isE(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             passToStandardLogger(Log.ERROR, createJointMessage(someInstance, someValue));
         }
     }
 
-    public static void aIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isA(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             passToStandardLogger(Log.ASSERT, createJointMessage(someInstance, someValue));
         }
     }
 
-    public static void pIs(@Nullable Object someInstance, @Nullable Object someValue) {
+    public static void isO(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(createJointMessage(someInstance, someValue));
         }
@@ -278,7 +277,7 @@ public final class VAL4 {
     }
 
     @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
-    public static void s(@Nullable final Object message) { // s - because it is the simplest here \\
+    public static void o(@Nullable final Object message) { // s - because it is the simplest here \\
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(message);
         }
