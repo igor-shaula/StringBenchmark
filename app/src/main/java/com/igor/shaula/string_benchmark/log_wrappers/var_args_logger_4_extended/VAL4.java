@@ -149,6 +149,87 @@ public final class VAL4 {
         }
     }
 
+    // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
+
+    public static void isV(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.VERBOSE, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void isD(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.DEBUG, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void isI(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.INFO, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void isW(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.WARN, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void isE(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.ERROR, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void isA(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            passToStandardLogger(Log.ASSERT, createJointMessage(someInstance, someValue));
+        }
+    }
+
+    public static void isO(@Nullable Object someInstance, @Nullable Object someValue) {
+        if (USE_LOGGING && isLogAllowed) {
+            System.out.println(createJointMessage(someInstance, someValue));
+        }
+    }
+
+    @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
+    private static void passToStandardLogger(final int logLevel, @NonNull final String logResult) {
+        switch (logLevel) {
+            case Log.VERBOSE:  // 2 \\
+                Log.v(tag23, logResult);
+                break;
+            case Log.DEBUG:  // 3 \\
+                Log.d(tag23, logResult);
+                break;
+            case Log.INFO:  // 4 \\
+                Log.i(tag23, logResult);
+                break;
+            case Log.WARN:  // 5 \\
+                Log.w(tag23, logResult);
+                break;
+            case Log.ERROR:  // 6 \\
+                Log.e(tag23, logResult);
+                break;
+            case Log.ASSERT:  // 7 \\
+                Log.wtf(tag23, logResult);
+                break;
+            default:  // in fact this else will never be invoked \\
+                System.out.println(logResult);
+        }
+    }
+
+    @NonNull
+    private static String createJointMessage(@Nullable Object instanceToLog, @Nullable Object value) {
+        String result;
+        if (instanceToLog == null) { // just protecting from NPE in that simple way \\
+            result = L_NULL;
+        } else {
+            result = instanceToLog.toString();
+        }
+        return result + connector + value; // no need to use StringBuilder here for only 1 operation \\
+    }
+
     // STANDARD API FOR SHOWING HAPPENED FACTS =====================================================
 
     public static void v(@Nullable final Object... objects) {
@@ -236,89 +317,6 @@ public final class VAL4 {
 
     private static int getStringLength(@Nullable Object string) {
         return string != null ? string.toString().length() : 0;
-    }
-
-    // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
-
-    public static void isV(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.VERBOSE, createJointMessage(someInstance, someValue));
-        }
-    }
-
-    public static void isD(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.DEBUG, createJointMessage(someInstance, someValue));
-        }
-    }
-
-    public static void isI(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.INFO, createJointMessage(someInstance, someValue));
-        }
-    }
-
-    public static void isW(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.WARN, createJointMessage(someInstance, someValue));
-        }
-    }
-
-    public static void isE(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.ERROR, createJointMessage(someInstance, someValue));
-        }
-    }
-
-    public static void isA(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            passToStandardLogger(Log.ASSERT, createJointMessage(someInstance, someValue));
-        }
-    }
-
-    public static void isO(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            System.out.println(createJointMessage(someInstance, someValue));
-        }
-    }
-
-    @NonNull
-    private static String createJointMessage(@Nullable Object instanceToLog, @Nullable Object value) {
-        String result;
-        if (instanceToLog == null) { // just protecting from NPE in that simple way \\
-            result = L_NULL;
-        } else {
-            result = instanceToLog.toString();
-        }
-        return result + connector + value; // no need to use StringBuilder here for only 1 operation \\
-    }
-
-    // GENERAL PART ================================================================================
-
-    @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
-    private static void passToStandardLogger(final int logLevel, @NonNull final String logResult) {
-        switch (logLevel) {
-            case Log.VERBOSE:  // 2 \\
-                Log.v(tag23, logResult);
-                break;
-            case Log.DEBUG:  // 3 \\
-                Log.d(tag23, logResult);
-                break;
-            case Log.INFO:  // 4 \\
-                Log.i(tag23, logResult);
-                break;
-            case Log.WARN:  // 5 \\
-                Log.w(tag23, logResult);
-                break;
-            case Log.ERROR:  // 6 \\
-                Log.e(tag23, logResult);
-                break;
-            case Log.ASSERT:  // 7 \\
-                Log.wtf(tag23, logResult);
-                break;
-            default:  // in fact this else will never be invoked \\
-                System.out.println(logResult);
-        }
     }
 
     // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
