@@ -295,11 +295,11 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         VAL4.vIs("expression-2", "result");
         VAL4.setConnector(" IS ");
         VAL4.vIs(new JSONObject(), "json result");
-        VAL4.p("single p");
-        VAL4.p(null);
+        VAL4.pV("single p");
+        VAL4.pV(null);
         VAL4.s(null);
-        VAL4.p(null, null);
-        VAL4.p("multiple ps", "_+_");
+        VAL4.pV(null, null);
+        VAL4.pV("multiple ps", "_+_");
     }
 
     private void stopCurrentBurdenPreparationJob() {

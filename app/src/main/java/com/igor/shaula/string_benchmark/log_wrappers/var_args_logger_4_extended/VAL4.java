@@ -144,7 +144,7 @@ public final class VAL4 {
     }
 
     // simplest and fastest - even without tag23 - may be used to measure speed of doing job \
-    public static void p(@NonNull final Object... objects) {
+    public static void s(@NonNull final Object... objects) {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(assembleResultString(objects));
         }
@@ -253,20 +253,27 @@ public final class VAL4 {
 
     @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
     private static void passToStandardLogger(final int logLevel, @NonNull final String logResult) {
-        if (logLevel == Log.VERBOSE) { // 2 \\
-            Log.v(tag23, logResult);
-        } else if (logLevel == Log.DEBUG) { // 3 \\
-            Log.d(tag23, logResult);
-        } else if (logLevel == Log.INFO) { // 4 \\
-            Log.i(tag23, logResult);
-        } else if (logLevel == Log.WARN) { // 5 \\
-            Log.w(tag23, logResult);
-        } else if (logLevel == Log.ERROR) { // 6 \\
-            Log.e(tag23, logResult);
-        } else if (logLevel == Log.ASSERT) { // 7 \\
-            Log.wtf(tag23, logResult);
-        } else { // in fact this else will never be invoked \\
-            System.out.println(logResult);
+        switch (logLevel) {
+            case Log.VERBOSE:  // 2 \\
+                Log.v(tag23, logResult);
+                break;
+            case Log.DEBUG:  // 3 \\
+                Log.d(tag23, logResult);
+                break;
+            case Log.INFO:  // 4 \\
+                Log.i(tag23, logResult);
+                break;
+            case Log.WARN:  // 5 \\
+                Log.w(tag23, logResult);
+                break;
+            case Log.ERROR:  // 6 \\
+                Log.e(tag23, logResult);
+                break;
+            case Log.ASSERT:  // 7 \\
+                Log.wtf(tag23, logResult);
+                break;
+            default:  // in fact this else will never be invoked \\
+                System.out.println(logResult);
         }
     }
 
@@ -274,6 +281,56 @@ public final class VAL4 {
     public static void s(@Nullable final Object message) { // s - because it is the simplest here \\
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(message);
+        }
+    }
+
+    // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
+
+    public static int pV(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.VERBOSE, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pD(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.DEBUG, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pI(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.INFO, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pW(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.WARN, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pE(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.ERROR, tag23, assembleResultString(objects));
+        } else {
+            return -1;
+        }
+    }
+
+    public static int pA(@NonNull final Object... objects) {
+        if (USE_LOGGING && isLogAllowed) {
+            return Log.println(Log.ASSERT, tag23, assembleResultString(objects));
+        } else {
+            return -1;
         }
     }
 }
