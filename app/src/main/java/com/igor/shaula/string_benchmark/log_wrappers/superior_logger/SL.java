@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_4_extended;
+package com.igor.shaula.string_benchmark.log_wrappers.superior_logger;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -9,13 +9,14 @@ import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
+@SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
+
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "30-05-2018", purpose = "" +
         "the most minimalistic & useful wrapper for local logging," +
         "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
         "every method here takes any number of arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
-@SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
-public final class VAL4 {
+public final class SL {
 
     private static final String TAG_SHORTENED_TO_23_SYMBOLS =
             "given TAG was shortened to first 23 symbols to avoid IllegalArgumentException";
@@ -23,10 +24,6 @@ public final class VAL4 {
             "given divider was shortened to first 10 symbols to keep separation reasonable";
     private static final String CONNECTOR_SHORTENED_TO_10_SYMBOLS =
             "given connector was shortened to first 10 symbols to keep separation reasonable";
-    private static final String CONTAINER_IS_NULL = "{LogVarArgs:NULL}";
-    private static final String CONTAINER_IS_EMPTY = "{LogVarArgs:EMPTY}";
-    private static final String L_NULL = "{null}";
-    private static final String L_EMPTY = "{empty}";
 
     // global constant switcher to be touched from this class only \\
     private static final boolean USE_LOGGING = BuildConfig.DEBUG;
@@ -40,8 +37,16 @@ public final class VAL4 {
     private static String divider = " ` "; // should be restricted in length somehow to keep it usable \\
     @NonNull
     private static String connector = " = "; // should be restricted in length somehow to keep it usable \\
+    @NonNull
+    private static String stubForNullContainer = "{LogVarArgs:NULL}";
+    @NonNull
+    private static String stubForEmptyContainer = "{LogVarArgs:EMPTY}";
+    @NonNull
+    private static String stubForNullElement = "{null}";
+    @NonNull
+    private static String stubForEmptyElement = "{empty}";
 
-    private VAL4() {
+    private SL() {
         // should not create any instances of this class \\
     }
 
@@ -68,11 +73,11 @@ public final class VAL4 {
         */
         if (Build.VERSION.SDK_INT <= 23) {
             // to avoid IllegalArgumentException i decided to take only first 23 of given characters \\
-            VAL4.tag23 = tag23.substring(0, 22);
+            SL.tag23 = tag23.substring(0, 22);
             // i think in this case user should be notified about such a change \\
-            Log.i(VAL4.tag23, TAG_SHORTENED_TO_23_SYMBOLS);
+            Log.i(SL.tag23, TAG_SHORTENED_TO_23_SYMBOLS);
         } else {
-            VAL4.tag23 = tag23;
+            SL.tag23 = tag23;
         }
     }
 
@@ -84,10 +89,10 @@ public final class VAL4 {
     public static void setDivider(@NonNull String divider) {
         // i decided to restrict divider's length to reasonable limit (to avoid too long inner separators) \\
         if (divider.length() > 10) {
-            VAL4.divider = divider.substring(0, 9);
+            SL.divider = divider.substring(0, 9);
             Log.i(tag23, DIVIDER_SHORTENED_TO_10_SYMBOLS);
         }
-        VAL4.divider = divider;
+        SL.divider = divider;
     }
 
     @NonNull
@@ -98,10 +103,46 @@ public final class VAL4 {
     public static void setConnector(@NonNull String connector) {
         // i decided to restrict connector's length to reasonable limit (to avoid too long inner connectors) \\
         if (connector.length() > 10) {
-            VAL4.connector = connector.substring(0, 9);
+            SL.connector = connector.substring(0, 9);
             Log.i(tag23, CONNECTOR_SHORTENED_TO_10_SYMBOLS);
         }
-        VAL4.connector = connector;
+        SL.connector = connector;
+    }
+
+    @NonNull
+    public static String getStubForNullContainer() {
+        return stubForNullContainer;
+    }
+
+    public static void setStubForNullContainer(@NonNull String stubForNullContainer) {
+        SL.stubForNullContainer = stubForNullContainer; // currently unprotected concerning length \\
+    }
+
+    @NonNull
+    public static String getStubForEmptyContainer() {
+        return stubForEmptyContainer;
+    }
+
+    public static void setStubForEmptyContainer(@NonNull String stubForEmptyContainer) {
+        SL.stubForEmptyContainer = stubForEmptyContainer; // currently unprotected concerning length \\
+    }
+
+    @NonNull
+    public static String getStubForNullElement() {
+        return stubForNullElement;
+    }
+
+    public static void setStubForNullElement(@NonNull String stubForNullElement) {
+        SL.stubForNullElement = stubForNullElement; // currently unprotected concerning length \\
+    }
+
+    @NonNull
+    public static String getStubForEmptyElement() {
+        return stubForEmptyElement;
+    }
+
+    public static void setStubForEmptyElement(@NonNull String stubForEmptyElement) {
+        SL.stubForEmptyElement = stubForEmptyElement; // currently unprotected concerning length \\
     }
 
     // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
@@ -205,9 +246,9 @@ public final class VAL4 {
     private static String assembleResultString(@Nullable final Object... objects) {
         final String logResult; // logResult = VarArgsResult \\
         if (objects == null) {
-            logResult = CONTAINER_IS_NULL;
+            logResult = stubForNullContainer;
         } else if (objects.length == 0) {
-            logResult = CONTAINER_IS_EMPTY;
+            logResult = stubForEmptyContainer;
         } else if (objects.length == 1) { // saving time by avoiding StringBuilder creation \\
             logResult = processOneObject(objects[0]);
         } else { // as [objects.length cannot be < 0] -> in this case [objects.length >= 2] \\
@@ -230,9 +271,9 @@ public final class VAL4 {
     private static String processOneObject(@Nullable final Object theObject) {
         final String result;
         if (theObject == null) {
-            result = L_NULL;
+            result = stubForNullElement;
         } else if (theObject.toString().isEmpty()) {
-            result = L_EMPTY;
+            result = stubForEmptyElement;
         } else {
             result = theObject.toString();
         }
@@ -308,8 +349,7 @@ public final class VAL4 {
             case Log.ASSERT:  // 7 \\
                 Log.wtf(tag23, logResult);
                 break;
-            default:  // in fact this else will never be invoked \\
-                System.out.println(logResult);
+            // default is not needed here - due to all invocations are defined & method is private \\
         }
     }
 
@@ -317,7 +357,7 @@ public final class VAL4 {
     private static String createJointMessage(@Nullable Object instanceToLog, @Nullable Object value) {
         String result;
         if (instanceToLog == null) { // just protecting from NPE in that simple way \\
-            result = L_NULL;
+            result = stubForNullElement;
         } else {
             result = instanceToLog.toString();
         }
@@ -367,5 +407,16 @@ public final class VAL4 {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(assembleResultString(objects));
         }
+    }
+
+    // REMAINING STAFF TO BE WRAPPED FOR HAVING COMPLETE FUNCTIONALITY =============================
+
+    @NonNull
+    public static String getStackTrace(@NonNull final Throwable throwable) {
+        return Log.getStackTraceString(throwable);
+    }
+
+    public static boolean isLoggable(int priority) {
+        return Log.isLoggable(tag23, priority);
     }
 }

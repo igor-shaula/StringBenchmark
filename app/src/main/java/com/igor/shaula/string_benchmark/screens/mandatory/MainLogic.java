@@ -8,7 +8,7 @@ import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_4_extended.VAL4;
+import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SL;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -289,17 +289,17 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
                     VAL0.v("1", "2", "3");
                     VAL0.v("", "", "", "");
 */
-        VAL4.v("the fact of posting the expression itself"); // just logging the statement here \\
-//        VAL4.vChain("expression-1").is("result"); // should be "expression = result" \\
-//        VAL4.vChain(null).is(null); // should be "expression = result" \\
-        VAL4.isV("expression-2", "result");
-        VAL4.setConnector(" IS ");
-        VAL4.isV(new JSONObject(), "json result");
-        VAL4.pV("single p");
-        VAL4.pV(null);
-        VAL4.o(null);
-        VAL4.pV(null, null);
-        VAL4.pV("multiple ps", "_+_");
+        SL.v("the fact of posting the expression itself"); // just logging the statement here \\
+//        SL.vChain("expression-1").is("result"); // should be "expression = result" \\
+//        SL.vChain(null).is(null); // should be "expression = result" \\
+        SL.isV("expression-2", "result");
+        SL.setConnector(" IS ");
+        SL.isV(new JSONObject(), "json result");
+        SL.pV("single p");
+        SL.pV(null);
+        SL.o(null);
+        SL.pV(null, null);
+        SL.pV("multiple ps", "_+_");
     }
 
     private void stopCurrentBurdenPreparationJob() {
