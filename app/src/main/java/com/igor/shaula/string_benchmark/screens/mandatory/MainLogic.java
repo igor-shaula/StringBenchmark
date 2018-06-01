@@ -220,14 +220,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             case C.Choice.TEST_SYSTEM_LOG:
                 uiLink.updateResultForLog(resultNanoTime);
                 break;
-            case C.Choice.TEST_SAL:
-                uiLink.updateResultForSAL(resultNanoTime);
-                break;
             case C.Choice.TEST_DAL:
                 uiLink.updateResultForDAL(resultNanoTime);
-                break;
-            case C.Choice.TEST_VAL_0:
-                uiLink.updateResultForVAL0(resultNanoTime);
                 break;
             case C.Choice.TEST_VAL_1:
                 uiLink.updateResultForVAL1(resultNanoTime);
@@ -237,6 +231,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
                 break;
             case C.Choice.TEST_VAL_3:
                 uiLink.updateResultForVAL3(resultNanoTime);
+                break;
+            case C.Choice.TEST_SL_VOID:
+                uiLink.updateResultForSLVoid(resultNanoTime);
+                break;
+            case C.Choice.TEST_SL_INT:
+                uiLink.updateResultForSLInt(resultNanoTime);
                 break;
             default:
                 L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
@@ -276,18 +276,18 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private void doSingleTesting() {
         // TODO: 02.12.2017 wright unit-tests with this kind of content \\
 /*
-                    VAL0.v("" + getString(R.string.vero_test).length());
-                    VAL0.v("", "");
-                    VAL0.v("", "", "");
-                    VAL0.v();
-                    VAL0.v((String[]) null);
-                    VAL0.v(null, null);
-                    VAL0.v(null, null, null);
-                    VAL0.v(this.toString(), null, null);
-                    VAL0.v("1");
-                    VAL0.v("1", "2");
-                    VAL0.v("1", "2", "3");
-                    VAL0.v("", "", "", "");
+                    SLVoid.v("" + getString(R.string.vero_test).length());
+                    SLVoid.v("", "");
+                    SLVoid.v("", "", "");
+                    SLVoid.v();
+                    SLVoid.v((String[]) null);
+                    SLVoid.v(null, null);
+                    SLVoid.v(null, null, null);
+                    SLVoid.v(this.toString(), null, null);
+                    SLVoid.v("1");
+                    SLVoid.v("1", "2");
+                    SLVoid.v("1", "2", "3");
+                    SLVoid.v("", "", "", "");
 */
         SLVoid.v("the fact of posting the expression itself"); // just logging the statement here \\
 //        SLVoid.vChain("expression-1").is("result"); // should be "expression = result" \\
@@ -372,32 +372,32 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         }
         long sumForSout = 0;
         long sumForLog = 0;
-        long sumForSAL = 0;
         long sumForDAL = 0;
-        long sumForVAL0 = 0;
         long sumForVAL1 = 0;
         long sumForVAL2 = 0;
         long sumForVAL3 = 0;
+        long sumForSLVoid = 0;
+        long sumForSLInt = 0;
         for (long[] array : totalResultList) {
             L.w("calculateMedianResult", "" + Arrays.toString(array));
             // i hope we'll avoid exceeding the max value for type long \\
             sumForSout += array[C.Order.INDEX_OF_SOUT];
             sumForLog += array[C.Order.INDEX_OF_LOG];
-            sumForSAL += array[C.Order.INDEX_OF_SAL];
             sumForDAL += array[C.Order.INDEX_OF_DAL];
-            sumForVAL0 += array[C.Order.INDEX_OF_VAL_0];
             sumForVAL1 += array[C.Order.INDEX_OF_VAL_1];
             sumForVAL2 += array[C.Order.INDEX_OF_VAL_2];
             sumForVAL3 += array[C.Order.INDEX_OF_VAL_3];
+            sumForSLVoid += array[C.Order.INDEX_OF_SL_VOID];
+            sumForSLInt += array[C.Order.INDEX_OF_SL_INT];
         }
         medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
         medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
-        medianArray[C.Order.INDEX_OF_SAL] = sumForSAL / listSize;
         medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
-        medianArray[C.Order.INDEX_OF_VAL_0] = sumForVAL0 / listSize;
         medianArray[C.Order.INDEX_OF_VAL_1] = sumForVAL1 / listSize;
         medianArray[C.Order.INDEX_OF_VAL_2] = sumForVAL2 / listSize;
         medianArray[C.Order.INDEX_OF_VAL_3] = sumForVAL3 / listSize;
+        medianArray[C.Order.INDEX_OF_SL_VOID] = sumForSLVoid / listSize;
+        medianArray[C.Order.INDEX_OF_SL_INT] = sumForSLInt / listSize;
 
         return medianArray;
     }

@@ -8,10 +8,6 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 public final class C {
 
-    public static final String NULL = "null";
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
-    public static final char N = '\n';
     public static final char SPACE = ' ';
     public static final char SLASH = '/';
     public static final char DOT = '.';
@@ -20,9 +16,13 @@ public final class C {
     public static final char DASH = '-';
     public static final char UNDERSCORE = '_';
     public static final char ZERO = '0';
+    public static final char N = '\n';
     public static final String TWO_ZEROES = "00";
     public static final String THREE_ZEROES = "000";
     public static final String REGEX_NOT_DIGIT = "\\D";
+    public static final String NULL = "null";
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 
     public static final String INITIAL_BASIC_STRING = "1234567890";
     public static final String INITIAL_STRING_REPETITIONS = "100";
@@ -36,27 +36,27 @@ public final class C {
 
         public static final int TOAST = 1000;
         public static final int SNACKBAR = 1001;
-        public static final int PREPARATION = 0x1;
-        public static final int TEST_SYSTEM_LOG = 0x10;
-        public static final int TEST_SAL = 0x11;
-        public static final int TEST_DAL = 0x12;
-        public static final int TEST_VAL_0 = 0x130;
-        public static final int TEST_VAL_1 = 0x131;
-        public static final int TEST_VAL_2 = 0x132;
-        public static final int TEST_VAL_3 = 0x133;
-        public static final int DESTROYED = 0x100;
+        public static final int PREPARATION = 1;
+        public static final int TEST_SYSTEM_LOG = 10;
+        public static final int TEST_DAL = 11;
+        public static final int TEST_VAL_1 = 121;
+        public static final int TEST_VAL_2 = 122;
+        public static final int TEST_VAL_3 = 123;
+        public static final int TEST_SL_VOID = 131;
+        public static final int TEST_SL_INT = 132;
+        public static final int DESTROYED = 100;
     }
 
     public static final class Order {
 
         public static final int INDEX_OF_SOUT = 0;
         public static final int INDEX_OF_LOG = 1;
-        public static final int INDEX_OF_SAL = 2;
-        public static final int INDEX_OF_DAL = 3;
-        public static final int INDEX_OF_VAL_0 = 4;
-        public static final int INDEX_OF_VAL_1 = 5;
-        public static final int INDEX_OF_VAL_2 = 6;
-        public static final int INDEX_OF_VAL_3 = 7;
+        public static final int INDEX_OF_DAL = 2;
+        public static final int INDEX_OF_VAL_1 = 3;
+        public static final int INDEX_OF_VAL_2 = 4;
+        public static final int INDEX_OF_VAL_3 = 5;
+        public static final int INDEX_OF_SL_VOID = 6;
+        public static final int INDEX_OF_SL_INT = 7;
         public static final int VARIANTS_TOTAL = 8;
     }
 
@@ -74,24 +74,24 @@ public final class C {
         public static final String ACTION_GET_PREPARATION_RESULT = "from intent-service to activity";
         public static final String ACTION_START_ALL_TESTS = "start all tests moving on one-by-one";
         public static final String ACTION_GET_SYSTEM_LOG_TEST_RESULT = "standard system log test";
-        public static final String ACTION_GET_SAL_TEST_RESULT = "single argument log wrapper test";
         public static final String ACTION_GET_DAL_TEST_RESULT = "double argument log wrapper test";
-        public static final String ACTION_GET_VAL_0_TEST_RESULT = "var-args-0 number log wrapper test";
         public static final String ACTION_GET_VAL_1_TEST_RESULT = "var-args-1 number log wrapper test";
         public static final String ACTION_GET_VAL_2_TEST_RESULT = "var-args-2 number log wrapper test";
         public static final String ACTION_GET_VAL_3_TEST_RESULT = "var-args-3 number log wrapper test";
+        public static final String ACTION_GET_SL_VOID_TEST_RESULT = "superior-void log wrapper test";
+        public static final String ACTION_GET_SL_INT_TEST_RESULT = "superior-int log wrapper test";
         public static final String ACTION_ON_SERVICE_STOPPED = "invoked after service's destruction";
         public static final String ACTION_GET_ONE_ITERATION_RESULTS = "results after one iteration";
         public static final String NAME_BASIC_STRING = "string used as a basis for creating burden";
         public static final String NAME_COUNT = "domain for passing through intent";
         public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
         public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";
-        public static final String NAME_SAL_TIME = "time of single-arg log wrapper work";
         public static final String NAME_DAL_TIME = "time of double-arg log wrapper work";
-        public static final String NAME_VAL_0_TIME = "time of var-args-0 log wrapper work";
         public static final String NAME_VAL_1_TIME = "time of var-args-1 log wrapper work";
         public static final String NAME_VAL_2_TIME = "time of var-args-2 log wrapper work";
         public static final String NAME_VAL_3_TIME = "time of var-args-3 log wrapper work";
+        public static final String NAME_SL_VOID_TIME = "time of superior-void  log wrapper work";
+        public static final String NAME_SL_INT_TIME = "time of superior-int log wrapper work";
         public static final String NAME_ITERATIONS = "number of iterations for testing every variant";
         public static final String NAME_ALL_TIME = "array with results for every variant per iteration";
         public static final String NAME_ITERATION_NUMBER = "iteration number";

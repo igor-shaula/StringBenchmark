@@ -65,17 +65,17 @@ public interface MainHub {
 
         void updateResultForLog(long resultNanoTime);
 
-        void updateResultForSAL(long resultNanoTime);
-
         void updateResultForDAL(long resultNanoTime);
-
-        void updateResultForVAL0(long resultNanoTime);
 
         void updateResultForVAL1(long resultNanoTime);
 
         void updateResultForVAL2(long resultNanoTime);
 
         void updateResultForVAL3(long resultNanoTime);
+
+        void updateResultForSLVoid(long resultNanoTime);
+
+        void updateResultForSLInt(long resultNanoTime);
 
         void informUser(int whichWay, int stringId, int duration);
 

@@ -12,6 +12,8 @@ import android.util.Log;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.log_wrappers.double_args_logger.DAL;
+import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
+import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLVoid;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_1_safe.VAL1;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_2_configurable.VAL2;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_3_objects.VAL3;
@@ -196,14 +198,15 @@ public class TestingIntentService extends IntentService {
 
         for (int i = 0; i < howManyIterations; i++) {
             oneIterationResults.clear();
+            // TODO: 02.06.2018 try to avoid hardcoded indexes by using auto-incremented counter \\
             oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
-            oneIterationResults.add(C.Order.INDEX_OF_SAL, runSalMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
-            oneIterationResults.add(C.Order.INDEX_OF_VAL_0, runVal0Method(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_VAL_1, runVal1Method(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_VAL_2, runVal2Method(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_VAL_3, runVal3Method(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_SL_VOID, runSLVoidMethod(longStringForTest));
+            oneIterationResults.add(C.Order.INDEX_OF_SL_INT, runSLIntMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +
@@ -216,59 +219,51 @@ public class TestingIntentService extends IntentService {
     }
 
     private long runSoutMethod(@Nullable String longStringForTest) {
-        // measuring standard Android's Log time \\
         soutNanoTime = System.nanoTime();
         System.out.println(longStringForTest);
         return System.nanoTime() - soutNanoTime;
     }
 
     private long runLogMethod(@Nullable String longStringForTest) {
-        // measuring standard Android's Log time \\
         logNanoTime = System.nanoTime();
-        Log.v("StandardAndroidLogTag", longStringForTest);
+        Log.v(CN, longStringForTest);
         return System.nanoTime() - logNanoTime;
     }
 
-    private long runSalMethod(@Nullable String longStringForTest) {
-        // measuring SingleArgLogger's time \\
-        salNanoTime = System.nanoTime();
-//        SAL.v(longStringForTest);
-        return System.nanoTime() - salNanoTime;
-    }
-
     private long runDalMethod(@Nullable String longStringForTest) {
-        // measuring DoubleArgsLogger's time \\
         dalNanoTime = System.nanoTime();
         DAL.v(CN, longStringForTest);
         return System.nanoTime() - dalNanoTime;
     }
 
-    private long runVal0Method(@Nullable String longStringForTest) {
-        // measuring VariableArgsLogger's time \\
-        val0NanoTime = System.nanoTime();
-//        VAL0.v(CN, longStringForTest);
-        return System.nanoTime() - val0NanoTime;
-    }
-
     private long runVal1Method(@Nullable String longStringForTest) {
-        // measuring VariableArgsLogger's time \\
         val1NanoTime = System.nanoTime();
         VAL1.v(CN, longStringForTest);
         return System.nanoTime() - val1NanoTime;
     }
 
     private long runVal2Method(@Nullable String longStringForTest) {
-        // measuring VariableArgsLogger's time \\
         val2NanoTime = System.nanoTime();
         VAL2.v(CN, longStringForTest);
         return System.nanoTime() - val2NanoTime;
     }
 
     private long runVal3Method(@Nullable String longStringForTest) {
-        // measuring VariableArgsLogger's time \\
         val3NanoTime = System.nanoTime();
         VAL3.v(CN, longStringForTest);
         return System.nanoTime() - val3NanoTime;
+    }
+
+    private long runSLVoidMethod(@Nullable String longStringForTest) {
+        salNanoTime = System.nanoTime();
+        SLVoid.v(CN, longStringForTest);
+        return System.nanoTime() - salNanoTime;
+    }
+
+    private long runSLIntMethod(@Nullable String longStringForTest) {
+        val0NanoTime = System.nanoTime();
+        SLInt.v(CN, longStringForTest);
+        return System.nanoTime() - val0NanoTime;
     }
 
     @SuppressWarnings("unused")
