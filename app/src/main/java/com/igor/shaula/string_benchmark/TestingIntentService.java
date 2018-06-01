@@ -12,7 +12,6 @@ import android.util.Log;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.log_wrappers.double_args_logger.DAL;
-import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_0_initial.VAL0;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_1_safe.VAL1;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_2_configurable.VAL2;
 import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_3_objects.VAL3;
@@ -247,7 +246,7 @@ public class TestingIntentService extends IntentService {
     private long runVal0Method(@Nullable String longStringForTest) {
         // measuring VariableArgsLogger's time \\
         val0NanoTime = System.nanoTime();
-        VAL0.v(CN, longStringForTest);
+//        VAL0.v(CN, longStringForTest);
         return System.nanoTime() - val0NanoTime;
     }
 
