@@ -128,30 +128,10 @@
 
     <TextView
         style="@style/WrapWrap"
-        android:text="@string/resultOfSAL"/>
-
-    <TextView
-        android:id="@+id/tvResultForSAL"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
-
-    <TextView
-        style="@style/WrapWrap"
         android:text="@string/resultOfDAL"/>
 
     <TextView
         android:id="@+id/tvResultForDAL"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
-
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfVAL0"/>
-
-    <TextView
-        android:id="@+id/tvResultForVAL0"
         style="@style/MatchWrap.Gravity_End"
         android:text="@string/star"
         android:textColor="@color/colorPrimaryDark"/>
@@ -182,6 +162,26 @@
 
     <TextView
         android:id="@+id/tvResultForVAL3"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfSLVoid"/>
+
+    <TextView
+        android:id="@+id/tvResultForSLVoid"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        style="@style/WrapWrap"
+        android:text="@string/resultOfSLInt"/>
+
+    <TextView
+        android:id="@+id/tvResultForSLInt"
         style="@style/MatchWrap.Gravity_End"
         android:text="@string/star"
         android:textColor="@color/colorPrimaryDark"/>

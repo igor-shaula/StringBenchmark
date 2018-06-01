@@ -56,12 +56,12 @@
     <string name="resultsForLoggingTestsEnd">symbols total)</string>
 
     <string name="resultOfStandardLog">Standard Android Log:</string>
-    <string name="resultOfSAL">My single-arg Log wrapper:</string>
     <string name="resultOfDAL">My double-args Log wrapper:</string>
-    <string name="resultOfVAL0">My variable-args Log wrapper 0:</string>
     <string name="resultOfVAL1">My variable-args Log wrapper 1:</string>
     <string name="resultOfVAL2">My variable-args Log wrapper 2:</string>
     <string name="resultOfVAL3">My variable-args Log wrapper 3:</string>
+    <string name="resultOfSLVoid">My superior-void Log wrapper:</string>
+    <string name="resultOfSLInt">My superior-int Log wrapper:</string>
     <string name="resultOfSystemOutPrintln">Good old System.out.println(…):</string>
     <string name="thisBlocksDivider"/>
     <string name="totalBurdenInfo">Assembled burden length is</string>

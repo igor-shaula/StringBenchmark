@@ -356,8 +356,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvResultForVAL1 = rootView.findViewById(R.id.tvResultForVAL1);
         tvResultForVAL2 = rootView.findViewById(R.id.tvResultForVAL2);
         tvResultForVAL3 = rootView.findViewById(R.id.tvResultForVAL3);
-        tvResultForSLVoid = rootView.findViewById(R.id.tvResultForSAL);
-        tvResultForSLInt = rootView.findViewById(R.id.tvResultForVAL0);
+        tvResultForSLVoid = rootView.findViewById(R.id.tvResultForSLVoid);
+        tvResultForSLInt = rootView.findViewById(R.id.tvResultForSLInt);
 
         pdWait = new ProgressDialog(rootContext);
 //        pdWait.setMessage(rootContext.getString(R.string.startingUp));
