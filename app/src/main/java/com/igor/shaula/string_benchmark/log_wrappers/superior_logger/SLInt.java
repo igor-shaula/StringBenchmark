@@ -16,7 +16,7 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
         "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
         "every method here takes any number of arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
-public final class SL {
+public final class SLInt {
 
     private static final String TAG_SHORTENED_TO_23_SYMBOLS =
             "given TAG was shortened to first 23 symbols to avoid IllegalArgumentException";
@@ -46,7 +46,7 @@ public final class SL {
     @NonNull
     private static String stubForEmptyElement = "{empty}";
 
-    private SL() {
+    private SLInt() {
         // should not create any instances of this class \\
     }
 
@@ -73,11 +73,11 @@ public final class SL {
         */
         if (Build.VERSION.SDK_INT <= 23) {
             // to avoid IllegalArgumentException i decided to take only first 23 of given characters \\
-            SL.tag23 = tag23.substring(0, 22);
+            SLInt.tag23 = tag23.substring(0, 22);
             // i think in this case user should be notified about such a change \\
-            Log.i(SL.tag23, TAG_SHORTENED_TO_23_SYMBOLS);
+            Log.i(SLInt.tag23, TAG_SHORTENED_TO_23_SYMBOLS);
         } else {
-            SL.tag23 = tag23;
+            SLInt.tag23 = tag23;
         }
     }
 
@@ -89,10 +89,10 @@ public final class SL {
     public static void setDivider(@NonNull String divider) {
         // i decided to restrict divider's length to reasonable limit (to avoid too long inner separators) \\
         if (divider.length() > 10) {
-            SL.divider = divider.substring(0, 9);
+            SLInt.divider = divider.substring(0, 9);
             Log.i(tag23, DIVIDER_SHORTENED_TO_10_SYMBOLS);
         }
-        SL.divider = divider;
+        SLInt.divider = divider;
     }
 
     @NonNull
@@ -103,10 +103,10 @@ public final class SL {
     public static void setConnector(@NonNull String connector) {
         // i decided to restrict connector's length to reasonable limit (to avoid too long inner connectors) \\
         if (connector.length() > 10) {
-            SL.connector = connector.substring(0, 9);
+            SLInt.connector = connector.substring(0, 9);
             Log.i(tag23, CONNECTOR_SHORTENED_TO_10_SYMBOLS);
         }
-        SL.connector = connector;
+        SLInt.connector = connector;
     }
 
     @NonNull
@@ -115,7 +115,7 @@ public final class SL {
     }
 
     public static void setStubForNullContainer(@NonNull String stubForNullContainer) {
-        SL.stubForNullContainer = stubForNullContainer; // currently unprotected concerning length \\
+        SLInt.stubForNullContainer = stubForNullContainer; // currently unprotected concerning length \\
     }
 
     @NonNull
@@ -124,7 +124,7 @@ public final class SL {
     }
 
     public static void setStubForEmptyContainer(@NonNull String stubForEmptyContainer) {
-        SL.stubForEmptyContainer = stubForEmptyContainer; // currently unprotected concerning length \\
+        SLInt.stubForEmptyContainer = stubForEmptyContainer; // currently unprotected concerning length \\
     }
 
     @NonNull
@@ -133,7 +133,7 @@ public final class SL {
     }
 
     public static void setStubForNullElement(@NonNull String stubForNullElement) {
-        SL.stubForNullElement = stubForNullElement; // currently unprotected concerning length \\
+        SLInt.stubForNullElement = stubForNullElement; // currently unprotected concerning length \\
     }
 
     @NonNull
@@ -142,44 +142,56 @@ public final class SL {
     }
 
     public static void setStubForEmptyElement(@NonNull String stubForEmptyElement) {
-        SL.stubForEmptyElement = stubForEmptyElement; // currently unprotected concerning length \\
+        SLInt.stubForEmptyElement = stubForEmptyElement; // currently unprotected concerning length \\
     }
 
     // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
 
-    public static void v(@Nullable final String message) {
+    public static int v(@Nullable final String message) {
         if (USE_LOGGING && isLogAllowed) {
-            Log.v(tag23, message);
+            return Log.v(tag23, message);
+        } else {
+            return -1;
         }
     }
 
-    public static void d(@Nullable final String message) {
+    public static int d(@Nullable final String message) {
         if (USE_LOGGING && isLogAllowed) {
-            Log.d(tag23, message);
+            return Log.d(tag23, message);
+        } else {
+            return -1;
         }
     }
 
-    public static void i(@Nullable final String message) {
+    public static int i(@Nullable final String message) {
         if (USE_LOGGING && isLogAllowed) {
-            Log.i(tag23, message);
+            return Log.i(tag23, message);
+        } else {
+            return -1;
         }
     }
 
-    public static void w(@Nullable final String message) {
+    public static int w(@Nullable final String message) {
         if (USE_LOGGING && isLogAllowed) {
-            Log.w(tag23, message);
+            return Log.w(tag23, message);
+        } else {
+            return -1;
         }
     }
 
-    public static void e(@Nullable final String message) {
+    public static int e(@Nullable final String message) {
         if (USE_LOGGING && isLogAllowed) {
-            Log.e(tag23, message);
+            return Log.e(tag23, message);
+        } else {
+            return -1;
         }
     }
 
-    public static void a(@Nullable final String message) {
+    public static int a(@Nullable final String message) {
         if (USE_LOGGING && isLogAllowed) {
-            Log.wtf(tag23, message);
+            return Log.wtf(tag23, message);
+        } else {
+            return -1;
         }
     }
 
