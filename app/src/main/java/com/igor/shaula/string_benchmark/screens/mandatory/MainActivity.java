@@ -195,15 +195,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
                 logicLink.showPreparationsResult(whatInfoToShow, resultNanoTime);
                 break;
-//            case C.Intent.ACTION_GET_ONE_ITERATION_RESULTS:
-//                long[] oneIterationResults = intent.getLongArrayExtra(C.Intent.NAME_ALL_TIME);
-//                L.restore();
-//                L.w("selectInfoToShow",
-//                        " oneIterationResults = " + Arrays.toString(oneIterationResults));
-//                L.silence();
-//                storeToIntegralResult(oneIterationResults);
-//                updatePreparationsResultOnMainThread(calculateMedianResult());
-//                return;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 logicLink.toggleBurdenPreparationJobState(false);
                 logicLink.toggleIterationsJobState(false);

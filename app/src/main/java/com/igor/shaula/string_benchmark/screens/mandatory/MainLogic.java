@@ -179,21 +179,16 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     public void onViewBurdenClick() {
         final String burden = systemLink.getBurden();
         if (isBurdenReady) {
-//            if (burden.length() > 1000) {
-//                uiLink.setBusy(true);
-//            } else {
             uiLink.toggleViewBurdenBusyStateOnMainThread(false);
             uiLink.showBurdenInDialog(burden);
-//            }
         }
     }
 
     @Override
     public void onToggleIterationsClick() {
         if (isIterationsJobRunning) {
-//            stopCurrentIterationsJob();
             systemLink.allowIterationsJob(false);
-            // service will stop shortly after this \\
+            // IntentService will stop shortly after this \\
         } else {
             systemLink.allowIterationsJob(true);
             startIterationsJob();
@@ -330,11 +325,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         if (count > 0) {
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
-            showTextyTwister();
+            showTextyTwister(); // for now it works but is almost non-visible because of high speed \\
         }
         L.d(CN, "runTestBurdenPreparation() finished");
     }
 
+    // TODO: 03.06.2018 better attach this method to iterations - there it will be visible \\
     private void showTextyTwister() {
         final int[] index = new int[1];
         final String[] textForUI = new String[1];
@@ -350,11 +346,6 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         twisterTimer = new Timer(true);
         twisterTimer.schedule(twisterTask, 0, 80);
     }
-
-//    private void stopCurrentIterationsJob() {
-//        interruptPerformanceTest();
-//        toggleIterationsJobState(false);
-//    }
 
     private void startIterationsJob() {
         totalResultList.clear();
