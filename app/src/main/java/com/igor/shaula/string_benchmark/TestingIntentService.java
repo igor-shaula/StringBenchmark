@@ -44,7 +44,7 @@ public class TestingIntentService extends IntentService {
     }
 
     public static void prepareTheBurdenForTest(@NonNull Context context,
-                                               final String basicString,
+                                               final @NonNull String basicString,
                                                final int count) {
         // count is assured to be > 0 - by this method's invocation condition \\
         context.startService(new Intent(context, TestingIntentService.class)
@@ -117,7 +117,7 @@ public class TestingIntentService extends IntentService {
     @Override
     public void onDestroy() {
         L.d(CN, "onDestroy");
-        sendInfoToUI(C.Choice.DESTROYED, -1);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(C.Intent.ACTION_ON_SERVICE_STOPPED));
         super.onDestroy();
     }
 
@@ -151,7 +151,7 @@ public class TestingIntentService extends IntentService {
     private void prepareInitialBurden(@Nullable String stringExtra, int count) {
         if (count <= 0) {
             L.w(CN, "prepareInitialBurden ` count <= 0" + count);
-            sendInfoToUI(C.Choice.PREPARATION, -1);
+            notifyStarterThatBurdenPreparationFinished(-1);
             return;
         }
         // as StringBuilder is a part of String creation process - it has to be counted in time \\
@@ -166,27 +166,17 @@ public class TestingIntentService extends IntentService {
         // saving this created string into the App for the case if IntentService gets destroyed early \\
         ((DataTransport) getApplication()).setLongStringForTest(longStringForTest);
 
-        sendInfoToUI(C.Choice.PREPARATION, nanoTimeDelta);
+        notifyStarterThatBurdenPreparationFinished(nanoTimeDelta);
 
         L.v(CN, "prepareInitialBurden = " + longStringForTest);
     }
 
-    private void sendInfoToUI(int whichWay, long nanoTimeDelta) {
-        final Intent intent;
-        switch (whichWay) {
-            case C.Choice.PREPARATION:
-                intent = new Intent(C.Intent.ACTION_GET_PREPARATION_RESULT)
-                        .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta);
-                break;
-            case C.Choice.DESTROYED:
-                intent = new Intent(C.Intent.ACTION_ON_SERVICE_STOPPED);
-                break;
-            default:
-                intent = null;
-        }
-        if (intent != null) {
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-        }
+    @MeDoc("invoked only from prepareInitialBurden-method")
+    private void notifyStarterThatBurdenPreparationFinished(long nanoTimeDelta) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(
+                new Intent(C.Intent.ACTION_GET_PREPARATION_RESULT)
+                        .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta)
+        );
     }
 
     private void measurePerformanceInLoop(final int howManyIterations) {
@@ -197,8 +187,9 @@ public class TestingIntentService extends IntentService {
         final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
 
         for (int i = 0; i < howManyIterations; i++) {
-            if (appLink.isMarkedForStop()) {
+            if (!appLink.isAllowedToRunIterations()) {
                 L.i(CN, "measurePerformanceInLoop ` isMarkedForStop worked -> stopping now");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(C.Intent.ACTION_JOB_STOPPED));
                 break;
             }
             oneIterationResults.clear();
@@ -209,11 +200,17 @@ public class TestingIntentService extends IntentService {
             // pre-heating standard Android's Log to avoid it's slowing down for the first time \\
             runLogMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
+            runDalMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
+            runVal1Method(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_VAL_1, runVal1Method(longStringForTest));
+            runVal2Method(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_VAL_2, runVal2Method(longStringForTest));
+            runVal3Method(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_VAL_3, runVal3Method(longStringForTest));
+            runSLVoidMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_SL_VOID, runSLVoidMethod(longStringForTest));
+            runSLIntMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_SL_INT, runSLIntMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\

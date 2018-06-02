@@ -20,7 +20,7 @@ public final class App extends Application implements DataTransport {
 
     private static final String CN = "App";
 
-    private boolean isMarkedForStop;
+    private boolean isAllowedToRunIterations;
     @Nullable
     private IterationResultConsumer linkToIterationResultConsumer;
     @Nullable
@@ -104,13 +104,13 @@ public final class App extends Application implements DataTransport {
     }
 
     @Override
-    public boolean isMarkedForStop() {
-        return isMarkedForStop;
+    public boolean isAllowedToRunIterations() {
+        return isAllowedToRunIterations;
     }
 
     @Override
-    public void setMarkedForStop() {
-        isMarkedForStop = true;
+    public void allowIterationsJob(boolean isAllowedToRunIterations) {
+        this.isAllowedToRunIterations = isAllowedToRunIterations;
     }
 
     @Override

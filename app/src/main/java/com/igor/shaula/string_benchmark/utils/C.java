@@ -37,6 +37,7 @@ public final class C {
         public static final int TOAST = 1000;
         public static final int SNACKBAR = 1001;
         public static final int PREPARATION = 1;
+        public static final int STOPPED = 2;
         public static final int TEST_SYSTEM_LOG = 10;
         public static final int TEST_DAL = 11;
         public static final int TEST_VAL_1 = 121;
@@ -44,7 +45,6 @@ public final class C {
         public static final int TEST_VAL_3 = 123;
         public static final int TEST_SL_VOID = 131;
         public static final int TEST_SL_INT = 132;
-        public static final int DESTROYED = 100;
     }
 
     public static final class Order {
@@ -97,6 +97,7 @@ public final class C {
         public static final String NAME_ITERATION_NUMBER = "iteration number";
         static final String TYPE = "type";
         static final String NO_COMMAND = "no_command";
+        public static final String ACTION_JOB_STOPPED = "iterations job was interrupted";
     }
 
     public static final class Delay {

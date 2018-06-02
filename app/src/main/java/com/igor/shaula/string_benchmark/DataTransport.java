@@ -10,9 +10,9 @@ public interface DataTransport { // currently implemented by App as a quickest d
     @Nullable
     String getLongStringForTest();
 
-    boolean isMarkedForStop();
+    boolean isAllowedToRunIterations();
 
-    void setMarkedForStop();
+    void allowIterationsJob(boolean isAllowedToRunIterations);
 
     void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer);
 

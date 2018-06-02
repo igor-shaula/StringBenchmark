@@ -165,8 +165,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     }
 
     @Override
-    public void markIterationsJobForStop() {
-        ((DataTransport) getApplication()).setMarkedForStop();
+    public void allowIterationsJob(boolean isAllowedToRunIterations) {
+        ((DataTransport) getApplication()).allowIterationsJob(isAllowedToRunIterations);
     }
 
     @Override
@@ -207,7 +207,10 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 logicLink.toggleBurdenPreparationJobState(false);
                 logicLink.toggleIterationsJobState(false);
-                return;
+                break;
+            case C.Intent.ACTION_JOB_STOPPED:
+                logicLink.toggleIterationsJobState(false);
+                break;
             default:
                 L.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
         }

@@ -8,7 +8,7 @@ import com.igor.shaula.string_benchmark.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLVoid;
+import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -81,6 +81,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     @Override
     public void toggleBurdenPreparationJobState(boolean isRunning) {
         isBurdenPreparationJobRunning = isRunning;
+        uiLink.toggleJobActiveUiState(isRunning);
+    }
+
+    @Override
+    public void toggleIterationsJobState(boolean isRunning) {
+        isIterationsJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
     }
 
@@ -186,9 +192,10 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     public void onToggleIterationsClick() {
         if (isIterationsJobRunning) {
 //            stopCurrentIterationsJob();
-            systemLink.markIterationsJobForStop();
+            systemLink.allowIterationsJob(false);
             // service will stop shortly after this \\
         } else {
+            systemLink.allowIterationsJob(true);
             startIterationsJob();
         }
     }
@@ -283,31 +290,27 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     private void doSingleTesting() {
         // TODO: 02.12.2017 wright unit-tests with this kind of content \\
-/*
-                    SLVoid.v("" + getString(R.string.vero_test).length());
-                    SLVoid.v("", "");
-                    SLVoid.v("", "", "");
-                    SLVoid.v();
-                    SLVoid.v((String[]) null);
-                    SLVoid.v(null, null);
-                    SLVoid.v(null, null, null);
-                    SLVoid.v(this.toString(), null, null);
-                    SLVoid.v("1");
-                    SLVoid.v("1", "2");
-                    SLVoid.v("1", "2", "3");
-                    SLVoid.v("", "", "", "");
-*/
-        SLVoid.v("the fact of posting the expression itself"); // just logging the statement here \\
-//        SLVoid.vChain("expression-1").is("result"); // should be "expression = result" \\
-//        SLVoid.vChain(null).is(null); // should be "expression = result" \\
-        SLVoid.isV("expression-2", "result");
-        SLVoid.setConnector(" IS ");
-        SLVoid.isV(new JSONObject(), "json result");
-        SLVoid.pV("single p");
-        SLVoid.pV(null);
-        SLVoid.o(null);
-        SLVoid.pV(null, null);
-        SLVoid.pV("multiple ps", "_+_");
+        SLInt.v("");
+        SLInt.v("", "");
+        SLInt.v("", "", "");
+        SLInt.v();
+        SLInt.v((String[]) null);
+        SLInt.v(null, null);
+        SLInt.v(null, null, null);
+        SLInt.v(this.toString(), null, null);
+        SLInt.v("1");
+        SLInt.v("1", "2");
+        SLInt.v("1", "2", "3");
+        SLInt.v("", "", "", "");
+        SLInt.v("the fact of posting the expression itself"); // just logging the statement here \\
+        SLInt.isV("expression-2", "result");
+        SLInt.setConnector(" IS ");
+        SLInt.isV(new JSONObject(), "json result");
+        SLInt.pV("single p");
+        SLInt.pV(null);
+        SLInt.o(null);
+        SLInt.pV(null, null);
+        SLInt.pV("multiple ps", "_+_");
     }
 
     private void stopCurrentBurdenPreparationJob() {
@@ -348,16 +351,10 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         twisterTimer.schedule(twisterTask, 0, 80);
     }
 
-    private void stopCurrentIterationsJob() {
-        interruptPerformanceTest();
-        toggleIterationsJobState(false);
-    }
-
-    @Override
-    public void toggleIterationsJobState(boolean isRunning) {
-        isIterationsJobRunning = isRunning;
-        uiLink.toggleJobActiveUiState(isRunning);
-    }
+//    private void stopCurrentIterationsJob() {
+//        interruptPerformanceTest();
+//        toggleIterationsJobState(false);
+//    }
 
     private void startIterationsJob() {
         totalResultList.clear();
