@@ -21,6 +21,8 @@ public interface MainHub {
 
         void launchAllMeasurements(int testRepetitionsCount);
 
+        void markIterationsJobForStop();
+
         void stopTestingService();
 
         void finishItself();

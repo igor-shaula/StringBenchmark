@@ -185,7 +185,9 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     @Override
     public void onToggleIterationsClick() {
         if (isIterationsJobRunning) {
-            stopCurrentIterationsJob();
+//            stopCurrentIterationsJob();
+            systemLink.markIterationsJobForStop();
+            // service will stop shortly after this \\
         } else {
             startIterationsJob();
         }
@@ -363,6 +365,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         // condition in the main loop will work only for count > 0 but any numbers are safe there \\
         if (count > 0) {
             systemLink.launchAllMeasurements(count);
+            toggleIterationsJobState(true);
         }
         L.d(CN, "startIterationsJob() finished");
     }

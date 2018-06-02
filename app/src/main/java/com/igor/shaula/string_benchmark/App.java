@@ -20,6 +20,7 @@ public final class App extends Application implements DataTransport {
 
     private static final String CN = "App";
 
+    private boolean isMarkedForStop;
     @Nullable
     private IterationResultConsumer linkToIterationResultConsumer;
     @Nullable
@@ -100,6 +101,16 @@ public final class App extends Application implements DataTransport {
     @Nullable
     public String getLongStringForTest() {
         return longStringForTest;
+    }
+
+    @Override
+    public boolean isMarkedForStop() {
+        return isMarkedForStop;
+    }
+
+    @Override
+    public void setMarkedForStop() {
+        isMarkedForStop = true;
     }
 
     @Override

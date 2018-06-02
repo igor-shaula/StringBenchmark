@@ -197,11 +197,17 @@ public class TestingIntentService extends IntentService {
         final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
 
         for (int i = 0; i < howManyIterations; i++) {
+            if (appLink.isMarkedForStop()) {
+                L.i(CN, "measurePerformanceInLoop ` isMarkedForStop worked -> stopping now");
+                break;
+            }
             oneIterationResults.clear();
             // trying to exclude strange numbers for the first test method by pre-heating it \\
             runSoutMethod(longStringForTest);
             // TODO: 02.06.2018 try to avoid hardcoded indexes by using auto-incremented counter \\
             oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
+            // pre-heating standard Android's Log to avoid it's slowing down for the first time \\
+            runLogMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_VAL_1, runVal1Method(longStringForTest));
@@ -215,6 +221,7 @@ public class TestingIntentService extends IntentService {
                     " oneIterationResults = " + oneIterationResults);
 */
             appLink.transportOneIterationsResult(oneIterationResults);
+//            System.gc(); // i guess this might cause crash - NullPointerException: Attempt to read from null array in sumForSout += array[C.Order.INDEX_OF_SOUT];
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
         System.gc();

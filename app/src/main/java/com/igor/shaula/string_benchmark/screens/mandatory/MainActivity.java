@@ -165,6 +165,11 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     }
 
     @Override
+    public void markIterationsJobForStop() {
+        ((DataTransport) getApplication()).setMarkedForStop();
+    }
+
+    @Override
     public void stopTestingService() {
         stopService(new Intent(this, TestingIntentService.class));
     }

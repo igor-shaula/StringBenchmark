@@ -155,6 +155,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 //        pbViewCreatedBurden.invalidate();
 //        toggleViewBurdenBusyStateOnMainThread(!isJobRunning && logicLink.isBurdenReady());
         toggleViewBurdenBusyStateOnMainThread(bViewBurden.isEnabled());
+        bToggleIterations.setText(R.string.stopIterations);
         // TODO: 05.12.2017 solve the problem of disappearing progressBar \\
     }
 
