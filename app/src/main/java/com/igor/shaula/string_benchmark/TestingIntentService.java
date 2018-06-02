@@ -198,6 +198,8 @@ public class TestingIntentService extends IntentService {
 
         for (int i = 0; i < howManyIterations; i++) {
             oneIterationResults.clear();
+            // trying to exclude strange numbers for the first test method by pre-heating it \\
+            runSoutMethod(longStringForTest);
             // TODO: 02.06.2018 try to avoid hardcoded indexes by using auto-incremented counter \\
             oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));

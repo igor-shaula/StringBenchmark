@@ -66,6 +66,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 //        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SL_INT_TEST_RESULT));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_ON_SERVICE_STOPPED));
+//        logicLink.linkDataTransport();
     }
 
     @Override

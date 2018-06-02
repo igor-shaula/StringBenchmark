@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
@@ -35,7 +34,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private MainHub.LogicLink logicLink;
 
     private ProgressDialog pdWait;
-    private ProgressBar pbViewCreatedBurden;
+//    private ProgressBar pbViewCreatedBurden;
 
     // preparation of the burden \\
     private TextView tvStartingExplanation;
@@ -123,7 +122,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
             @Override
             public void run() {
 //        bViewAllResults.setVisibility(isBusy ? View.GONE : View.VISIBLE);
-                pbViewCreatedBurden.setVisibility(isBusy ? View.VISIBLE : View.GONE);
+//                pbViewCreatedBurden.setVisibility(isBusy ? View.VISIBLE : View.GONE);
+//                pbViewCreatedBurden.clearAnimation();
             }
         });
     }
@@ -363,7 +363,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 //        pdWait.setMessage(rootContext.getString(R.string.startingUp));
         pdWait.setIndeterminate(true);
 
-        pbViewCreatedBurden = rootView.findViewById(R.id.pbViewCreatedBurden);
+//        pbViewCreatedBurden = rootView.findViewById(R.id.pbViewCreatedBurden);
 
     } // init \\
 
