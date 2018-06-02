@@ -60,13 +60,9 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         // for now it's decided to use local receiver, but any other variant can ve used \\
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_PREPARATION_RESULT));
-//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SYSTEM_LOG_TEST_RESULT));
-//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SL_VOID_TEST_RESULT));
-//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_DAL_TEST_RESULT));
-//        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_SL_INT_TEST_RESULT));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_GET_ONE_ITERATION_RESULTS));
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_ON_SERVICE_STOPPED));
-//        logicLink.linkDataTransport();
+        logicLink.linkDataTransport();
     }
 
     @Override

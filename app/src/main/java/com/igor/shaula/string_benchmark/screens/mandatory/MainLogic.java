@@ -251,6 +251,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
     @MeDoc("invoked in activity's onStop")
     @Override
+    public void linkDataTransport() {
+        dataTransport.setDataConsumer(this); // for avoiding lost link after app was restored \\
+    }
+
+    @MeDoc("invoked in activity's onStop")
+    @Override
     public void unLinkDataTransport() {
         dataTransport.setDataConsumer(null); // preventing possible memory leak here \\
     }

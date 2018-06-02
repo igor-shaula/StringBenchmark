@@ -116,6 +116,8 @@ public interface MainHub {
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 
+        void linkDataTransport();
+
         void unLinkDataTransport();
 
         void interruptPerformanceTest();
