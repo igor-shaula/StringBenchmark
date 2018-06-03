@@ -126,9 +126,11 @@ public final class App extends Application implements DataTransport {
 
     @Override
     @MeDoc("invoked from working IntentService as for now")
-    public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult) {
+    public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult,
+                                             int currentIterationNumber) {
         if (linkToIterationResultConsumer != null) {
-            linkToIterationResultConsumer.onNewIterationResult(U.convertIntoArray(oneIterationsResult));
+            linkToIterationResultConsumer.onNewIterationResult(
+                    U.convertIntoArray(oneIterationsResult), currentIterationNumber);
             // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
     }

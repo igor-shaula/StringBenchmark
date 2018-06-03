@@ -52,6 +52,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private Button bToggleIterations;
     private Button bViewAllResults;
     private TextView tvBurdenExplanation;
+    private TextView tvCurrentIterationNumber;
+    private TextView tvIterationsTotalNumber;
     private TextView tvResultForSout;
     private TextView tvResultForLog;
     private TextView tvResultForDAL;
@@ -129,10 +131,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void updatePreparationsResultOnMainThread(@NonNull final long[] oneIterationResults) {
+    public void updateIterationsResultOnMainThread(@NonNull final long[] oneIterationResults,
+                                                   final int currentIterationNumber) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
+                final String currentIterationCounterString = "" + C.SPACE + currentIterationNumber;
+                tvCurrentIterationNumber.setText(currentIterationCounterString);
                 tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
                 tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
                 tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
@@ -287,6 +292,18 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
+    public void showTotalIterationsNumber(final int totalIterationsCount) {
+        tvIterationsTotalNumber.post(new Runnable() {
+            @Override
+            public void run() {
+                final String iterationsTotalCountString =
+                        "" + C.SPACE + C.SLASH + C.SPACE + totalIterationsCount;
+                tvIterationsTotalNumber.setText(iterationsTotalCountString);
+            }
+        });
+    }
+
+    @Override
     public void init() {
 
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
@@ -350,6 +367,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvBurdenExplanation = rootView.findViewById(R.id.tvBurdenExplanation);
         final String startingBurdenInfo = rootContext.getString(R.string.totalBurdenInfo) + C.SPACE + C.ZERO;
         tvBurdenExplanation.setText(startingBurdenInfo);
+        tvCurrentIterationNumber = rootView.findViewById(R.id.tvCurrentIterationNumber);
+        tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);

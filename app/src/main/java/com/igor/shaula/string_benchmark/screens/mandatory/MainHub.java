@@ -53,7 +53,7 @@ public interface MainHub {
 
         void resetResultOfPreparation();
 
-        void updatePreparationsResultOnMainThread(@NonNull long[] results);
+        void updateIterationsResultOnMainThread(@NonNull long[] results, int currentIterationNumber);
 
         void updateBasicStringHint(@NonNull String s);
 
@@ -84,6 +84,8 @@ public interface MainHub {
         void showBuildInfoDialog();
 
         void showBurdenInDialog(@NonNull String burden);
+
+        void showTotalIterationsNumber(int totalIterationsCount);
 
         void init();
     }

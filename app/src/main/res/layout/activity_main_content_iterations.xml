@@ -96,6 +96,25 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorPrimary"/>
 
+    <LinearLayout style="@style/MatchWrap">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/current_iteration_is"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvCurrentIterationNumber"
+            style="@style/WrapWrap"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvIterationsTotalNumber"
+            style="@style/WrapWrap"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tvIterationsResultHeader"
         style="@style/MatchWrap"

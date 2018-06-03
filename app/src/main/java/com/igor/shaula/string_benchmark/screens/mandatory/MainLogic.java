@@ -249,7 +249,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
 //    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
 //        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
-//            uiLink.updatePreparationsResultOnMainThread(oneIterationResults);
+//            uiLink.updateIterationsResultOnMainThread(oneIterationResults);
 //        }
 //    }
 
@@ -273,12 +273,12 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     // FROM IterationResultConsumer ================================================================
 
     @Override
-    public void onNewIterationResult(@NonNull long[] oneIterationsResult) {
+    public void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber) {
         L.w("onNewIterationResult",
                 " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
         totalResultList.add(oneIterationsResult);
         final long[] results = calculateMedianResult();
-        uiLink.updatePreparationsResultOnMainThread(results);
+        uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
     }
 
     // PRIVATE =====================================================================================
@@ -354,6 +354,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         if (count > 0) {
             systemLink.launchAllMeasurements(count);
             toggleIterationsJobState(true);
+            uiLink.showTotalIterationsNumber(count);
         }
         L.d(CN, "startIterationsJob() finished");
     }

@@ -209,11 +209,8 @@ public class TestingIntentService extends IntentService {
             L.w("measurePerformanceInLoop", "i = " + i +
                     " oneIterationResults = " + oneIterationResults);
 */
-            appLink.transportOneIterationsResult(oneIterationResults);
-//            System.gc(); - makes no effect - GC works when JVM wants - not me \\
+            appLink.transportOneIterationsResult(oneIterationResults, i);
         }
-        // for experiment's clarity it's better to initiate garbage-collector before the next step \\
-//        System.gc(); - makes no effect - GC works when JVM wants - not me \\
     }
 
     private long runSoutMethod(@Nullable String longStringForTest) {

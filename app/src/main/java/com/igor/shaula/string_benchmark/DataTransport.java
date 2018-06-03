@@ -18,10 +18,10 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
     void setLongStringForTest(@Nullable String longStringForTest);
 
-    void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult);
+    void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult, int currentIterationNumber);
 
     interface IterationResultConsumer { // implemented by LogicLink \\
 
-        void onNewIterationResult(@NonNull long[] oneIterationsResult);
+        void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber);
     }
 }
