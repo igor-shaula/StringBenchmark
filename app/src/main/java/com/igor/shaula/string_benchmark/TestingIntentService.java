@@ -31,14 +31,6 @@ public class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 
-    // placing variables here avoids creation of those in each test's loop iteration \\
-    @SuppressWarnings("FieldCanBeLocal")
-    private long logNanoTime,
-            salNanoTime,
-            dalNanoTime,
-            val0NanoTime, val1NanoTime, val2NanoTime, val3NanoTime,
-            soutNanoTime;
-
     public TestingIntentService() {
         super(CN);
     }
@@ -225,49 +217,49 @@ public class TestingIntentService extends IntentService {
     }
 
     private long runSoutMethod(@Nullable String longStringForTest) {
-        soutNanoTime = System.nanoTime();
+        long soutNanoTime = System.nanoTime();
         System.out.println(longStringForTest);
         return System.nanoTime() - soutNanoTime;
     }
 
     private long runLogMethod(@Nullable String longStringForTest) {
-        logNanoTime = System.nanoTime();
+        long logNanoTime = System.nanoTime();
         Log.v(CN, longStringForTest);
         return System.nanoTime() - logNanoTime;
     }
 
     private long runDalMethod(@Nullable String longStringForTest) {
-        dalNanoTime = System.nanoTime();
+        long dalNanoTime = System.nanoTime();
         DAL.v(CN, longStringForTest);
         return System.nanoTime() - dalNanoTime;
     }
 
     private long runVal1Method(@Nullable String longStringForTest) {
-        val1NanoTime = System.nanoTime();
+        long val1NanoTime = System.nanoTime();
         VAL1.v(longStringForTest);
         return System.nanoTime() - val1NanoTime;
     }
 
     private long runVal2Method(@Nullable String longStringForTest) {
-        val2NanoTime = System.nanoTime();
+        long val2NanoTime = System.nanoTime();
         VAL2.v(longStringForTest);
         return System.nanoTime() - val2NanoTime;
     }
 
     private long runVal3Method(@Nullable String longStringForTest) {
-        val3NanoTime = System.nanoTime();
+        long val3NanoTime = System.nanoTime();
         VAL3.v(longStringForTest);
         return System.nanoTime() - val3NanoTime;
     }
 
     private long runSLVoidMethod(@Nullable String longStringForTest) {
-        salNanoTime = System.nanoTime();
+        long salNanoTime = System.nanoTime();
         SLVoid.v(longStringForTest);
         return System.nanoTime() - salNanoTime;
     }
 
     private long runSLIntMethod(@Nullable String longStringForTest) {
-        val0NanoTime = System.nanoTime();
+        long val0NanoTime = System.nanoTime();
         SLInt.v(longStringForTest);
         return System.nanoTime() - val0NanoTime;
     }
