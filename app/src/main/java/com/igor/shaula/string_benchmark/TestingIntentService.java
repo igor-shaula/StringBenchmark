@@ -195,9 +195,8 @@ public class TestingIntentService extends IntentService {
             oneIterationResults.clear();
             // trying to exclude strange numbers for the first test method by pre-heating it \\
             runSoutMethod(longStringForTest);
-            // TODO: 02.06.2018 try to avoid hardcoded indexes by using auto-incremented counter \\
             oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
-            // pre-heating standard Android's Log to avoid it's slowing down for the first time \\
+            // pre-heating all other methods to avoid their slowing down for the first time invoked \\
             runLogMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
             runDalMethod(longStringForTest);
@@ -212,16 +211,17 @@ public class TestingIntentService extends IntentService {
             oneIterationResults.add(C.Order.INDEX_OF_SL_VOID, runSLVoidMethod(longStringForTest));
             runSLIntMethod(longStringForTest);
             oneIterationResults.add(C.Order.INDEX_OF_SL_INT, runSLIntMethod(longStringForTest));
+            // TODO: 02.06.2018 try to avoid hardcoded indexes by using auto-incremented counter \\
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +
                     " oneIterationResults = " + oneIterationResults);
 */
             appLink.transportOneIterationsResult(oneIterationResults);
-//            System.gc(); // i guess this might cause crash - NullPointerException: Attempt to read from null array in sumForSout += array[C.Order.INDEX_OF_SOUT];
+//            System.gc(); - makes no effect - GC works when JVM wants - not me \\
         }
         // for experiment's clarity it's better to initiate garbage-collector before the next step \\
-        System.gc();
+//        System.gc(); - makes no effect - GC works when JVM wants - not me \\
     }
 
     private long runSoutMethod(@Nullable String longStringForTest) {
@@ -244,31 +244,31 @@ public class TestingIntentService extends IntentService {
 
     private long runVal1Method(@Nullable String longStringForTest) {
         val1NanoTime = System.nanoTime();
-        VAL1.v(CN, longStringForTest);
+        VAL1.v(longStringForTest);
         return System.nanoTime() - val1NanoTime;
     }
 
     private long runVal2Method(@Nullable String longStringForTest) {
         val2NanoTime = System.nanoTime();
-        VAL2.v(CN, longStringForTest);
+        VAL2.v(longStringForTest);
         return System.nanoTime() - val2NanoTime;
     }
 
     private long runVal3Method(@Nullable String longStringForTest) {
         val3NanoTime = System.nanoTime();
-        VAL3.v(CN, longStringForTest);
+        VAL3.v(longStringForTest);
         return System.nanoTime() - val3NanoTime;
     }
 
     private long runSLVoidMethod(@Nullable String longStringForTest) {
         salNanoTime = System.nanoTime();
-        SLVoid.v(CN, longStringForTest);
+        SLVoid.v(longStringForTest);
         return System.nanoTime() - salNanoTime;
     }
 
     private long runSLIntMethod(@Nullable String longStringForTest) {
         val0NanoTime = System.nanoTime();
-        SLInt.v(CN, longStringForTest);
+        SLInt.v(longStringForTest);
         return System.nanoTime() - val0NanoTime;
     }
 

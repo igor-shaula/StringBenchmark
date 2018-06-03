@@ -32,7 +32,7 @@ public final class SLVoid {
     private static boolean isLogAllowed = true;
 
     @NonNull
-    private static String tag23 = "VariableArgsLogTag4";
+    private static String tag23 = "SLVoid";
     @NonNull
     private static String divider = " ` "; // should be restricted in length somehow to keep it usable \\
     @NonNull
