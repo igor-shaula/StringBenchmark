@@ -18,6 +18,8 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
     void setLongStringForTest(@Nullable String longStringForTest);
 
+    void notifyStarterThatLoadIsAssembled(long nanoTimeDelta);
+
     void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult, int currentIterationNumber);
 
     void stopIterations();

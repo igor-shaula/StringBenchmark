@@ -4,10 +4,10 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.string_benchmark.job_core.DataTransport;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.job_core.DataTransport;
 import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;

@@ -98,7 +98,7 @@ public final class App extends Application implements DataTransport {
         super.onTerminate();
     }
 
-    // GETTERS & SETTERS ===========================================================================
+    // FROM DataTransport ==========================================================================
 
     @Override
     @Nullable
@@ -125,6 +125,14 @@ public final class App extends Application implements DataTransport {
     @MeDoc("invoked from working IntentService as for now")
     public void setLongStringForTest(@Nullable String longStringForTest) {
         this.longStringForTest = longStringForTest;
+    }
+
+    @Override
+    public void notifyStarterThatLoadIsAssembled(long nanoTimeDelta) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(
+                new Intent(C.Intent.ACTION_GET_PREPARATION_RESULT)
+                        .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta)
+        );
     }
 
     @Override

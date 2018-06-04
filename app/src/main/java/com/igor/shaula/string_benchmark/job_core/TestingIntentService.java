@@ -83,13 +83,15 @@ public class TestingIntentService extends IntentService {
             case C.Intent.ACTION_START_BURDEN_PREPARATION:
                 final String basicString = intent.getStringExtra(C.Intent.NAME_BASIC_STRING);
                 final int howManyStrings = intent.getIntExtra(C.Intent.NAME_COUNT, 0);
-                prepareInitialBurden(basicString, howManyStrings);
+                new AssembleStringLoad().prepareInitialBurden(
+                        basicString, howManyStrings, (DataTransport) getApplication());
                 L.w(CN, "onHandleIntent ` basicString = " + basicString);
                 L.w(CN, "onHandleIntent ` howManyStrings = " + howManyStrings);
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
                 final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
-                new IterationsJob().measurePerformanceInLoop(howManyIterations, (DataTransport) getApplication());
+                new IterationsJob().measurePerformanceInLoop(
+                        howManyIterations, (DataTransport) getApplication());
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
                 break;
             default:
@@ -129,38 +131,6 @@ public class TestingIntentService extends IntentService {
     }
 
     // PRIVATE PAYLOAD =============================================================================
-
-    @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
-    private void prepareInitialBurden(@Nullable String stringExtra, int count) {
-        if (count <= 0) {
-            L.w(CN, "prepareInitialBurden ` count <= 0" + count);
-            notifyStarterThatBurdenPreparationFinished(-1);
-            return;
-        }
-        // as StringBuilder is a part of String creation process - it has to be counted in time \\
-        final long nanoTime = System.nanoTime();
-        final StringBuilder longStringForTestBuilder = new StringBuilder(stringExtra);
-        for (int i = 1; i < count; i++) { // initial string with i = 0 is already in StringBuilder \\
-            longStringForTestBuilder.append(stringExtra);
-        }
-        final String longStringForTest = longStringForTestBuilder.toString();
-        final long nanoTimeDelta = System.nanoTime() - nanoTime;
-
-        // saving this created string into the App for the case if IntentService gets destroyed early \\
-        ((DataTransport) getApplication()).setLongStringForTest(longStringForTest);
-
-        notifyStarterThatBurdenPreparationFinished(nanoTimeDelta);
-
-        L.v(CN, "prepareInitialBurden = " + longStringForTest);
-    }
-
-    @MeDoc("invoked only from prepareInitialBurden-method")
-    private void notifyStarterThatBurdenPreparationFinished(long nanoTimeDelta) {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(
-                new Intent(C.Intent.ACTION_GET_PREPARATION_RESULT)
-                        .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta)
-        );
-    }
 
     @SuppressWarnings("unused")
     @MeDoc("actually iterative passing data via intent works very strange - we cannot rely on it")
