@@ -2,22 +2,19 @@ package com.igor.shaula.string_benchmark.screens.mandatory;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.job_core.DataTransport;
 import com.igor.shaula.string_benchmark.job_core.IterationResultConsumer;
+import com.igor.shaula.string_benchmark.job_core.TextyTwister;
 import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
 import org.json.JSONObject;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
         comment = "logic should not have any Android-specific imports & dependencies - only pure Java")
@@ -26,7 +23,14 @@ public final class MainLogic implements MainHub.LogicLink {
 
     private static final String CN = "MainLogic";
 
-    private static final char[] CHARS = {'-', '\\', '|', '/', '-'};
+    private boolean backWasPressedOnce;
+    private boolean isBurdenPreparationJobRunning;
+    private boolean isIterationsJobRunning;
+    private boolean isBurdenReady;
+    private boolean isPrefsFragmentShownHere;
+
+    @NonNull
+    private String pendingPreparationResult = "";
 
     @NonNull
     private final MainHub.SystemLink systemLink;
@@ -36,19 +40,8 @@ public final class MainLogic implements MainHub.LogicLink {
     private final DataTransport dataTransport;
     @NonNull
     private final DataTransport.IterationResultConsumer resultConsumer;
-
-    private boolean backWasPressedOnce;
-    private boolean isBurdenPreparationJobRunning;
-    private boolean isIterationsJobRunning;
-    private boolean isBurdenReady;
-    private boolean isPrefsFragmentShownHere;
-
-    private int twisterCounter;
-
     @NonNull
-    private String pendingPreparationResult = "";
-    @Nullable
-    private Timer twisterTimer;
+    private TextyTwister textyTwister;
 
     MainLogic(@NonNull MainHub.SystemLink systemLink,
               @NonNull MainHub.UiLink uiLink,
@@ -61,6 +54,7 @@ public final class MainLogic implements MainHub.LogicLink {
         uiLink.setInitialInputFieldsValues();
         resultConsumer = new IterationResultConsumer(this);
         dataTransport.setDataConsumer(resultConsumer); // register for receiving portions of result \\
+        textyTwister = new TextyTwister();
     }
 
     // FROM LogicLink ==============================================================================
@@ -173,6 +167,52 @@ public final class MainLogic implements MainHub.LogicLink {
         doSingleTesting();
     }
 
+    private void stopCurrentBurdenPreparationJob() {
+        interruptPerformanceTest();
+        toggleBurdenPreparationJobState(false);
+    }
+
+    private void startNewBurdenPreparationJob() {
+        isBurdenReady = false;
+        runTestBurdenPreparation();
+        toggleBurdenPreparationJobState(true);
+    }
+
+    private void runTestBurdenPreparation() {
+        int count = U.convertIntoInt(uiLink.getStringsAmountText());
+        if (count > 0) {
+            systemLink.launchPreparation(uiLink.getBasicStringText(), count);
+            pendingPreparationResult = "";
+            new TextyTwister().showTextyTwister(this); // for now it works but is almost non-visible because of high speed \\
+        }
+        L.d(CN, "runTestBurdenPreparation() finished");
+    }
+
+    private void doSingleTesting() {
+        // TODO: 02.12.2017 wright unit-tests with this kind of content \\
+        SLInt.v("");
+        SLInt.v("", "");
+        SLInt.v("", "", "");
+        SLInt.v();
+        SLInt.v((String[]) null);
+        SLInt.v(null, null);
+        SLInt.v(null, null, null);
+        SLInt.v(this.toString(), null, null);
+        SLInt.v("1");
+        SLInt.v("1", "2");
+        SLInt.v("1", "2", "3");
+        SLInt.v("", "", "", "");
+        SLInt.v("the fact of posting the expression itself"); // just logging the statement here \\
+        SLInt.isV("expression-2", "result");
+        SLInt.setConnector(" IS ");
+        SLInt.isV(new JSONObject(), "json result");
+        SLInt.pV("single p");
+        SLInt.pV(null);
+        SLInt.o(null);
+        SLInt.pV(null, null);
+        SLInt.pV("multiple ps", "_+_");
+    }
+
     @Override
     public void onViewBurdenClick() {
         final String burden = systemLink.getBurden();
@@ -191,6 +231,23 @@ public final class MainLogic implements MainHub.LogicLink {
             systemLink.allowIterationsJob(true);
             startIterationsJob(isEndless);
         }
+    }
+
+    private void startIterationsJob(boolean isEndless) {
+        resultConsumer.prepareForNewJob();
+        int count;
+        if (isEndless) {
+            count = Integer.MAX_VALUE;
+        } else {
+            count = U.convertIntoInt(uiLink.getIterationsAmountText());
+        }
+        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
+        if (count > 0) {
+            systemLink.launchAllMeasurements(count);
+            toggleIterationsJobState(true);
+            uiLink.showTotalIterationsNumber(count);
+        }
+        L.d(CN, "startIterationsJob() finished");
     }
 
     @Override
@@ -215,7 +272,7 @@ public final class MainLogic implements MainHub.LogicLink {
         L.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
         switch (whatInfoToShow) {
             case C.Choice.PREPARATION:
-                stopTwisterTimer();
+                textyTwister.stopTwisterTimer();
                 pendingPreparationResult = systemLink.getAdaptedString(resultNanoTime);
                 updatePreparationResult("");
                 break;
@@ -245,6 +302,19 @@ public final class MainLogic implements MainHub.LogicLink {
         }
     }
 
+    @Override
+    public void updatePreparationResult(@NonNull final String result) {
+        if (pendingPreparationResult.isEmpty()) {
+            uiLink.updatePreparationResultOnMainThread(result);
+//            twisterCounter++;
+        } else {
+            uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
+        }
+        isBurdenReady = true;
+        uiLink.toggleViewBurdenBusyStateOnMainThread(true);
+        uiLink.updateBurdenLengthOnMainThread(systemLink.getBurden().length());
+    }
+
 //    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
 //        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
 //            uiLink.transportIterationsResult(oneIterationResults);
@@ -271,108 +341,5 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void transportIterationsResult(@NonNull long[] results, int currentIterationNumber) {
         uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
-    }
-
-    // PRIVATE =====================================================================================
-
-    private void doSingleTesting() {
-        // TODO: 02.12.2017 wright unit-tests with this kind of content \\
-        SLInt.v("");
-        SLInt.v("", "");
-        SLInt.v("", "", "");
-        SLInt.v();
-        SLInt.v((String[]) null);
-        SLInt.v(null, null);
-        SLInt.v(null, null, null);
-        SLInt.v(this.toString(), null, null);
-        SLInt.v("1");
-        SLInt.v("1", "2");
-        SLInt.v("1", "2", "3");
-        SLInt.v("", "", "", "");
-        SLInt.v("the fact of posting the expression itself"); // just logging the statement here \\
-        SLInt.isV("expression-2", "result");
-        SLInt.setConnector(" IS ");
-        SLInt.isV(new JSONObject(), "json result");
-        SLInt.pV("single p");
-        SLInt.pV(null);
-        SLInt.o(null);
-        SLInt.pV(null, null);
-        SLInt.pV("multiple ps", "_+_");
-    }
-
-    private void stopCurrentBurdenPreparationJob() {
-        interruptPerformanceTest();
-        toggleBurdenPreparationJobState(false);
-    }
-
-    private void startNewBurdenPreparationJob() {
-        isBurdenReady = false;
-        runTestBurdenPreparation();
-        toggleBurdenPreparationJobState(true);
-//        uiLink.resetResultViewStates();
-    }
-
-    private void runTestBurdenPreparation() {
-        int count = U.convertIntoInt(uiLink.getStringsAmountText());
-        if (count > 0) {
-            systemLink.launchPreparation(uiLink.getBasicStringText(), count);
-            pendingPreparationResult = "";
-            showTextyTwister(); // for now it works but is almost non-visible because of high speed \\
-        }
-        L.d(CN, "runTestBurdenPreparation() finished");
-    }
-
-    // TODO: 03.06.2018 better attach this method to iterations - there it will be visible \\
-    private void showTextyTwister() {
-        final int[] index = new int[1];
-        final String[] textForUI = new String[1];
-        final TimerTask twisterTask = new TimerTask() {
-            @Override
-            public void run() {
-                // 0 - 1 - 2 - 3 - 0 - 1 - 2 - 3 - 0 - ...
-                index[0] = twisterCounter % CHARS.length;
-                textForUI[0] = String.valueOf(CHARS[index[0]]);
-                updatePreparationResult(textForUI[0]);
-            }
-        };
-        twisterTimer = new Timer(true);
-        twisterTimer.schedule(twisterTask, 0, 80);
-    }
-
-    private void startIterationsJob(boolean isEndless) {
-        resultConsumer.prepareForNewJob();
-        int count;
-        if (isEndless) {
-            count = Integer.MAX_VALUE;
-        } else {
-            count = U.convertIntoInt(uiLink.getIterationsAmountText());
-        }
-        // condition in the main loop will work only for count > 0 but any numbers are safe there \\
-        if (count > 0) {
-            systemLink.launchAllMeasurements(count);
-            toggleIterationsJobState(true);
-            uiLink.showTotalIterationsNumber(count);
-        }
-        L.d(CN, "startIterationsJob() finished");
-    }
-
-    private void updatePreparationResult(@NonNull final String result) {
-        if (pendingPreparationResult.isEmpty()) {
-            uiLink.updatePreparationResultOnMainThread(result);
-            twisterCounter++;
-        } else {
-            uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
-        }
-        isBurdenReady = true;
-        uiLink.toggleViewBurdenBusyStateOnMainThread(true);
-        uiLink.updateBurdenLengthOnMainThread(systemLink.getBurden().length());
-    }
-
-    private void stopTwisterTimer() {
-        if (twisterTimer != null) {
-            twisterTimer.cancel(); // purge() behaves very strangely - so i decided to avoid it
-        }
-        twisterTimer = null;
-        twisterCounter = 0;
     }
 }

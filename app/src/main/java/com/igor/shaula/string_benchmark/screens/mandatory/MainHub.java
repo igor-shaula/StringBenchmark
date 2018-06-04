@@ -127,5 +127,7 @@ public interface MainHub {
         void interruptPerformanceTest();
 
         void transportIterationsResult(@NonNull long[] results, int currentIterationNumber);
+
+        void updatePreparationResult(@NonNull String s);
     }
 }
