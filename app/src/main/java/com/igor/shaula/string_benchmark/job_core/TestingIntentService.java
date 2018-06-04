@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark;
+package com.igor.shaula.string_benchmark.job_core;
 
 import android.app.IntentService;
 import android.content.Context;

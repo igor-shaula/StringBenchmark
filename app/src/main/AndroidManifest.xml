@@ -3,7 +3,7 @@
           package="com.igor.shaula.string_benchmark">
 
     <application
-        android:name=".App"
+        android:name=".job_core.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,7 +27,7 @@
         </activity>
 
         <service
-            android:name=".TestingIntentService"
+            android:name=".job_core.TestingIntentService"
             android:exported="false">
         </service>
 

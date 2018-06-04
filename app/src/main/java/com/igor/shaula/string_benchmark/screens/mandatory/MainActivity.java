@@ -13,9 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.igor.shaula.string_benchmark.DataTransport;
+import com.igor.shaula.string_benchmark.job_core.DataTransport;
 import com.igor.shaula.string_benchmark.R;
-import com.igor.shaula.string_benchmark.TestingIntentService;
+import com.igor.shaula.string_benchmark.job_core.TestingIntentService;
 import com.igor.shaula.string_benchmark.screens.additional.PrefsFragment0;
 import com.igor.shaula.string_benchmark.screens.additional.SettingsActivity;
 import com.igor.shaula.string_benchmark.utils.C;
