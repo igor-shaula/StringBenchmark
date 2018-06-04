@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens.mandatory;
+package com.igor.shaula.string_benchmark.app_components.main_screen;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.R;
-import com.igor.shaula.string_benchmark.screens.for_ui.SimpleTextWatcher;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;

@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.job_core;
+package com.igor.shaula.string_benchmark.payload_jobs;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "abstract job - not in Service only")
-public class IterationsJob {
+public class IterationsMeasurement {
 
-    private static final String CN = "IterationsJob";
+    private static final String CN = "IterationsMeasurement";
 
     public void measurePerformanceInLoop(final int howManyIterations, final DataTransport dataTransport) {
 

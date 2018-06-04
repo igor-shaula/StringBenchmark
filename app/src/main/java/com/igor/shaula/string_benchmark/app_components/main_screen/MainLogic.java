@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens.mandatory;
+package com.igor.shaula.string_benchmark.app_components.main_screen;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.job_core.DataTransport;
-import com.igor.shaula.string_benchmark.job_core.IterationResultConsumer;
-import com.igor.shaula.string_benchmark.job_core.TextyTwister;
 import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
+import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
+import com.igor.shaula.string_benchmark.payload_jobs.IterationResultConsumer;
+import com.igor.shaula.string_benchmark.payload_jobs.TextyTwister;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;

@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens.mandatory;
+package com.igor.shaula.string_benchmark.app_components.main_screen;
 
 import android.support.annotation.NonNull;
 

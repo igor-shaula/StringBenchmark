@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens.for_ui;
+package com.igor.shaula.string_benchmark.app_components.main_screen.for_ui;
 
 import android.text.Editable;
 import android.text.TextWatcher;

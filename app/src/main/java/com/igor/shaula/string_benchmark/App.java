@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.job_core;
+package com.igor.shaula.string_benchmark;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;

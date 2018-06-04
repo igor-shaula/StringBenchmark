@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.job_core;
+package com.igor.shaula.string_benchmark.app_components;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -10,6 +10,9 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.payload_jobs.AssembleStringLoad;
+import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
+import com.igor.shaula.string_benchmark.payload_jobs.IterationsMeasurement;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
@@ -90,7 +93,7 @@ public class TestingIntentService extends IntentService {
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
                 final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
-                new IterationsJob().measurePerformanceInLoop(
+                new IterationsMeasurement().measurePerformanceInLoop(
                         howManyIterations, (DataTransport) getApplication());
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
                 break;

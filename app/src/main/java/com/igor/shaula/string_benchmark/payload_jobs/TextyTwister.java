@@ -1,10 +1,10 @@
-package com.igor.shaula.string_benchmark.job_core;
+package com.igor.shaula.string_benchmark.payload_jobs;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.screens.mandatory.MainHub;
+import com.igor.shaula.string_benchmark.app_components.main_screen.MainHub;
 
 import java.util.Timer;
 import java.util.TimerTask;

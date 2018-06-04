@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.screens.additional;
+package com.igor.shaula.string_benchmark.app_components.additional_screens;
 
 import android.annotation.TargetApi;
 import android.content.Context;

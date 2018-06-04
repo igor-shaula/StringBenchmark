@@ -6,7 +6,7 @@
     android:id="@+id/mainActivityRootView"
     style="@style/MatchMatch"
     android:orientation="vertical"
-    tools:context="com.igor.shaula.string_benchmark.screens.mandatory.MainActivity">
+    tools:context="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         style="@style/MatchWrap"

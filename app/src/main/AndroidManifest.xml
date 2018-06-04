@@ -3,7 +3,7 @@
           package="com.igor.shaula.string_benchmark">
 
     <application
-        android:name=".job_core.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
         <!-- we really need large heap here -->
 
         <activity
-            android:name=".screens.mandatory.MainActivity"
+            android:name=".app_components.main_screen.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
@@ -27,17 +27,17 @@
         </activity>
 
         <service
-            android:name=".job_core.TestingIntentService"
+            android:name=".app_components.TestingIntentService"
             android:exported="false">
         </service>
 
         <activity
-            android:name=".screens.additional.SettingsActivity"
+            android:name=".app_components.additional_screens.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".screens.mandatory.MainActivity">
+            android:parentActivityName=".app_components.main_screen.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.igor.shaula.string_benchmark.screens.mandatory.MainActivity"/>
+                android:value="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity"/>
         </activity>
     </application>
 
