@@ -209,7 +209,7 @@ public class TestingIntentService extends IntentService {
             L.w("measurePerformanceInLoop", "i = " + i +
                     " oneIterationResults = " + oneIterationResults);
 */
-            appLink.transportOneIterationsResult(oneIterationResults, i);
+            appLink.transportOneIterationsResult(oneIterationResults, i + 1);
         }
     }
 

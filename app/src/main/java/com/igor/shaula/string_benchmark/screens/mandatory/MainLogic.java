@@ -317,7 +317,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         isBurdenReady = false;
         runTestBurdenPreparation();
         toggleBurdenPreparationJobState(true);
-        uiLink.resetResultViewStates();
+//        uiLink.resetResultViewStates();
     }
 
     private void runTestBurdenPreparation() {
