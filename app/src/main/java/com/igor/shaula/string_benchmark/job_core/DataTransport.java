@@ -27,5 +27,7 @@ public interface DataTransport { // currently implemented by App as a quickest d
     interface IterationResultConsumer { // implemented by LogicLink \\
 
         void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber);
+
+        void prepareForNewJob();
     }
 }

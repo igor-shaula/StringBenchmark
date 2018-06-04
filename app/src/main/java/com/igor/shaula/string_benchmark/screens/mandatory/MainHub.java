@@ -125,5 +125,7 @@ public interface MainHub {
         void unLinkDataTransport();
 
         void interruptPerformanceTest();
+
+        void transportIterationsResult(@NonNull long[] results, int currentIterationNumber);
     }
 }

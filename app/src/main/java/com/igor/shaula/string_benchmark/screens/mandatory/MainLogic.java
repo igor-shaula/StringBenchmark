@@ -8,6 +8,7 @@ import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.job_core.DataTransport;
+import com.igor.shaula.string_benchmark.job_core.IterationResultConsumer;
 import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
@@ -15,16 +16,13 @@ import com.igor.shaula.string_benchmark.utils.U;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
         comment = "logic should not have any Android-specific imports & dependencies - only pure Java")
 
-public final class MainLogic implements MainHub.LogicLink, DataTransport.IterationResultConsumer {
+public final class MainLogic implements MainHub.LogicLink {
 
     private static final String CN = "MainLogic";
 
@@ -36,6 +34,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private final MainHub.UiLink uiLink;
     @NonNull
     private final DataTransport dataTransport;
+    @NonNull
+    private final DataTransport.IterationResultConsumer resultConsumer;
 
     private boolean backWasPressedOnce;
     private boolean isBurdenPreparationJobRunning;
@@ -44,9 +44,6 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     private boolean isPrefsFragmentShownHere;
 
     private int twisterCounter;
-
-    @NonNull
-    private List<long[]> totalResultList = new LinkedList<>();
 
     @NonNull
     private String pendingPreparationResult = "";
@@ -60,9 +57,10 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         this.uiLink = uiLink;
         this.dataTransport = dataTransport;
         uiLink.setLogicLink(this);
-        dataTransport.setDataConsumer(this); // register for receiving portions of result \\
         uiLink.init();
         uiLink.setInitialInputFieldsValues();
+        resultConsumer = new IterationResultConsumer(this);
+        dataTransport.setDataConsumer(resultConsumer); // register for receiving portions of result \\
     }
 
     // FROM LogicLink ==============================================================================
@@ -249,14 +247,14 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
 
 //    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
 //        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
-//            uiLink.updateIterationsResultOnMainThread(oneIterationResults);
+//            uiLink.transportIterationsResult(oneIterationResults);
 //        }
 //    }
 
     @MeDoc("invoked in activity's onStop")
     @Override
     public void linkDataTransport() {
-        dataTransport.setDataConsumer(this); // for avoiding lost link after app was restored \\
+        dataTransport.setDataConsumer(resultConsumer); // for avoiding lost link after app was restored \\
     }
 
     @MeDoc("invoked in activity's onStop")
@@ -270,14 +268,8 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         systemLink.stopTestingService();
     }
 
-    // FROM IterationResultConsumer ================================================================
-
     @Override
-    public void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber) {
-        L.w("onNewIterationResult",
-                " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
-        totalResultList.add(oneIterationsResult);
-        final long[] results = calculateMedianResult();
+    public void transportIterationsResult(@NonNull long[] results, int currentIterationNumber) {
         uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
     }
 
@@ -348,7 +340,7 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     private void startIterationsJob(boolean isEndless) {
-        totalResultList.clear();
+        resultConsumer.prepareForNewJob();
         int count;
         if (isEndless) {
             count = Integer.MAX_VALUE;
@@ -362,47 +354,6 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
             uiLink.showTotalIterationsNumber(count);
         }
         L.d(CN, "startIterationsJob() finished");
-    }
-
-    @NonNull
-    private long[] calculateMedianResult() {
-        final int listSize = totalResultList.size();
-        L.w("calculateMedianResult", "listSize = " + listSize);
-        final long[] medianArray = new long[C.Order.VARIANTS_TOTAL];
-        if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
-            // avoiding division by zero in the loop just after this check \\
-            return medianArray; // empty here \\
-        }
-        long sumForSout = 0;
-        long sumForLog = 0;
-        long sumForDAL = 0;
-        long sumForVAL1 = 0;
-        long sumForVAL2 = 0;
-        long sumForVAL3 = 0;
-        long sumForSLVoid = 0;
-        long sumForSLInt = 0;
-        for (long[] array : totalResultList) {
-            L.w("calculateMedianResult", "" + Arrays.toString(array));
-            // i hope we'll avoid exceeding the max value for type long \\
-            sumForSout += array[C.Order.INDEX_OF_SOUT];
-            sumForLog += array[C.Order.INDEX_OF_LOG];
-            sumForDAL += array[C.Order.INDEX_OF_DAL];
-            sumForVAL1 += array[C.Order.INDEX_OF_VAL_1];
-            sumForVAL2 += array[C.Order.INDEX_OF_VAL_2];
-            sumForVAL3 += array[C.Order.INDEX_OF_VAL_3];
-            sumForSLVoid += array[C.Order.INDEX_OF_SL_VOID];
-            sumForSLInt += array[C.Order.INDEX_OF_SL_INT];
-        }
-        medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
-        medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
-        medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
-        medianArray[C.Order.INDEX_OF_VAL_1] = sumForVAL1 / listSize;
-        medianArray[C.Order.INDEX_OF_VAL_2] = sumForVAL2 / listSize;
-        medianArray[C.Order.INDEX_OF_VAL_3] = sumForVAL3 / listSize;
-        medianArray[C.Order.INDEX_OF_SL_VOID] = sumForSLVoid / listSize;
-        medianArray[C.Order.INDEX_OF_SL_INT] = sumForSLInt / listSize;
-
-        return medianArray;
     }
 
     private void updatePreparationResult(@NonNull final String result) {
