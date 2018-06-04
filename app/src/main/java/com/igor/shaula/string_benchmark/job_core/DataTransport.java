@@ -20,6 +20,8 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
     void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult, int currentIterationNumber);
 
+    void stopIterations();
+
     interface IterationResultConsumer { // implemented by LogicLink \\
 
         void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber);

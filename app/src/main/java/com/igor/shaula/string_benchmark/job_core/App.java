@@ -2,12 +2,15 @@ package com.igor.shaula.string_benchmark.job_core;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
@@ -133,5 +136,11 @@ public final class App extends Application implements DataTransport {
                     U.convertIntoArray(oneIterationsResult), currentIterationNumber);
             // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
+    }
+
+    @Override
+    public void stopIterations() {
+//        isAllowedToRunIterations = false; - not needed because we work via older chain \\
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(C.Intent.ACTION_JOB_STOPPED));
     }
 }
