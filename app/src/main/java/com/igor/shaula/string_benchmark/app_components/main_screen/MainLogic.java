@@ -80,6 +80,11 @@ public final class MainLogic implements MainHub.LogicLink {
     public void toggleIterationsJobState(boolean isRunning) {
         isIterationsJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
+        if (isRunning) {
+            textyTwister.showTextyTwister(this);
+        } else {
+            textyTwister.stopTwisterTimer();
+        }
     }
 
     @Override
@@ -183,7 +188,6 @@ public final class MainLogic implements MainHub.LogicLink {
         if (count > 0) {
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
-            new TextyTwister().showTextyTwister(this); // for now it works but is almost non-visible because of high speed \\
         }
         L.d(CN, "runTestBurdenPreparation() finished");
     }
@@ -272,7 +276,6 @@ public final class MainLogic implements MainHub.LogicLink {
         L.d("showPreparationsResult", "resultNanoTime = " + resultNanoTime);
         switch (whatInfoToShow) {
             case C.Choice.PREPARATION:
-                textyTwister.stopTwisterTimer();
                 pendingPreparationResult = systemLink.getAdaptedString(resultNanoTime);
                 updatePreparationResult("");
                 break;

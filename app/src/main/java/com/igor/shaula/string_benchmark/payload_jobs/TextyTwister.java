@@ -40,7 +40,7 @@ public class TextyTwister {
             }
         };
         twisterTimer = new Timer(true);
-        twisterTimer.schedule(twisterTask, 0, 80);
+        twisterTimer.schedule(twisterTask, 0, 80); // every 5 frames = 12 times per second \\
     }
 
     public void stopTwisterTimer() {
@@ -50,5 +50,4 @@ public class TextyTwister {
         twisterTimer = null;
         twisterCounter = 0;
     }
-
 }
