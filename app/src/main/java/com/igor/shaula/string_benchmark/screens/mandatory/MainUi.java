@@ -49,8 +49,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     // iterations \\
     private TextInputLayout tilIterationsAmount;
     private EditText etIterationsAmount;
-    private Button bToggleIterations;
-    private Button bViewAllResults;
+    private Button bToggleAdjustedIterations;
+    private Button bToggleEndlessIterations;
     private TextView tvBurdenExplanation;
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
@@ -123,7 +123,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         rootView.post(new Runnable() {
             @Override
             public void run() {
-//        bViewAllResults.setVisibility(isBusy ? View.GONE : View.VISIBLE);
+//        bToggleEndlessIterations.setVisibility(isBusy ? View.GONE : View.VISIBLE);
 //                pbViewCreatedBurden.setVisibility(isBusy ? View.VISIBLE : View.GONE);
 //                pbViewCreatedBurden.clearAnimation();
             }
@@ -160,7 +160,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 //        pbViewCreatedBurden.invalidate();
 //        toggleViewBurdenBusyStateOnMainThread(!isJobRunning && logicLink.isBurdenReady());
         toggleViewBurdenBusyStateOnMainThread(bViewBurden.isEnabled());
-        bToggleIterations.setText(isJobRunning ? R.string.stopIterations : R.string.startIterations);
+        bToggleAdjustedIterations.setText(isJobRunning ?
+                R.string.stopAdjustedIterations : R.string.startAdjustedIterations);
+        bToggleEndlessIterations.setText(isJobRunning ?
+                R.string.stopEndlessIterations : R.string.startEndlessIterations);
     }
 
     @Override
@@ -360,10 +363,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 return false;
             }
         });
-        bToggleIterations = rootView.findViewById(R.id.bToggleIterations);
-        bToggleIterations.setOnClickListener(this);
-        bViewAllResults = rootView.findViewById(R.id.bViewAllResults);
-        bViewAllResults.setOnClickListener(this);
+        bToggleAdjustedIterations = rootView.findViewById(R.id.bToggleAdjustedIterations);
+        bToggleAdjustedIterations.setOnClickListener(this);
+        bToggleEndlessIterations = rootView.findViewById(R.id.bToggleEndlessIterations);
+        bToggleEndlessIterations.setOnClickListener(this);
         tvBurdenExplanation = rootView.findViewById(R.id.tvBurdenExplanation);
         final String startingBurdenInfo = rootContext.getString(R.string.totalBurdenInfo) + C.SPACE + C.ZERO;
         tvBurdenExplanation.setText(startingBurdenInfo);
@@ -382,8 +385,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 //        pdWait.setMessage(rootContext.getString(R.string.startingUp));
         pdWait.setIndeterminate(true);
 
-//        pbViewCreatedBurden = rootView.findViewById(R.id.pbViewCreatedBurden);
-
     } // init \\
 
     @Override
@@ -395,11 +396,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
             case R.id.bViewBurden:
                 logicLink.onViewBurdenClick();
                 break;
-            case R.id.bToggleIterations:
-                logicLink.onToggleIterationsClick();
+            case R.id.bToggleAdjustedIterations:
+                logicLink.onToggleIterationsClick(false);
                 break;
-            case R.id.bViewAllResults:
-
+            case R.id.bToggleEndlessIterations:
+                logicLink.onToggleIterationsClick(true);
                 break;
         }
     }

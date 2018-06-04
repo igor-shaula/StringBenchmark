@@ -185,13 +185,13 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
     }
 
     @Override
-    public void onToggleIterationsClick() {
+    public void onToggleIterationsClick(boolean isEndless) {
         if (isIterationsJobRunning) {
             systemLink.allowIterationsJob(false);
             // IntentService will stop shortly after this \\
         } else {
             systemLink.allowIterationsJob(true);
-            startIterationsJob();
+            startIterationsJob(isEndless);
         }
     }
 
@@ -347,9 +347,14 @@ public final class MainLogic implements MainHub.LogicLink, DataTransport.Iterati
         twisterTimer.schedule(twisterTask, 0, 80);
     }
 
-    private void startIterationsJob() {
+    private void startIterationsJob(boolean isEndless) {
         totalResultList.clear();
-        int count = U.convertIntoInt(uiLink.getIterationsAmountText());
+        int count;
+        if (isEndless) {
+            count = Integer.MAX_VALUE;
+        } else {
+            count = U.convertIntoInt(uiLink.getIterationsAmountText());
+        }
         // condition in the main loop will work only for count > 0 but any numbers are safe there \\
         if (count > 0) {
             systemLink.launchAllMeasurements(count);

@@ -50,14 +50,14 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/bToggleIterations"
+            android:id="@+id/bToggleAdjustedIterations"
             style="@android:style/Widget.Button.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:text="@string/startIterations"
+            android:text="@string/startAdjustedIterations"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
 
@@ -66,15 +66,14 @@
             android:layout_height="0dp"/>
 
         <Button
-            android:id="@+id/bViewAllResults"
+            android:id="@+id/bToggleEndlessIterations"
             style="@android:style/Widget.Button.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:enabled="false"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:text="@string/viewTestResults"
+            android:text="@string/startEndlessIterations"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
 

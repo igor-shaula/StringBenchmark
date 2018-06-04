@@ -112,7 +112,7 @@ public interface MainHub {
 
         void onViewBurdenClick();
 
-        void onToggleIterationsClick();
+        void onToggleIterationsClick(boolean isEndless);
 
         void showDialogWithBuildInfo();
 
