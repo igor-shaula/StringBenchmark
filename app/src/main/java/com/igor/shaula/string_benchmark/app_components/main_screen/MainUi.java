@@ -45,6 +45,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private Button bPrepareBurden;
     private Button bViewBurden;
     private TextView tvResultOfPreparation;
+    private TextView tvResultForCreatingLoad;
 
     // iterations \\
     private TextInputLayout tilIterationsAmount;
@@ -180,7 +181,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 
     @Override
     public void resetResultOfPreparation() {
-        tvResultOfPreparation.setText(String.valueOf(C.STAR));
+        tvResultOfPreparation.setText(rootContext.getString(R.string.resultOfPreparation));
     }
 
     @Override
@@ -203,7 +204,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         rootView.post(new Runnable() {
             @Override
             public void run() {
-                tvResultOfPreparation.setText(result);
+                tvResultForCreatingLoad.setText(String.valueOf(result));
             }
         });
     }
@@ -333,6 +334,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         bViewBurden = rootView.findViewById(R.id.bViewBurden);
         bViewBurden.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
+        tvResultForCreatingLoad = rootView.findViewById(R.id.tvResultForCreatingLoad);
 
         // iterations block \\
         tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);

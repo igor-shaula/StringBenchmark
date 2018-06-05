@@ -19,13 +19,6 @@ public class TextyTwister {
     @Nullable
     private Timer twisterTimer;
 
-//    @NonNull
-//    private final MainHub.LogicLink logicLink;
-
-//    public TextyTwister(@NonNull MainHub.LogicLink logicLink) {
-//        this.logicLink = logicLink;
-//    }
-
     public void showTextyTwister(@NonNull final MainHub.LogicLink logicLink) {
         final int[] index = new int[1];
         final String[] textForUI = new String[1];

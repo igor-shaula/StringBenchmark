@@ -36,7 +36,7 @@
     <string name="prepareBurdenButtonText">Assemble the burden</string>
     <string name="viewBurdenButtonText">View created burden</string>
 
-    <string name="resultOfPreparation">Time expended on creating the burden:</string>
+    <string name="resultOfPreparation">Time for creating the burden:</string>
 
     <!-- iterations -->
 
@@ -65,7 +65,7 @@
     <string name="resultOfSLVoid">My superior-void Log wrapper:</string>
     <string name="resultOfSLInt">My superior-int Log wrapper:</string>
     <string name="thisBlocksDivider"/>
-    <string name="totalBurdenInfo">Assembled burden length is</string>
+    <string name="totalBurdenInfo">Assembled burden length is:</string>
 
     <string name="menu_prefsFragment0">Prefs in fragment 0</string>
     <string name="title_activity_settings">Settings</string>
@@ -142,6 +142,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="current_iteration_is">Current iteration is:</string>
+    <string name="makeBurdenEmpty">Make burden empty</string>
 
     <!-- something else - for new automatically created strings -->
 

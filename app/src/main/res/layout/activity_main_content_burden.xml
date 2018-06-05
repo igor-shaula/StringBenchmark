@@ -78,47 +78,52 @@
             android:layout_width="16dp"
             android:layout_height="0dp"/>
 
-        <!--<FrameLayout-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1">-->
-
         <Button
-            android:id="@+id/bViewBurden"
+            android:id="@+id/bResetBurden"
             style="@android:style/Widget.Button.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:enabled="false"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:text="@string/viewBurdenButtonText"
+            android:text="@string/makeBurdenEmpty"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
-
-        <!--<ProgressBar-->
-        <!--android:id="@+id/pbViewCreatedBurden"-->
-        <!--style="@style/MatchMatch"-->
-        <!--android:visibility="gone"/>-->
-
-        <!--</FrameLayout>-->
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvResultOfPreparation"
         style="@style/MatchWrap"
-        android:gravity="center"
         android:text="@string/resultOfPreparation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="italic"/>
+        android:textColor="@android:color/black"/>
 
     <TextView
-        android:id="@+id/tvResultOfPreparation"
+        android:id="@+id/tvResultForCreatingLoad"
+        style="@style/MatchWrap.Gravity_End"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
         style="@style/WrapWrap"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:text="@string/star"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/bViewBurden"
+        style="@android:style/Widget.Button.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/viewBurdenButtonText"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:visibility="gone"/>
 
 </LinearLayout>
