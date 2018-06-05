@@ -87,11 +87,11 @@
         android:textColor="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/tvBurdenExplanation"
+        android:id="@+id/tvLoadExplanation"
         style="@style/MatchWrap"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:text="@string/totalBurdenInfo"
+        android:text="@string/summaryLoadInfo"
         android:textColor="@android:color/black"/>
 
     <LinearLayout style="@style/MatchWrap">

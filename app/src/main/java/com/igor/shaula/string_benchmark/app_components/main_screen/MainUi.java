@@ -42,8 +42,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private EditText etBasicString;
     private TextInputLayout tilStringsAmount;
     private EditText etStringsAmount;
-    private Button bPrepareBurden;
-    private Button bViewBurden;
+    private Button bPrepareLoad;
+    private Button bViewLoad;
     private TextView tvResultOfPreparation;
     private TextView tvResultForCreatingLoad;
 
@@ -52,7 +52,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private EditText etIterationsAmount;
     private Button bToggleAdjustedIterations;
     private Button bToggleEndlessIterations;
-    private TextView tvBurdenExplanation;
+    private TextView tvLoadExplanation;
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
     private TextView tvResultForSout;
@@ -120,7 +120,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void toggleViewBurdenBusyStateOnMainThread(final boolean isBusy) {
+    public void toggleViewLoadBusyStateOnMainThread(final boolean isBusy) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
@@ -156,11 +156,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
         etIterationsAmount.setEnabled(!isJobRunning);
-        bPrepareBurden.setEnabled(!isJobRunning);
-        bViewBurden.setEnabled(!isJobRunning && logicLink.isBurdenReady());
+        bPrepareLoad.setEnabled(!isJobRunning);
+        bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
 //        pbViewCreatedBurden.invalidate();
-//        toggleViewBurdenBusyStateOnMainThread(!isJobRunning && logicLink.isBurdenReady());
-        toggleViewBurdenBusyStateOnMainThread(bViewBurden.isEnabled());
+//        toggleViewLoadBusyStateOnMainThread(!isJobRunning && logicLink.isLoadReady());
+        toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
         bToggleAdjustedIterations.setText(isJobRunning ?
                 R.string.stopAdjustedIterations : R.string.startAdjustedIterations);
         bToggleEndlessIterations.setText(isJobRunning ?
@@ -210,13 +210,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void updateBurdenLengthOnMainThread(final int length) {
+    public void updateLoadLengthOnMainThread(final int length) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
-                final String burdenLengthText = rootContext.getString(R.string.totalBurdenInfo)
+                final String text = rootContext.getString(R.string.summaryLoadInfo)
                         + C.SPACE + U.createReadableStringForLong(length);
-                tvBurdenExplanation.setText(burdenLengthText);
+                tvLoadExplanation.setText(text);
             }
         });
     }
@@ -283,16 +283,16 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void showBurdenInDialog(@NonNull String burden) {
+    public void showLoadInDialog(@NonNull String load) {
         // TODO: 05.12.2017 move to the Dialog from support library \\
-        final String title = rootContext.getString(R.string.totalBurdenLength) + C.SPACE + U.createReadableStringForLong(burden.length());
+        final String title = rootContext.getString(R.string.summaryLoadLength) + C.SPACE + U.createReadableStringForLong(load.length());
         final AlertDialog alertDialog = new AlertDialog.Builder(rootContext)
                 .setTitle(title)
-                .setMessage(burden)
+                .setMessage(load)
                 .create();
         alertDialog
                 .show();
-        toggleViewBurdenBusyStateOnMainThread(!alertDialog.isShowing());
+        toggleViewLoadBusyStateOnMainThread(!alertDialog.isShowing());
     }
 
     @Override
@@ -329,10 +329,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 logicLink.onStringsAmountChanged();
             }
         });
-        bPrepareBurden = rootView.findViewById(R.id.bPrepareBurden);
-        bPrepareBurden.setOnClickListener(this);
-        bViewBurden = rootView.findViewById(R.id.bViewBurden);
-        bViewBurden.setOnClickListener(this);
+        bPrepareLoad = rootView.findViewById(R.id.bPrepareLoad);
+        bPrepareLoad.setOnClickListener(this);
+        bViewLoad = rootView.findViewById(R.id.bViewLoad);
+        bViewLoad.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
         tvResultForCreatingLoad = rootView.findViewById(R.id.tvResultForCreatingLoad);
 
@@ -369,9 +369,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         bToggleAdjustedIterations.setOnClickListener(this);
         bToggleEndlessIterations = rootView.findViewById(R.id.bToggleEndlessIterations);
         bToggleEndlessIterations.setOnClickListener(this);
-        tvBurdenExplanation = rootView.findViewById(R.id.tvBurdenExplanation);
-        final String startingBurdenInfo = rootContext.getString(R.string.totalBurdenInfo) + C.SPACE + C.ZERO;
-        tvBurdenExplanation.setText(startingBurdenInfo);
+        tvLoadExplanation = rootView.findViewById(R.id.tvLoadExplanation);
+        final String startingLoadInfo = rootContext.getString(R.string.summaryLoadInfo) + C.SPACE + C.ZERO;
+        tvLoadExplanation.setText(startingLoadInfo);
         tvCurrentIterationNumber = rootView.findViewById(R.id.tvCurrentIterationNumber);
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
@@ -392,11 +392,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bPrepareBurden:
-                logicLink.onPrepareBurdenClick();
+            case R.id.bPrepareLoad:
+                logicLink.onPrepareLoadClick();
                 break;
-            case R.id.bViewBurden:
-                logicLink.onViewBurdenClick();
+            case R.id.bViewLoad:
+                logicLink.onViewLoadClick();
                 break;
             case R.id.bToggleAdjustedIterations:
                 logicLink.onToggleIterationsClick(false);

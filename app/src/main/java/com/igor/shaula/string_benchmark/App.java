@@ -18,7 +18,7 @@ import com.igor.shaula.string_benchmark.utils.U;
 import java.util.List;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "13-11-2017", purpose = "" +
-        "fastest & easiest way of preserving the burden from being destroyed with IntentService")
+        "fastest & easiest way of preserving the load from being destroyed with IntentService")
 
 public final class App extends Application implements DataTransport {
 

@@ -119,7 +119,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @NonNull
     @Override
-    public String getBurden() {
+    public String getLoad() {
         final DataTransport appLink = (DataTransport) getApplication();
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = appLink.getLongStringForTest();
@@ -156,7 +156,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {
-        TestingIntentService.prepareTheBurdenForTest(this, basicString, basicStringsCount);
+        TestingIntentService.prepareTheLoadForTest(this, basicString, basicStringsCount);
     }
 
     @Override
@@ -196,7 +196,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 logicLink.showPreparationsResult(whatInfoToShow, resultNanoTime);
                 break;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
-                logicLink.toggleBurdenPreparationJobState(false);
+                logicLink.toggleLoadPreparationJobState(false);
                 logicLink.toggleIterationsJobState(false);
                 break;
             case C.Intent.ACTION_JOB_STOPPED:

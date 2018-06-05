@@ -7,7 +7,7 @@ public interface MainHub {
     interface SystemLink {
 
         @NonNull
-        String getBurden();
+        String getLoad();
 
         @NonNull
         String getAdaptedString(long resultNanoTime);
@@ -45,7 +45,7 @@ public interface MainHub {
 
         void setBusy(boolean isBusy);
 
-        void toggleViewBurdenBusyStateOnMainThread(boolean isBusy);
+        void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
 
         void toggleJobActiveUiState(boolean isRunning);
 
@@ -63,7 +63,7 @@ public interface MainHub {
 
         void updatePreparationResultOnMainThread(@NonNull String result);
 
-        void updateBurdenLengthOnMainThread(int length);
+        void updateLoadLengthOnMainThread(int length);
 
         void updateResultForLog(long resultNanoTime);
 
@@ -83,7 +83,7 @@ public interface MainHub {
 
         void showBuildInfoDialog();
 
-        void showBurdenInDialog(@NonNull String burden);
+        void showLoadInDialog(@NonNull String load);
 
         void showTotalIterationsNumber(int totalIterationsCount);
 
@@ -92,11 +92,11 @@ public interface MainHub {
 
     interface LogicLink {
 
-        boolean isBurdenReady();
+        boolean isLoadReady();
 
         boolean isPrefsFragmentShownHere();
 
-        void toggleBurdenPreparationJobState(boolean isRunning);
+        void toggleLoadPreparationJobState(boolean isRunning);
 
         void toggleIterationsJobState(boolean isRunning);
 
@@ -108,9 +108,9 @@ public interface MainHub {
 
         void onIterationsAmountChanged();
 
-        void onPrepareBurdenClick();
+        void onPrepareLoadClick();
 
-        void onViewBurdenClick();
+        void onViewLoadClick();
 
         void onToggleIterationsClick(boolean isEndless);
 

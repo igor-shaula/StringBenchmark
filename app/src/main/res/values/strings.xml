@@ -10,7 +10,7 @@
     <string name="versionName">version name:</string>
     <string name="author">author:</string>
     <string name="me">Igor Shaula</string>
-    <string name="totalBurdenLength">Burden length is</string>
+    <string name="summaryLoadLength">Load length is</string>
 
     <string name="pressBackAgainToExit">Press Back button again to exit</string>
 
@@ -21,27 +21,27 @@
     <string name="millis">milli-sec.</string>
     <string name="seconds">sec.</string>
 
-    <!-- preparation of burden for iterations -->
+    <!-- preparation of load for iterations -->
 
     <string name="startingExplanation">
-        Burden consists of basic string from the 1st field
+        Load consists of basic string from the 1st field
         repeated as many times as specified in the 2nd field
     </string>
 
     <string name="testBasisHintEmpty">Test\'s basic string is currently empty</string>
     <string name="testBasisHintBusy">Test\'s basic string length is</string>
-    <string name="stringsAmountHintEmpty">Multiplier is 0 -> total burden is empty</string>
-    <string name="stringsAmountHintBusy">Total burden string\'s length is</string>
+    <string name="stringsAmountHintEmpty">Multiplier is 0 -> total load is empty</string>
+    <string name="stringsAmountHintBusy">Total load string\'s length is</string>
 
-    <string name="prepareBurdenButtonText">Assemble the burden</string>
-    <string name="viewBurdenButtonText">View created burden</string>
+    <string name="prepareLoadButtonText">Prepare load</string>
+    <string name="viewLoadButtonText">View created load</string>
 
-    <string name="resultOfPreparation">Time for creating the burden:</string>
+    <string name="resultOfPreparation">Time for creating the load:</string>
 
     <!-- iterations -->
 
     <string name="iterationsExplanation">
-        Burden is processed by each variant in every iteration
+        Load is processed by each variant in every iteration
     </string>
 
     <string name="iterationsAmountHintEmpty">No test iterations will be done!</string>
@@ -52,7 +52,7 @@
     <string name="startEndlessIterations">Start endless iterations</string>
     <string name="stopEndlessIterations">Stop endless iterations</string>
 
-    <string name="resultsForLoggingTests">Median results for logging the burden:</string>
+    <string name="resultsForLoggingTests">Median results for logging the load:</string>
     <string name="resultsForLoggingTestsBeginning">\n(the string of</string>
     <string name="resultsForLoggingTestsEnd">symbols total)</string>
 
@@ -65,7 +65,7 @@
     <string name="resultOfSLVoid">My superior-void Log wrapper:</string>
     <string name="resultOfSLInt">My superior-int Log wrapper:</string>
     <string name="thisBlocksDivider"/>
-    <string name="totalBurdenInfo">Assembled burden length is:</string>
+    <string name="summaryLoadInfo">Assembled load length is:</string>
 
     <string name="menu_prefsFragment0">Prefs in fragment 0</string>
     <string name="title_activity_settings">Settings</string>
@@ -142,7 +142,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="current_iteration_is">Current iteration is:</string>
-    <string name="makeBurdenEmpty">Make burden empty</string>
+    <string name="makeLoadEmpty">Make load empty</string>
 
     <!-- something else - for new automatically created strings -->
 

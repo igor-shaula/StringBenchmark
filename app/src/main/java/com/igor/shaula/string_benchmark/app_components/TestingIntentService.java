@@ -29,12 +29,12 @@ public class TestingIntentService extends IntentService {
         super(CN);
     }
 
-    public static void prepareTheBurdenForTest(@NonNull Context context,
-                                               final @NonNull String basicString,
-                                               final int count) {
+    public static void prepareTheLoadForTest(@NonNull Context context,
+                                             final @NonNull String basicString,
+                                             final int count) {
         // count is assured to be > 0 - by this method's invocation condition \\
         context.startService(new Intent(context, TestingIntentService.class)
-                .setAction(C.Intent.ACTION_START_BURDEN_PREPARATION)
+                .setAction(C.Intent.ACTION_START_LOAD_PREPARATION)
                 .putExtra(C.Intent.NAME_BASIC_STRING, basicString)
                 .putExtra(C.Intent.NAME_COUNT, count)
         );
@@ -83,10 +83,10 @@ public class TestingIntentService extends IntentService {
             return;
         }
         switch (intentAction) {
-            case C.Intent.ACTION_START_BURDEN_PREPARATION:
+            case C.Intent.ACTION_START_LOAD_PREPARATION:
                 final String basicString = intent.getStringExtra(C.Intent.NAME_BASIC_STRING);
                 final int howManyStrings = intent.getIntExtra(C.Intent.NAME_COUNT, 0);
-                new AssembleStringLoad().prepareInitialBurden(
+                new AssembleStringLoad().prepareStartingLoad(
                         basicString, howManyStrings, (DataTransport) getApplication());
                 L.w(CN, "onHandleIntent ` basicString = " + basicString);
                 L.w(CN, "onHandleIntent ` howManyStrings = " + howManyStrings);

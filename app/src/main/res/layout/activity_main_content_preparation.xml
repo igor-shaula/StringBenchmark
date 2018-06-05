@@ -63,14 +63,14 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/bPrepareBurden"
+            android:id="@+id/bPrepareLoad"
             style="@android:style/Widget.Button.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:text="@string/prepareBurdenButtonText"
+            android:text="@string/prepareLoadButtonText"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
 
@@ -79,14 +79,14 @@
             android:layout_height="0dp"/>
 
         <Button
-            android:id="@+id/bResetBurden"
+            android:id="@+id/bResetLoad"
             style="@android:style/Widget.Button.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:text="@string/makeBurdenEmpty"
+            android:text="@string/makeLoadEmpty"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
 
@@ -114,14 +114,14 @@
         android:visibility="gone"/>
 
     <Button
-        android:id="@+id/bViewBurden"
+        android:id="@+id/bViewLoad"
         style="@android:style/Widget.Button.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:text="@string/viewBurdenButtonText"
+        android:text="@string/viewLoadButtonText"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:visibility="gone"/>

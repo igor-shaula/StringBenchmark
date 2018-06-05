@@ -70,7 +70,7 @@ public final class C {
 
     public static final class Intent {
 
-        public static final String ACTION_START_BURDEN_PREPARATION = "from activity to intent-service";
+        public static final String ACTION_START_LOAD_PREPARATION = "from activity to intent-service";
         public static final String ACTION_GET_PREPARATION_RESULT = "from intent-service to activity";
         public static final String ACTION_START_ALL_TESTS = "start all tests moving on one-by-one";
         public static final String ACTION_GET_SYSTEM_LOG_TEST_RESULT = "standard system log test";
@@ -82,9 +82,9 @@ public final class C {
         public static final String ACTION_GET_SL_INT_TEST_RESULT = "superior-int log wrapper test";
         public static final String ACTION_ON_SERVICE_STOPPED = "invoked after service's destruction";
         public static final String ACTION_GET_ONE_ITERATION_RESULTS = "results after one iteration";
-        public static final String NAME_BASIC_STRING = "string used as a basis for creating burden";
+        public static final String NAME_BASIC_STRING = "string used as a basis for creating load";
         public static final String NAME_COUNT = "domain for passing through intent";
-        public static final String NAME_PREPARATION_TIME = "time of preparing the burden";
+        public static final String NAME_PREPARATION_TIME = "time of preparing the load";
         public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";
         public static final String NAME_DAL_TIME = "time of double-arg log wrapper work";
         public static final String NAME_VAL_1_TIME = "time of var-args-1 log wrapper work";

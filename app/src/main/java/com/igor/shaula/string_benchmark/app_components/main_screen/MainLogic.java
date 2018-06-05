@@ -24,9 +24,9 @@ public final class MainLogic implements MainHub.LogicLink {
     private static final String CN = "MainLogic";
 
     private boolean backWasPressedOnce;
-    private boolean isBurdenPreparationJobRunning;
+    private boolean isLoadPreparationJobRunning;
     private boolean isIterationsJobRunning;
-    private boolean isBurdenReady;
+    private boolean isLoadReady;
     private boolean isPrefsFragmentShownHere;
 
     @NonNull
@@ -59,10 +59,10 @@ public final class MainLogic implements MainHub.LogicLink {
 
     // FROM LogicLink ==============================================================================
 
-    @MeDoc("used only in uiLink to sync the bViewBurden availability state")
+    @MeDoc("used only in uiLink to sync the bViewLoad availability state")
     @Override
-    public boolean isBurdenReady() {
-        return isBurdenReady;
+    public boolean isLoadReady() {
+        return isLoadReady;
     }
 
     @Override
@@ -71,8 +71,8 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void toggleBurdenPreparationJobState(boolean isRunning) {
-        isBurdenPreparationJobRunning = isRunning;
+    public void toggleLoadPreparationJobState(boolean isRunning) {
+        isLoadPreparationJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
     }
 
@@ -162,34 +162,34 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void onPrepareBurdenClick() {
-        if (isBurdenPreparationJobRunning) {
-            stopCurrentBurdenPreparationJob();
+    public void onPrepareLoadClick() {
+        if (isLoadPreparationJobRunning) {
+            stopCurrentLoadPreparationJob();
         } else {
-            startNewBurdenPreparationJob();
+            startNewLoadPreparationJob();
         }
         // the following is temporary placed here \\
         doSingleTesting();
     }
 
-    private void stopCurrentBurdenPreparationJob() {
+    private void stopCurrentLoadPreparationJob() {
         interruptPerformanceTest();
-        toggleBurdenPreparationJobState(false);
+        toggleLoadPreparationJobState(false);
     }
 
-    private void startNewBurdenPreparationJob() {
-        isBurdenReady = false;
-        runTestBurdenPreparation();
-        toggleBurdenPreparationJobState(true);
+    private void startNewLoadPreparationJob() {
+        isLoadReady = false;
+        runTestLoadPreparation();
+        toggleLoadPreparationJobState(true);
     }
 
-    private void runTestBurdenPreparation() {
+    private void runTestLoadPreparation() {
         int count = U.convertIntoInt(uiLink.getStringsAmountText());
         if (count > 0) {
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
         }
-        L.d(CN, "runTestBurdenPreparation() finished");
+        L.d(CN, "runTestLoadPreparation() finished");
     }
 
     private void doSingleTesting() {
@@ -218,11 +218,11 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void onViewBurdenClick() {
-        final String burden = systemLink.getBurden();
-        if (isBurdenReady) {
-            uiLink.toggleViewBurdenBusyStateOnMainThread(false);
-            uiLink.showBurdenInDialog(burden);
+    public void onViewLoadClick() {
+        final String load = systemLink.getLoad();
+        if (isLoadReady) {
+            uiLink.toggleViewLoadBusyStateOnMainThread(false);
+            uiLink.showLoadInDialog(load);
         }
     }
 
@@ -313,9 +313,9 @@ public final class MainLogic implements MainHub.LogicLink {
         } else {
             uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
         }
-        isBurdenReady = true;
-        uiLink.toggleViewBurdenBusyStateOnMainThread(true);
-        uiLink.updateBurdenLengthOnMainThread(systemLink.getBurden().length());
+        isLoadReady = true;
+        uiLink.toggleViewLoadBusyStateOnMainThread(true);
+        uiLink.updateLoadLengthOnMainThread(systemLink.getLoad().length());
     }
 
 //    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
