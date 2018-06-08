@@ -15,6 +15,8 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
+        void resetLoad();
+
         void togglePrefsFragment(boolean shouldShow);
 
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
@@ -109,6 +111,8 @@ public interface MainHub {
         void onIterationsAmountChanged();
 
         void onPrepareLoadClick();
+
+        void onResetLoadClick();
 
         void onViewLoadClick();
 

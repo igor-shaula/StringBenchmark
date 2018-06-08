@@ -168,6 +168,12 @@ public final class MainLogic implements MainHub.LogicLink {
         } else {
             startNewLoadPreparationJob();
         }
+    }
+
+    @Override
+    public void onResetLoadClick() {
+        systemLink.resetLoad();
+        isLoadReady = true;
         // the following is temporary placed here \\
         doSingleTesting();
     }

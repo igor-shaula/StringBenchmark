@@ -43,6 +43,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     private TextInputLayout tilStringsAmount;
     private EditText etStringsAmount;
     private Button bPrepareLoad;
+    private Button bResetLoad;
     private Button bViewLoad;
     private TextView tvResultOfPreparation;
     private TextView tvResultForCreatingLoad;
@@ -331,6 +332,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         });
         bPrepareLoad = rootView.findViewById(R.id.bPrepareLoad);
         bPrepareLoad.setOnClickListener(this);
+        bResetLoad = rootView.findViewById(R.id.bResetLoad);
+        bResetLoad.setOnClickListener(this);
         bViewLoad = rootView.findViewById(R.id.bViewLoad);
         bViewLoad.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
@@ -394,6 +397,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         switch (v.getId()) {
             case R.id.bPrepareLoad:
                 logicLink.onPrepareLoadClick();
+                break;
+            case R.id.bResetLoad:
+                logicLink.onResetLoadClick();
                 break;
             case R.id.bViewLoad:
                 logicLink.onViewLoadClick();

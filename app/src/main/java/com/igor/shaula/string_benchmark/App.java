@@ -113,6 +113,11 @@ public final class App extends Application implements DataTransport {
     }
 
     @Override
+    public void resetLoad() {
+        longStringForTest = "";
+    }
+
+    @Override
     public void allowIterationsJob(boolean isAllowedToRunIterations) {
         this.isAllowedToRunIterations = isAllowedToRunIterations;
     }
