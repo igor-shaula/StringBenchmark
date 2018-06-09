@@ -25,7 +25,6 @@ public final class MainLogic implements MainHub.LogicLink {
     private static final String CN = "MainLogic";
 
     private boolean backWasPressedOnce;
-    //    private boolean isLoadPreparationJobRunning; // not needed in fact because the process is too fast \\
     private boolean isIterationsJobRunning;
     private boolean isLoadReady;
     private boolean isPrefsFragmentShownHere;
@@ -73,7 +72,6 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void toggleLoadPreparationJobState(boolean isRunning) {
-//        isLoadPreparationJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
     }
 
@@ -165,14 +163,8 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void onPrepareLoadClick() {
-//        if (isLoadPreparationJobRunning) {
-//            stopCurrentLoadPreparationJob();
-//        } else {
-//        startNewLoadPreparationJob();
         isLoadReady = false;
         runTestLoadPreparation();
-        toggleLoadPreparationJobState(true);
-//        }
     }
 
     @Override
@@ -182,25 +174,11 @@ public final class MainLogic implements MainHub.LogicLink {
         // the next line prepares UI state for later deciding which load to prepare - empty or heavy \\
         uiLink.setStringsAmountZeroValueText();
         // now going further - all expected logic branching is inside the following method \\
-//        startNewLoadPreparationJob();
         runTestLoadPreparation();
-        toggleLoadPreparationJobState(true);
     }
-
-/*
-    private void stopCurrentLoadPreparationJob() {
-//        interruptPerformanceTest();
-        toggleLoadPreparationJobState(false);
-    }
-*/
-
-//    private void startNewLoadPreparationJob() {
-//        isLoadReady = false;
-//        runTestLoadPreparation();
-//        toggleLoadPreparationJobState(true);
-//    }
 
     private void runTestLoadPreparation() {
+        toggleLoadPreparationJobState(true);
         // the rest is for preparing potentially heavy load \\
         int count = U.convertIntoInt(uiLink.getStringsAmountText());
         if (count < 0) {
@@ -208,7 +186,7 @@ public final class MainLogic implements MainHub.LogicLink {
             L.w(CN, "runTestLoadPreparation ` count < 0 - this should never happen");
         } else if (count == 0) {
             // for this case there is no need to use worker thread as for creating heavy load \\
-            new AssembleStringLoad().prepareStartingLoad("", 1, dataTransport);
+            new AssembleStringLoad().prepareStartingLoad("", 0, dataTransport);
         } else { // if (count > 0) \\
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";

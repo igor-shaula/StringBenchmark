@@ -16,14 +16,10 @@ public class AssembleStringLoad {
     public void prepareStartingLoad(@Nullable String stringBasis, int count,
                                     final @NonNull DataTransport dataTransport) {
         if (count < 0) {
-            L.w(CN, "prepareStartingLoad ` count <= 0" + count);
+            L.w(CN, "prepareStartingLoad ` wrong count value = " + count);
             dataTransport.notifyStarterThatLoadIsAssembled(-1);
         } else if (count == 0) {
-//            if (stringBasis == null || stringBasis.isEmpty()) {
             assembleEmptyLoad(dataTransport);
-//            } else {
-//                assembleHeavyLoad(stringBasis, count, dataTransport);
-//            }
         } else if (count == 1) {
             assembleHeavyLoad(stringBasis, dataTransport);
         } else {

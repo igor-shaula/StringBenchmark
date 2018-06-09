@@ -161,16 +161,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     public void toggleJobActiveUiState(boolean isJobRunning) {
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
-//        etIterationsAmount.setEnabled(!isJobRunning);
         bPrepareLoad.setEnabled(!isJobRunning);
         bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
+        toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
 //        pbViewCreatedBurden.invalidate();
 //        toggleViewLoadBusyStateOnMainThread(!isJobRunning && logicLink.isLoadReady());
-        toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
-//        bToggleAdjustedIterations.setText(isJobRunning ?
-//                R.string.stopAdjustedIterations : R.string.startAdjustedIterations);
-//        bToggleEndlessIterations.setText(isJobRunning ?
-//                R.string.stopEndlessIterations : R.string.startEndlessIterations);
     }
 
     @Override
