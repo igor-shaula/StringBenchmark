@@ -25,7 +25,7 @@ public final class MainLogic implements MainHub.LogicLink {
     private static final String CN = "MainLogic";
 
     private boolean backWasPressedOnce;
-    private boolean isLoadPreparationJobRunning;
+    //    private boolean isLoadPreparationJobRunning; // not needed in fact because the process is too fast \\
     private boolean isIterationsJobRunning;
     private boolean isLoadReady;
     private boolean isPrefsFragmentShownHere;
@@ -73,7 +73,7 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void toggleLoadPreparationJobState(boolean isRunning) {
-        isLoadPreparationJobRunning = isRunning;
+//        isLoadPreparationJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
     }
 
@@ -96,6 +96,7 @@ public final class MainLogic implements MainHub.LogicLink {
             systemLink.finishItself();
             U.immediatelyDisableToast();
         } else {
+            // TODO: 10.06.2018 add clearing focus for all input fields here \\
             uiLink.informUser(C.Choice.TOAST, R.string.pressBackAgainToExit, 0);
             backWasPressedOnce = true;
             new Handler().postDelayed(new Runnable() {
@@ -164,11 +165,14 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void onPrepareLoadClick() {
-        if (isLoadPreparationJobRunning) {
-            stopCurrentLoadPreparationJob();
-        } else {
-            startNewLoadPreparationJob();
-        }
+//        if (isLoadPreparationJobRunning) {
+//            stopCurrentLoadPreparationJob();
+//        } else {
+//        startNewLoadPreparationJob();
+        isLoadReady = false;
+        runTestLoadPreparation();
+        toggleLoadPreparationJobState(true);
+//        }
     }
 
     @Override
@@ -176,21 +180,25 @@ public final class MainLogic implements MainHub.LogicLink {
         // the following is temporary placed here \\
         doSingleTesting();
         // the next line prepares UI state for later deciding which load to prepare - empty or heavy \\
-        uiLink.setEmptyBasicStringText();
+        uiLink.setStringsAmountZeroValueText();
         // now going further - all expected logic branching is inside the following method \\
-        startNewLoadPreparationJob();
-    }
-
-    private void stopCurrentLoadPreparationJob() {
-        interruptPerformanceTest();
-        toggleLoadPreparationJobState(false);
-    }
-
-    private void startNewLoadPreparationJob() {
-        isLoadReady = false;
+//        startNewLoadPreparationJob();
         runTestLoadPreparation();
         toggleLoadPreparationJobState(true);
     }
+
+/*
+    private void stopCurrentLoadPreparationJob() {
+//        interruptPerformanceTest();
+        toggleLoadPreparationJobState(false);
+    }
+*/
+
+//    private void startNewLoadPreparationJob() {
+//        isLoadReady = false;
+//        runTestLoadPreparation();
+//        toggleLoadPreparationJobState(true);
+//    }
 
     private void runTestLoadPreparation() {
         // the rest is for preparing potentially heavy load \\

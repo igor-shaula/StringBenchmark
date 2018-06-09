@@ -12,8 +12,6 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
     boolean isAllowedToRunIterations();
 
-    void resetLoad();
-
     void allowIterationsJob(boolean isAllowedToRunIterations);
 
     void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer);

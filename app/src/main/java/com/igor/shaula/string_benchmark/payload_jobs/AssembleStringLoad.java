@@ -15,15 +15,17 @@ public class AssembleStringLoad {
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
     public void prepareStartingLoad(@Nullable String stringBasis, int count,
                                     final @NonNull DataTransport dataTransport) {
-        if (count <= 0) {
+        if (count < 0) {
             L.w(CN, "prepareStartingLoad ` count <= 0" + count);
             dataTransport.notifyStarterThatLoadIsAssembled(-1);
+        } else if (count == 0) {
+//            if (stringBasis == null || stringBasis.isEmpty()) {
+            assembleEmptyLoad(dataTransport);
+//            } else {
+//                assembleHeavyLoad(stringBasis, count, dataTransport);
+//            }
         } else if (count == 1) {
-            if (stringBasis == null || stringBasis.isEmpty()) {
-                assembleEmptyLoad(dataTransport);
-            } else {
-                assembleHeavyLoad(stringBasis, count, dataTransport);
-            }
+            assembleHeavyLoad(stringBasis, dataTransport);
         } else {
             assembleHeavyLoad(stringBasis, count, dataTransport);
         }
@@ -38,6 +40,15 @@ public class AssembleStringLoad {
 
         dataTransport.setLongStringForTest(emptyStringForTest);
         dataTransport.notifyStarterThatLoadIsAssembled(nanoTimeDelta);
+    }
+
+    private void assembleHeavyLoad(@Nullable String stringBasis, @NonNull DataTransport dataTransport) {
+        // no need to use StringBuilder or create a new String - because we already have stringBasis \\
+        dataTransport.setLongStringForTest(stringBasis);
+        // as we haven't created a new String instance - hence there is nothing to measure here \\
+        dataTransport.notifyStarterThatLoadIsAssembled(0);
+
+        L.v(CN, "assembleHeavyLoad = " + stringBasis);
     }
 
     @MeDoc("count is meant to be > 1 here")
@@ -56,6 +67,6 @@ public class AssembleStringLoad {
         dataTransport.setLongStringForTest(longStringForTest);
         dataTransport.notifyStarterThatLoadIsAssembled(nanoTimeDelta);
 
-        L.v(CN, "prepareStartingLoad = " + longStringForTest);
+        L.v(CN, "assembleHeavyLoad = " + longStringForTest);
     }
 }
