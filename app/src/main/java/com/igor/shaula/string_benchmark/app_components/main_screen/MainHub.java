@@ -88,6 +88,8 @@ public interface MainHub {
         void showTotalIterationsNumber(int totalIterationsCount);
 
         void init();
+
+        void clearFocusFromAllInputFields();
     }
 
     interface LogicLink {

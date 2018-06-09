@@ -7,8 +7,8 @@ android {
         applicationId "com.igor.shaula.string_benchmark"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 25
-        versionName "0.0.25"
+        versionCode 26
+        versionName "0.0.26"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

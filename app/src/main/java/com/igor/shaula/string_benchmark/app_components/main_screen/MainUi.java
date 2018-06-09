@@ -353,10 +353,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     // disabling this view's focused state somehow - we have to pass it somewhere \\
-                    etBasicString.clearFocus();
-                    etStringsAmount.clearFocus();
-                    etIterationsAmount.clearFocus();
-                    tvStartingExplanation.requestFocus();
+                    clearFocusFromAllInputFields();
                     // also should close keyboard right now \\
                     final InputMethodManager imm = (InputMethodManager)
                             rootContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -391,6 +388,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
 //        pdWait.setIndeterminate(true);
 
     } // init \\
+
+    @Override
+    public void clearFocusFromAllInputFields() {
+        etBasicString.clearFocus();
+        etStringsAmount.clearFocus();
+        etIterationsAmount.clearFocus();
+        tvStartingExplanation.requestFocus(); // this action is not obvious but needed in fact \\
+    }
 
     @Override
     public void onClick(@NonNull View v) {

@@ -73,6 +73,9 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void toggleLoadPreparationJobState(boolean isRunning) {
         uiLink.toggleJobActiveUiState(isRunning);
+        if (isRunning) {
+            uiLink.clearFocusFromAllInputFields();
+        }
     }
 
     @Override
@@ -80,6 +83,7 @@ public final class MainLogic implements MainHub.LogicLink {
         isIterationsJobRunning = isRunning;
         uiLink.toggleJobActiveUiState(isRunning);
         if (isRunning) {
+            uiLink.clearFocusFromAllInputFields();
             textyTwister.showTextyTwister(this);
         } else {
             textyTwister.stopTwisterTimer();
@@ -94,7 +98,7 @@ public final class MainLogic implements MainHub.LogicLink {
             systemLink.finishItself();
             U.immediatelyDisableToast();
         } else {
-            // TODO: 10.06.2018 add clearing focus for all input fields here \\
+            uiLink.clearFocusFromAllInputFields();
             uiLink.informUser(C.Choice.TOAST, R.string.pressBackAgainToExit, 0);
             backWasPressedOnce = true;
             new Handler().postDelayed(new Runnable() {
