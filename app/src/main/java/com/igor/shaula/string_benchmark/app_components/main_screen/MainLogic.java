@@ -172,10 +172,12 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void onResetLoadClick() {
-        systemLink.resetLoad();
-        isLoadReady = true;
         // the following is temporary placed here \\
         doSingleTesting();
+//        systemLink.resetLoad();
+//        isLoadReady = true;
+        uiLink.setEmptyBasicStringText();
+        startNewLoadPreparationJob();
     }
 
     private void stopCurrentLoadPreparationJob() {
@@ -191,36 +193,11 @@ public final class MainLogic implements MainHub.LogicLink {
 
     private void runTestLoadPreparation() {
         int count = U.convertIntoInt(uiLink.getStringsAmountText());
-        if (count > 0) {
+        if (count >= 0) { // additional check - because we're not 100% sure from where it can be read \\
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
         }
         L.d(CN, "runTestLoadPreparation() finished");
-    }
-
-    private void doSingleTesting() {
-        // TODO: 02.12.2017 wright unit-tests with this kind of content \\
-        SLInt.v("");
-        SLInt.v("", "");
-        SLInt.v("", "", "");
-        SLInt.v();
-        SLInt.v((String[]) null);
-        SLInt.v(null, null);
-        SLInt.v(null, null, null);
-        SLInt.v(this.toString(), null, null);
-        SLInt.v("1");
-        SLInt.v("1", "2");
-        SLInt.v("1", "2", "3");
-        SLInt.v("", "", "", "");
-        SLInt.v("the fact of posting the expression itself"); // just logging the statement here \\
-        SLInt.isV("expression-2", "result");
-        SLInt.setConnector(" IS ");
-        SLInt.isV(new JSONObject(), "json result");
-        SLInt.pV("single p");
-        SLInt.pV(null);
-        SLInt.o(null);
-        SLInt.pV(null, null);
-        SLInt.pV("multiple ps", "_+_");
     }
 
     @Override
@@ -350,5 +327,32 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void transportIterationsResult(@NonNull long[] results, int currentIterationNumber) {
         uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
+    }
+
+    // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================
+
+    private void doSingleTesting() {
+        // TODO: 02.12.2017 wright unit-tests with this kind of content \\
+        SLInt.v("");
+        SLInt.v("", "");
+        SLInt.v("", "", "");
+        SLInt.v();
+        SLInt.v((String[]) null);
+        SLInt.v(null, null);
+        SLInt.v(null, null, null);
+        SLInt.v(this.toString(), null, null);
+        SLInt.v("1");
+        SLInt.v("1", "2");
+        SLInt.v("1", "2", "3");
+        SLInt.v("", "", "", "");
+        SLInt.v("the fact of posting the expression itself"); // just logging the statement here \\
+        SLInt.isV("expression-2", "result");
+        SLInt.setConnector(" IS ");
+        SLInt.isV(new JSONObject(), "json result");
+        SLInt.pV("single p");
+        SLInt.pV(null);
+        SLInt.o(null);
+        SLInt.pV(null, null);
+        SLInt.pV("multiple ps", "_+_");
     }
 }

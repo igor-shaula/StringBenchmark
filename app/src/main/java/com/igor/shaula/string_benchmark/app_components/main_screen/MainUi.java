@@ -76,6 +76,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         return etBasicString.getText().toString();
     }
 
+    @Override
+    public void setEmptyBasicStringText() {
+        etBasicString.setText("");
+    }
+
     @NonNull
     @Override
     public String getStringsAmountText() {
