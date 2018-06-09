@@ -15,7 +15,7 @@ public class AssembleStringLoad {
     @MeDoc("this is launched in the worker thread only, here we assume that count is always > 0")
     public void prepareStartingLoad(@Nullable String stringExtra, int count,
                                     final @NonNull DataTransport dataTransport) {
-        if (count <= 0) {
+        if (count < 0) {
             L.w(CN, "prepareStartingLoad ` count <= 0" + count);
             dataTransport.notifyStarterThatLoadIsAssembled(-1);
             return;
