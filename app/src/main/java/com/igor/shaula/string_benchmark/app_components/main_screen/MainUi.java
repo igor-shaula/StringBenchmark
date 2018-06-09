@@ -81,8 +81,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     }
 
     @Override
-    public void setStringsAmountZeroValueText() {
-        etStringsAmount.setText(String.valueOf(C.ZERO));
+    public void setStringsAmountText(int howManyTimesToRepeatBasicStringInLoad) {
+        etStringsAmount.setText(String.valueOf(howManyTimesToRepeatBasicStringInLoad));
     }
 
     @NonNull

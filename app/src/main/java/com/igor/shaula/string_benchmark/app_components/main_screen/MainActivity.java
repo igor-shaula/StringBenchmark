@@ -194,6 +194,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 whatInfoToShow = C.Choice.PREPARATION;
                 resultNanoTime = intent.getLongExtra(C.Intent.NAME_PREPARATION_TIME, 0);
                 logicLink.showPreparationsResult(whatInfoToShow, resultNanoTime);
+                logicLink.toggleLoadPreparationJobState(false);
                 break;
             case C.Intent.ACTION_ON_SERVICE_STOPPED:
                 logicLink.toggleLoadPreparationJobState(false);

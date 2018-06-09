@@ -33,7 +33,7 @@ public interface MainHub {
         @NonNull
         String getBasicStringText();
 
-        void setStringsAmountZeroValueText();
+        void setStringsAmountText(int howManyTimesToRepeatBasicStringInLoad);
 
         @NonNull
         String getStringsAmountText();

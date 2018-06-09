@@ -164,6 +164,11 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void onPrepareLoadClick() {
         isLoadReady = false;
+        final int previousCount = U.convertIntoInt(uiLink.getStringsAmountText());
+        if (previousCount == 0) {
+            // recovering from possible previous resetLoad-click \\
+            uiLink.setStringsAmountText(1);
+        }
         runTestLoadPreparation();
     }
 
@@ -172,7 +177,7 @@ public final class MainLogic implements MainHub.LogicLink {
         // the following is temporary placed here \\
         doSingleTesting();
         // the next line prepares UI state for later deciding which load to prepare - empty or heavy \\
-        uiLink.setStringsAmountZeroValueText();
+        uiLink.setStringsAmountText(0);
         // now going further - all expected logic branching is inside the following method \\
         runTestLoadPreparation();
     }
