@@ -7,6 +7,7 @@ import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
+import com.igor.shaula.string_benchmark.payload_jobs.AssembleStringLoad;
 import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
 import com.igor.shaula.string_benchmark.payload_jobs.IterationResultConsumer;
 import com.igor.shaula.string_benchmark.payload_jobs.TextyTwister;
@@ -166,7 +167,7 @@ public final class MainLogic implements MainHub.LogicLink {
         if (isLoadPreparationJobRunning) {
             stopCurrentLoadPreparationJob();
         } else {
-            startNewLoadPreparationJob();
+            startNewLoadPreparationJob(false);
         }
     }
 
@@ -176,8 +177,7 @@ public final class MainLogic implements MainHub.LogicLink {
         doSingleTesting();
 //        systemLink.resetLoad();
 //        isLoadReady = true;
-        uiLink.setEmptyBasicStringText();
-        startNewLoadPreparationJob();
+        startNewLoadPreparationJob(true);
     }
 
     private void stopCurrentLoadPreparationJob() {
@@ -185,15 +185,26 @@ public final class MainLogic implements MainHub.LogicLink {
         toggleLoadPreparationJobState(false);
     }
 
-    private void startNewLoadPreparationJob() {
+    private void startNewLoadPreparationJob(boolean shouldLoadBeEmpty) {
         isLoadReady = false;
-        runTestLoadPreparation();
+        runTestLoadPreparation(shouldLoadBeEmpty);
         toggleLoadPreparationJobState(true);
     }
 
-    private void runTestLoadPreparation() {
+    private void runTestLoadPreparation(boolean shouldLoadBeEmpty) {
+        if (shouldLoadBeEmpty) {
+            uiLink.setEmptyBasicStringText();
+            // for this case there is no need to use worker thread as for creating heavy load \\
+            new AssembleStringLoad().prepareStartingLoad("", 1, dataTransport);
+            return; // to avoid possible situation when count == 0 \\
+        }
+        // the rest is for preparing potentially heavy load \\
         int count = U.convertIntoInt(uiLink.getStringsAmountText());
-        if (count >= 0) { // additional check - because we're not 100% sure from where it can be read \\
+        // first of all protecting from potentially wrong values \\
+        if (count <= 0) {
+            return;
+        } else {
+//        if (count > 0) { // additional check - because we're not 100% sure from where it can be read \\
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
         }

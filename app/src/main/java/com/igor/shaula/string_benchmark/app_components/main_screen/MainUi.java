@@ -161,16 +161,16 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     public void toggleJobActiveUiState(boolean isJobRunning) {
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
-        etIterationsAmount.setEnabled(!isJobRunning);
+//        etIterationsAmount.setEnabled(!isJobRunning);
         bPrepareLoad.setEnabled(!isJobRunning);
         bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
 //        pbViewCreatedBurden.invalidate();
 //        toggleViewLoadBusyStateOnMainThread(!isJobRunning && logicLink.isLoadReady());
         toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
-        bToggleAdjustedIterations.setText(isJobRunning ?
-                R.string.stopAdjustedIterations : R.string.startAdjustedIterations);
-        bToggleEndlessIterations.setText(isJobRunning ?
-                R.string.stopEndlessIterations : R.string.startEndlessIterations);
+//        bToggleAdjustedIterations.setText(isJobRunning ?
+//                R.string.stopAdjustedIterations : R.string.startAdjustedIterations);
+//        bToggleEndlessIterations.setText(isJobRunning ?
+//                R.string.stopEndlessIterations : R.string.startEndlessIterations);
     }
 
     @Override
@@ -398,7 +398,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     } // init \\
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         switch (v.getId()) {
             case R.id.bPrepareLoad:
                 logicLink.onPrepareLoadClick();
