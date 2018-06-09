@@ -1,7 +1,5 @@
 package com.igor.shaula.string_benchmark.app_components.main_screen;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -33,7 +31,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
     @NonNull
     private MainHub.LogicLink logicLink;
 
-    private ProgressDialog pdWait;
+//    private ProgressDialog pdWait;
 //    private ProgressBar pbViewCreatedBurden;
 
     // preparation of the burden \\
@@ -108,6 +106,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         etIterationsAmount.setSelection(C.INITIAL_TEST_ITERATIONS.length());
     }
 
+/*
     // currently not used \\
     @Override
     public void setBusy(boolean isBusy) {
@@ -124,6 +123,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
             }
         }
     }
+*/
 
     @Override
     public void toggleViewLoadBusyStateOnMainThread(final boolean isBusy) {
@@ -391,9 +391,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
         tvResultForSLVoid = rootView.findViewById(R.id.tvResultForSLVoid);
         tvResultForSLInt = rootView.findViewById(R.id.tvResultForSLInt);
 
-        pdWait = new ProgressDialog(rootContext);
+//        pdWait = new ProgressDialog(rootContext);
 //        pdWait.setMessage(rootContext.getString(R.string.startingUp));
-        pdWait.setIndeterminate(true);
+//        pdWait.setIndeterminate(true);
 
     } // init \\
 

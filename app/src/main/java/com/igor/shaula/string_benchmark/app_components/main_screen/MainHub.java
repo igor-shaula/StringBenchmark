@@ -15,8 +15,6 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
-        void resetLoad();
-
         void togglePrefsFragment(boolean shouldShow);
 
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
@@ -46,8 +44,6 @@ public interface MainHub {
         void setLogicLink(@NonNull LogicLink logicLink);
 
         void setInitialInputFieldsValues();
-
-        void setBusy(boolean isBusy);
 
         void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
 

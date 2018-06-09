@@ -144,11 +144,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     }
 
     @Override
-    public void resetLoad() {
-        ((DataTransport) getApplication()).resetLoad();
-    }
-
-    @Override
     public void togglePrefsFragment(boolean shouldShow) {
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         if (shouldShow) {

@@ -167,7 +167,7 @@ public final class MainLogic implements MainHub.LogicLink {
         if (isLoadPreparationJobRunning) {
             stopCurrentLoadPreparationJob();
         } else {
-            startNewLoadPreparationJob(false);
+            startNewLoadPreparationJob();
         }
     }
 
@@ -175,9 +175,10 @@ public final class MainLogic implements MainHub.LogicLink {
     public void onResetLoadClick() {
         // the following is temporary placed here \\
         doSingleTesting();
-//        systemLink.resetLoad();
-//        isLoadReady = true;
-        startNewLoadPreparationJob(true);
+        // the next line prepares UI state for later deciding which load to prepare - empty or heavy \\
+        uiLink.setEmptyBasicStringText();
+        // now going further - all expected logic branching is inside the following method \\
+        startNewLoadPreparationJob();
     }
 
     private void stopCurrentLoadPreparationJob() {
@@ -185,26 +186,22 @@ public final class MainLogic implements MainHub.LogicLink {
         toggleLoadPreparationJobState(false);
     }
 
-    private void startNewLoadPreparationJob(boolean shouldLoadBeEmpty) {
+    private void startNewLoadPreparationJob() {
         isLoadReady = false;
-        runTestLoadPreparation(shouldLoadBeEmpty);
+        runTestLoadPreparation();
         toggleLoadPreparationJobState(true);
     }
 
-    private void runTestLoadPreparation(boolean shouldLoadBeEmpty) {
-        if (shouldLoadBeEmpty) {
-            uiLink.setEmptyBasicStringText();
-            // for this case there is no need to use worker thread as for creating heavy load \\
-            new AssembleStringLoad().prepareStartingLoad("", 1, dataTransport);
-            return; // to avoid possible situation when count == 0 \\
-        }
+    private void runTestLoadPreparation() {
         // the rest is for preparing potentially heavy load \\
         int count = U.convertIntoInt(uiLink.getStringsAmountText());
-        // first of all protecting from potentially wrong values \\
-        if (count <= 0) {
-            return;
-        } else {
-//        if (count > 0) { // additional check - because we're not 100% sure from where it can be read \\
+        if (count < 0) {
+            // first of all protecting from potentially wrong values \\
+            L.w(CN, "runTestLoadPreparation ` count < 0 - this should never happen");
+        } else if (count == 0) {
+            // for this case there is no need to use worker thread as for creating heavy load \\
+            new AssembleStringLoad().prepareStartingLoad("", 1, dataTransport);
+        } else { // if (count > 0) \\
             systemLink.launchPreparation(uiLink.getBasicStringText(), count);
             pendingPreparationResult = "";
         }
@@ -343,7 +340,7 @@ public final class MainLogic implements MainHub.LogicLink {
     // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================
 
     private void doSingleTesting() {
-        // TODO: 02.12.2017 wright unit-tests with this kind of content \\
+        // TODO: 02.12.2017 write unit-tests with this kind of content \\
         SLInt.v("");
         SLInt.v("", "");
         SLInt.v("", "", "");
