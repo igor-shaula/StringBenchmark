@@ -2,6 +2,8 @@ package com.igor.shaula.string_benchmark.app_components.main_screen;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
@@ -32,8 +34,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @NonNull
     private MainHub.LogicLink logicLink;
 
-//    private ProgressDialog pdWait;
+    //    private ProgressDialog pdWait;
 //    private ProgressBar pbViewCreatedBurden;
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     // preparation of the burden \\
     private TextView tvStartingExplanation;
@@ -51,7 +55,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextInputLayout tilIterationsAmount;
     private EditText etIterationsAmount;
     private Button bToggleAdjustedIterations;
-    //    private Button bToggleEndlessIterations;
     private CheckBox cbEndlessIterations;
     private TextView tvLoadExplanation;
     private TextView tvCurrentIterationNumber;
@@ -73,6 +76,16 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @Override
     public boolean isEndless() {
         return cbEndlessIterations.isChecked();
+    }
+
+    @Override
+    public boolean isPreparationBlockShown() {
+//        appBarLayout.is
+//        appBarLayout.getOffset
+//        collapsingToolbarLayout.is
+//        collapsingToolbarLayout.getOffset
+        return true;
+        // TODO: 11.06.2018 continue here \\
     }
 
     @NonNull
@@ -131,6 +144,17 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         }
     }
 */
+
+    @Override
+    public void toggleLoadPreparationBlock() {
+        // of course it can be simplified - but in that case code will be harder to read \\
+        if (isPreparationBlockShown()) {
+            appBarLayout.setExpanded(false);
+        } else {
+            appBarLayout.setExpanded(true);
+        }
+        // in fact animation works every time here \\
+    }
 
     @Override
     public void toggleViewLoadBusyStateOnMainThread(final boolean isBusy) {
@@ -319,6 +343,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @Override
     public void init() {
 
+        appBarLayout = rootView.findViewById(R.id.appBarLayout);
+        collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
+
         tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
 
         // burden preparation block \\
@@ -422,12 +449,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 logicLink.onViewLoadClick();
                 break;
             case R.id.bToggleAdjustedIterations:
-//                logicLink.onToggleIterationsClick(false);
                 logicLink.onToggleIterationsClick();
                 break;
-//            case R.id.bToggleEndlessIterations:
-//                logicLink.onToggleIterationsClick(true);
-//                break;
         }
     }
 

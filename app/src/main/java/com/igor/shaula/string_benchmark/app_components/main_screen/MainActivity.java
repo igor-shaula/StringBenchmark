@@ -41,7 +41,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setContentView(R.layout.z_activity_main_linear);
         setContentView(R.layout.main_activity_root);
 
         logicLink = new MainLogic(this,
@@ -65,7 +64,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         logicLink.onBackPressed();
     }
 
@@ -97,15 +95,13 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_showPrefsFragmentHere) {
-//            logicLink.togglePrefsFragmentHere();
-//             as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
-//            item.setIcon(logicLink.isPrefsFragmentShownHere() ?
-//                    android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info);
-//            return true;
-//        } else if (id == R.id.action_showSettingsActivity) {
-        if (id == R.id.action_showSettingsActivity) {
+        if (id == R.id.action_toggleLoadPreparationBlock) {
+            logicLink.toggleLoadPreparationBlock();
+            // as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
+            item.setIcon(logicLink.isPreparationBlockShown() ?
+                    android.R.drawable.ic_lock_idle_lock : android.R.drawable.ic_lock_idle_lock);
+            return true;
+        } else if (id == R.id.action_showSettingsActivity) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.action_about) {
             logicLink.showDialogWithBuildInfo();
@@ -141,17 +137,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     public String findStringById(int stringId) {
         return getString(stringId);
     }
-
-//    @Override
-//    public void togglePrefsFragment(boolean shouldShow) {
-//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        if (shouldShow) {
-//            fragmentTransaction.replace(R.id.flPrefsContainer, PrefsFragment0.getInstance(), "");
-//        } else {
-//            fragmentTransaction.remove(PrefsFragment0.getInstance());
-//        }
-//        fragmentTransaction.commit();
-//    }
 
     @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {

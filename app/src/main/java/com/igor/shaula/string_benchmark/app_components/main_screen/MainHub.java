@@ -15,8 +15,6 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
-//        void togglePrefsFragment(boolean shouldShow);
-
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
         void launchAllMeasurements(int testRepetitionsCount);
@@ -32,6 +30,8 @@ public interface MainHub {
 
         boolean isEndless();
 
+        boolean isPreparationBlockShown();
+
         @NonNull
         String getBasicStringText();
 
@@ -46,6 +46,8 @@ public interface MainHub {
         void setLogicLink(@NonNull LogicLink logicLink);
 
         void setInitialInputFieldsValues();
+
+        void toggleLoadPreparationBlock();
 
         void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
 
@@ -98,7 +100,9 @@ public interface MainHub {
 
         boolean isLoadReady();
 
-//        boolean isPrefsFragmentShownHere();
+        boolean isPreparationBlockShown();
+
+        void toggleLoadPreparationBlock();
 
         void toggleLoadPreparationJobState(boolean isRunning);
 
@@ -121,8 +125,6 @@ public interface MainHub {
         void onToggleIterationsClick();
 
         void showDialogWithBuildInfo();
-
-//        void togglePrefsFragmentHere();
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 

@@ -3,13 +3,13 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity">
 
-    <!--<item-->
-        <!--android:id="@+id/action_showPrefsFragmentHere"-->
-        <!--android:icon="@android:drawable/ic_dialog_info"-->
-        <!--android:orderInCategory="10"-->
-        <!--android:title="@string/menu_prefsFragment0"-->
-        <!--app:showAsAction="ifRoom"/>-->
-<!---->
+    <item
+        android:id="@+id/action_toggleLoadPreparationBlock"
+        android:icon="@android:drawable/ic_lock_idle_lock"
+        android:orderInCategory="10"
+        android:title="@string/menu_prefsFragment0"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_showSettingsActivity"
         android:orderInCategory="11"
