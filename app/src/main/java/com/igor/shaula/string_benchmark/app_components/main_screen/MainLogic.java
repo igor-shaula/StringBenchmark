@@ -27,7 +27,7 @@ public final class MainLogic implements MainHub.LogicLink {
     private boolean backWasPressedOnce;
     private boolean isIterationsJobRunning;
     private boolean isLoadReady;
-    private boolean isPrefsFragmentShownHere;
+//    private boolean isPrefsFragmentShownHere;
 
     @NonNull
     private String pendingPreparationResult = "";
@@ -65,10 +65,10 @@ public final class MainLogic implements MainHub.LogicLink {
         return isLoadReady;
     }
 
-    @Override
-    public boolean isPrefsFragmentShownHere() {
-        return isPrefsFragmentShownHere;
-    }
+//    @Override
+//    public boolean isPrefsFragmentShownHere() {
+//        return isPrefsFragmentShownHere;
+//    }
 
     @Override
     public void toggleLoadPreparationJobState(boolean isRunning) {
@@ -247,16 +247,16 @@ public final class MainLogic implements MainHub.LogicLink {
         uiLink.showBuildInfoDialog();
     }
 
-    @Override
-    public void togglePrefsFragmentHere() {
-        if (isPrefsFragmentShownHere) {
-            systemLink.togglePrefsFragment(false);
-            isPrefsFragmentShownHere = false;
-        } else {
-            systemLink.togglePrefsFragment(true);
-            isPrefsFragmentShownHere = true;
-        }
-    }
+//    @Override
+//    public void togglePrefsFragmentHere() {
+//        if (isPrefsFragmentShownHere) {
+//            systemLink.togglePrefsFragment(false);
+//            isPrefsFragmentShownHere = false;
+//        } else {
+//            systemLink.togglePrefsFragment(true);
+//            isPrefsFragmentShownHere = true;
+//        }
+//    }
 
     @Override
     public void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {

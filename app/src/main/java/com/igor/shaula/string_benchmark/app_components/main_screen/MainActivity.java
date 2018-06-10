@@ -1,6 +1,5 @@
 package com.igor.shaula.string_benchmark.app_components.main_screen;
 
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.app_components.TestingIntentService;
-import com.igor.shaula.string_benchmark.app_components.additional_screens.PrefsFragment0;
 import com.igor.shaula.string_benchmark.app_components.additional_screens.SettingsActivity;
 import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -144,16 +142,16 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         return getString(stringId);
     }
 
-    @Override
-    public void togglePrefsFragment(boolean shouldShow) {
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        if (shouldShow) {
-            fragmentTransaction.replace(R.id.flPrefsContainer, PrefsFragment0.getInstance(), "");
-        } else {
-            fragmentTransaction.remove(PrefsFragment0.getInstance());
-        }
-        fragmentTransaction.commit();
-    }
+//    @Override
+//    public void togglePrefsFragment(boolean shouldShow) {
+//        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        if (shouldShow) {
+//            fragmentTransaction.replace(R.id.flPrefsContainer, PrefsFragment0.getInstance(), "");
+//        } else {
+//            fragmentTransaction.remove(PrefsFragment0.getInstance());
+//        }
+//        fragmentTransaction.commit();
+//    }
 
     @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {

@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchWrap"
     android:orientation="vertical"
-    android:paddingBottom="80dp"
+    android:paddingBottom="16dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    android:paddingTop="64dp"
+    android:paddingTop="56dp"
     tools:context=".app_components.main_screen.MainActivity">
 
     <TextView

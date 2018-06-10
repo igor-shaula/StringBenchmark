@@ -15,7 +15,7 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
-        void togglePrefsFragment(boolean shouldShow);
+//        void togglePrefsFragment(boolean shouldShow);
 
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
@@ -98,7 +98,7 @@ public interface MainHub {
 
         boolean isLoadReady();
 
-        boolean isPrefsFragmentShownHere();
+//        boolean isPrefsFragmentShownHere();
 
         void toggleLoadPreparationJobState(boolean isRunning);
 
@@ -119,11 +119,10 @@ public interface MainHub {
         void onViewLoadClick();
 
         void onToggleIterationsClick();
-//        void onToggleIterationsClick(boolean isEndless);
 
         void showDialogWithBuildInfo();
 
-        void togglePrefsFragmentHere();
+//        void togglePrefsFragmentHere();
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 

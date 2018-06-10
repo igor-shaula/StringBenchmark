@@ -19,46 +19,37 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolBar"
             style="@style/MatchMatch"
+            android:animationCache="true"
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
-            app:expandedTitleGravity="bottom|center_horizontal"
+            app:contentScrim="@color/colorWhite"
+            app:expandedTitleGravity="top|center_horizontal"
             app:expandedTitleMargin="16dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:scrimAnimationDuration="1000"
+            app:scrimVisibleHeightTrigger="100dp"
+            app:statusBarScrim="@color/colorWhite"
+            app:titleEnabled="false">
+
+            <include layout="@layout/content_for_load_preparation"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                style="@style/MatchWrap"
                 android:background="@color/colorPrimary"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-            <include layout="@layout/content_for_load_preparation"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- later delete this frame layout -->
-    <FrameLayout
-        android:id="@+id/flPrefsContainer"
-        style="@style/MatchWrap"
-        android:visibility="gone"/>
-
     <android.support.v4.widget.NestedScrollView
         style="@style/MatchMatch"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!--<LinearLayout-->
-        <!--style="@style/MatchWrap"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<include layout="@layout/content_for_load_preparation"/>-->
-
         <include layout="@layout/content_for_test_iterations"/>
-
-        <!--</LinearLayout>-->
 
     </android.support.v4.widget.NestedScrollView>
 

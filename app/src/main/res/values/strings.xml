@@ -6,9 +6,9 @@
     <string name="application">Application:</string>
     <string name="menu_about">About</string>
     <string name="aboutThisBuild">About this build</string>
-    <string name="versionCode">version code:</string>
-    <string name="versionName">version name:</string>
-    <string name="author">author:</string>
+    <string name="versionCode">Version code:</string>
+    <string name="versionName">Version name:</string>
+    <string name="author">Author:</string>
     <string name="me">Igor Shaula</string>
     <string name="summaryLoadLength">Load length is</string>
 
