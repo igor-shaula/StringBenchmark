@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainActivityRootView"
     style="@style/MatchMatch"
-    android:background="@android:color/background_light"
     android:fitsSystemWindows="true"
     tools:context="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity">
 
@@ -14,34 +13,28 @@
         android:id="@+id/appBarLayout"
         style="@style/MatchWrap"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:expanded="false">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolBar"
             style="@style/MatchMatch"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorBackgroundFloating"
-            app:expandedTitleGravity="start|top"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
+            app:expandedTitleGravity="bottom|center_horizontal"
+            app:expandedTitleMargin="16dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <include layout="@layout/activity_main_content_preparation"/>
-
-            <!--<ImageView-->
-            <!--android:id="@+id/main.backdrop"-->
-            <!--style="@style/MatchMatch"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:src="@android:drawable/btn_star"-->
-            <!--app:layout_collapseMode="parallax"/>-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimary"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+            <include layout="@layout/content_for_load_preparation"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -61,9 +54,9 @@
         <!--style="@style/MatchWrap"-->
         <!--android:orientation="vertical">-->
 
-        <!--<include layout="@layout/activity_main_content_preparation"/>-->
+        <!--<include layout="@layout/content_for_load_preparation"/>-->
 
-        <include layout="@layout/activity_main_content_iterations"/>
+        <include layout="@layout/content_for_test_iterations"/>
 
         <!--</LinearLayout>-->
 

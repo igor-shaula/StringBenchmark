@@ -31,9 +31,9 @@
             style="@style/MatchWrap"
             android:orientation="vertical">
 
-            <include layout="@layout/activity_main_content_preparation"/>
+            <include layout="@layout/content_for_load_preparation"/>
 
-            <include layout="@layout/activity_main_content_iterations"/>
+            <include layout="@layout/content_for_test_iterations"/>
 
         </LinearLayout>
 

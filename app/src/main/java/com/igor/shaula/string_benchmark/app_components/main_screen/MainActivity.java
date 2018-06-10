@@ -43,8 +43,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setContentView(R.layout.activity_main_linear);
-        setContentView(R.layout.root_coordinator_layout);
+//        setContentView(R.layout.z_activity_main_linear);
+        setContentView(R.layout.main_activity_root);
 
         logicLink = new MainLogic(this,
                 new MainUi(findViewById(R.id.mainActivityRootView)),
