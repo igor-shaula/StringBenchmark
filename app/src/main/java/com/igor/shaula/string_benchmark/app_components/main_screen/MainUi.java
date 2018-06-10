@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,7 +51,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextInputLayout tilIterationsAmount;
     private EditText etIterationsAmount;
     private Button bToggleAdjustedIterations;
-    private Button bToggleEndlessIterations;
+    //    private Button bToggleEndlessIterations;
+    private CheckBox cbEndlessIterations;
     private TextView tvLoadExplanation;
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
@@ -66,6 +68,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
         rootContext = rootView.getContext();
+    }
+
+    @Override
+    public boolean isEndless() {
+        return cbEndlessIterations.isChecked();
     }
 
     @NonNull
@@ -143,7 +150,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rootView.post(new Runnable() {
             @Override
             public void run() {
-                final String currentIterationCounterString = "" + C.SPACE + currentIterationNumber;
+                final String currentIterationCounterString =
+                        "" + C.SPACE + U.createReadableStringForLong(currentIterationNumber);
                 tvCurrentIterationNumber.setText(currentIterationCounterString);
                 tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
                 tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
@@ -302,7 +310,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             @Override
             public void run() {
                 final String iterationsTotalCountString =
-                        "" + C.SPACE + C.SLASH + C.SPACE + totalIterationsCount;
+                        "" + C.SPACE + C.SLASH + C.SPACE + U.createReadableStringForLong(totalIterationsCount);
                 tvIterationsTotalNumber.setText(iterationsTotalCountString);
             }
         });
@@ -370,8 +378,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etIterationsAmount.setOnKeyListener(this);
         bToggleAdjustedIterations = rootView.findViewById(R.id.bToggleAdjustedIterations);
         bToggleAdjustedIterations.setOnClickListener(this);
-        bToggleEndlessIterations = rootView.findViewById(R.id.bToggleEndlessIterations);
-        bToggleEndlessIterations.setOnClickListener(this);
+//        bToggleEndlessIterations = rootView.findViewById(R.id.bToggleEndlessIterations);
+//        bToggleEndlessIterations.setOnClickListener(this);
+        cbEndlessIterations = rootView.findViewById(R.id.cbEndlessIterations);
         tvLoadExplanation = rootView.findViewById(R.id.tvLoadExplanation);
         final String startingLoadInfo = rootContext.getString(R.string.summaryLoadInfo) + C.SPACE + C.ZERO;
         tvLoadExplanation.setText(startingLoadInfo);
@@ -413,11 +422,12 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 logicLink.onViewLoadClick();
                 break;
             case R.id.bToggleAdjustedIterations:
-                logicLink.onToggleIterationsClick(false);
+//                logicLink.onToggleIterationsClick(false);
+                logicLink.onToggleIterationsClick();
                 break;
-            case R.id.bToggleEndlessIterations:
-                logicLink.onToggleIterationsClick(true);
-                break;
+//            case R.id.bToggleEndlessIterations:
+//                logicLink.onToggleIterationsClick(true);
+//                break;
         }
     }
 

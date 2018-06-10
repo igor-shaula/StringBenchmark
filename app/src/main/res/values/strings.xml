@@ -47,10 +47,12 @@
     <string name="iterationsAmountHintEmpty">No test iterations will be done!</string>
     <string name="iterationsAmountHintBusy">Numbers from 100 to 10.000 are usually enough</string>
 
-    <string name="startAdjustedIterations">Start adjusted iterations</string>
-    <string name="stopAdjustedIterations">Stop adjusted iterations</string>
-    <string name="startEndlessIterations">Start endless iterations</string>
-    <string name="stopEndlessIterations">Stop endless iterations</string>
+    <string name="startIterations">Start iterations</string>
+    <string name="stopIterations">Stop iterations</string>
+    <!--<string name="startAdjustedIterations">Start adjusted iterations</string>-->
+    <!--<string name="stopAdjustedIterations">Stop adjusted iterations</string>-->
+    <!--<string name="startEndlessIterations">Start endless iterations</string>-->
+    <!--<string name="stopEndlessIterations">Stop endless iterations</string>-->
 
     <string name="resultsForLoggingTests">Median results for logging the load:</string>
     <string name="resultsForLoggingTestsBeginning">\n(the string of</string>
@@ -143,6 +145,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="current_iteration_is">Current iteration is:</string>
     <string name="makeLoadEmpty">Make load empty</string>
+    <string name="endless_iterations">Endless iterations</string>
 
     <!-- something else - for new automatically created strings -->
 

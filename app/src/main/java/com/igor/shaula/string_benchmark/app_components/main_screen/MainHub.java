@@ -30,6 +30,8 @@ public interface MainHub {
 
     interface UiLink {
 
+        boolean isEndless();
+
         @NonNull
         String getBasicStringText();
 
@@ -116,7 +118,8 @@ public interface MainHub {
 
         void onViewLoadClick();
 
-        void onToggleIterationsClick(boolean isEndless);
+        void onToggleIterationsClick();
+//        void onToggleIterationsClick(boolean isEndless);
 
         void showDialogWithBuildInfo();
 
