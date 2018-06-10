@@ -281,8 +281,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     public void showBuildInfoDialog() {
         final String message = rootContext.getString(R.string.application) + C.SPACE
                 + rootContext.getString(R.string.app_name) + C.N
-                + rootContext.getString(R.string.versionCode) + C.SPACE + BuildConfig.VERSION_CODE + C.N
                 + rootContext.getString(R.string.versionName) + C.SPACE + BuildConfig.VERSION_NAME + C.N
+                + rootContext.getString(R.string.versionCode) + C.SPACE + BuildConfig.VERSION_CODE + C.N
                 + rootContext.getString(R.string.author) + C.SPACE + rootContext.getString(R.string.me);
         new AlertDialog.Builder(rootContext)
                 .setTitle(rootContext.getString(R.string.aboutThisBuild))
