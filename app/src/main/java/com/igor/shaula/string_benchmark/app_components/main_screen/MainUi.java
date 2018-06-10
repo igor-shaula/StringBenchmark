@@ -19,7 +19,7 @@ import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
-public final class MainUi implements MainHub.UiLink, View.OnClickListener {
+public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.OnKeyListener {
 
     private static final String CN = "MainUi";
     @NonNull
@@ -322,6 +322,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 logicLink.onBasicStringChanged();
             }
         });
+        etBasicString.setOnKeyListener(this);
         tilStringsAmount = rootView.findViewById(R.id.tilStringsAmount);
         etStringsAmount = rootView.findViewById(R.id.tiedStringsAmount);
         etStringsAmount.addTextChangedListener(new SimpleTextWatcher() {
@@ -330,6 +331,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 logicLink.onStringsAmountChanged();
             }
         });
+        etStringsAmount.setOnKeyListener(this);
         bPrepareLoad = rootView.findViewById(R.id.bPrepareLoad);
         bPrepareLoad.setOnClickListener(this);
         bResetLoad = rootView.findViewById(R.id.bResetLoad);
@@ -365,6 +367,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 return false;
             }
         });
+        etIterationsAmount.setOnKeyListener(this);
         bToggleAdjustedIterations = rootView.findViewById(R.id.bToggleAdjustedIterations);
         bToggleAdjustedIterations.setOnClickListener(this);
         bToggleEndlessIterations = rootView.findViewById(R.id.bToggleEndlessIterations);
@@ -416,5 +419,18 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener {
                 logicLink.onToggleIterationsClick(true);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        L.v(CN, "onKey ` keyCode = " + keyCode);
+        // TODO: 10.06.2018 make sure that it works and if not - just make it work \\
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            L.v(CN, "onKey == KEYCODE_BACK");
+            clearFocusFromAllInputFields();
+            return true;
+//                    return U.hideKeyboard(v);
+        }
+        return false;
     }
 }

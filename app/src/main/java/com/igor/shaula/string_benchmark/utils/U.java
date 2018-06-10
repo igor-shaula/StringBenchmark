@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.igor.shaula.string_benchmark.R;
@@ -341,5 +342,17 @@ public final class U {
             s = s.replaceFirst(String.valueOf(C.ZERO), "");
         }
         return s;
+    }
+
+    public static boolean hideKeyboard(@NonNull View view) {
+        final InputMethodManager imm =
+                (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
