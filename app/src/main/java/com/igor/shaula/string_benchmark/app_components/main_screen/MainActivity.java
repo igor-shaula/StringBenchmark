@@ -43,8 +43,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main_linear);
-//        setContentView(R.layout.z_activity_main_coordinator);
+//        setContentView(R.layout.activity_main_linear);
+        setContentView(R.layout.root_coordinator_layout);
 
         logicLink = new MainLogic(this,
                 new MainUi(findViewById(R.id.mainActivityRootView)),
@@ -100,13 +100,14 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_showPrefsFragmentHere) {
-            logicLink.togglePrefsFragmentHere();
-            // as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
-            item.setIcon(logicLink.isPrefsFragmentShownHere() ?
-                    android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info);
-            return true;
-        } else if (id == R.id.action_showSettingsActivity) {
+//        if (id == R.id.action_showPrefsFragmentHere) {
+//            logicLink.togglePrefsFragmentHere();
+//             as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
+//            item.setIcon(logicLink.isPrefsFragmentShownHere() ?
+//                    android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info);
+//            return true;
+//        } else if (id == R.id.action_showSettingsActivity) {
+        if (id == R.id.action_showSettingsActivity) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.action_about) {
             logicLink.showDialogWithBuildInfo();

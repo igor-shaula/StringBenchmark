@@ -146,6 +146,7 @@
     <string name="current_iteration_is">Current iteration is:</string>
     <string name="makeLoadEmpty">Make load empty</string>
     <string name="endless_iterations">Endless iterations</string>
+    <string name="settingsActivity">SettingsActivity</string>
 
     <!-- something else - for new automatically created strings -->
 
