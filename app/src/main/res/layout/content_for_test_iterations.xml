@@ -31,24 +31,9 @@
         android:layout_marginStart="2dp"
         android:background="@android:color/darker_gray"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilIterationsAmount"
-        style="@style/MatchWrap">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/tiedIterationsAmount"
-            style="@style/MatchWrap"
-            android:gravity="center"
-            android:hint="@string/iterationsAmountHintEmpty"
-            android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
-            android:inputType="number"
-            android:textColor="@color/colorPrimaryDark"/>
-
-    </android.support.design.widget.TextInputLayout>
-
     <LinearLayout
         style="@style/MatchWrap"
-        android:gravity="center">
+        android:gravity="center_vertical">
 
         <Button
             android:id="@+id/bToggleAdjustedIterations"
@@ -73,6 +58,22 @@
             android:theme="@style/AppThemeGreenAccent"/>
 
     </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilIterationsAmount"
+        style="@style/MatchWrap"
+        android:layout_marginTop="8dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tiedIterationsAmount"
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:hint="@string/iterationsAmountHintEmpty"
+            android:imeOptions="actionDone|flagForceAscii|flagNoExtractUi|flagNoFullscreen"
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/tvProgressBar"

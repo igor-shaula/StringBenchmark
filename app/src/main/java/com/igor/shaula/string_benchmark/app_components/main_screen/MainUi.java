@@ -191,8 +191,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
         bPrepareLoad.setEnabled(!isJobRunning);
+        bResetLoad.setEnabled(!isJobRunning);
         bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
         toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
+        bToggleAdjustedIterations.setText(isJobRunning ? R.string.stopIterations : R.string.startIterations);
+        cbEndlessIterations.setEnabled(!isJobRunning);
     }
 
     @Override
