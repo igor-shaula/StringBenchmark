@@ -13,7 +13,7 @@
     tools:context=".app_components.main_screen.MainActivity">
 
     <TextView
-        android:id="@+id/tvStartingExplanation"
+        android:id="@+id/tvPrepareLoadExplanation"
         style="@style/MatchWrap"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -23,9 +23,9 @@
         android:textStyle="italic"/>
 
     <View
+        android:id="@+id/vPrepareLoadExplanation"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="2dp"
         android:layout_marginStart="2dp"
         android:background="@color/colorWhite"/>
@@ -33,6 +33,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilBasicString"
         style="@style/MatchWrap"
+        android:layout_marginTop="8dp"
         android:textColorHint="@color/colorPrimaryBright">
 
         <android.support.design.widget.TextInputEditText

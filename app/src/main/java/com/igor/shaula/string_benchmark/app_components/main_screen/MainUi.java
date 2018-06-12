@@ -40,7 +40,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
     // preparation of the burden \\
-    private TextView tvStartingExplanation;
+    private TextView tvPrepareLoadExplanation;
+    private View vPrepareLoadExplanation;
     private TextInputLayout tilBasicString;
     private EditText etBasicString;
     private TextInputLayout tilStringsAmount;
@@ -53,6 +54,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     // iterations \\
     private TextView tvIterationsExplanation;
+    private View vIterationsExplanation;
     private TextInputLayout tilIterationsAmount;
     private EditText etIterationsAmount;
     private Button bToggleAdjustedIterations;
@@ -204,11 +206,15 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @Override
     public void toggleAllExplanations(boolean shouldShowExplanations) {
         if (shouldShowExplanations) {
-            tvStartingExplanation.setVisibility(View.VISIBLE);
+            tvPrepareLoadExplanation.setVisibility(View.VISIBLE);
+            vPrepareLoadExplanation.setVisibility(View.VISIBLE);
             tvIterationsExplanation.setVisibility(View.VISIBLE);
+            vIterationsExplanation.setVisibility(View.VISIBLE);
         } else {
-            tvStartingExplanation.setVisibility(View.GONE);
+            tvPrepareLoadExplanation.setVisibility(View.GONE);
+            vPrepareLoadExplanation.setVisibility(View.GONE);
             tvIterationsExplanation.setVisibility(View.GONE);
+            vIterationsExplanation.setVisibility(View.GONE);
         }
     }
 
@@ -358,9 +364,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         appBarLayout = rootView.findViewById(R.id.appBarLayout);
         collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
 
-        tvStartingExplanation = rootView.findViewById(R.id.tvStartingExplanation);
-
         // burden preparation block \\
+        tvPrepareLoadExplanation = rootView.findViewById(R.id.tvPrepareLoadExplanation);
+        vPrepareLoadExplanation = rootView.findViewById(R.id.vPrepareLoadExplanation);
         tilBasicString = rootView.findViewById(R.id.tilBasicString);
         etBasicString = rootView.findViewById(R.id.tiedBasicString);
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
@@ -390,6 +396,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
         // iterations block \\
         tvIterationsExplanation = rootView.findViewById(R.id.tvIterationsExplanation);
+        vIterationsExplanation = rootView.findViewById(R.id.vIterationsExplanation);
         tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
         etIterationsAmount = rootView.findViewById(R.id.tiedIterationsAmount);
         etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
@@ -408,7 +415,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                     final InputMethodManager imm = (InputMethodManager)
                             rootContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
-                        imm.hideSoftInputFromWindow(tvStartingExplanation.getWindowToken(), 0);
+                        imm.hideSoftInputFromWindow(tvPrepareLoadExplanation.getWindowToken(), 0);
                     }
                     return true;
                 }
@@ -446,7 +453,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etBasicString.clearFocus();
         etStringsAmount.clearFocus();
         etIterationsAmount.clearFocus();
-        tvStartingExplanation.requestFocus(); // this action is not obvious but needed in fact \\
+        tvPrepareLoadExplanation.requestFocus(); // this action is not obvious but needed in fact \\
     }
 
     @Override
