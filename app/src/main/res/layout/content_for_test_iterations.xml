@@ -98,7 +98,7 @@
         android:textColor="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/tvLoadExplanation"
+        android:id="@+id/tvPreparedLoadInfo"
         style="@style/MatchWrap"
         android:focusable="true"
         android:focusableInTouchMode="true"

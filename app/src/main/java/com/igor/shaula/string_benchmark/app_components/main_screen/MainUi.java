@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -34,8 +35,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @NonNull
     private MainHub.LogicLink logicLink;
 
-    //    private ProgressDialog pdWait;
-//    private ProgressBar pbViewCreatedBurden;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -59,7 +58,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private EditText etIterationsAmount;
     private Button bToggleAdjustedIterations;
     private CheckBox cbEndlessIterations;
-    private TextView tvLoadExplanation;
+    private TextView tvPreparedLoadInfo;
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
     private TextView tvResultForSout;
@@ -83,10 +82,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     @Override
     public boolean isPreparationBlockShown() {
-//        appBarLayout.is
-//        appBarLayout.getOffset
-//        collapsingToolbarLayout.is
-//        collapsingToolbarLayout.getOffset
         return true;
         // TODO: 11.06.2018 continue here \\
     }
@@ -164,9 +159,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rootView.post(new Runnable() {
             @Override
             public void run() {
-//        bToggleEndlessIterations.setVisibility(isBusy ? View.GONE : View.VISIBLE);
-//                pbViewCreatedBurden.setVisibility(isBusy ? View.VISIBLE : View.GONE);
-//                pbViewCreatedBurden.clearAnimation();
+                // maybe later i'll use it \\
             }
         });
     }
@@ -199,8 +192,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         bPrepareLoad.setEnabled(!isJobRunning);
         bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
         toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
-//        pbViewCreatedBurden.invalidate();
-//        toggleViewLoadBusyStateOnMainThread(!isJobRunning && logicLink.isLoadReady());
     }
 
     @Override
@@ -220,14 +211,15 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     @Override
     public void resetResultViewStates() {
-        tvResultForSout.setText(String.valueOf(C.STAR));
-        tvResultForLog.setText(String.valueOf(C.STAR));
-        tvResultForDAL.setText(String.valueOf(C.STAR));
-        tvResultForVAL1.setText(String.valueOf(C.STAR));
-        tvResultForVAL2.setText(String.valueOf(C.STAR));
-        tvResultForVAL3.setText(String.valueOf(C.STAR));
-        tvResultForSLVoid.setText(String.valueOf(C.STAR));
-        tvResultForSLInt.setText(String.valueOf(C.STAR));
+        final CharSequence oneTemplateForAll = String.valueOf(C.STAR);
+        tvResultForSout.setText(oneTemplateForAll);
+        tvResultForLog.setText(oneTemplateForAll);
+        tvResultForDAL.setText(oneTemplateForAll);
+        tvResultForVAL1.setText(oneTemplateForAll);
+        tvResultForVAL2.setText(oneTemplateForAll);
+        tvResultForVAL3.setText(oneTemplateForAll);
+        tvResultForSLVoid.setText(oneTemplateForAll);
+        tvResultForSLInt.setText(oneTemplateForAll);
     }
 
     @Override
@@ -267,7 +259,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             public void run() {
                 final String text = rootContext.getString(R.string.summaryLoadInfo)
                         + C.SPACE + U.createReadableStringForLong(length);
-                tvLoadExplanation.setText(text);
+                tvPreparedLoadInfo.setText(text);
             }
         });
     }
@@ -425,12 +417,16 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etIterationsAmount.setOnKeyListener(this);
         bToggleAdjustedIterations = rootView.findViewById(R.id.bToggleAdjustedIterations);
         bToggleAdjustedIterations.setOnClickListener(this);
-//        bToggleEndlessIterations = rootView.findViewById(R.id.bToggleEndlessIterations);
-//        bToggleEndlessIterations.setOnClickListener(this);
         cbEndlessIterations = rootView.findViewById(R.id.cbEndlessIterations);
-        tvLoadExplanation = rootView.findViewById(R.id.tvLoadExplanation);
+        cbEndlessIterations.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                tilIterationsAmount.setVisibility(isChecked ? View.GONE : View.VISIBLE);
+            }
+        });
+        tvPreparedLoadInfo = rootView.findViewById(R.id.tvPreparedLoadInfo);
         final String startingLoadInfo = rootContext.getString(R.string.summaryLoadInfo) + C.SPACE + C.ZERO;
-        tvLoadExplanation.setText(startingLoadInfo);
+        tvPreparedLoadInfo.setText(startingLoadInfo);
         tvCurrentIterationNumber = rootView.findViewById(R.id.tvCurrentIterationNumber);
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
@@ -441,10 +437,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvResultForVAL3 = rootView.findViewById(R.id.tvResultForVAL3);
         tvResultForSLVoid = rootView.findViewById(R.id.tvResultForSLVoid);
         tvResultForSLInt = rootView.findViewById(R.id.tvResultForSLInt);
-
-//        pdWait = new ProgressDialog(rootContext);
-//        pdWait.setMessage(rootContext.getString(R.string.startingUp));
-//        pdWait.setIndeterminate(true);
 
     } // init \\
 
@@ -482,7 +474,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             L.v(CN, "onKey == KEYCODE_BACK");
             clearFocusFromAllInputFields();
             return true;
-//                    return U.hideKeyboard(v);
+//            return U.hideKeyboard(v);
         }
         return false;
     }
