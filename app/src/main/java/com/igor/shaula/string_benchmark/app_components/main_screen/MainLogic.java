@@ -99,6 +99,8 @@ public final class MainLogic implements MainHub.LogicLink {
     public void toggleAllExplanations() {
         uiLink.toggleAllExplanations(shouldShowExplanations);
         shouldShowExplanations = !shouldShowExplanations;
+        // for upcoming changes we need already reversed flag state \\
+        systemLink.toggleMenuItemAboutExplanations(shouldShowExplanations);
     }
 
     @Override

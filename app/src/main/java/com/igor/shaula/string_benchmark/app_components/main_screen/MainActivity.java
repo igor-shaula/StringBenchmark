@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +35,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             selectInfoToShow(intent);
         }
     };
+    @Nullable
+    private Menu menu;
 
     // LIFECYCLE ===================================================================================
 
@@ -86,6 +89,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -138,6 +142,19 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @Override
     public String findStringById(int stringId) {
         return getString(stringId);
+    }
+
+    @Override
+    public void toggleMenuItemAboutExplanations(boolean shouldShowExplanations) {
+        if (menu == null) {
+            return; // protecting from always possible NPE \\
+        }
+        final MenuItem toggleExplanationsMenuItem = menu.findItem(R.id.action_toggleExplanations);
+        if (shouldShowExplanations) {
+            toggleExplanationsMenuItem.setTitle(R.string.showExplanations);
+        } else {
+            toggleExplanationsMenuItem.setTitle(R.string.hideExplanations);
+        }
     }
 
     @Override

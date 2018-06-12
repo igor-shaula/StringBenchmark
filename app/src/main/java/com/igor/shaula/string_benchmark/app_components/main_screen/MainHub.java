@@ -15,6 +15,8 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
+        void toggleMenuItemAboutExplanations(boolean shouldShowExplanations);
+
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
         void launchAllMeasurements(int testRepetitionsCount);
