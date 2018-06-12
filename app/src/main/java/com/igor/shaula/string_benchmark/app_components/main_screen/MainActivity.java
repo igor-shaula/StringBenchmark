@@ -103,6 +103,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             return true;
         } else if (id == R.id.action_showSettingsActivity) {
             startActivity(new Intent(this, SettingsActivity.class));
+        } else if (id == R.id.action_toggleExplanations) {
+            logicLink.toggleAllExplanations();
         } else if (id == R.id.action_about) {
             logicLink.showDialogWithBuildInfo();
             return true;

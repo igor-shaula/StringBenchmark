@@ -147,6 +147,7 @@
     <string name="makeLoadEmpty">Make load empty</string>
     <string name="endless_iterations">Endless iterations</string>
     <string name="settingsActivity">SettingsActivity</string>
+    <string name="hideExplanations">Hide explanations</string>
 
     <!-- something else - for new automatically created strings -->
 

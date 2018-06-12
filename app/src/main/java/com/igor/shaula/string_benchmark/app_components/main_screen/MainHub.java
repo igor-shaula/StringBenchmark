@@ -53,6 +53,8 @@ public interface MainHub {
 
         void toggleJobActiveUiState(boolean isRunning);
 
+        void toggleAllExplanations(boolean shouldShowExplanations);
+
         void resetResultViewStates();
 
         void resetResultOfPreparation();
@@ -107,6 +109,8 @@ public interface MainHub {
         void toggleLoadPreparationJobState(boolean isRunning);
 
         void toggleIterationsJobState(boolean isRunning);
+
+        void toggleAllExplanations();
 
         void onBackPressed();
 

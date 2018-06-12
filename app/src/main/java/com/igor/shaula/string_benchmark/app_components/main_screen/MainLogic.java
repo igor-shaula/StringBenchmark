@@ -27,6 +27,7 @@ public final class MainLogic implements MainHub.LogicLink {
     private boolean backWasPressedOnce;
     private boolean isIterationsJobRunning;
     private boolean isLoadReady;
+    private boolean shouldShowExplanations;
 
     @NonNull
     private String pendingPreparationResult = "";
@@ -92,6 +93,12 @@ public final class MainLogic implements MainHub.LogicLink {
         } else {
             textyTwister.stopTwisterTimer();
         }
+    }
+
+    @Override
+    public void toggleAllExplanations() {
+        uiLink.toggleAllExplanations(shouldShowExplanations);
+        shouldShowExplanations = !shouldShowExplanations;
     }
 
     @Override

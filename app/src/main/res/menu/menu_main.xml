@@ -17,6 +17,12 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_toggleExplanations"
+        android:orderInCategory="12"
+        android:title="@string/hideExplanations"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:title="@string/menu_about"

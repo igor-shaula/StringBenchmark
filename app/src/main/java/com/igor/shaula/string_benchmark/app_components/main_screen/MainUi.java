@@ -52,6 +52,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvResultForCreatingLoad;
 
     // iterations \\
+    private TextView tvIterationsExplanation;
     private TextInputLayout tilIterationsAmount;
     private EditText etIterationsAmount;
     private Button bToggleAdjustedIterations;
@@ -198,6 +199,17 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
 //        pbViewCreatedBurden.invalidate();
 //        toggleViewLoadBusyStateOnMainThread(!isJobRunning && logicLink.isLoadReady());
+    }
+
+    @Override
+    public void toggleAllExplanations(boolean shouldShowExplanations) {
+        if (shouldShowExplanations) {
+            tvStartingExplanation.setVisibility(View.VISIBLE);
+            tvIterationsExplanation.setVisibility(View.VISIBLE);
+        } else {
+            tvStartingExplanation.setVisibility(View.GONE);
+            tvIterationsExplanation.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -377,6 +389,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvResultForCreatingLoad = rootView.findViewById(R.id.tvResultForCreatingLoad);
 
         // iterations block \\
+        tvIterationsExplanation = rootView.findViewById(R.id.tvIterationsExplanation);
         tilIterationsAmount = rootView.findViewById(R.id.tilIterationsAmount);
         etIterationsAmount = rootView.findViewById(R.id.tiedIterationsAmount);
         etIterationsAmount.addTextChangedListener(new SimpleTextWatcher() {
