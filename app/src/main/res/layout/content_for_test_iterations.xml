@@ -62,22 +62,6 @@
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
 
-        <!--<View-->
-        <!--android:layout_width="16dp"-->
-        <!--android:layout_height="0dp"/>-->
-
-        <!--<Button-->
-        <!--android:id="@+id/bToggleEndlessIterations"-->
-        <!--style="@android:style/Widget.Button.Small"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:paddingEnd="16dp"-->
-        <!--android:paddingStart="16dp"-->
-        <!--android:text="@string/startEndlessIterations"-->
-        <!--android:textAllCaps="false"-->
-        <!--android:textColor="@color/colorPrimary"/>-->
-
         <CheckBox
             android:id="@+id/cbEndlessIterations"
             android:layout_width="0dp"
@@ -127,13 +111,13 @@
     <TextView
         android:id="@+id/tvIterationsResultHeader"
         style="@style/MatchWrap"
-        android:layout_marginBottom="16dp"
         android:gravity="end"
         android:text="@string/resultsForLoggingTests"
         android:textStyle="italic"/>
 
     <TextView
         style="@style/WrapWrap"
+        android:layout_marginTop="16dp"
         android:text="@string/resultOfSystemOutPrintln"/>
 
     <TextView

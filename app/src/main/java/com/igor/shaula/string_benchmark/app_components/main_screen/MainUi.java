@@ -61,6 +61,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvPreparedLoadInfo;
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
+    private TextView tvIterationsResultHeader;
     private TextView tvResultForSout;
     private TextView tvResultForLog;
     private TextView tvResultForDAL;
@@ -201,11 +202,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             vPrepareLoadExplanation.setVisibility(View.VISIBLE);
             tvIterationsExplanation.setVisibility(View.VISIBLE);
             vIterationsExplanation.setVisibility(View.VISIBLE);
+            tvIterationsResultHeader.setVisibility(View.VISIBLE);
         } else {
             tvPrepareLoadExplanation.setVisibility(View.GONE);
             vPrepareLoadExplanation.setVisibility(View.GONE);
             tvIterationsExplanation.setVisibility(View.GONE);
             vIterationsExplanation.setVisibility(View.GONE);
+            tvIterationsResultHeader.setVisibility(View.GONE);
         }
     }
 
@@ -407,7 +410,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                     final InputMethodManager imm = (InputMethodManager)
                             rootContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
-                        imm.hideSoftInputFromWindow(tvPrepareLoadExplanation.getWindowToken(), 0);
+                        imm.hideSoftInputFromWindow(etIterationsAmount.getWindowToken(), 0);
                     }
                     return true;
                 }
@@ -429,6 +432,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvPreparedLoadInfo.setText(startingLoadInfo);
         tvCurrentIterationNumber = rootView.findViewById(R.id.tvCurrentIterationNumber);
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
+        tvIterationsResultHeader = rootView.findViewById(R.id.tvIterationsResultHeader);
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
@@ -445,7 +449,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etBasicString.clearFocus();
         etStringsAmount.clearFocus();
         etIterationsAmount.clearFocus();
-        tvPrepareLoadExplanation.requestFocus(); // this action is not obvious but needed in fact \\
+//        cbEndlessIterations.requestFocus(); // this action is not obvious but needed in fact \\
     }
 
     @Override

@@ -103,7 +103,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             logicLink.toggleLoadPreparationBlock();
             // as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
             item.setIcon(logicLink.isPreparationBlockShown() ?
-                    android.R.drawable.ic_lock_idle_lock : android.R.drawable.ic_lock_idle_lock);
+                    R.drawable.ic_close_preparation_block : R.drawable.ic_open_preparation_block);
             return true;
         } else if (id == R.id.action_showSettingsActivity) {
             startActivity(new Intent(this, SettingsActivity.class));
