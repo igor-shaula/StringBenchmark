@@ -78,11 +78,6 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void toggleLoadPreparationBlock() {
-        uiLink.toggleLoadPreparationBlock();
-    }
-
-    @Override
     public void toggleLoadPreparationJobState(boolean isRunning) {
         uiLink.toggleJobActiveUiState(isRunning);
         if (isRunning) {
@@ -103,11 +98,25 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void toggleAllExplanations() {
+    public void onLoadPreparationBlockAction() {
+        uiLink.toggleLoadPreparationBlock(!isAppBarLayoutFullyExpanded);
+    }
+
+    @Override
+    public void onToggleAllExplanationsAction() {
         uiLink.toggleAllExplanations(shouldShowExplanations);
         shouldShowExplanations = !shouldShowExplanations;
         // for upcoming changes we need already reversed flag state \\
         systemLink.toggleMenuItemAboutExplanations(shouldShowExplanations);
+        // additional workaround for preventing appearance of bottom part of expanded AppBar \\
+        if (!isAppBarLayoutFullyExpanded) {
+            uiLink.toggleLoadPreparationBlock(false);
+        }
+    }
+
+    @Override
+    public void onShowDialogWithBuildInfoAction() {
+        uiLink.showBuildInfoDialog();
     }
 
     @Override
@@ -259,11 +268,6 @@ public final class MainLogic implements MainHub.LogicLink {
             uiLink.showTotalIterationsNumber(count);
         }
         L.d(CN, "startIterationsJob() finished");
-    }
-
-    @Override
-    public void showDialogWithBuildInfo() {
-        uiLink.showBuildInfoDialog();
     }
 
     @Override

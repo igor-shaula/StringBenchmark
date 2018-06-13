@@ -139,13 +139,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 */
 
     @Override
-    public void toggleLoadPreparationBlock() {
-        // of course it can be simplified - but in that case code will be harder to read \\
-        if (logicLink.isPreparationBlockShown()) {
-            appBarLayout.setExpanded(false);
-        } else {
-            appBarLayout.setExpanded(true);
-        }
+    public void toggleLoadPreparationBlock(boolean shouldBeExpanded) {
+        appBarLayout.setExpanded(shouldBeExpanded);
         // in fact animation works every time here \\
     }
 

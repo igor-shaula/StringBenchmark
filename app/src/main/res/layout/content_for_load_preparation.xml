@@ -9,7 +9,7 @@
     android:paddingBottom="16dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    android:paddingTop="56dp"
+    android:paddingTop="64dp"
     tools:context=".app_components.main_screen.MainActivity">
 
     <TextView

@@ -49,7 +49,7 @@ public interface MainHub {
 
         void setInitialInputFieldsValues();
 
-        void toggleLoadPreparationBlock();
+        void toggleLoadPreparationBlock(boolean shouldExpand);
 
         void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
 
@@ -108,13 +108,15 @@ public interface MainHub {
 
         void setAppBarLayoutFullyExpanded(boolean isFullyExpanded);
 
-        void toggleLoadPreparationBlock();
-
         void toggleLoadPreparationJobState(boolean isRunning);
 
         void toggleIterationsJobState(boolean isRunning);
 
-        void toggleAllExplanations();
+        void onLoadPreparationBlockAction();
+
+        void onToggleAllExplanationsAction();
+
+        void onShowDialogWithBuildInfoAction();
 
         void onBackPressed();
 
@@ -131,8 +133,6 @@ public interface MainHub {
         void onViewLoadClick();
 
         void onToggleIterationsClick();
-
-        void showDialogWithBuildInfo();
 
         void showPreparationsResult(int whatInfoToShow, long resultNanoTime);
 

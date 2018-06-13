@@ -100,7 +100,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_toggleLoadPreparationBlock) {
-            logicLink.toggleLoadPreparationBlock();
+            logicLink.onLoadPreparationBlockAction();
             // as it's hard to avoid linking to Android classes in logic - toggling the icon is here \\
             item.setIcon(logicLink.isPreparationBlockShown() ?
                     R.drawable.ic_close_preparation_block : R.drawable.ic_open_preparation_block);
@@ -108,9 +108,9 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         } else if (id == R.id.action_showSettingsActivity) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.action_toggleExplanations) {
-            logicLink.toggleAllExplanations();
+            logicLink.onToggleAllExplanationsAction();
         } else if (id == R.id.action_about) {
-            logicLink.showDialogWithBuildInfo();
+            logicLink.onShowDialogWithBuildInfoAction();
             return true;
         }
         return super.onOptionsItemSelected(item);

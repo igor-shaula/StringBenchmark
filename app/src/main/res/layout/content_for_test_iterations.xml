@@ -12,25 +12,6 @@
     android:paddingTop="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/tvIterationsExplanation"
-        style="@style/MatchWrap"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:text="@string/iterationsExplanation"
-        android:textColor="@android:color/black"
-        android:textStyle="italic"/>
-
-    <View
-        android:id="@+id/vIterationsExplanation"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:background="@android:color/darker_gray"/>
-
     <LinearLayout
         style="@style/MatchWrap"
         android:gravity="center_vertical">
@@ -58,6 +39,24 @@
             android:theme="@style/AppThemeGreenAccent"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvIterationsExplanation"
+        style="@style/MatchWrap"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:text="@string/iterationsExplanation"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"/>
+
+    <View
+        android:id="@+id/vIterationsExplanation"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:background="@android:color/darker_gray"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilIterationsAmount"
