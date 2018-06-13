@@ -81,12 +81,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         return cbEndlessIterations.isChecked();
     }
 
-    @Override
-    public boolean isPreparationBlockShown() {
-        return true;
-        // TODO: 11.06.2018 continue here \\
-    }
-
     @NonNull
     @Override
     public String getBasicStringText() {
@@ -147,7 +141,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @Override
     public void toggleLoadPreparationBlock() {
         // of course it can be simplified - but in that case code will be harder to read \\
-        if (isPreparationBlockShown()) {
+        if (logicLink.isPreparationBlockShown()) {
             appBarLayout.setExpanded(false);
         } else {
             appBarLayout.setExpanded(true);
@@ -360,6 +354,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     public void init() {
 
         appBarLayout = rootView.findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                Log.v(CN, "init ` verticalOffset = " + verticalOffset);
+                logicLink.setAppBarLayoutFullyExpanded(appBarLayout.getHeight() == appBarLayout.getBottom());
+            }
+        });
         collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
 
         // burden preparation block \\

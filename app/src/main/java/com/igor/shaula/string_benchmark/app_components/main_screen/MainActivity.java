@@ -158,6 +158,19 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     }
 
     @Override
+    public void toggleAppBarExpansionIcon(boolean shouldCollapseAbbBar) {
+        if (menu == null) {
+            return;
+        }
+        final MenuItem toggleAppBarExpansionMenuItem = menu.findItem(R.id.action_toggleLoadPreparationBlock);
+        if (shouldCollapseAbbBar) {
+            toggleAppBarExpansionMenuItem.setIcon(R.drawable.ic_close_preparation_block);
+        } else {
+            toggleAppBarExpansionMenuItem.setIcon(R.drawable.ic_open_preparation_block);
+        }
+    }
+
+    @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {
         TestingIntentService.prepareTheLoadForTest(this, basicString, basicStringsCount);
     }

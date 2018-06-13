@@ -28,6 +28,7 @@ public final class MainLogic implements MainHub.LogicLink {
     private boolean isIterationsJobRunning;
     private boolean isLoadReady;
     private boolean shouldShowExplanations;
+    private boolean isAppBarLayoutFullyExpanded;
 
     @NonNull
     private String pendingPreparationResult = "";
@@ -67,7 +68,13 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public boolean isPreparationBlockShown() {
-        return uiLink.isPreparationBlockShown();
+        return isAppBarLayoutFullyExpanded;
+    }
+
+    @Override
+    public void setAppBarLayoutFullyExpanded(boolean isFullyExpanded) {
+        isAppBarLayoutFullyExpanded = isFullyExpanded;
+        systemLink.toggleAppBarExpansionIcon(isFullyExpanded);
     }
 
     @Override

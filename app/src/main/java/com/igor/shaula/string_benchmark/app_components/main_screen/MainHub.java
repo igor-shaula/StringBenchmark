@@ -17,6 +17,8 @@ public interface MainHub {
 
         void toggleMenuItemAboutExplanations(boolean shouldShowExplanations);
 
+        void toggleAppBarExpansionIcon(boolean shouldCollapseAbbBar);
+
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
         void launchAllMeasurements(int testRepetitionsCount);
@@ -31,8 +33,6 @@ public interface MainHub {
     interface UiLink {
 
         boolean isEndless();
-
-        boolean isPreparationBlockShown();
 
         @NonNull
         String getBasicStringText();
@@ -105,6 +105,8 @@ public interface MainHub {
         boolean isLoadReady();
 
         boolean isPreparationBlockShown();
+
+        void setAppBarLayoutFullyExpanded(boolean isFullyExpanded);
 
         void toggleLoadPreparationBlock();
 
