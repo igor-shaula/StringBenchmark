@@ -30,6 +30,12 @@
         android:layout_marginStart="2dp"
         android:background="@color/colorWhite"/>
 
+    <!--<TextView-->
+    <!--android:id="@+id/tvWorkaroundForKeepingFocus"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:text="..."-->
+    <!--android:layout_height="8dp"/>-->
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilBasicString"
         style="@style/MatchWrap"

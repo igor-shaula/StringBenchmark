@@ -98,6 +98,10 @@ public interface MainHub {
         void init();
 
         void clearFocusFromAllInputFields();
+
+        void invalidateAppBar();
+
+        void toggleAppBarExpansionIcon(boolean isFullyExpanded);
     }
 
     interface LogicLink {

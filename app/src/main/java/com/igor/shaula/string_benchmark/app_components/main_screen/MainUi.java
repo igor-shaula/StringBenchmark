@@ -3,9 +3,9 @@ package com.igor.shaula.string_benchmark.app_components.main_screen;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
@@ -36,11 +37,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private MainHub.LogicLink logicLink;
 
     private AppBarLayout appBarLayout;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    //    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ImageView ivToggleAppBar;
 
     // preparation of the burden \\
     private TextView tvPrepareLoadExplanation;
     private View vPrepareLoadExplanation;
+    //    private TextView tvWorkaroundForKeepingFocus;
     private TextInputLayout tilBasicString;
     private EditText etBasicString;
     private TextInputLayout tilStringsAmount;
@@ -352,15 +355,19 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                Log.v(CN, "init ` verticalOffset = " + verticalOffset);
-                logicLink.setAppBarLayoutFullyExpanded(appBarLayout.getHeight() == appBarLayout.getBottom());
+                Log.v(CN, "init ` verticalOffset = " + verticalOffset);
+                logicLink.setAppBarLayoutFullyExpanded(verticalOffset == 0);
+//                logicLink.setAppBarLayoutFullyExpanded(appBarLayout.getHeight() == appBarLayout.getBottom());
             }
         });
-        collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
+//        collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
+        ivToggleAppBar = rootView.findViewById(R.id.ivToggleAppBar);
+        ivToggleAppBar.setOnClickListener(this);
 
         // burden preparation block \\
         tvPrepareLoadExplanation = rootView.findViewById(R.id.tvPrepareLoadExplanation);
         vPrepareLoadExplanation = rootView.findViewById(R.id.vPrepareLoadExplanation);
+//        tvWorkaroundForKeepingFocus = rootView.findViewById(R.id.tvWorkaroundForKeepingFocus);
         tilBasicString = rootView.findViewById(R.id.tilBasicString);
         etBasicString = rootView.findViewById(R.id.tiedBasicString);
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
@@ -448,7 +455,18 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etBasicString.clearFocus();
         etStringsAmount.clearFocus();
         etIterationsAmount.clearFocus();
-//        cbEndlessIterations.requestFocus(); // this action is not obvious but needed in fact \\
+//        tvWorkaroundForKeepingFocus.requestFocus(); // this action is not obvious but needed in fact \\
+    }
+
+    @Override
+    public void invalidateAppBar() {
+        appBarLayout.invalidate();
+    }
+
+    @Override
+    public void toggleAppBarExpansionIcon(boolean isFullyExpanded) {
+        ivToggleAppBar.setImageResource(isFullyExpanded ?
+                R.drawable.ic_close_preparation_block : R.drawable.ic_open_preparation_block);
     }
 
     @Override
@@ -466,6 +484,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             case R.id.bToggleAdjustedIterations:
                 logicLink.onToggleIterationsClick();
                 break;
+            case R.id.ivToggleAppBar:
+                logicLink.onLoadPreparationBlockAction();
+                break;
         }
     }
 
@@ -476,8 +497,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             L.v(CN, "onKey == KEYCODE_BACK");
             clearFocusFromAllInputFields();
-            return true;
-//            return U.hideKeyboard(v);
+//            return true;
+            return U.hideKeyboard(v);
         }
         return false;
     }

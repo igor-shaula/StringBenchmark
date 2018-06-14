@@ -164,10 +164,14 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         }
         final MenuItem toggleAppBarExpansionMenuItem = menu.findItem(R.id.action_toggleLoadPreparationBlock);
         if (shouldCollapseAbbBar) {
+//            toggleAppBarExpansionMenuItem.setIcon(getResources().getDrawable(R.drawable.ic_close_preparation_block));
             toggleAppBarExpansionMenuItem.setIcon(R.drawable.ic_close_preparation_block);
         } else {
+//            toggleAppBarExpansionMenuItem.setIcon(getResources().getDrawable(R.drawable.ic_open_preparation_block));
             toggleAppBarExpansionMenuItem.setIcon(R.drawable.ic_open_preparation_block);
         }
+//        toggleAppBarExpansionMenuItem.getActionView().requestLayout();
+        // TODO: 14.06.2018 protect after W/View: requestLayout() improperly called by android.support.design.widget.CollapsingToolbarLayout
     }
 
     @Override

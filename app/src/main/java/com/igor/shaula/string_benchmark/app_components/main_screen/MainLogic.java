@@ -74,7 +74,9 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void setAppBarLayoutFullyExpanded(boolean isFullyExpanded) {
         isAppBarLayoutFullyExpanded = isFullyExpanded;
-        systemLink.toggleAppBarExpansionIcon(isFullyExpanded);
+//        systemLink.toggleAppBarExpansionIcon(isFullyExpanded);
+        uiLink.toggleAppBarExpansionIcon(isFullyExpanded);
+        uiLink.invalidateAppBar();
     }
 
     @Override

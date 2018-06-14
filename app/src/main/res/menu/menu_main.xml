@@ -7,7 +7,7 @@
         android:id="@+id/action_toggleLoadPreparationBlock"
         android:icon="@drawable/ic_close_preparation_block"
         android:orderInCategory="10"
-        android:title="@string/menu_prefsFragment0"
+        android:title="@string/togglePreparationBlock"
         app:showAsAction="ifRoom"/>
 
     <item

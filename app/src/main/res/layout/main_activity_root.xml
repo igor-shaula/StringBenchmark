@@ -41,7 +41,14 @@
                 style="@style/MatchWrap"
                 android:background="@color/colorPrimary"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <ImageView
+                    android:id="@+id/ivToggleAppBar"
+                    style="@style/WrapWrap"
+                    android:src="@drawable/ic_close_preparation_block"/>
+
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
