@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.R;
@@ -49,7 +50,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextInputLayout tilStringsAmount;
     private EditText etStringsAmount;
     private Button bPrepareLoad;
-    //    private Button bResetLoad;
     private CheckBox cbMakeLoadEmpty;
     private Button bViewLoad;
     private TextView tvResultOfPreparation;
@@ -60,7 +60,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private View vIterationsExplanation;
     private TextInputLayout tilIterationsAmount;
     private EditText etIterationsAmount;
-    private Button bToggleAdjustedIterations;
+    private ToggleButton bToggleAdjustedIterations;
     private CheckBox cbEndlessIterations;
     private TextView tvPreparedLoadInfo;
     private TextView tvCurrentIterationNumber;
@@ -184,11 +184,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
         bPrepareLoad.setEnabled(!isJobRunning);
-//        bResetLoad.setEnabled(!isJobRunning);
         cbMakeLoadEmpty.setEnabled(!isJobRunning);
         bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
         toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
         bToggleAdjustedIterations.setText(isJobRunning ? R.string.stopIterations : R.string.startIterations);
+        bToggleAdjustedIterations.setChecked(isJobRunning);
         cbEndlessIterations.setEnabled(!isJobRunning);
     }
 
@@ -369,7 +369,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         // burden preparation block \\
         tvPrepareLoadExplanation = rootView.findViewById(R.id.tvPrepareLoadExplanation);
         vPrepareLoadExplanation = rootView.findViewById(R.id.vPrepareLoadExplanation);
-//        tvWorkaroundForKeepingFocus = rootView.findViewById(R.id.tvWorkaroundForKeepingFocus);
         tilBasicString = rootView.findViewById(R.id.tilBasicString);
         etBasicString = rootView.findViewById(R.id.tiedBasicString);
         etBasicString.addTextChangedListener(new SimpleTextWatcher() {
@@ -389,10 +388,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         });
         etStringsAmount.setOnKeyListener(this);
         cbMakeLoadEmpty = rootView.findViewById(R.id.cbMakeLoadEmpty);
+        cbMakeLoadEmpty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                logicLink.onLoadEmptyChecked(isChecked);
+            }
+        });
         bPrepareLoad = rootView.findViewById(R.id.bPrepareLoad);
         bPrepareLoad.setOnClickListener(this);
-//        bResetLoad = rootView.findViewById(R.id.bResetLoad);
-//        bResetLoad.setOnClickListener(this);
         bViewLoad = rootView.findViewById(R.id.bViewLoad);
         bViewLoad.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
@@ -473,14 +476,16 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     }
 
     @Override
+    public void hideKeyboard() {
+        U.hideKeyboard(rootView);
+    }
+
+    @Override
     public void onClick(@NonNull View v) {
         switch (v.getId()) {
             case R.id.bPrepareLoad:
                 logicLink.onPrepareLoadClick();
                 break;
-//            case R.id.bResetLoad:
-//                logicLink.onResetLoadClick();
-//                break;
             case R.id.bViewLoad:
                 logicLink.onViewLoadClick();
                 break;

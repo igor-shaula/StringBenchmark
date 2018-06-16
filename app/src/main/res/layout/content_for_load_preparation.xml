@@ -67,18 +67,6 @@
         style="@style/MatchWrap"
         android:gravity="center">
 
-        <!--<Button-->
-        <!--android:id="@+id/bResetLoad"-->
-        <!--style="@android:style/Widget.Button.Small"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:paddingEnd="16dp"-->
-        <!--android:paddingStart="16dp"-->
-        <!--android:text="@string/makeLoadEmpty"-->
-        <!--android:textAllCaps="false"-->
-        <!--android:textColor="@color/colorPrimaryDark"/>-->
-
         <CheckBox
             android:id="@+id/cbMakeLoadEmpty"
             style="@android:style/Widget.DeviceDefault.Light.CompoundButton.Star"

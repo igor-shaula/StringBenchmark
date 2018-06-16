@@ -102,6 +102,8 @@ public interface MainHub {
         void invalidateAppBar();
 
         void toggleAppBarExpansionIcon(boolean isFullyExpanded);
+
+        void hideKeyboard();
     }
 
     interface LogicLink {
@@ -130,9 +132,9 @@ public interface MainHub {
 
         void onIterationsAmountChanged();
 
-        void onPrepareLoadClick();
+        void onLoadEmptyChecked(boolean isChecked);
 
-        void onResetLoadClick();
+        void onPrepareLoadClick();
 
         void onViewLoadClick();
 

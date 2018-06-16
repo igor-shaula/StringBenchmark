@@ -197,28 +197,31 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void onPrepareLoadClick() {
-        isLoadReady = false;
+    public void onLoadEmptyChecked(boolean isChecked) {
+        if (isChecked) {
+            // the next line prepares UI state for later deciding which load to prepare - empty or heavy \\
+            uiLink.setStringsAmountText(0);
+            // the following is temporary placed here \\
+            doSingleTesting();
+            return;
+        }
         final int previousCount = U.convertIntoInt(uiLink.getStringsAmountText());
         if (previousCount == 0) {
             // recovering from possible previous resetLoad-click \\
             uiLink.setStringsAmountText(1);
         }
-        runTestLoadPreparation();
     }
 
     @Override
-    public void onResetLoadClick() {
-        // the following is temporary placed here \\
-        doSingleTesting();
-        // the next line prepares UI state for later deciding which load to prepare - empty or heavy \\
-        uiLink.setStringsAmountText(0);
+    public void onPrepareLoadClick() {
+        isLoadReady = false;
         // now going further - all expected logic branching is inside the following method \\
         runTestLoadPreparation();
     }
 
     private void runTestLoadPreparation() {
-        toggleLoadPreparationJobState(true);
+        uiLink.clearFocusFromAllInputFields();
+        uiLink.hideKeyboard();
         // the rest is for preparing potentially heavy load \\
         int count = U.convertIntoInt(uiLink.getStringsAmountText());
         if (count < 0) {
