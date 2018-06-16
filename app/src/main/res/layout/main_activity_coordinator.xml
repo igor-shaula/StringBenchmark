@@ -25,7 +25,8 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
             app:contentScrim="@color/colorWhite"
             app:expandedTitleGravity="top|start"
-            app:expandedTitleMargin="12dp"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleMarginTop="12dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="1000"
@@ -43,31 +44,18 @@
                 android:layout_height="48dp"
                 android:background="@color/colorPrimary"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                <!--<LinearLayout-->
-                <!--style="@style/MatchWrap"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<View-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"/>-->
-
-                <!--</LinearLayout>-->
-
-            </android.support.v7.widget.Toolbar>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
             <ImageView
                 android:id="@+id/ivToggleAppBar"
                 style="@style/WrapWrap"
                 android:layout_gravity="end"
+                android:layout_marginEnd="14dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
                 android:contentDescription="@string/togglePreparationBlock"
                 android:src="@drawable/ic_close_preparation_block"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.87"/>
+                app:layout_collapseParallaxMultiplier="0.85"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

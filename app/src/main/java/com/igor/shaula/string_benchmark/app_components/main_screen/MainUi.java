@@ -49,7 +49,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextInputLayout tilStringsAmount;
     private EditText etStringsAmount;
     private Button bPrepareLoad;
-    private Button bResetLoad;
+    //    private Button bResetLoad;
+    private CheckBox cbMakeLoadEmpty;
     private Button bViewLoad;
     private TextView tvResultOfPreparation;
     private TextView tvResultForCreatingLoad;
@@ -183,7 +184,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etBasicString.setEnabled(!isJobRunning);
         etStringsAmount.setEnabled(!isJobRunning);
         bPrepareLoad.setEnabled(!isJobRunning);
-        bResetLoad.setEnabled(!isJobRunning);
+//        bResetLoad.setEnabled(!isJobRunning);
+        cbMakeLoadEmpty.setEnabled(!isJobRunning);
         bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
         toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
         bToggleAdjustedIterations.setText(isJobRunning ? R.string.stopIterations : R.string.startIterations);
@@ -386,10 +388,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             }
         });
         etStringsAmount.setOnKeyListener(this);
+        cbMakeLoadEmpty = rootView.findViewById(R.id.cbMakeLoadEmpty);
         bPrepareLoad = rootView.findViewById(R.id.bPrepareLoad);
         bPrepareLoad.setOnClickListener(this);
-        bResetLoad = rootView.findViewById(R.id.bResetLoad);
-        bResetLoad.setOnClickListener(this);
+//        bResetLoad = rootView.findViewById(R.id.bResetLoad);
+//        bResetLoad.setOnClickListener(this);
         bViewLoad = rootView.findViewById(R.id.bViewLoad);
         bViewLoad.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
@@ -475,9 +478,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             case R.id.bPrepareLoad:
                 logicLink.onPrepareLoadClick();
                 break;
-            case R.id.bResetLoad:
-                logicLink.onResetLoadClick();
-                break;
+//            case R.id.bResetLoad:
+//                logicLink.onResetLoadClick();
+//                break;
             case R.id.bViewLoad:
                 logicLink.onViewLoadClick();
                 break;

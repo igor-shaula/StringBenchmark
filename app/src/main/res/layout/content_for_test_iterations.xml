@@ -16,6 +16,15 @@
         style="@style/MatchWrap"
         android:gravity="center_vertical">
 
+        <CheckBox
+            android:id="@+id/cbEndlessIterations"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/endless_iterations"
+            android:textColor="@color/colorPrimary"
+            android:theme="@style/AppThemeGreenAccent"/>
+
         <Button
             android:id="@+id/bToggleAdjustedIterations"
             style="@android:style/Widget.Button.Small"
@@ -27,16 +36,6 @@
             android:text="@string/startIterations"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"/>
-
-        <CheckBox
-            android:id="@+id/cbEndlessIterations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="@string/endless_iterations"
-            android:textColor="@color/colorPrimary"
-            android:theme="@style/AppThemeGreenAccent"/>
 
     </LinearLayout>
 

@@ -30,12 +30,6 @@
         android:layout_marginStart="2dp"
         android:background="@color/colorWhite"/>
 
-    <!--<TextView-->
-    <!--android:id="@+id/tvWorkaroundForKeepingFocus"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:text="..."-->
-    <!--android:layout_height="8dp"/>-->
-
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilBasicString"
         style="@style/MatchWrap"
@@ -73,6 +67,31 @@
         style="@style/MatchWrap"
         android:gravity="center">
 
+        <!--<Button-->
+        <!--android:id="@+id/bResetLoad"-->
+        <!--style="@android:style/Widget.Button.Small"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:paddingEnd="16dp"-->
+        <!--android:paddingStart="16dp"-->
+        <!--android:text="@string/makeLoadEmpty"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/colorPrimaryDark"/>-->
+
+        <CheckBox
+            android:id="@+id/cbMakeLoadEmpty"
+            style="@android:style/Widget.CompoundButton.Star"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/makeLoadEmpty"
+            android:textColor="@color/colorWhite"/>
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="0dp"/>
+
         <Button
             android:id="@+id/bPrepareLoad"
             style="@android:style/Widget.Button.Small"
@@ -85,35 +104,21 @@
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"/>
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="0dp"/>
-
-        <Button
-            android:id="@+id/bResetLoad"
-            style="@android:style/Widget.Button.Small"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:text="@string/makeLoadEmpty"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"/>
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvResultOfPreparation"
         style="@style/MatchWrap"
         android:text="@string/resultOfPreparation"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvResultForCreatingLoad"
         style="@style/MatchWrap.Gravity_End"
         android:text="@string/star"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:visibility="gone"/>
 
     <TextView
         style="@style/WrapWrap"
