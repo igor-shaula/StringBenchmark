@@ -40,8 +40,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private AppBarLayout appBarLayout;
     //    private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView ivToggleAppBar;
+    private ToggleButton tbLoadPreparationBlock;
+    private ToggleButton tbExplanations;
+    private Button bAboutTheApp;
 
-    // preparation of the burden \\
+    // preparation of the load \\
     private TextView tvPrepareLoadExplanation;
     private View vPrepareLoadExplanation;
     //    private TextView tvWorkaroundForKeepingFocus;
@@ -365,6 +368,22 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 //        collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
         ivToggleAppBar = rootView.findViewById(R.id.ivToggleAppBar);
         ivToggleAppBar.setOnClickListener(this);
+        tbLoadPreparationBlock = rootView.findViewById(R.id.tbLoadPreparationBlock);
+        tbLoadPreparationBlock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                logicLink.onLoadPreparationBlockAction();
+            }
+        });
+        tbExplanations = rootView.findViewById(R.id.tbExplanations);
+        tbExplanations.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                logicLink.onToggleAllExplanationsAction();
+            }
+        });
+        bAboutTheApp = rootView.findViewById(R.id.bAboutTheApp);
+        bAboutTheApp.setOnClickListener(this);
 
         // burden preparation block \\
         tvPrepareLoadExplanation = rootView.findViewById(R.id.tvPrepareLoadExplanation);
@@ -494,6 +513,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 break;
             case R.id.ivToggleAppBar:
                 logicLink.onLoadPreparationBlockAction();
+                break;
+            case R.id.bAboutTheApp:
+                logicLink.onShowDialogWithBuildInfoAction();
                 break;
         }
     }

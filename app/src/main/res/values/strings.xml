@@ -4,7 +4,7 @@
 
     <string name="app_name">String Benchmark</string>
     <string name="application">Application:</string>
-    <string name="menu_about">About</string>
+    <string name="showInfoAboutTheApp">About this App…</string>
     <string name="aboutThisBuild">About this build</string>
     <string name="versionCode">Version code:</string>
     <string name="versionName">Version name:</string>
@@ -69,7 +69,8 @@
     <string name="thisBlocksDivider"/>
     <string name="summaryLoadInfo">Assembled load length is:</string>
 
-    <string name="togglePreparationBlock">Toggle preparation block</string>
+    <string name="showPreparationBlock">Show preparation block</string>
+    <string name="hidePreparationBlock">Hide preparation block</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

@@ -109,7 +109,7 @@ public final class MainLogic implements MainHub.LogicLink {
         uiLink.toggleAllExplanations(shouldShowExplanations);
         shouldShowExplanations = !shouldShowExplanations;
         // for upcoming changes we need already reversed flag state \\
-        systemLink.toggleMenuItemAboutExplanations(shouldShowExplanations);
+//        systemLink.toggleMenuItemAboutExplanations(shouldShowExplanations);
         // additional workaround for preventing appearance of bottom part of expanded AppBar \\
         if (!isAppBarLayoutFullyExpanded) {
             uiLink.toggleLoadPreparationBlock(false);

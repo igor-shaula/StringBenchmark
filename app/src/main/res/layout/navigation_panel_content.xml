@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.NavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:padding="16dp"
+    app:elevation="8dp">
+
+    <LinearLayout
+        style="@style/MatchMatch"
+        android:orientation="vertical">
+
+        <ToggleButton
+            android:id="@+id/tbLoadPreparationBlock"
+            style="@style/MatchWrap"
+            android:layout_marginTop="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorPrimaryDark"
+            android:textOff="@string/hidePreparationBlock"
+            android:textOn="@string/showPreparationBlock"/>
+
+        <ToggleButton
+            android:id="@+id/tbExplanations"
+            style="@style/MatchWrap"
+            android:layout_marginTop="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorPrimaryDark"
+            android:textOff="@string/hideExplanations"
+            android:textOn="@string/showExplanations"/>
+
+        <Button
+            android:id="@+id/bAboutTheApp"
+            style="@style/MatchWrap"
+            android:layout_marginTop="16dp"
+            android:text="@string/showInfoAboutTheApp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
+
+</android.support.design.widget.NavigationView>

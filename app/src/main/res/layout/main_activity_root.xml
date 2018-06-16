@@ -1,53 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivityRootView"
     style="@style/MatchMatch"
     android:fitsSystemWindows="true"
     tools:context=".app_components.main_screen.MainActivity">
 
     <include layout="@layout/main_activity_coordinator"/>
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:paddingTop="80dp"
-        app:elevation="8dp">
-
-        <LinearLayout
-            style="@style/MatchMatch"
-            android:orientation="vertical">
-
-            <CheckBox
-                android:id="@+id/tvToggleLoadPreparationBlock"
-                style="@style/MatchWrap"
-                android:layout_margin="16dp"
-                android:text="@string/togglePreparationBlock"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorWhite"/>
-
-            <CheckBox
-                android:id="@+id/tvToggleExplanations"
-                style="@style/MatchWrap"
-                android:layout_margin="16dp"
-                android:text="@string/hideExplanations"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorWhite"/>
-
-            <TextView
-                android:id="@+id/tvAbout"
-                style="@style/MatchWrap"
-                android:layout_margin="16dp"
-                android:text="@string/menu_about"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorWhite"/>
-
-        </LinearLayout>
-
-    </android.support.design.widget.NavigationView>
+    <include layout="@layout/navigation_panel_content"/>
 
 </android.support.v4.widget.DrawerLayout>
