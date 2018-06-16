@@ -18,6 +18,7 @@
 
         <CheckBox
             android:id="@+id/cbEndlessIterations"
+            style="@android:style/Widget.DeviceDefault.CompoundButton.Star"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -27,7 +28,7 @@
 
         <Button
             android:id="@+id/bToggleAdjustedIterations"
-            style="@android:style/Widget.Button.Small"
+            style="@android:style/Widget.DeviceDefault.Button.Toggle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

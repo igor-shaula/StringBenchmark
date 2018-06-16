@@ -81,28 +81,25 @@
 
         <CheckBox
             android:id="@+id/cbMakeLoadEmpty"
-            style="@android:style/Widget.CompoundButton.Star"
+            style="@android:style/Widget.DeviceDefault.Light.CompoundButton.Star"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/makeLoadEmpty"
             android:textColor="@color/colorWhite"/>
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="0dp"/>
-
         <Button
             android:id="@+id/bPrepareLoad"
-            style="@android:style/Widget.Button.Small"
+            style="@android:style/Widget.DeviceDefault.Button.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/colorGray"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
             android:text="@string/prepareLoadButtonText"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 
