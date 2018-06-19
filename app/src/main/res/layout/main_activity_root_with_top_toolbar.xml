@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:orientation="vertical"
+    tools:context=".app_components.main_screen.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        style="@style/MatchWrap"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        app:title="s;klsdlkjfv"
+        android:background="@color/colorPrimaryBright"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/mainActivityRootView"
+        style="@style/MatchMatch"
+        android:fitsSystemWindows="false">
+
+        <include layout="@layout/main_activity_coordinator"/>
+
+        <include layout="@layout/navigation_panel_content"/>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

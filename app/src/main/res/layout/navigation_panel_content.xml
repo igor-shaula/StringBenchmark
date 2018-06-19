@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="@color/colorPrimary"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     android:padding="16dp"
     app:elevation="8dp">
 
@@ -15,31 +15,41 @@
         style="@style/MatchMatch"
         android:orientation="vertical">
 
+        <TextView
+            style="@style/MatchWrap"
+            android:layout_marginStart="4dp"
+            android:text="@string/all_settings_amp_options_are_here"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorWhite"/>
+
         <ToggleButton
             android:id="@+id/tbLoadPreparationBlock"
             style="@style/MatchWrap"
             android:layout_marginTop="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/colorPrimaryDark"
             android:textOff="@string/hidePreparationBlock"
-            android:textOn="@string/showPreparationBlock"/>
+            android:textOn="@string/showPreparationBlock"
+            android:textStyle="bold"/>
 
         <ToggleButton
             android:id="@+id/tbExplanations"
             style="@style/MatchWrap"
             android:layout_marginTop="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/colorPrimaryDark"
             android:textOff="@string/hideExplanations"
-            android:textOn="@string/showExplanations"/>
+            android:textOn="@string/showExplanations"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/bAboutTheApp"
             style="@style/MatchWrap"
             android:layout_marginTop="16dp"
             android:text="@string/showInfoAboutTheApp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

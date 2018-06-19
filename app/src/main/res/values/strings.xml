@@ -150,6 +150,7 @@
     <string name="settingsActivity">SettingsActivity</string>
     <string name="hideExplanations">Hide explanations</string>
     <string name="showExplanations">Show explanations</string>
+    <string name="all_settings_amp_options_are_here"><![CDATA[All settings & options are here]]></string>
 
     <!-- something else - for new automatically created strings -->
 
