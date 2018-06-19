@@ -330,6 +330,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     @Override
     public void showLoadInDialog(@NonNull String load) {
+        L.v(CN, "showLoadInDialog ` load = " + load);
         // TODO: 05.12.2017 move to the Dialog from support library \\
         final String title = rootContext.getString(R.string.summaryLoadLength) + C.SPACE + U.createReadableStringForLong(load.length());
         final AlertDialog alertDialog = new AlertDialog.Builder(rootContext)

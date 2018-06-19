@@ -34,7 +34,7 @@
     <string name="stringsAmountHintBusy">Total load string\'s length is</string>
 
     <string name="prepareLoadButtonText">Prepare load</string>
-    <string name="viewLoadButtonText">View created load</string>
+    <string name="viewLoadForTests">View load for tests…</string>
 
     <string name="resultOfPreparation">Time for creating the load:</string>
 

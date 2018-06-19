@@ -43,6 +43,15 @@
             android:textStyle="bold"/>
 
         <Button
+            android:id="@+id/bViewLoad"
+            style="@style/MatchWrap"
+            android:layout_marginTop="16dp"
+            android:text="@string/viewLoadForTests"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"/>
+
+        <Button
             android:id="@+id/bAboutTheApp"
             style="@style/MatchWrap"
             android:layout_marginTop="16dp"
