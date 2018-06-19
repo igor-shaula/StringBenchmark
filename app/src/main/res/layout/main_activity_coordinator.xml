@@ -8,6 +8,14 @@
     android:fitsSystemWindows="true"
     tools:context="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity">
 
+    <android.support.v4.widget.NestedScrollView
+        style="@style/MatchMatch"
+        android:layout_marginTop="48dp">
+
+        <include layout="@layout/content_for_test_iterations"/>
+
+    </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         style="@style/MatchWrap"
@@ -59,13 +67,5 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        style="@style/MatchMatch"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <include layout="@layout/content_for_test_iterations"/>
-
-    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
