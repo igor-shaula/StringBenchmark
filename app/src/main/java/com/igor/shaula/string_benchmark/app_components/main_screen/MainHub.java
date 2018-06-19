@@ -15,9 +15,9 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
-        void toggleMenuItemAboutExplanations(boolean shouldShowExplanations);
+//        void toggleMenuItemAboutExplanations(boolean shouldShowExplanations);
 
-        void toggleAppBarExpansionIcon(boolean shouldCollapseAbbBar);
+//        void toggleAppBarExpansionIcon(boolean shouldCollapseAbbBar);
 
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
@@ -51,7 +51,7 @@ public interface MainHub {
 
         void toggleLoadPreparationBlock(boolean shouldExpand);
 
-        void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
+//        void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
 
         void toggleJobActiveUiState(boolean isRunning);
 
@@ -99,7 +99,7 @@ public interface MainHub {
 
         void clearFocusFromAllInputFields();
 
-        void invalidateAppBar();
+//        void invalidateAppBar();
 
         void toggleAppBarExpansionIcon(boolean isFullyExpanded);
 

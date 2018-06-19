@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -40,9 +41,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private AppBarLayout appBarLayout;
     //    private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView ivToggleAppBar;
-    private ToggleButton tbLoadPreparationBlock;
-    private ToggleButton tbExplanations;
-    private Button bAboutTheApp;
 
     // preparation of the load \\
     private TextView tvPrepareLoadExplanation;
@@ -54,7 +52,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private EditText etStringsAmount;
     private Button bPrepareLoad;
     private CheckBox cbMakeLoadEmpty;
-    private Button bViewLoad;
     private TextView tvResultOfPreparation;
     private TextView tvResultForCreatingLoad;
 
@@ -152,16 +149,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     }
 
     @Override
-    public void toggleViewLoadBusyStateOnMainThread(final boolean isBusy) {
-        rootView.post(new Runnable() {
-            @Override
-            public void run() {
-                // maybe later i'll use it \\
-            }
-        });
-    }
-
-    @Override
     public void updateIterationsResultOnMainThread(@NonNull final long[] oneIterationResults,
                                                    final int currentIterationNumber) {
         rootView.post(new Runnable() {
@@ -188,8 +175,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etStringsAmount.setEnabled(!isJobRunning);
         bPrepareLoad.setEnabled(!isJobRunning);
         cbMakeLoadEmpty.setEnabled(!isJobRunning);
-        bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
-        toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
+//        bViewLoad.setEnabled(!isJobRunning && logicLink.isLoadReady());
+//        toggleViewLoadBusyStateOnMainThread(bViewLoad.isEnabled());
         bToggleAdjustedIterations.setText(isJobRunning ? R.string.stopIterations : R.string.startIterations);
         bToggleAdjustedIterations.setChecked(isJobRunning);
         cbEndlessIterations.setEnabled(!isJobRunning);
@@ -339,7 +326,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 .create();
         alertDialog
                 .show();
-        toggleViewLoadBusyStateOnMainThread(!alertDialog.isShowing());
+//        toggleViewLoadBusyStateOnMainThread(!alertDialog.isShowing());
     }
 
     @Override
@@ -358,6 +345,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     public void init() {
 
         appBarLayout = rootView.findViewById(R.id.appBarLayout);
+        appBarLayout.setOnClickListener(this);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -366,24 +354,26 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 //                logicLink.setAppBarLayoutFullyExpanded(appBarLayout.getHeight() == appBarLayout.getBottom());
             }
         });
+        final Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(this);
 //        collapsingToolbarLayout = rootView.findViewById(R.id.collapsingToolBar);
         ivToggleAppBar = rootView.findViewById(R.id.ivToggleAppBar);
         ivToggleAppBar.setOnClickListener(this);
-        tbLoadPreparationBlock = rootView.findViewById(R.id.tbLoadPreparationBlock);
+        final ToggleButton tbLoadPreparationBlock = rootView.findViewById(R.id.tbLoadPreparationBlock);
         tbLoadPreparationBlock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 logicLink.onLoadPreparationBlockAction();
             }
         });
-        tbExplanations = rootView.findViewById(R.id.tbExplanations);
+        final ToggleButton tbExplanations = rootView.findViewById(R.id.tbExplanations);
         tbExplanations.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 logicLink.onToggleAllExplanationsAction();
             }
         });
-        bAboutTheApp = rootView.findViewById(R.id.bAboutTheApp);
+        final Button bAboutTheApp = rootView.findViewById(R.id.bAboutTheApp);
         bAboutTheApp.setOnClickListener(this);
 
         // burden preparation block \\
@@ -416,7 +406,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         });
         bPrepareLoad = rootView.findViewById(R.id.bPrepareLoad);
         bPrepareLoad.setOnClickListener(this);
-        bViewLoad = rootView.findViewById(R.id.bViewLoad);
+        final Button bViewLoad = rootView.findViewById(R.id.bViewLoad);
         bViewLoad.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
         tvResultForCreatingLoad = rootView.findViewById(R.id.tvResultForCreatingLoad);
@@ -484,10 +474,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 //        tvWorkaroundForKeepingFocus.requestFocus(); // this action is not obvious but needed in fact \\
     }
 
-    @Override
-    public void invalidateAppBar() {
-        appBarLayout.invalidate();
-    }
+//    @Override
+//    public void invalidateAppBar() {
+//        appBarLayout.invalidate();
+//    }
 
     @Override
     public void toggleAppBarExpansionIcon(boolean isFullyExpanded) {
@@ -512,6 +502,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             case R.id.bToggleAdjustedIterations:
                 logicLink.onToggleIterationsClick();
                 break;
+            case R.id.toolbar: // not a mistake here - specially set behavior \\
             case R.id.ivToggleAppBar:
                 logicLink.onLoadPreparationBlockAction();
                 break;

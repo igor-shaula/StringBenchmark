@@ -76,7 +76,11 @@ public final class MainLogic implements MainHub.LogicLink {
         isAppBarLayoutFullyExpanded = isFullyExpanded;
 //        systemLink.toggleAppBarExpansionIcon(isFullyExpanded);
         uiLink.toggleAppBarExpansionIcon(isFullyExpanded);
-        uiLink.invalidateAppBar();
+/*        if (isFullyExpanded) {
+            uiLink.clearFocusFromAllInputFields();
+            uiLink.hideKeyboard();
+        }*/
+//        uiLink.invalidateAppBar();
     }
 
     @Override
@@ -102,6 +106,8 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void onLoadPreparationBlockAction() {
         uiLink.toggleLoadPreparationBlock(!isAppBarLayoutFullyExpanded);
+        uiLink.clearFocusFromAllInputFields();
+        uiLink.hideKeyboard();
     }
 
     @Override
@@ -242,7 +248,7 @@ public final class MainLogic implements MainHub.LogicLink {
         final String load = systemLink.getLoad();
 //        if (isLoadReady) {
 //            uiLink.toggleViewLoadBusyStateOnMainThread(false);
-            uiLink.showLoadInDialog(load);
+        uiLink.showLoadInDialog(load);
 //        }
     }
 
@@ -319,7 +325,7 @@ public final class MainLogic implements MainHub.LogicLink {
             uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
         }
         isLoadReady = true;
-        uiLink.toggleViewLoadBusyStateOnMainThread(true);
+//        uiLink.toggleViewLoadBusyStateOnMainThread(true);
         uiLink.updateLoadLengthOnMainThread(systemLink.getLoad().length());
     }
 

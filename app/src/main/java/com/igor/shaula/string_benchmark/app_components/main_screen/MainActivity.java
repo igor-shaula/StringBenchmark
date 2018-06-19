@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.igor.shaula.string_benchmark.R;
@@ -35,8 +33,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             selectInfoToShow(intent);
         }
     };
-    @Nullable
-    private Menu menu;
+//    @Nullable
+//    private Menu menu;
 
     // LIFECYCLE ===================================================================================
 
@@ -86,6 +84,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     // MENU ========================================================================================
 
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -93,6 +92,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         this.menu = menu;
         return true;
     }
+*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -145,6 +145,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         return getString(stringId);
     }
 
+/*
     @Override
     public void toggleMenuItemAboutExplanations(boolean shouldShowExplanations) {
         if (menu == null) {
@@ -157,7 +158,9 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             toggleExplanationsMenuItem.setTitle(R.string.hideExplanations);
         }
     }
+*/
 
+/*
     @Override
     public void toggleAppBarExpansionIcon(boolean shouldCollapseAbbBar) {
         if (menu == null) {
@@ -171,9 +174,9 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 //            toggleAppBarExpansionMenuItem.setIcon(getResources().getDrawable(R.drawable.ic_open_preparation_block));
             toggleAppBarExpansionMenuItem.setIcon(R.drawable.ic_open_preparation_block);
         }
-//        toggleAppBarExpansionMenuItem.getActionView().requestLayout();
         // TODO: 14.06.2018 protect after W/View: requestLayout() improperly called by android.support.design.widget.CollapsingToolbarLayout
     }
+*/
 
     @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {
