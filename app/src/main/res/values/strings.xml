@@ -69,8 +69,8 @@
     <string name="thisBlocksDivider"/>
     <string name="summaryLoadInfo">Assembled load length is:</string>
 
-    <string name="showPreparationBlock">Show preparation block</string>
-    <string name="hidePreparationBlock">Hide preparation block</string>
+    <string name="showPreparationBlock">Show load preparation</string>
+    <string name="hidePreparationBlock">Hide load preparation</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
