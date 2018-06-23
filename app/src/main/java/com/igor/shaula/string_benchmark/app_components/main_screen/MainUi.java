@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,6 +27,8 @@ import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.Simple
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
+
+import java.util.List;
 
 public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.OnKeyListener {
 
@@ -66,6 +70,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
     private TextView tvIterationsResultHeader;
+    private RecyclerView rvIterationResults;
+    private RecyclerView.Adapter rvAdapter;
+    private RecyclerView.LayoutManager rvLayoutManager;
     private TextView tvResultForSout;
     private TextView tvResultForLog;
     private TextView tvResultForDAL;
@@ -455,6 +462,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvCurrentIterationNumber = rootView.findViewById(R.id.tvCurrentIterationNumber);
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvIterationsResultHeader = rootView.findViewById(R.id.tvIterationsResultHeader);
+
+        rvIterationResults = rootView.findViewById(R.id.rvIterationResults);
+        // as inner changes in content should not affect the RecyclerView size \\
+        rvIterationResults.setHasFixedSize(true);
+        rvLayoutManager = new LinearLayoutManager(rootContext);
+        rvIterationResults.setLayoutManager(rvLayoutManager);
+        // adapter will be set inside dedicated setter method - this is only for beginning \\
+
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
         tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
@@ -465,6 +480,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvResultForSLInt = rootView.findViewById(R.id.tvResultForSLInt);
 
     } // init \\
+
+    public void updateIterationResults(@NonNull List<OneIterationResultModel> oneIterationResult) {
+        rvAdapter = new IterationResultsAdapter(oneIterationResult);
+        rvIterationResults.setAdapter(rvAdapter);
+    }
 
     @Override
     public void clearFocusFromAllInputFields() {

@@ -21,6 +21,12 @@
         android:text="@string/resultsForLoggingTests"
         android:textStyle="italic"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvIterationResults"
+        style="@style/MatchWrap"
+        android:layout_marginTop="16dp"
+        android:scrollbars="vertical"/>
+
     <TextView
         style="@style/WrapWrap"
         android:layout_marginTop="16dp"
