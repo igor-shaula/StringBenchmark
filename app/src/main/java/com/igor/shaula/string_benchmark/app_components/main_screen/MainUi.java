@@ -23,11 +23,14 @@ import android.widget.ToggleButton;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.R;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.IterationResultsAdapter;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.OnKeyListener {
@@ -468,7 +471,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(rootContext);
         rvIterationResults.setLayoutManager(rvLayoutManager);
-        // adapter will be set inside dedicated setter method - this is only for beginning \\
+        // mocking the list for testing how it all generally looks like \\
+        List<OneIterationResultModel> mockList = new ArrayList<>(3);
+        mockList.add(new OneIterationResultModel("method 1", 111));
+        mockList.add(new OneIterationResultModel("method 2", 222));
+        mockList.add(new OneIterationResultModel("method 3", 333));
+        rvAdapter = new IterationResultsAdapter(mockList);
+        rvIterationResults.setAdapter(rvAdapter);
 
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
         tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
@@ -482,8 +491,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     } // init \\
 
     public void updateIterationResults(@NonNull List<OneIterationResultModel> oneIterationResult) {
-        rvAdapter = new IterationResultsAdapter(oneIterationResult);
-        rvIterationResults.setAdapter(rvAdapter);
+        rvAdapter.notifyDataSetChanged();
     }
 
     @Override
