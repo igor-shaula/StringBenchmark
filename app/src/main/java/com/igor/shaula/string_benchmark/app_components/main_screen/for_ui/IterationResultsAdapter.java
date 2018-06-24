@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResul
 
         private ViewHolder(@NonNull ViewGroup viewGroup) {
             super(viewGroup);
-            methodName = viewGroup.findViewById(android.R.id.text1);
-            methodResult = viewGroup.findViewById(android.R.id.text2);
+            methodName = viewGroup.findViewById(R.id.tvMethodName);
+            methodResult = viewGroup.findViewById(R.id.tvMethodResult);
         }
     }
 
@@ -37,7 +38,7 @@ public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResul
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_2, parent, false);
+                .inflate(R.layout.recycler_item_view, parent, false);
         return new ViewHolder(viewGroup);
     }
 

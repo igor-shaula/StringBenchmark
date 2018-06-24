@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvMethodName"
+        style="@style/WrapWrap"/>
+
+    <TextView
+        android:id="@+id/tvMethodResult"
+        style="@style/MatchWrap.Gravity_End"
+        android:layout_marginEnd="8dp"
+        android:text="@string/star"
+        android:textColor="@color/colorPrimaryDark"/>
+
+</LinearLayout>
