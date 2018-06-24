@@ -30,7 +30,6 @@ import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.OnKeyListener {
@@ -74,7 +73,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvIterationsTotalNumber;
     private TextView tvIterationsResultHeader;
     private RecyclerView rvIterationResults;
-    private RecyclerView.Adapter rvAdapter;
+    private IterationResultsAdapter rvAdapter;
     private RecyclerView.LayoutManager rvLayoutManager;
     private TextView tvResultForSout;
     private TextView tvResultForLog;
@@ -471,12 +470,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(rootContext);
         rvIterationResults.setLayoutManager(rvLayoutManager);
-        // mocking the list for testing how it all generally looks like \\
-        List<OneIterationResultModel> mockList = new ArrayList<>(3);
-        mockList.add(new OneIterationResultModel("method 1", 111));
-        mockList.add(new OneIterationResultModel("method 2", 222));
-        mockList.add(new OneIterationResultModel("method 3", 333));
-        rvAdapter = new IterationResultsAdapter(mockList);
+        // linking to data origin is made here \\
+        rvAdapter = new IterationResultsAdapter(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
@@ -490,8 +485,15 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     } // init \\
 
-    public void updateIterationResults(@NonNull List<OneIterationResultModel> oneIterationResult) {
-        rvAdapter.notifyDataSetChanged();
+    public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList) {
+//        rvAdapter.updateIterationsResultOnMainThread(oneIterationResult);
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                rvAdapter.updateIterationsResult(resultModelList);
+                rvAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

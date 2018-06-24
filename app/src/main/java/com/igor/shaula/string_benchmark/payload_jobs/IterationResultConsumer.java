@@ -4,9 +4,11 @@ import android.support.annotation.NonNull;
 
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.app_components.main_screen.MainHub;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +34,11 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
                 " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
         totalResultList.add(oneIterationsResult);
         final long[] results = calculateMedianResult();
-        logicLink.transportIterationsResult(results, currentIterationNumber);
+//        logicLink.transportIterationsResult(results, currentIterationNumber);
+        final List<OneIterationResultModel> resultModelList = new ArrayList<>(results.length);
+        resultModelList.add(new OneIterationResultModel("SOUT", results[0]));
+        resultModelList.add(new OneIterationResultModel("SLOG", results[1]));
+        logicLink.transportIterationsResult(resultModelList, currentIterationNumber);
     }
 
     @Override

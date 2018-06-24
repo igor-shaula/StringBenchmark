@@ -16,6 +16,10 @@ public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResul
     @NonNull
     private List<OneIterationResultModel> iterationResultModels;
 
+    public void updateIterationsResult(List<OneIterationResultModel> resultModelList) {
+        iterationResultModels = resultModelList;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView methodName;

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.payload_jobs.AssembleStringLoad;
 import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
@@ -16,6 +17,9 @@ import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
         comment = "logic should not have any Android-specific imports & dependencies - only pure Java")
@@ -32,6 +36,8 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @NonNull
     private String pendingPreparationResult = "";
+    @NonNull
+    private List<OneIterationResultModel> resultModelList = new ArrayList<>();
 
     @NonNull
     private final MainHub.SystemLink systemLink;
@@ -59,6 +65,11 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     // FROM LogicLink ==============================================================================
+
+    @Override
+    public List<OneIterationResultModel> getIterationResultList() {
+        return resultModelList;
+    }
 
     @MeDoc("used only in uiLink to sync the bViewLoad availability state")
     @Override
@@ -353,8 +364,11 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void transportIterationsResult(@NonNull long[] results, int currentIterationNumber) {
-        uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
+    public void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
+                                          int currentIterationNumber) {
+//        uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
+        this.resultModelList = resultModelList;
+        uiLink.updateIterationsResultOnMainThread(resultModelList);
     }
 
     // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================

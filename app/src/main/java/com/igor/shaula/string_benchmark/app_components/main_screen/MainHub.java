@@ -2,6 +2,10 @@ package com.igor.shaula.string_benchmark.app_components.main_screen;
 
 import android.support.annotation.NonNull;
 
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
+
+import java.util.List;
+
 public interface MainHub {
 
     interface SystemLink {
@@ -73,6 +77,8 @@ public interface MainHub {
 
         void updateLoadLengthOnMainThread(int length);
 
+        void updateIterationsResultOnMainThread(List<OneIterationResultModel> resultModelList);
+
         void updateResultForLog(long resultNanoTime);
 
         void updateResultForDAL(long resultNanoTime);
@@ -107,6 +113,8 @@ public interface MainHub {
     }
 
     interface LogicLink {
+
+        List<OneIterationResultModel> getIterationResultList();
 
         boolean isLoadReady();
 
@@ -148,8 +156,11 @@ public interface MainHub {
 
         void interruptPerformanceTest();
 
-        void transportIterationsResult(@NonNull long[] results, int currentIterationNumber);
-
         void updatePreparationResult(@NonNull String s);
+
+//        void transportIterationsResult(@NonNull long[] results, int currentIterationNumber);
+
+        void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
+                                       int currentIterationNumber);
     }
 }
