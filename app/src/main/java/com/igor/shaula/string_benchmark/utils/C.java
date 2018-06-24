@@ -38,13 +38,13 @@ public final class C {
         public static final int SNACKBAR = 1001;
         public static final int PREPARATION = 1;
         public static final int STOPPED = 2;
-        public static final int TEST_SYSTEM_LOG = 10;
-        public static final int TEST_DAL = 11;
-        public static final int TEST_VAL_1 = 121;
-        public static final int TEST_VAL_2 = 122;
-        public static final int TEST_VAL_3 = 123;
-        public static final int TEST_SL_VOID = 131;
-        public static final int TEST_SL_INT = 132;
+//        public static final int TEST_SYSTEM_LOG = 10;
+//        public static final int TEST_DAL = 11;
+//        public static final int TEST_VAL_1 = 121;
+//        public static final int TEST_VAL_2 = 122;
+//        public static final int TEST_VAL_3 = 123;
+//        public static final int TEST_SL_VOID = 131;
+//        public static final int TEST_SL_INT = 132;
     }
 
     public static final class Order {

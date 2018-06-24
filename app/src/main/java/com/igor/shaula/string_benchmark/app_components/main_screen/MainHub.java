@@ -19,10 +19,6 @@ public interface MainHub {
         @NonNull
         String findStringById(int stringId);
 
-//        void toggleMenuItemAboutExplanations(boolean shouldShowExplanations);
-
-//        void toggleAppBarExpansionIcon(boolean shouldCollapseAbbBar);
-
         void launchPreparation(@NonNull String basicString, int basicStringsCount);
 
         void launchAllMeasurements(int testRepetitionsCount);
@@ -55,8 +51,6 @@ public interface MainHub {
 
         void toggleLoadPreparationBlock(boolean shouldExpand);
 
-//        void toggleViewLoadBusyStateOnMainThread(boolean isBusy);
-
         void toggleJobActiveUiState(boolean isRunning);
 
         void toggleAllExplanations(boolean shouldShowExplanations);
@@ -64,8 +58,6 @@ public interface MainHub {
         void resetResultViewStates();
 
         void resetResultOfPreparation();
-
-//        void updateIterationsResultOnMainThread(@NonNull long[] results, int currentIterationNumber);
 
         void updateBasicStringHint(@NonNull String s);
 
@@ -77,22 +69,8 @@ public interface MainHub {
 
         void updateLoadLengthOnMainThread(int length);
 
-        void updateIterationsResultOnMainThread(List<OneIterationResultModel> resultModelList,
+        void updateIterationsResultOnMainThread(@NonNull List<OneIterationResultModel> resultModelList,
                                                 int currentIterationNumber);
-
-//        void updateResultForLog(long resultNanoTime);
-
-//        void updateResultForDAL(long resultNanoTime);
-
-//        void updateResultForVAL1(long resultNanoTime);
-
-//        void updateResultForVAL2(long resultNanoTime);
-
-//        void updateResultForVAL3(long resultNanoTime);
-
-//        void updateResultForSLVoid(long resultNanoTime);
-
-//        void updateResultForSLInt(long resultNanoTime);
 
         void informUser(int whichWay, int stringId, int duration);
 
@@ -106,18 +84,12 @@ public interface MainHub {
 
         void clearFocusFromAllInputFields();
 
-//        void invalidateAppBar();
-
         void toggleAppBarExpansionIcon(boolean isFullyExpanded);
 
         void hideKeyboard();
     }
 
     interface LogicLink {
-
-//        List<OneIterationResultModel> getIterationResultList();
-
-        boolean isLoadReady();
 
         boolean isPreparationBlockShown();
 
@@ -158,8 +130,6 @@ public interface MainHub {
         void interruptPerformanceTest();
 
         void updatePreparationResult(@NonNull String s);
-
-//        void transportIterationsResult(@NonNull long[] results, int currentIterationNumber);
 
         void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
                                        int currentIterationNumber);

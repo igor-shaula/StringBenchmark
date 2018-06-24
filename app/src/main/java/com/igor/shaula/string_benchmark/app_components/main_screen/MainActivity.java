@@ -33,8 +33,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             selectInfoToShow(intent);
         }
     };
-//    @Nullable
-//    private Menu menu;
 
     // LIFECYCLE ===================================================================================
 
@@ -83,16 +81,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     }
 
     // MENU ========================================================================================
-
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-        this.menu = menu;
-        return true;
-    }
-*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -144,21 +132,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     public String findStringById(int stringId) {
         return getString(stringId);
     }
-
-/*
-    @Override
-    public void toggleMenuItemAboutExplanations(boolean shouldShowExplanations) {
-        if (menu == null) {
-            return; // protecting from always possible NPE \\
-        }
-        final MenuItem toggleExplanationsMenuItem = menu.findItem(R.id.action_toggleExplanations);
-        if (shouldShowExplanations) {
-            toggleExplanationsMenuItem.setTitle(R.string.showExplanations);
-        } else {
-            toggleExplanationsMenuItem.setTitle(R.string.hideExplanations);
-        }
-    }
-*/
 
 /*
     @Override

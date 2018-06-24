@@ -29,7 +29,6 @@ public final class MainLogic implements MainHub.LogicLink {
 
     private boolean backWasPressedOnce;
     private boolean isIterationsJobRunning;
-    private boolean isLoadReady;
     private boolean shouldShowExplanations;
     private boolean isAppBarLayoutFullyExpanded;
 
@@ -62,12 +61,6 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     // FROM LogicLink ==============================================================================
-
-    @MeDoc("used only in uiLink to sync the bViewLoad availability state")
-    @Override
-    public boolean isLoadReady() {
-        return isLoadReady;
-    }
 
     @Override
     public boolean isPreparationBlockShown() {
@@ -223,7 +216,6 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void onPrepareLoadClick() {
-        isLoadReady = false;
         // now going further - all expected logic branching is inside the following method \\
         runTestLoadPreparation();
     }
@@ -293,27 +285,6 @@ public final class MainLogic implements MainHub.LogicLink {
                 pendingPreparationResult = systemLink.getAdaptedString(resultNanoTime);
                 updatePreparationResult("");
                 break;
-//            case C.Choice.TEST_SYSTEM_LOG:
-//                uiLink.updateResultForLog(resultNanoTime);
-//                break;
-//            case C.Choice.TEST_DAL:
-//                uiLink.updateResultForDAL(resultNanoTime);
-//                break;
-//            case C.Choice.TEST_VAL_1:
-//                uiLink.updateResultForVAL1(resultNanoTime);
-//                break;
-//            case C.Choice.TEST_VAL_2:
-//                uiLink.updateResultForVAL2(resultNanoTime);
-//                break;
-//            case C.Choice.TEST_VAL_3:
-//                uiLink.updateResultForVAL3(resultNanoTime);
-//                break;
-//            case C.Choice.TEST_SL_VOID:
-//                uiLink.updateResultForSLVoid(resultNanoTime);
-//                break;
-//            case C.Choice.TEST_SL_INT:
-//                uiLink.updateResultForSLInt(resultNanoTime);
-//                break;
             default:
                 L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
         }
@@ -327,16 +298,8 @@ public final class MainLogic implements MainHub.LogicLink {
         } else {
             uiLink.updatePreparationResultOnMainThread(pendingPreparationResult);
         }
-        isLoadReady = true;
-//        uiLink.toggleViewLoadBusyStateOnMainThread(true);
         uiLink.updateLoadLengthOnMainThread(systemLink.getLoad().length());
     }
-
-//    private void showPreparationsResult(@Nullable long[] oneIterationResults) {
-//        if (oneIterationResults != null && oneIterationResults.length == C.Order.VARIANTS_TOTAL) {
-//            uiLink.transportIterationsResult(oneIterationResults);
-//        }
-//    }
 
     @MeDoc("invoked in activity's onStop")
     @Override
