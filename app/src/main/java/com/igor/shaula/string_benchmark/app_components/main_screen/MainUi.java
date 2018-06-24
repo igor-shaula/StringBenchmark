@@ -46,7 +46,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     private AppBarLayout appBarLayout;
     private ImageView ivToggleAppBar;
-
+    private ToggleButton tbLoadPreparationBlock;
     // preparation of the load \\
     private TextView tvPrepareLoadExplanation;
     private View vPrepareLoadExplanation;
@@ -309,7 +309,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         toolbar.setOnClickListener(this);
         ivToggleAppBar = rootView.findViewById(R.id.ivToggleAppBar);
         ivToggleAppBar.setOnClickListener(this);
-        final ToggleButton tbLoadPreparationBlock = rootView.findViewById(R.id.tbLoadPreparationBlock);
+        tbLoadPreparationBlock = rootView.findViewById(R.id.tbLoadPreparationBlock);
         tbLoadPreparationBlock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -411,7 +411,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setHasFixedSize(true);
         rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
         // special link to adapter is needed for upcoming update-kind method \\
-        rvAdapter = new IterationResultsAdapter();
+        rvAdapter = new IterationResultsAdapter(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 
     } // init \\
@@ -443,6 +443,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         ivToggleAppBar.setImageResource(isFullyExpanded ?
                 R.drawable.ic_close_preparation_block : R.drawable.ic_open_preparation_block);
     }
+
+//    @Override
+//    public void togglePreparationTButton(boolean isFullyExpanded) {
+//        tbLoadPreparationBlock.setChecked(!isFullyExpanded);
+//    }
 
     @Override
     public void hideKeyboard() {

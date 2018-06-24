@@ -10,12 +10,14 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
-import com.igor.shaula.string_benchmark.utils.U;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "13-11-2017", purpose = "" +
         "fastest & easiest way of preserving the load from being destroyed with IntentService")
@@ -101,6 +103,13 @@ public final class App extends Application implements DataTransport {
 
     // FROM DataTransport ==========================================================================
 
+    @NonNull
+    @Override
+    public List<OneIterationResultModel> getIterationResultList() {
+        // temporary stub for now \\
+        return new ArrayList<>();
+    }
+
     @Override
     @Nullable
     public String getLongStringForTest() {
@@ -143,11 +152,12 @@ public final class App extends Application implements DataTransport {
 
     @Override
     @MeDoc("invoked from working IntentService as for now")
-    public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult,
+    public void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult,
+//    public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult,
                                              int currentIterationNumber) {
         if (linkToIterationResultConsumer != null) {
-            linkToIterationResultConsumer.onNewIterationResult(
-                    U.convertIntoArray(oneIterationsResult), currentIterationNumber);
+            linkToIterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationNumber);
+//                    U.convertIntoArray(oneIterationsResult), currentIterationNumber);
             // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
     }

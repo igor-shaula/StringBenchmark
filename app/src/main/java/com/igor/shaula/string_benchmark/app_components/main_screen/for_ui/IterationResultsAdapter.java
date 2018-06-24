@@ -18,6 +18,10 @@ public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResul
     @Nullable
     private List<OneIterationResultModel> iterationResultModels;
 
+    public IterationResultsAdapter(@NonNull List<OneIterationResultModel> iterationResultList) {
+        this.iterationResultModels = iterationResultList;
+    }
+
     public void updateIterationsResult(List<OneIterationResultModel> resultModelList) {
         iterationResultModels = resultModelList;
     }

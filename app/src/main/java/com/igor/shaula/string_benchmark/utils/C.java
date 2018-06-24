@@ -32,6 +32,18 @@ public final class C {
         // should not create any instances of this class \
     }
 
+    public static class Key {
+
+        public static final String KEY_SOUT = "time of system out println";
+        public static final String KEY_LOG = "time of system log work";
+        public static final String KEY_DAL = "time of double-arg log wrapper work";
+        public static final String KEY_VAL_1 = "time of var-args-1 log wrapper work";
+        public static final String KEY_VAL_2 = "time of var-args-2 log wrapper work";
+        public static final String KEY_VAL_3 = "time of var-args-3 log wrapper work";
+        public static final String KEY_SL_VOID = "time of superior-void  log wrapper work";
+        public static final String KEY_SL_INT = "time of superior-int log wrapper work";
+    }
+
     public static final class Choice {
 
         public static final int TOAST = 1000;
@@ -85,13 +97,6 @@ public final class C {
         public static final String NAME_BASIC_STRING = "string used as a basis for creating load";
         public static final String NAME_COUNT = "domain for passing through intent";
         public static final String NAME_PREPARATION_TIME = "time of preparing the load";
-        public static final String NAME_SYSTEM_LOG_TIME = "time of system log work";
-        public static final String NAME_DAL_TIME = "time of double-arg log wrapper work";
-        public static final String NAME_VAL_1_TIME = "time of var-args-1 log wrapper work";
-        public static final String NAME_VAL_2_TIME = "time of var-args-2 log wrapper work";
-        public static final String NAME_VAL_3_TIME = "time of var-args-3 log wrapper work";
-        public static final String NAME_SL_VOID_TIME = "time of superior-void  log wrapper work";
-        public static final String NAME_SL_INT_TIME = "time of superior-int log wrapper work";
         public static final String NAME_ITERATIONS = "number of iterations for testing every variant";
         public static final String NAME_ALL_TIME = "array with results for every variant per iteration";
         public static final String NAME_ITERATION_NUMBER = "iteration number";

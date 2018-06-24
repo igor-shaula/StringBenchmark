@@ -62,6 +62,12 @@ public final class MainLogic implements MainHub.LogicLink {
 
     // FROM LogicLink ==============================================================================
 
+    @NonNull
+    @Override
+    public List<OneIterationResultModel> getIterationResultList() {
+        return dataTransport.getIterationResultList();
+    }
+
     @Override
     public boolean isPreparationBlockShown() {
         return isAppBarLayoutFullyExpanded;
@@ -72,6 +78,8 @@ public final class MainLogic implements MainHub.LogicLink {
         isAppBarLayoutFullyExpanded = isFullyExpanded;
 //        systemLink.toggleAppBarExpansionIcon(isFullyExpanded);
         uiLink.toggleAppBarExpansionIcon(isFullyExpanded);
+//        uiLink.togglePreparationTButton(isFullyExpanded);
+        // TODO: 24.06.2018 break this self-locking chain of reaction on listener \\
 /*        if (isFullyExpanded) {
             uiLink.clearFocusFromAllInputFields();
             uiLink.hideKeyboard();

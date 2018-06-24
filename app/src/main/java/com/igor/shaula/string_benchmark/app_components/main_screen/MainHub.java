@@ -86,10 +86,15 @@ public interface MainHub {
 
         void toggleAppBarExpansionIcon(boolean isFullyExpanded);
 
+//        void togglePreparationTButton(boolean isFullyExpanded);
+
         void hideKeyboard();
     }
 
     interface LogicLink {
+
+        @NonNull
+        List<OneIterationResultModel> getIterationResultList();
 
         boolean isPreparationBlockShown();
 
