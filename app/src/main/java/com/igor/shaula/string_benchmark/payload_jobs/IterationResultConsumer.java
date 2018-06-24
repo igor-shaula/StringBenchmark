@@ -36,8 +36,22 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
         final long[] results = calculateMedianResult();
 //        logicLink.transportIterationsResult(results, currentIterationNumber);
         final List<OneIterationResultModel> resultModelList = new ArrayList<>(results.length);
-        resultModelList.add(new OneIterationResultModel("SOUT", results[0]));
-        resultModelList.add(new OneIterationResultModel("SLOG", results[1]));
+        resultModelList.add(new OneIterationResultModel(
+                "Good old System.out.println(…):", results[0]));
+        resultModelList.add(new OneIterationResultModel(
+                "Standard Android Log:", results[1]));
+        resultModelList.add(new OneIterationResultModel(
+                "My double-args Log wrapper:", results[2]));
+        resultModelList.add(new OneIterationResultModel(
+                "My variable-args Log wrapper 1:", results[3]));
+        resultModelList.add(new OneIterationResultModel(
+                "My variable-args Log wrapper 3:", results[4]));
+        resultModelList.add(new OneIterationResultModel(
+                "My variable-args Log wrapper 3:", results[5]));
+        resultModelList.add(new OneIterationResultModel(
+                "My superior-void Log wrapper:", results[6]));
+        resultModelList.add(new OneIterationResultModel(
+                "My superior-int Log wrapper:", results[7]));
         logicLink.transportIterationsResult(resultModelList, currentIterationNumber);
     }
 

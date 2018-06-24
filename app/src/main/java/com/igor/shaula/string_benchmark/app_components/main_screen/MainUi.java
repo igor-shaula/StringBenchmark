@@ -72,9 +72,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
     private TextView tvIterationsResultHeader;
-    private RecyclerView rvIterationResults;
     private IterationResultsAdapter rvAdapter;
-    private RecyclerView.LayoutManager rvLayoutManager;
     private TextView tvResultForSout;
     private TextView tvResultForLog;
     private TextView tvResultForDAL;
@@ -157,26 +155,26 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         // in fact animation works every time here \\
     }
 
-    @Override
-    public void updateIterationsResultOnMainThread(@NonNull final long[] oneIterationResults,
-                                                   final int currentIterationNumber) {
-        rootView.post(new Runnable() {
-            @Override
-            public void run() {
-                final String currentIterationCounterString =
-                        "" + C.SPACE + U.createReadableStringForLong(currentIterationNumber);
-                tvCurrentIterationNumber.setText(currentIterationCounterString);
-                tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
-                tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
-                tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
-                tvResultForVAL1.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_1]));
-                tvResultForVAL2.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_2]));
-                tvResultForVAL3.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_3]));
-                tvResultForSLVoid.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SL_VOID]));
-                tvResultForSLInt.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SL_INT]));
-            }
-        });
-    }
+//    @Override
+//    public void updateIterationsResultOnMainThread(@NonNull final long[] oneIterationResults,
+//                                                   final int currentIterationNumber) {
+//        rootView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                final String currentIterationCounterString =
+//                        "" + C.SPACE + U.createReadableStringForLong(currentIterationNumber);
+//                tvCurrentIterationNumber.setText(currentIterationCounterString);
+//                tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
+//                tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
+//                tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
+//                tvResultForVAL1.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_1]));
+//                tvResultForVAL2.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_2]));
+//                tvResultForVAL3.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_3]));
+//                tvResultForSLVoid.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SL_VOID]));
+//                tvResultForSLInt.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SL_INT]));
+//            }
+//        });
+//    }
 
     @Override
     public void toggleJobActiveUiState(boolean isJobRunning) {
@@ -465,13 +463,12 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvIterationsResultHeader = rootView.findViewById(R.id.tvIterationsResultHeader);
 
-        rvIterationResults = rootView.findViewById(R.id.rvIterationResults);
+        final RecyclerView rvIterationResults = rootView.findViewById(R.id.rvIterationResults);
         // as inner changes in content should not affect the RecyclerView size \\
         rvIterationResults.setHasFixedSize(true);
-        rvLayoutManager = new LinearLayoutManager(rootContext);
-        rvIterationResults.setLayoutManager(rvLayoutManager);
-        // linking to data origin is made here \\
-        rvAdapter = new IterationResultsAdapter(logicLink.getIterationResultList());
+        rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
+        // special link to adapter is needed for upcoming update-kind method \\
+        rvAdapter = new IterationResultsAdapter();
         rvIterationResults.setAdapter(rvAdapter);
 
         tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
@@ -485,13 +482,16 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     } // init \\
 
-    public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList) {
-//        rvAdapter.updateIterationsResultOnMainThread(oneIterationResult);
+    public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList,
+                                                   final int currentIterationNumber) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
                 rvAdapter.updateIterationsResult(resultModelList);
                 rvAdapter.notifyDataSetChanged();
+                final String currentIterationCounterString =
+                        "" + C.SPACE + U.createReadableStringForLong(currentIterationNumber);
+                tvCurrentIterationNumber.setText(currentIterationCounterString);
             }
         });
     }

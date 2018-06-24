@@ -36,8 +36,6 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @NonNull
     private String pendingPreparationResult = "";
-    @NonNull
-    private List<OneIterationResultModel> resultModelList = new ArrayList<>();
 
     @NonNull
     private final MainHub.SystemLink systemLink;
@@ -65,11 +63,6 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     // FROM LogicLink ==============================================================================
-
-    @Override
-    public List<OneIterationResultModel> getIterationResultList() {
-        return resultModelList;
-    }
 
     @MeDoc("used only in uiLink to sync the bViewLoad availability state")
     @Override
@@ -366,9 +359,7 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
                                           int currentIterationNumber) {
-//        uiLink.updateIterationsResultOnMainThread(results, currentIterationNumber);
-        this.resultModelList = resultModelList;
-        uiLink.updateIterationsResultOnMainThread(resultModelList);
+        uiLink.updateIterationsResultOnMainThread(resultModelList, currentIterationNumber);
     }
 
     // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================

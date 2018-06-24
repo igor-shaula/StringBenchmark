@@ -1,6 +1,7 @@
 package com.igor.shaula.string_benchmark.app_components.main_screen.for_ui;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import java.util.List;
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
 public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResultsAdapter.ViewHolder> {
 
-    @NonNull
+    @Nullable
     private List<OneIterationResultModel> iterationResultModels;
 
     public void updateIterationsResult(List<OneIterationResultModel> resultModelList) {
@@ -32,10 +33,6 @@ public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResul
         }
     }
 
-    public IterationResultsAdapter(@NonNull List<OneIterationResultModel> iterationResultModels) {
-        this.iterationResultModels = iterationResultModels;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,12 +43,15 @@ public class IterationResultsAdapter extends RecyclerView.Adapter<IterationResul
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (iterationResultModels == null) {
+            return;
+        }
         holder.methodName.setText(String.valueOf(iterationResultModels.get(position).getTestedMethodName()));
         holder.methodResult.setText(String.valueOf(iterationResultModels.get(position).getTestedMethodTime()));
     }
 
     @Override
     public int getItemCount() {
-        return iterationResultModels.size();
+        return iterationResultModels != null ? iterationResultModels.size() : 0;
     }
 }

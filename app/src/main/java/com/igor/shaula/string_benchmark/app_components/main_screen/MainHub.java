@@ -65,7 +65,7 @@ public interface MainHub {
 
         void resetResultOfPreparation();
 
-        void updateIterationsResultOnMainThread(@NonNull long[] results, int currentIterationNumber);
+//        void updateIterationsResultOnMainThread(@NonNull long[] results, int currentIterationNumber);
 
         void updateBasicStringHint(@NonNull String s);
 
@@ -77,7 +77,8 @@ public interface MainHub {
 
         void updateLoadLengthOnMainThread(int length);
 
-        void updateIterationsResultOnMainThread(List<OneIterationResultModel> resultModelList);
+        void updateIterationsResultOnMainThread(List<OneIterationResultModel> resultModelList,
+                                                int currentIterationNumber);
 
         void updateResultForLog(long resultNanoTime);
 
@@ -114,7 +115,7 @@ public interface MainHub {
 
     interface LogicLink {
 
-        List<OneIterationResultModel> getIterationResultList();
+//        List<OneIterationResultModel> getIterationResultList();
 
         boolean isLoadReady();
 
