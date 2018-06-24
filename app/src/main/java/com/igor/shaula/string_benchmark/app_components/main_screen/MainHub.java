@@ -80,19 +80,19 @@ public interface MainHub {
         void updateIterationsResultOnMainThread(List<OneIterationResultModel> resultModelList,
                                                 int currentIterationNumber);
 
-        void updateResultForLog(long resultNanoTime);
+//        void updateResultForLog(long resultNanoTime);
 
-        void updateResultForDAL(long resultNanoTime);
+//        void updateResultForDAL(long resultNanoTime);
 
-        void updateResultForVAL1(long resultNanoTime);
+//        void updateResultForVAL1(long resultNanoTime);
 
-        void updateResultForVAL2(long resultNanoTime);
+//        void updateResultForVAL2(long resultNanoTime);
 
-        void updateResultForVAL3(long resultNanoTime);
+//        void updateResultForVAL3(long resultNanoTime);
 
-        void updateResultForSLVoid(long resultNanoTime);
+//        void updateResultForSLVoid(long resultNanoTime);
 
-        void updateResultForSLInt(long resultNanoTime);
+//        void updateResultForSLInt(long resultNanoTime);
 
         void informUser(int whichWay, int stringId, int duration);
 

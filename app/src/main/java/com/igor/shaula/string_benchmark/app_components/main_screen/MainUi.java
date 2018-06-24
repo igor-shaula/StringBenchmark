@@ -73,14 +73,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvIterationsTotalNumber;
     private TextView tvIterationsResultHeader;
     private IterationResultsAdapter rvAdapter;
-    private TextView tvResultForSout;
-    private TextView tvResultForLog;
-    private TextView tvResultForDAL;
-    private TextView tvResultForVAL1;
-    private TextView tvResultForVAL2;
-    private TextView tvResultForVAL3;
-    private TextView tvResultForSLVoid;
-    private TextView tvResultForSLInt;
+//    private TextView tvResultForSout;
+//    private TextView tvResultForLog;
+//    private TextView tvResultForDAL;
+//    private TextView tvResultForVAL1;
+//    private TextView tvResultForVAL2;
+//    private TextView tvResultForVAL3;
+//    private TextView tvResultForSLVoid;
+//    private TextView tvResultForSLInt;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -209,14 +209,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     @Override
     public void resetResultViewStates() {
         final CharSequence oneTemplateForAll = String.valueOf(C.STAR);
-        tvResultForSout.setText(oneTemplateForAll);
-        tvResultForLog.setText(oneTemplateForAll);
-        tvResultForDAL.setText(oneTemplateForAll);
-        tvResultForVAL1.setText(oneTemplateForAll);
-        tvResultForVAL2.setText(oneTemplateForAll);
-        tvResultForVAL3.setText(oneTemplateForAll);
-        tvResultForSLVoid.setText(oneTemplateForAll);
-        tvResultForSLInt.setText(oneTemplateForAll);
+//        tvResultForSout.setText(oneTemplateForAll);
+//        tvResultForLog.setText(oneTemplateForAll);
+//        tvResultForDAL.setText(oneTemplateForAll);
+//        tvResultForVAL1.setText(oneTemplateForAll);
+//        tvResultForVAL2.setText(oneTemplateForAll);
+//        tvResultForVAL3.setText(oneTemplateForAll);
+//        tvResultForSLVoid.setText(oneTemplateForAll);
+//        tvResultForSLInt.setText(oneTemplateForAll);
     }
 
     @Override
@@ -261,40 +261,40 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         });
     }
 
-    @Override
-    public void updateResultForLog(long resultNanoTime) {
-        tvResultForLog.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForDAL(long resultNanoTime) {
-        tvResultForDAL.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForVAL1(long resultNanoTime) {
-        tvResultForVAL1.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForVAL2(long resultNanoTime) {
-        tvResultForVAL2.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForVAL3(long resultNanoTime) {
-        tvResultForVAL3.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForSLVoid(long resultNanoTime) {
-        tvResultForSLVoid.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
-
-    @Override
-    public void updateResultForSLInt(long resultNanoTime) {
-        tvResultForSLInt.setText(U.adaptForUser(rootContext, resultNanoTime));
-    }
+//    @Override
+//    public void updateResultForLog(long resultNanoTime) {
+//        tvResultForLog.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
+//
+//    @Override
+//    public void updateResultForDAL(long resultNanoTime) {
+//        tvResultForDAL.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
+//
+//    @Override
+//    public void updateResultForVAL1(long resultNanoTime) {
+//        tvResultForVAL1.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
+//
+//    @Override
+//    public void updateResultForVAL2(long resultNanoTime) {
+//        tvResultForVAL2.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
+//
+//    @Override
+//    public void updateResultForVAL3(long resultNanoTime) {
+//        tvResultForVAL3.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
+//
+//    @Override
+//    public void updateResultForSLVoid(long resultNanoTime) {
+//        tvResultForSLVoid.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
+//
+//    @Override
+//    public void updateResultForSLInt(long resultNanoTime) {
+//        tvResultForSLInt.setText(U.adaptForUser(rootContext, resultNanoTime));
+//    }
 
     @Override
     public void informUser(int typeOfNotification, int stringId, int duration) {
@@ -471,14 +471,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvAdapter = new IterationResultsAdapter();
         rvIterationResults.setAdapter(rvAdapter);
 
-        tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
-        tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
-        tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
-        tvResultForVAL1 = rootView.findViewById(R.id.tvResultForVAL1);
-        tvResultForVAL2 = rootView.findViewById(R.id.tvResultForVAL2);
-        tvResultForVAL3 = rootView.findViewById(R.id.tvResultForVAL3);
-        tvResultForSLVoid = rootView.findViewById(R.id.tvResultForSLVoid);
-        tvResultForSLInt = rootView.findViewById(R.id.tvResultForSLInt);
+//        tvResultForSout = rootView.findViewById(R.id.tvResultForSystemOutPrintln);
+//        tvResultForLog = rootView.findViewById(R.id.tvResultForStandardLog);
+//        tvResultForDAL = rootView.findViewById(R.id.tvResultForDAL);
+//        tvResultForVAL1 = rootView.findViewById(R.id.tvResultForVAL1);
+//        tvResultForVAL2 = rootView.findViewById(R.id.tvResultForVAL2);
+//        tvResultForVAL3 = rootView.findViewById(R.id.tvResultForVAL3);
+//        tvResultForSLVoid = rootView.findViewById(R.id.tvResultForSLVoid);
+//        tvResultForSLInt = rootView.findViewById(R.id.tvResultForSLInt);
 
     } // init \\
 

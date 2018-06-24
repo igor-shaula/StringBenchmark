@@ -18,7 +18,6 @@ import com.igor.shaula.string_benchmark.utils.U;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
@@ -294,27 +293,27 @@ public final class MainLogic implements MainHub.LogicLink {
                 pendingPreparationResult = systemLink.getAdaptedString(resultNanoTime);
                 updatePreparationResult("");
                 break;
-            case C.Choice.TEST_SYSTEM_LOG:
-                uiLink.updateResultForLog(resultNanoTime);
-                break;
-            case C.Choice.TEST_DAL:
-                uiLink.updateResultForDAL(resultNanoTime);
-                break;
-            case C.Choice.TEST_VAL_1:
-                uiLink.updateResultForVAL1(resultNanoTime);
-                break;
-            case C.Choice.TEST_VAL_2:
-                uiLink.updateResultForVAL2(resultNanoTime);
-                break;
-            case C.Choice.TEST_VAL_3:
-                uiLink.updateResultForVAL3(resultNanoTime);
-                break;
-            case C.Choice.TEST_SL_VOID:
-                uiLink.updateResultForSLVoid(resultNanoTime);
-                break;
-            case C.Choice.TEST_SL_INT:
-                uiLink.updateResultForSLInt(resultNanoTime);
-                break;
+//            case C.Choice.TEST_SYSTEM_LOG:
+//                uiLink.updateResultForLog(resultNanoTime);
+//                break;
+//            case C.Choice.TEST_DAL:
+//                uiLink.updateResultForDAL(resultNanoTime);
+//                break;
+//            case C.Choice.TEST_VAL_1:
+//                uiLink.updateResultForVAL1(resultNanoTime);
+//                break;
+//            case C.Choice.TEST_VAL_2:
+//                uiLink.updateResultForVAL2(resultNanoTime);
+//                break;
+//            case C.Choice.TEST_VAL_3:
+//                uiLink.updateResultForVAL3(resultNanoTime);
+//                break;
+//            case C.Choice.TEST_SL_VOID:
+//                uiLink.updateResultForSLVoid(resultNanoTime);
+//                break;
+//            case C.Choice.TEST_SL_INT:
+//                uiLink.updateResultForSLInt(resultNanoTime);
+//                break;
             default:
                 L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
         }

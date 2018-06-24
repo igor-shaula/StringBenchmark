@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/vgIterations"
-    style="@style/MatchMatch"
+    style="@style/MatchWrap"
+    android:layout_marginBottom="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".app_components.main_screen.MainActivity">
 
@@ -23,90 +23,92 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvIterationResults"
-        style="@style/MatchWrap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:layout_weight="1"
         android:scrollbars="vertical"/>
 
-    <TextView
-        style="@style/WrapWrap"
-        android:layout_marginTop="16dp"
-        android:text="@string/resultOfSystemOutPrintln"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:text="@string/resultOfSystemOutPrintln"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForSystemOutPrintln"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForSystemOutPrintln"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfStandardLog"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfStandardLog"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForStandardLog"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForStandardLog"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfDAL"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfDAL"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForDAL"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForDAL"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfVAL1"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfVAL1"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForVAL1"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForVAL1"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfVAL2"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfVAL2"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForVAL2"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForVAL2"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfVAL3"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfVAL3"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForVAL3"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForVAL3"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfSLVoid"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfSLVoid"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForSLVoid"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForSLVoid"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
-    <TextView
-        style="@style/WrapWrap"
-        android:text="@string/resultOfSLInt"/>
+    <!--<TextView-->
+    <!--style="@style/WrapWrap"-->
+    <!--android:text="@string/resultOfSLInt"/>-->
 
-    <TextView
-        android:id="@+id/tvResultForSLInt"
-        style="@style/MatchWrap.Gravity_End"
-        android:text="@string/star"
-        android:textColor="@color/colorPrimaryDark"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tvResultForSLInt"-->
+    <!--style="@style/MatchWrap.Gravity_End"-->
+    <!--android:text="@string/star"-->
+    <!--android:textColor="@color/colorPrimaryDark"/>-->
 
     <LinearLayout
         style="@style/MatchWrap"
