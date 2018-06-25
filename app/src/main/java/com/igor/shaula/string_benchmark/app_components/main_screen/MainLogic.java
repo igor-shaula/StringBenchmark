@@ -249,10 +249,7 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public void onViewLoadClick() {
         final String load = systemLink.getLoad();
-//        if (isLoadReady) {
-//            uiLink.toggleViewLoadBusyStateOnMainThread(false);
         uiLink.showLoadInDialog(load);
-//        }
     }
 
     @Override

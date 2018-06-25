@@ -27,14 +27,12 @@ public interface DataTransport { // currently implemented by App as a quickest d
     void notifyStarterThatLoadIsAssembled(long nanoTimeDelta);
 
     void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
-//    void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult, int currentIterationNumber);
 
     void stopIterations();
 
     interface IterationResultConsumer { // implemented by LogicLink \\
 
         void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
-//        void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber);
 
         void prepareForNewJob();
     }

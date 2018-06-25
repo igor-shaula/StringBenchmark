@@ -25,7 +25,6 @@ public class IterationsMeasurement {
 
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
-//        final List<Long> oneIterationResults = new ArrayList<>(C.Order.VARIANTS_TOTAL);
         final Map<String, Long> oneIterationResults = new HashMap<>();
 
         for (int i = 0; i < howManyIterations; i++) {
@@ -37,31 +36,29 @@ public class IterationsMeasurement {
             oneIterationResults.clear();
             // trying to exclude strange numbers for the first test method by pre-heating it \\
             runSoutMethod(longStringForTest);
-//            oneIterationResults.add(C.Order.INDEX_OF_SOUT, runSoutMethod(longStringForTest));
             oneIterationResults.put(C.Key.KEY_SOUT, runSoutMethod(longStringForTest));
             // pre-heating all other methods to avoid their slowing down for the first time invoked \\
+
             runLogMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_LOG, runLogMethod(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_LOG, runLogMethod(longStringForTest));
+
             runDalMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_DAL, runDalMethod(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_DAL, runDalMethod(longStringForTest));
+
             runVal1Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_1, runVal1Method(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_VAL_1, runVal1Method(longStringForTest));
+
             runVal2Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_2, runVal2Method(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_VAL_2, runVal2Method(longStringForTest));
+
             runVal3Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_3, runVal3Method(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_VAL_3, runVal3Method(longStringForTest));
+
             runSLVoidMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SL_VOID, runSLVoidMethod(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_SL_VOID, runSLVoidMethod(longStringForTest));
+
             runSLIntMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SL_INT, runSLIntMethod(longStringForTest));
-//            oneIterationResults.add(C.Order.INDEX_OF_SL_INT, runSLIntMethod(longStringForTest));
-            // TODO: 02.06.2018 try to avoid hardcoded indexes by using auto-incremented counter \\
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +

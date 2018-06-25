@@ -34,14 +34,14 @@ public final class C {
 
     public static class Key {
 
-        public static final String KEY_SOUT = "time of system out println";
-        public static final String KEY_LOG = "time of system log work";
-        public static final String KEY_DAL = "time of double-arg log wrapper work";
-        public static final String KEY_VAL_1 = "time of var-args-1 log wrapper work";
-        public static final String KEY_VAL_2 = "time of var-args-2 log wrapper work";
-        public static final String KEY_VAL_3 = "time of var-args-3 log wrapper work";
-        public static final String KEY_SL_VOID = "time of superior-void  log wrapper work";
-        public static final String KEY_SL_INT = "time of superior-int log wrapper work";
+        public static final String KEY_SOUT = "Good old System.out.println(…):";
+        public static final String KEY_LOG = "Standard Android Log:";
+        public static final String KEY_DAL = "My double-args Log wrapper:";
+        public static final String KEY_VAL_1 = "My variable-args Log wrapper 1:";
+        public static final String KEY_VAL_2 = "My variable-args Log wrapper 2:";
+        public static final String KEY_VAL_3 = "My variable-args Log wrapper 3:";
+        public static final String KEY_SL_VOID = "My superior-void Log wrapper:";
+        public static final String KEY_SL_INT = "My superior-int Log wrapper:";
     }
 
     public static final class Choice {
@@ -50,13 +50,6 @@ public final class C {
         public static final int SNACKBAR = 1001;
         public static final int PREPARATION = 1;
         public static final int STOPPED = 2;
-//        public static final int TEST_SYSTEM_LOG = 10;
-//        public static final int TEST_DAL = 11;
-//        public static final int TEST_VAL_1 = 121;
-//        public static final int TEST_VAL_2 = 122;
-//        public static final int TEST_VAL_3 = 123;
-//        public static final int TEST_SL_VOID = 131;
-//        public static final int TEST_SL_INT = 132;
     }
 
     public static final class Order {

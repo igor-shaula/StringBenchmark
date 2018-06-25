@@ -37,13 +37,13 @@ public interface MainHub {
         @NonNull
         String getBasicStringText();
 
-        void setStringsAmountText(int howManyTimesToRepeatBasicStringInLoad);
-
         @NonNull
         String getStringsAmountText();
 
         @NonNull
         String getIterationsAmountText();
+
+        void setStringsAmountText(int howManyTimesToRepeatBasicStringInLoad);
 
         void setLogicLink(@NonNull LogicLink logicLink);
 

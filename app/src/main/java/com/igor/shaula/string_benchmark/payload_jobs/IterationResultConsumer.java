@@ -24,7 +24,6 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
 
     @NonNull
     private List<Map<String, Long>> totalResultList = new LinkedList<>();
-//    private List<long[]> totalResultList = new LinkedList<>();
 
     public IterationResultConsumer(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
@@ -36,93 +35,18 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
                 " oneIterationsResult = " + oneIterationsResult);
         totalResultList.add(oneIterationsResult);
         final Map<String, Long> results = calculateMedianResult();
-//        logicLink.transportIterationsResult(results, currentIterationNumber);
         final List<OneIterationResultModel> resultModelList = new ArrayList<>(results.size());
-//        for (OneIterationResultModel model : resultModelList) {
-//            resultModelList.add()
-//        }
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_SOUT, results.get(C.Key.KEY_SOUT)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_LOG, results.get(C.Key.KEY_LOG)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_DAL, results.get(C.Key.KEY_DAL)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_VAL_1, results.get(C.Key.KEY_VAL_1)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_VAL_2, results.get(C.Key.KEY_VAL_2)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_VAL_3, results.get(C.Key.KEY_VAL_3)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_SL_VOID, results.get(C.Key.KEY_SL_VOID)));
-        resultModelList.add(new OneIterationResultModel(C.Key.KEY_SL_INT, results.get(C.Key.KEY_SL_INT)));
+        for (String key : results.keySet()) {
+            resultModelList.add(new OneIterationResultModel(key, results.get(key)));
+        }
         logicLink.transportIterationsResult(resultModelList, currentIterationNumber);
     }
-//    @Override
-//    public void onNewIterationResult(@NonNull long[] oneIterationsResult, int currentIterationNumber) {
-//        L.w("onNewIterationResult",
-//                " oneIterationsResult = " + Arrays.toString(oneIterationsResult));
-//        totalResultList.add(oneIterationsResult);
-//        final long[] results = calculateMedianResult();
-////        logicLink.transportIterationsResult(results, currentIterationNumber);
-//        final List<OneIterationResultModel> resultModelList = new ArrayList<>(results.length);
-//        resultModelList.add(new OneIterationResultModel(
-//                "Good old System.out.println(…):", results[0]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "Standard Android Log:", results[1]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "My double-args Log wrapper:", results[2]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "My variable-args Log wrapper 1:", results[3]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "My variable-args Log wrapper 3:", results[4]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "My variable-args Log wrapper 3:", results[5]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "My superior-void Log wrapper:", results[6]));
-//        resultModelList.add(new OneIterationResultModel(
-//                "My superior-int Log wrapper:", results[7]));
-//        logicLink.transportIterationsResult(resultModelList, currentIterationNumber);
-//    }
 
     @Override
     public void prepareForNewJob() {
         totalResultList.clear();
     }
 
-    //    @NonNull
-//    private long[] calculateMedianResult() {
-//        final int listSize = totalResultList.size();
-//        L.w(CN, "calculateMedianResult ` listSize = " + listSize);
-//        final long[] medianArray = new long[C.Order.VARIANTS_TOTAL];
-//        if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
-//            // avoiding division by zero in the loop just after this check \\
-//            return medianArray; // empty here \\
-//        }
-//        long sumForSout = 0;
-//        long sumForLog = 0;
-//        long sumForDAL = 0;
-//        long sumForVAL1 = 0;
-//        long sumForVAL2 = 0;
-//        long sumForVAL3 = 0;
-//        long sumForSLVoid = 0;
-//        long sumForSLInt = 0;
-//        for (long[] array : totalResultList) {
-//            L.w(CN, "calculateMedianResult: " + Arrays.toString(array));
-//            // i hope we'll avoid exceeding the max value for type long \\
-//            sumForSout += array[C.Order.INDEX_OF_SOUT];
-//            sumForLog += array[C.Order.INDEX_OF_LOG];
-//            sumForDAL += array[C.Order.INDEX_OF_DAL];
-//            sumForVAL1 += array[C.Order.INDEX_OF_VAL_1];
-//            sumForVAL2 += array[C.Order.INDEX_OF_VAL_2];
-//            sumForVAL3 += array[C.Order.INDEX_OF_VAL_3];
-//            sumForSLVoid += array[C.Order.INDEX_OF_SL_VOID];
-//            sumForSLInt += array[C.Order.INDEX_OF_SL_INT];
-//        }
-//        medianArray[C.Order.INDEX_OF_SOUT] = sumForSout / listSize;
-//        medianArray[C.Order.INDEX_OF_LOG] = sumForLog / listSize;
-//        medianArray[C.Order.INDEX_OF_DAL] = sumForDAL / listSize;
-//        medianArray[C.Order.INDEX_OF_VAL_1] = sumForVAL1 / listSize;
-//        medianArray[C.Order.INDEX_OF_VAL_2] = sumForVAL2 / listSize;
-//        medianArray[C.Order.INDEX_OF_VAL_3] = sumForVAL3 / listSize;
-//        medianArray[C.Order.INDEX_OF_SL_VOID] = sumForSLVoid / listSize;
-//        medianArray[C.Order.INDEX_OF_SL_INT] = sumForSLInt / listSize;
-//
-//        return medianArray;
-//    }
     @NonNull
     private Map<String, Long> calculateMedianResult() {
         final int listSize = totalResultList.size();
