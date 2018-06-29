@@ -417,14 +417,14 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     } // init \\
 
     public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList,
-                                                   final int currentIterationNumber) {
+                                                   final int currentIterationIndex) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
                 rvAdapter.updateIterationsResult(resultModelList);
                 rvAdapter.notifyDataSetChanged();
                 final String currentIterationCounterString =
-                        "" + C.SPACE + U.createReadableStringForLong(currentIterationNumber);
+                        "" + C.SPACE + U.createReadableStringForLong(currentIterationIndex + 1);
                 tvCurrentIterationNumber.setText(currentIterationCounterString);
             }
         });

@@ -148,9 +148,9 @@ public final class App extends Application implements DataTransport {
     @Override
     @MeDoc("invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult,
-                                             int currentIterationNumber) {
+                                             int currentIterationIndex) {
         if (iterationResultConsumer != null) {
-            iterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationNumber);
+            iterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationIndex);
         }
     }
 

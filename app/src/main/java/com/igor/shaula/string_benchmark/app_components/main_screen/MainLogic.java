@@ -325,8 +325,8 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
-                                          int currentIterationNumber) {
-        uiLink.updateIterationsResultOnMainThread(resultModelList, currentIterationNumber);
+                                          int currentIterationIndex) {
+        uiLink.updateIterationsResultOnMainThread(resultModelList, currentIterationIndex);
     }
 
     // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================

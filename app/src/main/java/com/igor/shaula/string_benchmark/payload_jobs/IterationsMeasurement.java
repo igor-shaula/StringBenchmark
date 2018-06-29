@@ -65,7 +65,7 @@ public final class IterationsMeasurement {
             L.w("measurePerformanceInLoop", "i = " + i +
                     " oneIterationResults = " + oneIterationResults);
 */
-            dataTransport.transportOneIterationsResult(oneIterationResults, i + 1);
+            dataTransport.transportOneIterationsResult(oneIterationResults, i);
         }
     }
 
