@@ -2,14 +2,16 @@ package com.igor.shaula.string_benchmark.payload_jobs;
 
 import android.support.annotation.NonNull;
 
+import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.app_components.main_screen.MainHub;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,17 +31,23 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
         this.logicLink = logicLink;
     }
 
+    @NonNull
+    @Override
+    public List<OneIterationResultModel> getOneIterationResultList() {
+        final List<OneIterationResultModel> mockResultList = new ArrayList<>();
+//        mockResultList.add();
+        return mockResultList;
+    }
+
     @Override
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber) {
+        L.restore();
         L.w("onNewIterationResult",
                 " oneIterationsResult = " + oneIterationsResult);
         totalResultList.add(oneIterationsResult);
         final Map<String, Long> results = calculateMedianResult();
-        final List<OneIterationResultModel> resultModelList = new ArrayList<>(results.size());
-        for (String key : results.keySet()) {
-            resultModelList.add(new OneIterationResultModel(key, results.get(key)));
-        }
-        logicLink.transportIterationsResult(resultModelList, currentIterationNumber);
+        logicLink.transportIterationsResult(U.convertIntoList(results), currentIterationNumber);
+        L.silence();
     }
 
     @Override
@@ -47,11 +55,12 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
         totalResultList.clear();
     }
 
+    @MeDoc("this method runs after every test iteration - so it has to be very fast")
     @NonNull
     private Map<String, Long> calculateMedianResult() {
         final int listSize = totalResultList.size();
         L.w(CN, "calculateMedianResult ` listSize = " + listSize);
-        final Map<String, Long> medianMap = new HashMap<>();
+        final Map<String, Long> medianMap = new LinkedHashMap<>(listSize);
         if (totalResultList.isEmpty()) { // anyway we should not fall inside this check \\
             // avoiding division by zero in the loop just after this check \\
             return medianMap; // empty here \\
@@ -64,7 +73,7 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
         long sumForVAL3 = 0;
         long sumForSLVoid = 0;
         long sumForSLInt = 0;
-        for (Map<String, Long> oneIterationResult : totalResultList) {
+        for (final Map<String, Long> oneIterationResult : totalResultList) {
             L.w(CN, "calculateMedianResult: " + oneIterationResult);
             // i hope we'll avoid exceeding the max value for type long \\
             sumForSout += oneIterationResult.get(C.Key.KEY_SOUT);

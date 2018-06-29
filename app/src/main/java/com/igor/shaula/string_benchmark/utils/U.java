@@ -19,10 +19,13 @@ import android.widget.Toast;
 import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unused")
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "31-08-2017", modifiedOn = "06.11.2017",
@@ -190,6 +193,15 @@ public final class U {
             array[i] = list.get(i);
         }
         return array;
+    }
+
+    @NonNull
+    public static List<OneIterationResultModel> convertIntoList(Map<String, Long> givenMap) {
+        final List<OneIterationResultModel> resultList = new ArrayList<>(givenMap.size());
+        for (String key : givenMap.keySet()) {
+            resultList.add(new OneIterationResultModel(key, givenMap.get(key)));
+        }
+        return resultList;
     }
 
     public static void printLogFor(@Nullable Intent intent) {

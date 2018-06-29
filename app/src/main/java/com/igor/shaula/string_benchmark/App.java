@@ -28,7 +28,7 @@ public final class App extends Application implements DataTransport {
 
     private boolean isAllowedToRunIterations;
     @Nullable
-    private IterationResultConsumer linkToIterationResultConsumer;
+    private IterationResultConsumer iterationResultConsumer;
     @Nullable
     private String longStringForTest = ""; // ma be rather long & heavy \\
 
@@ -106,8 +106,8 @@ public final class App extends Application implements DataTransport {
     @NonNull
     @Override
     public List<OneIterationResultModel> getIterationResultList() {
-        // temporary stub for now \\
-        return new ArrayList<>();
+        return iterationResultConsumer != null ?
+                iterationResultConsumer.getOneIterationResultList() : new ArrayList<OneIterationResultModel>();
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class App extends Application implements DataTransport {
 
     @Override
     public void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer) {
-        this.linkToIterationResultConsumer = iterationResultConsumer;
+        this.iterationResultConsumer = iterationResultConsumer;
     }
 
     @Override
@@ -155,8 +155,8 @@ public final class App extends Application implements DataTransport {
     public void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult,
 //    public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult,
                                              int currentIterationNumber) {
-        if (linkToIterationResultConsumer != null) {
-            linkToIterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationNumber);
+        if (iterationResultConsumer != null) {
+            iterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationNumber);
 //                    U.convertIntoArray(oneIterationsResult), currentIterationNumber);
             // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
