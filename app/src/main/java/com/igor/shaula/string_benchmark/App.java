@@ -121,11 +121,6 @@ public final class App extends Application implements DataTransport {
         return isAllowedToRunIterations;
     }
 
-//    @Override
-//    public void resetLoad() {
-//        longStringForTest = "";
-//    }
-
     @Override
     public void allowIterationsJob(boolean isAllowedToRunIterations) {
         this.isAllowedToRunIterations = isAllowedToRunIterations;
@@ -153,12 +148,9 @@ public final class App extends Application implements DataTransport {
     @Override
     @MeDoc("invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult,
-//    public void transportOneIterationsResult(@NonNull List<Long> oneIterationsResult,
                                              int currentIterationNumber) {
         if (iterationResultConsumer != null) {
             iterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationNumber);
-//                    U.convertIntoArray(oneIterationsResult), currentIterationNumber);
-            // not used oneIterationsResult.toArray(new Long[] {}); for avoiding Long-long conversion \\
         }
     }
 

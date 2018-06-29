@@ -11,6 +11,7 @@ import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,9 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
 
     @NonNull
     private List<Map<String, Long>> totalResultList = new LinkedList<>();
+    @NonNull
+    private Map<String, Long> summarizedResultsMap = new HashMap<>();
+    private Map<String, Long> medianResultMap = new HashMap<>();
 
     public IterationResultConsumer(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
@@ -39,14 +43,38 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
         return mockResultList;
     }
 
+    @MeDoc("decision made inside here is the reason to be proud about myself for now")
     @Override
-    public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber) {
+    public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\
+                                     int currentIterationNumber) {
         L.restore();
-        L.w("onNewIterationResult",
-                " oneIterationsResult = " + oneIterationsResult);
+        L.w("onNewIterationResult", " oneIterationsResult = " + oneIterationsResult);
         totalResultList.add(oneIterationsResult);
-        final Map<String, Long> results = calculateMedianResult();
-        logicLink.transportIterationsResult(U.convertIntoList(results), currentIterationNumber);
+
+        if (currentIterationNumber == 1) {
+            // creating & preparing maps for summarized & median results per iteration \\
+            for (final String key : oneIterationsResult.keySet()) {
+                summarizedResultsMap.put(key, oneIterationsResult.get(key));
+                medianResultMap.put(key, oneIterationsResult.get(key));
+            }
+        } else {
+            // the idea here is to avoid increasing number of actions for getting median result \\
+            long tempValue;
+            for (final String key : oneIterationsResult.keySet()) {
+                tempValue = summarizedResultsMap.get(key) + oneIterationsResult.get(key);
+                summarizedResultsMap.put(key, tempValue);
+            }
+            // 1 - 10
+            // 2 - 20
+            // sum = 30
+            for (final String key : summarizedResultsMap.keySet()) {
+                medianResultMap.put(key, summarizedResultsMap.get(key) / currentIterationNumber);
+            }
+        }
+        // get 30 and divide by 2 -> 15 as a result -> profit \\
+//        final Map<String, Long> results = calculateMedianResult();
+        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationNumber);
+//        logicLink.transportIterationsResult(U.convertIntoList(results), currentIterationNumber);
         L.silence();
     }
 
