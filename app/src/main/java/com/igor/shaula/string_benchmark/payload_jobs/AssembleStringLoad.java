@@ -8,7 +8,7 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.utils.L;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "")
-public class AssembleStringLoad {
+public final class AssembleStringLoad {
 
     private static final String CN = "AssembleStringLoad";
 

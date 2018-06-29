@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "just to lighten MainLogic")
-public class TextyTwister {
+public final class TextyTwister {
 
     private static final char[] CHARS = {'-', '\\', '|', '/', '-'};
 

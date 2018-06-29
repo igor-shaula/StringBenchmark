@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "iterations result processor")
-public class IterationResultConsumer implements DataTransport.IterationResultConsumer {
+public final class IterationResultConsumer implements DataTransport.IterationResultConsumer {
 
     private static final String CN = "IterationResultConsumer";
 
@@ -55,6 +55,7 @@ public class IterationResultConsumer implements DataTransport.IterationResultCon
         totalResultList.clear();
     }
 
+    // TODO: 29.06.2018 optimize this method to avoid direct using of keys & code duplication \\
     @MeDoc("this method runs after every test iteration - so it has to be very fast")
     @NonNull
     private Map<String, Long> calculateMedianResult() {

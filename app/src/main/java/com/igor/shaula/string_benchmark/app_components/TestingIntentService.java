@@ -21,7 +21,7 @@ import java.util.Arrays;
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "06-11-2017", purpose = "" +
         "simplest way of performing heavy jobs queue on the separate thread")
 
-public class TestingIntentService extends IntentService {
+public final class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 

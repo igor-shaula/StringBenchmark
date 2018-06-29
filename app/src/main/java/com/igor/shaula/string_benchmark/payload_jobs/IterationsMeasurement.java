@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "abstract job - not in Service only")
-public class IterationsMeasurement {
+public final class IterationsMeasurement {
 
     private static final String CN = "IterationsMeasurement";
 
