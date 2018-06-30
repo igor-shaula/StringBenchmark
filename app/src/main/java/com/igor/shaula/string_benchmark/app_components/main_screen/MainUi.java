@@ -23,14 +23,13 @@ import android.widget.ToggleButton;
 
 import com.igor.shaula.string_benchmark.BuildConfig;
 import com.igor.shaula.string_benchmark.R;
-import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.IterationResultsAdapter;
-import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
+import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.IterationResultsAdapterWithMap;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.SimpleTextWatcher;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
 
-import java.util.List;
+import java.util.Map;
 
 public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.OnKeyListener {
 
@@ -70,7 +69,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
     private TextView tvIterationsResultHeader;
-    private IterationResultsAdapter rvAdapter;
+    private IterationResultsAdapterWithMap rvAdapter;
+//    private IterationResultsAdapterWithList rvAdapter;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -411,17 +411,21 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setHasFixedSize(true);
         rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
         // special link to adapter is needed for upcoming update-kind method \\
-        rvAdapter = new IterationResultsAdapter(logicLink.getIterationResultList());
+        rvAdapter = new IterationResultsAdapterWithMap(logicLink.getIterationResultMap());
+//        rvAdapter = new IterationResultsAdapterWithList(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 
     } // init \\
 
-    public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList,
+    @Override
+    public void updateIterationsResultOnMainThread(@NonNull final Map<String, Long> resultModelMap,
+//    public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList,
                                                    final int currentIterationIndex) {
         rootView.post(new Runnable() {
             @Override
             public void run() {
-                rvAdapter.updateIterationsResult(resultModelList);
+                rvAdapter.updateIterationsResult(resultModelMap);
+//                rvAdapter.updateIterationsResult(resultModelList);
                 rvAdapter.notifyDataSetChanged();
                 final String currentIterationCounterString =
                         "" + C.SPACE + U.createReadableStringForLong(currentIterationIndex + 1);

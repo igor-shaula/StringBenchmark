@@ -19,6 +19,7 @@ import com.igor.shaula.string_benchmark.utils.U;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Map;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
         comment = "logic should not have any Android-specific imports & dependencies - only pure Java")
@@ -66,6 +67,12 @@ public final class MainLogic implements MainHub.LogicLink {
     @Override
     public List<OneIterationResultModel> getIterationResultList() {
         return dataTransport.getIterationResultList();
+    }
+
+    @NonNull
+    @Override
+    public Map<String, Long> getIterationResultMap() {
+        return dataTransport.getIterationResultMap();
     }
 
     @Override
@@ -324,9 +331,10 @@ public final class MainLogic implements MainHub.LogicLink {
     }
 
     @Override
-    public void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
+    public void transportIterationsResult(@NonNull Map<String, Long> resultModelMap,
+//    public void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
                                           int currentIterationIndex) {
-        uiLink.updateIterationsResultOnMainThread(resultModelList, currentIterationIndex);
+        uiLink.updateIterationsResultOnMainThread(resultModelMap, currentIterationIndex);
     }
 
     // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================

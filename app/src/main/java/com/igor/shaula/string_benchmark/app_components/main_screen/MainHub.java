@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MainHub {
 
@@ -69,7 +70,7 @@ public interface MainHub {
 
         void updateLoadLengthOnMainThread(int length);
 
-        void updateIterationsResultOnMainThread(@NonNull List<OneIterationResultModel> resultModelList,
+        void updateIterationsResultOnMainThread(@NonNull Map<String, Long> resultModelList,
                                                 int currentIterationNumber);
 
         void informUser(int whichWay, int stringId, int duration);
@@ -95,6 +96,9 @@ public interface MainHub {
 
         @NonNull
         List<OneIterationResultModel> getIterationResultList();
+
+        @NonNull
+        Map<String, Long> getIterationResultMap();
 
         boolean isPreparationBlockShown();
 
@@ -136,7 +140,7 @@ public interface MainHub {
 
         void updatePreparationResult(@NonNull String s);
 
-        void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
+        void transportIterationsResult(@NonNull Map<String, Long> resultModelList,
                                        int currentIterationNumber);
     }
 }

@@ -13,16 +13,16 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import java.util.List;
 
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
-public final class IterationResultsAdapter extends RecyclerView.Adapter<IterationResultsAdapter.ViewHolder> {
+public final class IterationResultsAdapterWithList extends RecyclerView.Adapter<IterationResultsAdapterWithList.ViewHolder> {
 
     @Nullable
     private List<OneIterationResultModel> iterationResultModels;
 
-    public IterationResultsAdapter(@NonNull List<OneIterationResultModel> iterationResultList) {
+    public IterationResultsAdapterWithList(@NonNull List<OneIterationResultModel> iterationResultList) {
         this.iterationResultModels = iterationResultList;
     }
 
-    public void updateIterationsResult(List<OneIterationResultModel> resultModelList) {
+    public void updateIterationsResult(@Nullable List<OneIterationResultModel> resultModelList) {
         iterationResultModels = resultModelList;
     }
 

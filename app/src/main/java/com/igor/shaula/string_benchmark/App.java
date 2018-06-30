@@ -16,6 +16,7 @@ import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -108,6 +109,13 @@ public final class App extends Application implements DataTransport {
     public List<OneIterationResultModel> getIterationResultList() {
         return iterationResultConsumer != null ?
                 iterationResultConsumer.getOneIterationResultList() : new ArrayList<OneIterationResultModel>();
+    }
+
+    @NonNull
+    @Override
+    public Map<String, Long> getIterationResultMap() {
+        return iterationResultConsumer != null ?
+                iterationResultConsumer.getOneIterationResultMap() : new LinkedHashMap<String, Long>();
     }
 
     @Override

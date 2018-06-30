@@ -13,6 +13,9 @@ public interface DataTransport { // currently implemented by App as a quickest d
     @NonNull
     List<OneIterationResultModel> getIterationResultList();
 
+    @NonNull
+    Map<String, Long> getIterationResultMap();
+
     @Nullable
     String getLongStringForTest();
 
@@ -34,6 +37,9 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
         @NonNull
         List<OneIterationResultModel> getOneIterationResultList();
+
+        @NonNull
+        Map<String,Long> getOneIterationResultMap();
 
         void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
 

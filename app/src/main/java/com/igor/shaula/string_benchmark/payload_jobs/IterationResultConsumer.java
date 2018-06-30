@@ -6,7 +6,6 @@ import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.app_components.main_screen.MainHub;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
-import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -40,6 +39,12 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
         return mockResultList;
     }
 
+    @NonNull
+    @Override
+    public Map<String, Long> getOneIterationResultMap() {
+        return medianResultMap;
+    }
+
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
     @Override
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\
@@ -67,7 +72,8 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
                 medianResultMap.put(key, summarizedValue / (currentIterationIndex + 1));
             }
         }
-        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationIndex);
+        logicLink.transportIterationsResult(medianResultMap, currentIterationIndex);
+//        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationIndex);
     }
 
     @Override
