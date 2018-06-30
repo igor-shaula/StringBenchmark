@@ -9,7 +9,6 @@ import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIte
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +20,12 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
     @NonNull
     private MainHub.LogicLink logicLink;
 
-    @NonNull
-    private List<Map<String, Long>> totalResultList = new LinkedList<>();
+    //    @NonNull
+//    private List<Map<String, Long>> totalResultList = new LinkedList<>();
     @NonNull
     private Map<String, Long> summarizedResultsMap = new LinkedHashMap<>();
-    private Map<String, Long> medianResultMap = new LinkedHashMap<>();
+//    @NonNull
+//    private Map<String, Long> medianResultMap = new LinkedHashMap<>();
 
     public IterationResultConsumer(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
@@ -42,23 +42,22 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
     @NonNull
     @Override
     public Map<String, Long> getOneIterationResultMap() {
-        return medianResultMap;
+        return summarizedResultsMap;
+//        return medianResultMap;
     }
 
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
     @Override
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\
                                      int currentIterationIndex) {
-
-        totalResultList.add(oneIterationsResult);
-
+//        totalResultList.add(oneIterationsResult);
         if (currentIterationIndex == 0) {
             long oneIterationValue;
             // creating & preparing maps for summarized & median results per iteration \\
             for (final String key : oneIterationsResult.keySet()) {
                 oneIterationValue = oneIterationsResult.get(key);
                 summarizedResultsMap.put(key, oneIterationValue);
-                medianResultMap.put(key, oneIterationValue);
+//                medianResultMap.put(key, oneIterationValue);
             }
         } else {
             long summarizedValue;
@@ -67,19 +66,20 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
                 summarizedValue = summarizedResultsMap.get(key);
                 summarizedResultsMap.put(key, summarizedValue + oneIterationsResult.get(key));
             }
-            for (final String key : summarizedResultsMap.keySet()) {
-                summarizedValue = summarizedResultsMap.get(key);
-                medianResultMap.put(key, summarizedValue / (currentIterationIndex + 1));
-            }
+//            for (final String key : summarizedResultsMap.keySet()) {
+//                summarizedValue = summarizedResultsMap.get(key);
+//                medianResultMap.put(key, summarizedValue / (currentIterationIndex + 1));
+//            }
         }
-        logicLink.transportIterationsResult(medianResultMap, currentIterationIndex);
+        logicLink.transportIterationsResult(summarizedResultsMap, currentIterationIndex);
+//        logicLink.transportIterationsResult(medianResultMap, currentIterationIndex);
 //        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationIndex);
     }
 
     @Override
     public void prepareForNewJob() {
-        totalResultList.clear();
+//        totalResultList.clear();
         summarizedResultsMap.clear();
-        medianResultMap.clear();
+//        medianResultMap.clear();
     }
 }

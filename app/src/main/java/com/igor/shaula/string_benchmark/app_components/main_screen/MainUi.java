@@ -424,7 +424,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rootView.post(new Runnable() {
             @Override
             public void run() {
-                rvAdapter.updateIterationsResult(resultModelMap);
+                rvAdapter.updateIterationsResult(resultModelMap, currentIterationIndex);
 //                rvAdapter.updateIterationsResult(resultModelList);
                 rvAdapter.notifyDataSetChanged();
                 final String currentIterationCounterString =

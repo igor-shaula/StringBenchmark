@@ -12,8 +12,10 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
-public final class IterationResultsAdapterWithMap extends RecyclerView.Adapter<IterationResultsAdapterWithMap.ViewHolder> {
+public final class IterationResultsAdapterWithMap extends
+        RecyclerView.Adapter<IterationResultsAdapterWithMap.ViewHolder> {
 
+    private int currentIterationIndex;
     @NonNull
     private Map<String, Long> iterationResultModels;
 
@@ -23,6 +25,11 @@ public final class IterationResultsAdapterWithMap extends RecyclerView.Adapter<I
 
     public void updateIterationsResult(@NonNull Map<String, Long> resultModelList) {
         iterationResultModels = resultModelList;
+    }
+
+    public void updateIterationsResult(@NonNull Map<String, Long> resultModelMap, int currentIterationIndex) {
+        this.iterationResultModels = resultModelMap;
+        this.currentIterationIndex = currentIterationIndex;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +64,9 @@ public final class IterationResultsAdapterWithMap extends RecyclerView.Adapter<I
         }
         holder.methodName.setText(keyAtPosition);
 //        holder.methodName.setText(String.valueOf(iterationResultModels.get(keyAtPosition)));
-        holder.methodResult.setText(String.valueOf(iterationResultModels.get(keyAtPosition)));
+        holder.methodResult.setText(String.valueOf(
+                iterationResultModels.get(keyAtPosition) / currentIterationIndex + 1
+        ));
     }
 
     @Override
