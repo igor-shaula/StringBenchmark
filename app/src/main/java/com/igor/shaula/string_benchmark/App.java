@@ -114,8 +114,14 @@ public final class App extends Application implements DataTransport {
     @NonNull
     @Override
     public Map<String, Long> getIterationResultMap() {
-        return iterationResultConsumer != null ?
-                iterationResultConsumer.getOneIterationResultMap() : new LinkedHashMap<String, Long>();
+        if (iterationResultConsumer != null) {
+            return iterationResultConsumer.getOneIterationResultMap();
+        } else {
+            final Map<String, Long> initialEmptyMap = new LinkedHashMap<>();
+            initialEmptyMap.put("test0", 0L);
+            initialEmptyMap.put("test1", 1L);
+            return initialEmptyMap;
+        }
     }
 
     @Override

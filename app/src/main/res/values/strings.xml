@@ -19,7 +19,7 @@
     <string name="nanos">nano-sec.</string>
     <string name="micros">micro-sec.</string>
     <string name="millis">milli-sec.</string>
-    <string name="seconds">sec.</string>
+    <string name="seconds">second(s)</string>
 
     <!-- preparation of load for iterations -->
 

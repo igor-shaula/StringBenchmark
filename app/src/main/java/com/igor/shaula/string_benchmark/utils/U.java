@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
@@ -257,32 +256,35 @@ public final class U {
     }
 
     @NonNull
-    public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
+    public static String adaptForUser(@NonNull String[] unitsOfMeasurement, long nanoTimeValue) {
+//    public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
         final StringBuilder stringBuilder = new StringBuilder();
 
         if (nanoTimeValue < 1_000) {
             stringBuilder
                     .append(nanoTimeValue)
                     .append(C.SPACE)
-                    .append(context.getString(R.string.nanos));
+                    .append(unitsOfMeasurement[0]);
 
-        } else if (nanoTimeValue >= 1_000 && nanoTimeValue < 1_000_000) {
+        } else if (nanoTimeValue < 1_000_000) {
+//        } else if (nanoTimeValue >= 1_000 && nanoTimeValue < 1_000_000) {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
-                    .append(context.getString(R.string.micros));
+                    .append(unitsOfMeasurement[1]);
 
-        } else if (nanoTimeValue >= 1_000_000 && nanoTimeValue < 1_000_000_000) {
+        } else if (nanoTimeValue < 1_000_000_000) {
+//        } else if (nanoTimeValue >= 1_000_000 && nanoTimeValue < 1_000_000_000) {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
-                    .append(context.getString(R.string.millis));
+                    .append(unitsOfMeasurement[2]);
 
         } else {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
-                    .append(context.getString(R.string.seconds));
+                    .append(unitsOfMeasurement[3]);
         }
         return stringBuilder.toString();
     }

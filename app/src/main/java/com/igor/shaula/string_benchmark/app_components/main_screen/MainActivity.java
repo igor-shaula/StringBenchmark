@@ -124,7 +124,13 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @NonNull
     @Override
     public String getAdaptedString(long resultNanoTime) {
-        return U.adaptForUser(this, resultNanoTime);
+        final String[] unitsOfMeasurements = new String[]{
+                getString(R.string.nanos),
+                getString(R.string.micros),
+                getString(R.string.millis),
+                getString(R.string.seconds)
+        };
+        return U.adaptForUser(unitsOfMeasurements, resultNanoTime);
     }
 
     @NonNull
