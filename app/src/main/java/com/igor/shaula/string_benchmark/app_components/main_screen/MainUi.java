@@ -196,7 +196,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     @Override
     public void resetResultViewStates() {
-        final CharSequence oneTemplateForAll = String.valueOf(C.STAR);
+//        final CharSequence oneTemplateForAll = String.valueOf(C.STAR);
+        rvAdapter.updateIterationsResult(logicLink.getInitialEmptyMap());
+        rvAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -411,7 +413,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setHasFixedSize(true);
         rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
         // special link to adapter is needed for upcoming update-kind method \\
-        rvAdapter = new IterationResultsAdapterWithMap(logicLink.getIterationResultMap());
+        rvAdapter = new IterationResultsAdapterWithMap(logicLink.getInitialEmptyMap());
 //        rvAdapter = new IterationResultsAdapterWithList(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 

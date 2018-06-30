@@ -98,7 +98,7 @@ public interface MainHub {
         List<OneIterationResultModel> getIterationResultList();
 
         @NonNull
-        Map<String, Long> getIterationResultMap();
+        Map<String, Long> getInitialEmptyMap();
 
         boolean isPreparationBlockShown();
 

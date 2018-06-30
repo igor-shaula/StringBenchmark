@@ -63,7 +63,12 @@ public final class IterationResultsAdapterWithMap extends
         return iterationResultModels.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public void updateIterationsResult(@NonNull Map<String, Long> iterationResultMap) {
+        this.iterationResultModels = iterationResultMap;
+        currentIterationIndex = 0;
+    }
+
+    static final class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView methodName;
         private TextView methodResult;

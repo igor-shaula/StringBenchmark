@@ -13,7 +13,8 @@ import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import java.util.List;
 
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
-public final class IterationResultsAdapterWithList extends RecyclerView.Adapter<IterationResultsAdapterWithList.ViewHolder> {
+public final class IterationResultsAdapterWithList extends
+        RecyclerView.Adapter<IterationResultsAdapterWithList.ViewHolder> {
 
     @Nullable
     private List<OneIterationResultModel> iterationResultModels;
@@ -24,18 +25,6 @@ public final class IterationResultsAdapterWithList extends RecyclerView.Adapter<
 
     public void updateIterationsResult(@Nullable List<OneIterationResultModel> resultModelList) {
         iterationResultModels = resultModelList;
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView methodName;
-        private TextView methodResult;
-
-        private ViewHolder(@NonNull ViewGroup viewGroup) {
-            super(viewGroup);
-            methodName = viewGroup.findViewById(R.id.tvMethodName);
-            methodResult = viewGroup.findViewById(R.id.tvMethodResult);
-        }
     }
 
     @NonNull
@@ -51,12 +40,25 @@ public final class IterationResultsAdapterWithList extends RecyclerView.Adapter<
         if (iterationResultModels == null) {
             return;
         }
-        holder.methodName.setText(String.valueOf(iterationResultModels.get(position).getTestedMethodName()));
-        holder.methodResult.setText(String.valueOf(iterationResultModels.get(position).getTestedMethodTime()));
+        final OneIterationResultModel oneIterationResultModel = iterationResultModels.get(position);
+        holder.methodName.setText(String.valueOf(oneIterationResultModel.getTestedMethodName()));
+        holder.methodResult.setText(String.valueOf(oneIterationResultModel.getTestedMethodTime()));
     }
 
     @Override
     public int getItemCount() {
         return iterationResultModels != null ? iterationResultModels.size() : 0;
+    }
+
+    static final class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView methodName;
+        private TextView methodResult;
+
+        private ViewHolder(@NonNull ViewGroup viewGroup) {
+            super(viewGroup);
+            methodName = viewGroup.findViewById(R.id.tvMethodName);
+            methodResult = viewGroup.findViewById(R.id.tvMethodResult);
+        }
     }
 }
