@@ -25,7 +25,8 @@ public final class IterationsMeasurement {
 
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
-        final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
+        final Map<String, Long> oneIterationResults = dataTransport.getIterationResultMap();
+//        final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
 
         // this loop is global - all measurements run inside it \\
         for (int i = 0; i < howManyIterations; i++) {

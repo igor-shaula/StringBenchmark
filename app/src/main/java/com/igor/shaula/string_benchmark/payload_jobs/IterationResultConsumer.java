@@ -20,12 +20,8 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
     @NonNull
     private MainHub.LogicLink logicLink;
 
-    //    @NonNull
-//    private List<Map<String, Long>> totalResultList = new LinkedList<>();
     @NonNull
     private Map<String, Long> summarizedResultsMap = new LinkedHashMap<>();
-//    @NonNull
-//    private Map<String, Long> medianResultMap = new LinkedHashMap<>();
 
     public IterationResultConsumer(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
@@ -35,7 +31,6 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
     @Override
     public List<OneIterationResultModel> getOneIterationResultList() {
         final List<OneIterationResultModel> mockResultList = new ArrayList<>();
-//        mockResultList.add();
         return mockResultList;
     }
 
@@ -43,43 +38,29 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
     @Override
     public Map<String, Long> getOneIterationResultMap() {
         return summarizedResultsMap;
-//        return medianResultMap;
     }
 
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
     @Override
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\
                                      int currentIterationIndex) {
-//        totalResultList.add(oneIterationsResult);
         if (currentIterationIndex == 0) {
-            long oneIterationValue;
             // creating & preparing maps for summarized & median results per iteration \\
             for (final String key : oneIterationsResult.keySet()) {
-                oneIterationValue = oneIterationsResult.get(key);
-                summarizedResultsMap.put(key, oneIterationValue);
-//                medianResultMap.put(key, oneIterationValue);
+                summarizedResultsMap.put(key, oneIterationsResult.get(key));
             }
         } else {
-            long summarizedValue;
             // the idea here is to avoid increasing number of actions for getting median result \\
             for (final String key : oneIterationsResult.keySet()) {
-                summarizedValue = summarizedResultsMap.get(key);
-                summarizedResultsMap.put(key, summarizedValue + oneIterationsResult.get(key));
+                summarizedResultsMap.put(key, summarizedResultsMap.get(key) + oneIterationsResult.get(key));
             }
-//            for (final String key : summarizedResultsMap.keySet()) {
-//                summarizedValue = summarizedResultsMap.get(key);
-//                medianResultMap.put(key, summarizedValue / (currentIterationIndex + 1));
-//            }
         }
         logicLink.transportIterationsResult(summarizedResultsMap, currentIterationIndex);
-//        logicLink.transportIterationsResult(medianResultMap, currentIterationIndex);
 //        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationIndex);
     }
 
     @Override
     public void prepareForNewJob() {
-//        totalResultList.clear();
         summarizedResultsMap.clear();
-//        medianResultMap.clear();
     }
 }
