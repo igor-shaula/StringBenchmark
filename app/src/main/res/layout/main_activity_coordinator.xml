@@ -58,7 +58,7 @@
                 android:contentDescription="@string/showPreparationBlock"
                 android:src="@drawable/ic_close_preparation_block"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.85"/>
+                app:layout_collapseParallaxMultiplier="0.84"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

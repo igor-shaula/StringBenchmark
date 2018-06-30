@@ -114,9 +114,6 @@ public final class App extends Application implements DataTransport {
     @NonNull
     @Override
     public Map<String, Long> getInitialEmptyMap() {
-//        if (iterationResultConsumer != null) {
-//            return iterationResultConsumer.getOneIterationResultMap();
-//        } else {
         final Map<String, Long> initialEmptyMap = new LinkedHashMap<>();
         initialEmptyMap.put(C.Key.KEY_SOUT, 0L);
         initialEmptyMap.put(C.Key.KEY_LOG, 0L);
@@ -127,7 +124,6 @@ public final class App extends Application implements DataTransport {
         initialEmptyMap.put(C.Key.KEY_SL_VOID, 0L);
         initialEmptyMap.put(C.Key.KEY_SL_INT, 0L);
         return initialEmptyMap;
-//        }
     }
 
     @Override

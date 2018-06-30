@@ -6,7 +6,7 @@
     style="@style/MatchWrap"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
+    android:paddingBottom="8dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
     android:paddingTop="64dp"
@@ -92,6 +92,15 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvPreparedLoadInfo"
+        style="@style/MatchWrap"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/summaryLoadInfo"
+        android:textColor="@color/colorPrimaryBright"
+        android:textStyle="bold"/>
+
+    <TextView
         android:id="@+id/tvResultOfPreparation"
         style="@style/MatchWrap"
         android:text="@string/resultOfPreparation"
@@ -104,27 +113,5 @@
         android:text="@string/star"
         android:textColor="@color/colorWhite"
         android:visibility="gone"/>
-
-    <!--<TextView-->
-    <!--style="@style/WrapWrap"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginBottom="16dp"-->
-    <!--android:text="@string/star"-->
-    <!--android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
-    <!--android:textColor="@color/colorPrimaryDark"-->
-    <!--android:visibility="gone"/>-->
-
-    <!--<Button-->
-    <!--android:id="@+id/bViewLoad"-->
-    <!--style="@android:style/Widget.Button.Small"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:enabled="false"-->
-    <!--android:paddingEnd="16dp"-->
-    <!--android:paddingStart="16dp"-->
-    <!--android:text="@string/viewLoadButtonText"-->
-    <!--android:textAllCaps="false"-->
-    <!--android:textColor="@color/colorPrimary"-->
-    <!--android:visibility="gone"/>-->
 
 </LinearLayout>

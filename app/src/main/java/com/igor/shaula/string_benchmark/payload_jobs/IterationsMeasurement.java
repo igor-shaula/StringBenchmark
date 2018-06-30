@@ -1,5 +1,6 @@
 package com.igor.shaula.string_benchmark.payload_jobs;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -20,15 +21,16 @@ public final class IterationsMeasurement {
 
     private static final String CN = "IterationsMeasurement";
 
-    public void measurePerformanceInLoop(final int howManyIterations, final DataTransport dataTransport) {
+    public void measurePerformanceInLoop(@NonNull final DataTransport dataTransport,
+                                         final int howManyIterations) {
 
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
         final Map<String, Long> oneIterationResults = dataTransport.getInitialEmptyMap();
-//        final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
 
         // this loop is global - all measurements run inside it \\
         for (int i = 0; i < howManyIterations; i++) {
+            // at first checking if it has been marked for stop \\
             if (!dataTransport.isAllowedToRunIterations()) {
                 L.i(CN, "measurePerformanceInLoop ` isMarkedForStop worked -> stopping now");
                 dataTransport.stopIterations();

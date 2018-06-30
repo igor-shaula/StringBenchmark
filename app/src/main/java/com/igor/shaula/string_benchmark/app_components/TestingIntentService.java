@@ -94,7 +94,7 @@ public final class TestingIntentService extends IntentService {
             case C.Intent.ACTION_START_ALL_TESTS:
                 final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
                 new IterationsMeasurement().measurePerformanceInLoop(
-                        howManyIterations, (DataTransport) getApplication());
+                        (DataTransport) getApplication(), howManyIterations);
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
                 break;
             default:

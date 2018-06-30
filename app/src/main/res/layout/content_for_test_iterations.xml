@@ -9,6 +9,7 @@
     android:layout_marginBottom="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
+    android:layout_marginTop="-16dp"
     android:gravity="bottom"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -17,17 +18,33 @@
     <TextView
         android:id="@+id/tvIterationsResultHeader"
         style="@style/MatchWrap"
-        android:gravity="end"
-        android:text="@string/resultsForLoggingTests"
+        android:gravity="center"
+        android:text="@string/resultsForLoggingExplanation"
+        android:textColor="@android:color/black"
         android:textStyle="italic"/>
+
+    <View
+        android:id="@+id/vIterationsResultHeader"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:background="@android:color/darker_gray"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvIterationResults"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:scrollbars="vertical"/>
+        android:scrollbarDefaultDelayBeforeFade="500"
+        android:scrollbarFadeDuration="1000"
+        android:scrollbarSize="4dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@color/colorPrimary"
+        android:scrollbarTrackVertical="@android:color/black"
+        android:scrollbars="vertical"
+        android:theme="@style/AppThemeGreenAccent"/>
 
     <LinearLayout
         style="@style/MatchWrap"
@@ -98,14 +115,6 @@
         android:layout_gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorPrimary"/>
-
-    <TextView
-        android:id="@+id/tvPreparedLoadInfo"
-        style="@style/MatchWrap"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:text="@string/summaryLoadInfo"
-        android:textColor="@android:color/black"/>
 
     <LinearLayout style="@style/MatchWrap">
 

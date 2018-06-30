@@ -3,6 +3,7 @@ package com.igor.shaula.string_benchmark.app_components.main_screen;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,6 +70,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvCurrentIterationNumber;
     private TextView tvIterationsTotalNumber;
     private TextView tvIterationsResultHeader;
+    private View vIterationsResultHeader;
     private IterationResultsAdapterWithMap rvAdapter;
 //    private IterationResultsAdapterWithList rvAdapter;
 
@@ -185,18 +187,23 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             tvIterationsExplanation.setVisibility(View.VISIBLE);
             vIterationsExplanation.setVisibility(View.VISIBLE);
             tvIterationsResultHeader.setVisibility(View.VISIBLE);
+            vIterationsResultHeader.setVisibility(View.VISIBLE);
         } else {
             tvPrepareLoadExplanation.setVisibility(View.GONE);
             vPrepareLoadExplanation.setVisibility(View.GONE);
             tvIterationsExplanation.setVisibility(View.GONE);
             vIterationsExplanation.setVisibility(View.GONE);
             tvIterationsResultHeader.setVisibility(View.GONE);
+            vIterationsResultHeader.setVisibility(View.GONE);
         }
+        final CollapsingToolbarLayout.LayoutParams parallaxLayoutParams
+                = (CollapsingToolbarLayout.LayoutParams) ivToggleAppBar.getLayoutParams();
+        parallaxLayoutParams.setParallaxMultiplier(shouldShowExplanations ? 0.84F : 0.81F);
+        ivToggleAppBar.setLayoutParams(parallaxLayoutParams);
     }
 
     @Override
     public void resetResultViewStates() {
-//        final CharSequence oneTemplateForAll = String.valueOf(C.STAR);
         rvAdapter.updateIterationsResult(logicLink.getInitialEmptyMap());
         rvAdapter.notifyDataSetChanged();
     }
@@ -407,6 +414,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvCurrentIterationNumber = rootView.findViewById(R.id.tvCurrentIterationNumber);
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvIterationsResultHeader = rootView.findViewById(R.id.tvIterationsResultHeader);
+        vIterationsResultHeader = rootView.findViewById(R.id.vIterationsResultHeader);
 
         final RecyclerView rvIterationResults = rootView.findViewById(R.id.rvIterationResults);
         // as inner changes in content should not affect the RecyclerView size \\
@@ -427,7 +435,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             @Override
             public void run() {
                 rvAdapter.updateIterationsResult(resultModelMap, currentIterationIndex);
-//                rvAdapter.updateIterationsResult(resultModelList);
                 rvAdapter.notifyDataSetChanged();
                 final String currentIterationCounterString =
                         "" + C.SPACE + U.createReadableStringForLong(currentIterationIndex + 1);
