@@ -72,7 +72,7 @@ public final class MainLogic implements MainHub.LogicLink {
     @NonNull
     @Override
     public Map<String, Long> getIterationResultMap() {
-        return dataTransport.getIterationResultMap();
+        return dataTransport.getInitialEmptyMap();
     }
 
     @Override

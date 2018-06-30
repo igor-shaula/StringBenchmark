@@ -13,7 +13,6 @@ import com.igor.shaula.string_benchmark.log_wrappers.var_args_logger_3_objects.V
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "abstract job - not in Service only")
@@ -25,7 +24,7 @@ public final class IterationsMeasurement {
 
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
-        final Map<String, Long> oneIterationResults = dataTransport.getIterationResultMap();
+        final Map<String, Long> oneIterationResults = dataTransport.getInitialEmptyMap();
 //        final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
 
         // this loop is global - all measurements run inside it \\

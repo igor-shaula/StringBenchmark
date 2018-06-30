@@ -260,7 +260,10 @@ public final class U {
 //    public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        if (nanoTimeValue < 1_000) {
+        if (nanoTimeValue <= 0) {
+            stringBuilder.append(C.STAR);
+
+        } else if (nanoTimeValue < 1_000) {
             stringBuilder
                     .append(nanoTimeValue)
                     .append(C.SPACE)

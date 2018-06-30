@@ -14,7 +14,7 @@ public interface DataTransport { // currently implemented by App as a quickest d
     List<OneIterationResultModel> getIterationResultList();
 
     @NonNull
-    Map<String, Long> getIterationResultMap();
+    Map<String, Long> getInitialEmptyMap();
 
     @Nullable
     String getLongStringForTest();
