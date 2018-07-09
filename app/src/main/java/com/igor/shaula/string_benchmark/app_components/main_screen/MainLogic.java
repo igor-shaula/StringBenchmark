@@ -364,6 +364,18 @@ public final class MainLogic implements MainHub.LogicLink {
         SLInt.pV(null, null);
         SLInt.pV("multiple ps", "_+_");
 
+        // android.os.CpuUsageInfo - practically useless \\
+        // android.util.DebugUtils - useless here \\
+
+        // TODO: 18.11.2017 use android.os.Debug.MemoryInfo \\
+//        android.os.Debug.MemoryInfo memoryInfo = new Debug.MemoryInfo();
+//        memoryInfo.getMemoryStats()
+
+        SLInt.isV("this thread's priority", Thread.currentThread().getPriority());
+
+        // TODO: 18.11.2017 use android.os.Process - should investigate this more \\
+        android.os.Process.setThreadPriority(0);
+
         Enumeration<?> properties = System.getProperties().propertyNames();
         while (properties.hasMoreElements()) {
             SLInt.isV("property", properties.nextElement());

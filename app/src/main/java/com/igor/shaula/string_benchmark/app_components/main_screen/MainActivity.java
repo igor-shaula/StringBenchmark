@@ -210,9 +210,4 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
                 L.w(CN, "selectInfoToShow ` unknown intentAction = " + intentAction);
         }
     }
-
-    // TODO: 18.11.2017 use android.os.CpuUsageInfo
-    // TODO: 18.11.2017 use android.os.Debug.MemoryInfo \\
-    // TODO: 18.11.2017 use android.os.Process \\
-    // TODO: 18.11.2017 use android.util.DebugUtils \\
 }
