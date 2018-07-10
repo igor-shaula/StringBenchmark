@@ -1,5 +1,6 @@
 package com.igor.shaula.string_benchmark.app_components.main_screen;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
@@ -10,6 +11,9 @@ import java.util.Map;
 public interface MainHub {
 
     interface SystemLink {
+
+        @NonNull
+        Context getContext();
 
         @NonNull
         String getLoad();

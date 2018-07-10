@@ -109,6 +109,12 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @NonNull
     @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @NonNull
+    @Override
     public String getLoad() {
         final DataTransport appLink = (DataTransport) getApplication();
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
@@ -164,7 +170,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @Override
     public void launchAllMeasurements(int testRepetitionsCount) {
-        TestingIntentService.launchAllMeasurements(this, testRepetitionsCount);
+        JobHolder.getInstance(0).launchAllMeasurements(this, testRepetitionsCount);
+//        TestingIntentService.launchAllMeasurements(this, testRepetitionsCount);
     }
 
     @Override
