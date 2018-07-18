@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.payload_jobs;
+package com.igor.shaula.string_benchmark.core_jobs;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +37,7 @@ public final class IterationsMeasurement {
                 break;
             }
             oneIterationResults.clear();
+
             // trying to exclude strange numbers for the first test method by pre-heating it \\
             runSoutMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SOUT, runSoutMethod(longStringForTest));

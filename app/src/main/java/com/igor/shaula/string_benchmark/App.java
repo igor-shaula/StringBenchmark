@@ -11,7 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.igor.shaula.string_benchmark.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
-import com.igor.shaula.string_benchmark.payload_jobs.DataTransport;
+import com.igor.shaula.string_benchmark.core_jobs.DataTransport;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 
