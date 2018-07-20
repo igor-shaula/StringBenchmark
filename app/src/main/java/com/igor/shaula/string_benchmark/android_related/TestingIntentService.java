@@ -4,17 +4,18 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.logic_engine.AssembleStringLoad;
 import com.igor.shaula.string_benchmark.logic_engine.DataTransport;
 import com.igor.shaula.string_benchmark.logic_engine.IterationsMeasurement;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
 import java.util.Arrays;
 
@@ -93,6 +94,12 @@ public final class TestingIntentService extends IntentService {
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
                 final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
+
+                // the following has rather slight effect in comparison to THREAD_PRIORITY_LOWEST \\
+                Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
+                // setting Java Thread priority does noticeably affect performance \\
+                Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
                 new IterationsMeasurement().measurePerformanceInLoop(
                         (DataTransport) getApplication(), howManyIterations);
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
