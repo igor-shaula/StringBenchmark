@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:fitsSystemWindows="true"
-    tools:context="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity">
+    tools:context="com.igor.shaula.string_benchmark.android_related.main_screen.MainActivity">
 
     <include
         layout="@layout/content_for_test_iterations"

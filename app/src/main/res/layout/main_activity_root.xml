@@ -6,7 +6,7 @@
     android:id="@+id/mainActivityRootView"
     style="@style/MatchMatch"
     android:fitsSystemWindows="true"
-    tools:context=".app_components.main_screen.MainActivity">
+    tools:context=".android_related.main_screen.MainActivity">
 
     <include layout="@layout/main_activity_coordinator"/>
 

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:orientation="vertical"
-    tools:context=".app_components.main_screen.MainActivity">
+    tools:context=".android_related.main_screen.MainActivity">
 
     <android.support.v7.widget.Toolbar
         style="@style/MatchWrap"

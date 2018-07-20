@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.igor.shaula.string_benchmark.annotations.MeDoc;
-import com.igor.shaula.string_benchmark.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.app_components.main_screen.for_ui.OneIterationResultModel;
+import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
+import com.igor.shaula.string_benchmark.android_related.main_screen.for_ui.OneIterationResultModel;
 
 import java.util.ArrayList;
 import java.util.Collection;

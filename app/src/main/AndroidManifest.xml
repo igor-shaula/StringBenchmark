@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name=".app_components.App"
+        android:name=".android_related.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +17,7 @@
         <!-- we really need large heap here -->
 
         <activity
-            android:name=".app_components.main_screen.MainActivity"
+            android:name=".android_related.main_screen.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
@@ -29,17 +29,17 @@
         </activity>
 
         <service
-            android:name=".app_components.TestingIntentService"
+            android:name=".android_related.TestingIntentService"
             android:exported="false">
         </service>
 
         <activity
-            android:name=".app_components.additional_screens.SettingsActivity"
+            android:name=".android_related.additional_screens.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".app_components.main_screen.MainActivity">
+            android:parentActivityName=".android_related.main_screen.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.igor.shaula.string_benchmark.app_components.main_screen.MainActivity"/>
+                android:value="com.igor.shaula.string_benchmark.android_related.main_screen.MainActivity"/>
         </activity>
     </application>
 

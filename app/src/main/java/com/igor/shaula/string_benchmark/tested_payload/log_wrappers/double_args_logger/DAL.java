@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.utils;
+package com.igor.shaula.string_benchmark.tested_payload.log_wrappers.double_args_logger;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,16 +13,16 @@ import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
         "every method here takes only two arguments," +
         "the best name for this class consists of only one letter - L - for briefness in code")
 
-public final class L {
+public final class DAL {
 
-    private static final String TAG_23 = "APP_LOG";
+    private static final String TAG_23 = "DoubleArgsLogTag";
     private static final String DIVIDER = " ` ";
     // global constant switcher to be touched from this class only \\
     private static final boolean USE_LOGGING = true;
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
 
-    private L() {
+    private DAL() {
         // should not create any instances of this class \\
     }
 
