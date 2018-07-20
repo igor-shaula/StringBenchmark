@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.android_related.main_screen.for_ui.OneIterationResultModel;
+import com.igor.shaula.string_benchmark.logic_engine.OneIterationResultModel;
 
 import java.util.ArrayList;
 import java.util.Collection;

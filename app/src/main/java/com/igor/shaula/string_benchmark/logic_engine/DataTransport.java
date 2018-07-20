@@ -3,8 +3,6 @@ package com.igor.shaula.string_benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.string_benchmark.android_related.main_screen.for_ui.OneIterationResultModel;
-
 import java.util.List;
 import java.util.Map;
 

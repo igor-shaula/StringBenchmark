@@ -8,18 +8,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.R;
+import com.igor.shaula.string_benchmark.logic_engine.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
 import java.util.List;
 
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
-public final class IterationResultsAdapterWithList extends
-        RecyclerView.Adapter<IterationResultsAdapterWithList.ViewHolder> {
+public final class IterationResultsAdapterWithListX extends
+        RecyclerView.Adapter<IterationResultsAdapterWithListX.ViewHolder> {
 
     @Nullable
     private List<OneIterationResultModel> iterationResultModels;
 
-    public IterationResultsAdapterWithList(@NonNull List<OneIterationResultModel> iterationResultList) {
+    public IterationResultsAdapterWithListX(@NonNull List<OneIterationResultModel> iterationResultList) {
         this.iterationResultModels = iterationResultList;
     }
 

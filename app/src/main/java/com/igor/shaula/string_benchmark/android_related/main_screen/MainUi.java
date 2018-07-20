@@ -72,7 +72,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvIterationsResultHeader;
     private View vIterationsResultHeader;
     private IterationResultsAdapterWithMap rvAdapter;
-//    private IterationResultsAdapterWithList rvAdapter;
+//    private IterationResultsAdapterWithListX rvAdapter;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -422,7 +422,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
         // special link to adapter is needed for upcoming update-kind method \\
         rvAdapter = new IterationResultsAdapterWithMap(logicLink.getInitialEmptyMap());
-//        rvAdapter = new IterationResultsAdapterWithList(logicLink.getIterationResultList());
+//        rvAdapter = new IterationResultsAdapterWithListX(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 
     } // init \\
