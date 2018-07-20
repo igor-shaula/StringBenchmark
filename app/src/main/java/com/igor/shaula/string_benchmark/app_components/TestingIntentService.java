@@ -25,19 +25,8 @@ public final class TestingIntentService extends IntentService {
 
     private static final String CN = "TestingIntentService";
 
-    private static TestingIntentService thisInstance;
-
-    private TestingIntentService() {
+    public TestingIntentService() {
         super(CN);
-        thisInstance = this;
-    }
-
-    public static TestingIntentService getInstance() {
-        if (thisInstance == null) {
-            return new TestingIntentService();
-        } else {
-            return thisInstance;
-        }
     }
 
     public static void prepareTheLoadForTest(@NonNull Context context,
@@ -51,7 +40,7 @@ public final class TestingIntentService extends IntentService {
         );
     }
 
-    public void launchAllMeasurements(@NonNull Context context, int howManyIterations) {
+    public static void launchAllMeasurements(@NonNull Context context, int howManyIterations) {
         context.startService(new Intent(context, TestingIntentService.class)
                 .setAction(C.Intent.ACTION_START_ALL_TESTS)
                 .putExtra(C.Intent.NAME_ITERATIONS, howManyIterations)

@@ -18,9 +18,7 @@ public class SwitchingThreads {
 
     public SwitchingThreads(@NonNull Callback callback) {
         this.callback = callback;
-    }
 
-    public void prepareTestedContainer() {
         testedArrayList.add("0");
         testedArrayList.add("1");
         testedArrayList.add("2");
@@ -42,7 +40,6 @@ public class SwitchingThreads {
         return resultBuilder.toString();
     }
 
-    @NonNull
     public void iterateThroughArrayListInWorkerThread() {
         final Thread workerThread = new Thread(new Runnable() {
             @Override

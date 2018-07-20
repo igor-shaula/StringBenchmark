@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark;
+package com.igor.shaula.string_benchmark.app_components;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;

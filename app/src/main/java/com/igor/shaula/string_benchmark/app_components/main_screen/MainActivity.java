@@ -15,6 +15,7 @@ import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.app_components.TestingIntentService;
 import com.igor.shaula.string_benchmark.app_components.additional_screens.SettingsActivity;
 import com.igor.shaula.string_benchmark.core_jobs.DataTransport;
+import com.igor.shaula.string_benchmark.core_jobs.JobHolder;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
@@ -171,7 +172,6 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @Override
     public void launchAllMeasurements(int testRepetitionsCount) {
         JobHolder.getInstance(0).launchAllMeasurements(this, testRepetitionsCount);
-//        TestingIntentService.launchAllMeasurements(this, testRepetitionsCount);
     }
 
     @Override
