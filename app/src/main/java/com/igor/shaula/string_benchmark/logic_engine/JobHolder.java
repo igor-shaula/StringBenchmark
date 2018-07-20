@@ -9,7 +9,7 @@ import com.igor.shaula.string_benchmark.android_related.main_screen.MainHub;
 
 @TypeDoc(createdBy = "shaula", createdOn = "10.07.2018", purpose = "" +
         "abstraction for IntentService, background thread, handler or any other working mechanism")
-public class JobHolder {
+public final class JobHolder {
 
     private int implementation;
     @Nullable

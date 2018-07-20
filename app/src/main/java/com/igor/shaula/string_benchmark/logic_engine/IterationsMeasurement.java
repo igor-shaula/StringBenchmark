@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLVoid;
@@ -13,6 +12,7 @@ import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.var_args_log
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.var_args_logger_3_objects.VAL3;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
 import java.util.Map;
 
@@ -21,8 +21,8 @@ public final class IterationsMeasurement {
 
     private static final String CN = "IterationsMeasurement";
 
-    public void measurePerformanceInLoop(@NonNull final DataTransport dataTransport,
-                                         final int howManyIterations) {
+    public static void measurePerformanceInLoop(@NonNull final DataTransport dataTransport,
+                                                final int howManyIterations) {
 
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
@@ -72,49 +72,49 @@ public final class IterationsMeasurement {
         }
     }
 
-    private long runSoutMethod(@Nullable String longStringForTest) {
+    private static long runSoutMethod(@Nullable String longStringForTest) {
         long soutNanoTime = System.nanoTime();
         System.out.println(longStringForTest);
         return System.nanoTime() - soutNanoTime;
     }
 
-    private long runLogMethod(@Nullable String longStringForTest) {
+    private static long runLogMethod(@Nullable String longStringForTest) {
         long logNanoTime = System.nanoTime();
         Log.v(CN, longStringForTest);
         return System.nanoTime() - logNanoTime;
     }
 
-    private long runDalMethod(@Nullable String longStringForTest) {
+    private static long runDalMethod(@Nullable String longStringForTest) {
         long dalNanoTime = System.nanoTime();
         DAL.v(CN, longStringForTest);
         return System.nanoTime() - dalNanoTime;
     }
 
-    private long runVal1Method(@Nullable String longStringForTest) {
+    private static long runVal1Method(@Nullable String longStringForTest) {
         long val1NanoTime = System.nanoTime();
         VAL1.v(longStringForTest);
         return System.nanoTime() - val1NanoTime;
     }
 
-    private long runVal2Method(@Nullable String longStringForTest) {
+    private static long runVal2Method(@Nullable String longStringForTest) {
         long val2NanoTime = System.nanoTime();
         VAL2.v(longStringForTest);
         return System.nanoTime() - val2NanoTime;
     }
 
-    private long runVal3Method(@Nullable String longStringForTest) {
+    private static long runVal3Method(@Nullable String longStringForTest) {
         long val3NanoTime = System.nanoTime();
         VAL3.v(longStringForTest);
         return System.nanoTime() - val3NanoTime;
     }
 
-    private long runSLVoidMethod(@Nullable String longStringForTest) {
+    private static long runSLVoidMethod(@Nullable String longStringForTest) {
         long salNanoTime = System.nanoTime();
         SLVoid.v(longStringForTest);
         return System.nanoTime() - salNanoTime;
     }
 
-    private long runSLIntMethod(@Nullable String longStringForTest) {
+    private static long runSLIntMethod(@Nullable String longStringForTest) {
         long val0NanoTime = System.nanoTime();
         SLInt.v(longStringForTest);
         return System.nanoTime() - val0NanoTime;

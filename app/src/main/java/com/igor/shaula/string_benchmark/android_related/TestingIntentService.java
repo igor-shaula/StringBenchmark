@@ -100,7 +100,7 @@ public final class TestingIntentService extends IntentService {
                 // setting Java Thread priority does noticeably affect performance \\
                 Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
-                new IterationsMeasurement().measurePerformanceInLoop(
+                IterationsMeasurement.measurePerformanceInLoop(
                         (DataTransport) getApplication(), howManyIterations);
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
                 break;
