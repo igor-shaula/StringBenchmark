@@ -3,8 +3,8 @@ package com.igor.shaula.string_benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.android_related.main_screen.MainHub;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
 import java.util.Timer;
 import java.util.TimerTask;

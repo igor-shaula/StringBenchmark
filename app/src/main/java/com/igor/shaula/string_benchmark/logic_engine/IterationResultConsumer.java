@@ -24,19 +24,6 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
         this.logicLink = logicLink;
     }
 
-//    @NonNull
-//    @Override
-//    public List<OneIterationResultModel> getOneIterationResultList() {
-//        final List<OneIterationResultModel> mockResultList = new ArrayList<>();
-//        return mockResultList;
-//    }
-
-//    @NonNull
-//    @Override
-//    public Map<String, Long> getOneIterationResultMap() {
-//        return summarizedResultsMap;
-//    }
-
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
     @Override
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\

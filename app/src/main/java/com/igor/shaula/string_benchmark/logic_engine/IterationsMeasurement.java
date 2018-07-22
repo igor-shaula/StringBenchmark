@@ -28,7 +28,6 @@ public final class IterationsMeasurement {
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
         final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
-//        final Map<String, Long> oneIterationResults = dataTransport.getInitialEmptyMap();
 
         // this loop is global - all measurements run inside it \\
         for (int i = 0; i < howManyIterations; i++) {
@@ -38,34 +37,26 @@ public final class IterationsMeasurement {
                 dataTransport.stopIterations();
                 break;
             }
-//            oneIterationResults.clear();
+            oneIterationResults.clear(); // it's always better to be sure in clean container \\
             /*
             previously used to try reducing of garbage collector impact =
             trying to exclude strange numbers for the first test method by pre-heating it \
             pre-heating all other methods to avoid their slowing down for the first time invoked \
             */
-//            runSoutMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SOUT, runSoutMethod(longStringForTest));
 
-//            runLogMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_LOG, runLogMethod(longStringForTest));
 
-//            runDalMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_DAL, runDalMethod(longStringForTest));
 
-//            runVal1Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_1, runVal1Method(longStringForTest));
 
-//            runVal2Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_2, runVal2Method(longStringForTest));
 
-//            runVal3Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_3, runVal3Method(longStringForTest));
 
-//            runSLVoidMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SL_VOID, runSLVoidMethod(longStringForTest));
 
-//            runSLIntMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SL_INT, runSLIntMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
