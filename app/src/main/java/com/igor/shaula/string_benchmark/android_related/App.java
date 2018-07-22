@@ -101,27 +101,10 @@ public final class App extends Application implements DataTransport {
 
     // FROM DataTransport ==========================================================================
 
-//    @NonNull
-//    @Override
-//    public List<OneIterationResultModel> getIterationResultList() {
-//        return iterationResultConsumer != null ?
-//                iterationResultConsumer.getOneIterationResultList() : new ArrayList<OneIterationResultModel>();
-//    }
-
-//    @NonNull
-//    @Override
-//    public Map<String, Long> getInitialEmptyMap() {
-//        final Map<String, Long> initialEmptyMap = new LinkedHashMap<>();
-//        initialEmptyMap.put(C.Key.KEY_SOUT, 0L);
-//        initialEmptyMap.put(C.Key.KEY_LOG, 0L);
-//        initialEmptyMap.put(C.Key.KEY_DAL, 0L);
-//        initialEmptyMap.put(C.Key.KEY_VAL_1, 0L);
-//        initialEmptyMap.put(C.Key.KEY_VAL_2, 0L);
-//        initialEmptyMap.put(C.Key.KEY_VAL_3, 0L);
-//        initialEmptyMap.put(C.Key.KEY_SL_VOID, 0L);
-//        initialEmptyMap.put(C.Key.KEY_SL_INT, 0L);
-//        return initialEmptyMap;
-//    }
+    @Override
+    public void delegateResult(@Nullable String result) {
+        longStringForTest = result;
+    }
 
     @Override
     @Nullable

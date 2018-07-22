@@ -34,14 +34,16 @@ public final class C {
 
     public static class Key {
 
-        public static final String KEY_SOUT = "Good old System.out.println(…):";
-        public static final String KEY_LOG = "Standard Android Log:";
-        public static final String KEY_DAL = "My double-args Log wrapper:";
-        public static final String KEY_VAL_1 = "My variable-args Log wrapper 1:";
-        public static final String KEY_VAL_2 = "My variable-args Log wrapper 2:";
-        public static final String KEY_VAL_3 = "My variable-args Log wrapper 3:";
-        public static final String KEY_SL_VOID = "My superior-void Log wrapper:";
-        public static final String KEY_SL_INT = "My superior-int Log wrapper:";
+        public static final String READ_ARRAY_LIST_IN_THIS_THREAD = "read 10 strings ArrayList in current thread";
+        public static final String READ_ARRAY_LIST_IN_NEW_THREAD = "read 10 strings ArrayList - new thread each time";
+        public static final String GOOD_OLD_SYSTEM_OUT_PRINTLN = "Good old System.out.println(…):";
+        public static final String STANDARD_ANDROID_LOG = "Standard Android Log:";
+        public static final String MY_DOUBLE_ARGS_LOG_WRAPPER = "My double-args Log wrapper:";
+        public static final String MY_VARIABLE_ARGS_LOG_WRAPPER_1 = "My variable-args Log wrapper 1:";
+        public static final String MY_VARIABLE_ARGS_LOG_WRAPPER_2 = "My variable-args Log wrapper 2:";
+        public static final String MY_VARIABLE_ARGS_LOG_WRAPPER_3 = "My variable-args Log wrapper 3:";
+        public static final String MY_SUPERIOR_VOID_LOG_WRAPPER = "My superior-void Log wrapper:";
+        public static final String MY_SUPERIOR_INT_LOG_WRAPPER = "My superior-int Log wrapper:";
     }
 
     public static final class Choice {
@@ -50,19 +52,6 @@ public final class C {
         public static final int SNACKBAR = 1001;
         public static final int PREPARATION = 1;
         public static final int STOPPED = 2;
-    }
-
-    public static final class Order {
-
-        public static final int INDEX_OF_SOUT = 0;
-        public static final int INDEX_OF_LOG = 1;
-        public static final int INDEX_OF_DAL = 2;
-        public static final int INDEX_OF_VAL_1 = 3;
-        public static final int INDEX_OF_VAL_2 = 4;
-        public static final int INDEX_OF_VAL_3 = 5;
-        public static final int INDEX_OF_SL_VOID = 6;
-        public static final int INDEX_OF_SL_INT = 7;
-        public static final int VARIANTS_TOTAL = 8;
     }
 
     public static final class Prefs {

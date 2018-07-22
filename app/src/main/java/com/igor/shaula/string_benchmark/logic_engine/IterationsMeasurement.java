@@ -3,6 +3,7 @@ package com.igor.shaula.string_benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.igor.shaula.string_benchmark.tested_payload.SwitchingThreads;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLVoid;
@@ -42,21 +43,35 @@ public final class IterationsMeasurement {
             trying to exclude strange numbers for the first test method by pre-heating it \
             pre-heating all other methods to avoid their slowing down for the first time invoked \
             */
-            oneIterationResults.put(C.Key.KEY_SOUT, i == 0 ? 0L : runSoutMethod(dataTransport));
+            oneIterationResults.put(C.Key.READ_ARRAY_LIST_IN_THIS_THREAD,
+                    i == 0 ? 0L : runReadArrayListInThisThread(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_LOG, i == 0 ? 0L : runLogMethod(dataTransport));
+            oneIterationResults.put(C.Key.READ_ARRAY_LIST_IN_NEW_THREAD,
+                    i == 0 ? 0L : runReadArrayListInNewThread(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_DAL, i == 0 ? 0L : runDalMethod(dataTransport));
+            oneIterationResults.put(C.Key.GOOD_OLD_SYSTEM_OUT_PRINTLN,
+                    i == 0 ? 0L : runSoutMethod(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_VAL_1, i == 0 ? 0L : runVal1Method(dataTransport));
+            oneIterationResults.put(C.Key.STANDARD_ANDROID_LOG,
+                    i == 0 ? 0L : runLogMethod(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_VAL_2, i == 0 ? 0L : runVal2Method(dataTransport));
+            oneIterationResults.put(C.Key.MY_DOUBLE_ARGS_LOG_WRAPPER,
+                    i == 0 ? 0L : runDalMethod(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_VAL_3, i == 0 ? 0L : runVal3Method(dataTransport));
+            oneIterationResults.put(C.Key.MY_VARIABLE_ARGS_LOG_WRAPPER_1,
+                    i == 0 ? 0L : runVal1Method(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_SL_VOID, i == 0 ? 0L : runSLVoidMethod(dataTransport));
+            oneIterationResults.put(C.Key.MY_VARIABLE_ARGS_LOG_WRAPPER_2,
+                    i == 0 ? 0L : runVal2Method(dataTransport));
 
-            oneIterationResults.put(C.Key.KEY_SL_INT, i == 0 ? 0L : runSLIntMethod(dataTransport));
+            oneIterationResults.put(C.Key.MY_VARIABLE_ARGS_LOG_WRAPPER_3,
+                    i == 0 ? 0L : runVal3Method(dataTransport));
+
+            oneIterationResults.put(C.Key.MY_SUPERIOR_VOID_LOG_WRAPPER,
+                    i == 0 ? 0L : runSLVoidMethod(dataTransport));
+
+            oneIterationResults.put(C.Key.MY_SUPERIOR_INT_LOG_WRAPPER,
+                    i == 0 ? 0L : runSLIntMethod(dataTransport));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +
@@ -66,40 +81,54 @@ public final class IterationsMeasurement {
         }
     }
 
+    @NonNull
+    private static Long runReadArrayListInThisThread(@NonNull DataTransport dataTransport) {
+        long initialNanoTime = System.nanoTime();
+        SwitchingThreads.getInstance(dataTransport).iterateThroughArrayListInThisThread();
+        return System.nanoTime() - initialNanoTime;
+    }
+
+    @NonNull
+    private static Long runReadArrayListInNewThread(@NonNull DataTransport dataTransport) {
+        long initialNanoTime = System.nanoTime();
+        SwitchingThreads.getInstance(dataTransport).iterateThroughArrayListInNewThread();
+        return System.nanoTime() - initialNanoTime;
+    }
+
     private static long runSoutMethod(@NonNull DataTransport dataTransport) {
-        long soutNanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         System.out.println(dataTransport.getLongStringForTest());
-        return System.nanoTime() - soutNanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 
     private static long runLogMethod(@NonNull DataTransport dataTransport) {
-        long logNanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         Log.v(CN, dataTransport.getLongStringForTest());
-        return System.nanoTime() - logNanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 
     private static long runDalMethod(@NonNull DataTransport dataTransport) {
-        long dalNanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         DAL.v(CN, dataTransport.getLongStringForTest());
-        return System.nanoTime() - dalNanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 
     private static long runVal1Method(@NonNull DataTransport dataTransport) {
-        long val1NanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         VAL1.v(dataTransport.getLongStringForTest());
-        return System.nanoTime() - val1NanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 
     private static long runVal2Method(@NonNull DataTransport dataTransport) {
-        long val2NanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         VAL2.v(dataTransport.getLongStringForTest());
-        return System.nanoTime() - val2NanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 
     private static long runVal3Method(@NonNull DataTransport dataTransport) {
-        long val3NanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         VAL3.v(dataTransport.getLongStringForTest());
-        return System.nanoTime() - val3NanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 
     private static long runSLVoidMethod(@NonNull DataTransport dataTransport) {
@@ -109,8 +138,8 @@ public final class IterationsMeasurement {
     }
 
     private static long runSLIntMethod(@NonNull DataTransport dataTransport) {
-        long val0NanoTime = System.nanoTime();
+        long initialNanoTime = System.nanoTime();
         SLInt.v(dataTransport.getLongStringForTest());
-        return System.nanoTime() - val0NanoTime;
+        return System.nanoTime() - initialNanoTime;
     }
 }

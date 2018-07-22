@@ -11,12 +11,14 @@ import java.util.ArrayList;
         "test switching between threads when working with collections")
 public class SwitchingThreads {
 
+    @Nullable
+    private static SwitchingThreads instance;
     @NonNull
     private ArrayList<String> testedArrayList = new ArrayList<>(10);
     @NonNull
     private Callback callback;
 
-    public SwitchingThreads(@NonNull Callback callback) {
+    private SwitchingThreads(@NonNull Callback callback) {
         this.callback = callback;
 
         testedArrayList.add("0");
@@ -32,7 +34,15 @@ public class SwitchingThreads {
     }
 
     @NonNull
-    public String iterateThroughArrayListInTheSameThread() {
+    public static SwitchingThreads getInstance(@NonNull Callback callback) {
+        if (instance == null) {
+            instance = new SwitchingThreads(callback);
+        }
+        return instance;
+    }
+
+    @NonNull
+    public String iterateThroughArrayListInThisThread() {
         final StringBuilder resultBuilder = new StringBuilder();
         for (String s : testedArrayList) {
             resultBuilder.append(s);
@@ -40,11 +50,11 @@ public class SwitchingThreads {
         return resultBuilder.toString();
     }
 
-    public void iterateThroughArrayListInWorkerThread() {
+    public void iterateThroughArrayListInNewThread() {
         final Thread workerThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                callback.delegateResult(iterateThroughArrayListInTheSameThread());
+                callback.delegateResult(iterateThroughArrayListInThisThread());
             }
         });
         workerThread.start();
