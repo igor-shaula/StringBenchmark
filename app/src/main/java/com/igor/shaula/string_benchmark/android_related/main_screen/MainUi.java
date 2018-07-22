@@ -438,7 +438,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 rvAdapter.updateIterationsResult(resultModelMap, currentIterationIndex);
                 rvAdapter.notifyDataSetChanged();
                 final String currentIterationCounterString =
-                        "" + C.SPACE + U.createReadableStringForLong(currentIterationIndex + 1);
+                        "" + C.SPACE + U.createReadableStringForLong(currentIterationIndex);
                 tvCurrentIterationNumber.setText(currentIterationCounterString);
             }
         });
