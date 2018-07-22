@@ -175,8 +175,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     }
 
     @Override
-    public void allowIterationsJob(boolean isAllowedToRunIterations) {
-        ((DataTransport) getApplication()).allowIterationsJob(isAllowedToRunIterations);
+    public void forbidIterationsJob(boolean isForbiddenToRunIterations) {
+        ((DataTransport) getApplication()).forbidIterationsJob(isForbiddenToRunIterations);
     }
 
     @Override

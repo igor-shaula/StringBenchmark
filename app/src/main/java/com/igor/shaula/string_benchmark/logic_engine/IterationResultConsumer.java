@@ -6,9 +6,7 @@ import com.igor.shaula.string_benchmark.android_related.main_screen.MainHub;
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "iterations result processor")
@@ -26,18 +24,18 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
         this.logicLink = logicLink;
     }
 
-    @NonNull
-    @Override
-    public List<OneIterationResultModel> getOneIterationResultList() {
-        final List<OneIterationResultModel> mockResultList = new ArrayList<>();
-        return mockResultList;
-    }
+//    @NonNull
+//    @Override
+//    public List<OneIterationResultModel> getOneIterationResultList() {
+//        final List<OneIterationResultModel> mockResultList = new ArrayList<>();
+//        return mockResultList;
+//    }
 
-    @NonNull
-    @Override
-    public Map<String, Long> getOneIterationResultMap() {
-        return summarizedResultsMap;
-    }
+//    @NonNull
+//    @Override
+//    public Map<String, Long> getOneIterationResultMap() {
+//        return summarizedResultsMap;
+//    }
 
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
     @Override

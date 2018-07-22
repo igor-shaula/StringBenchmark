@@ -3,13 +3,12 @@ package com.igor.shaula.string_benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.List;
 import java.util.Map;
 
 public interface DataTransport { // currently implemented by App as a quickest decision \\
 
-    @NonNull
-    List<OneIterationResultModel> getIterationResultList();
+//    @NonNull
+//    List<OneIterationResultModel> getIterationResultList();
 
     @NonNull
     Map<String, Long> getInitialEmptyMap();
@@ -17,9 +16,9 @@ public interface DataTransport { // currently implemented by App as a quickest d
     @Nullable
     String getLongStringForTest();
 
-    boolean isAllowedToRunIterations();
+    boolean isForbiddenToRunIterations();
 
-    void allowIterationsJob(boolean isAllowedToRunIterations);
+    void forbidIterationsJob(boolean isForbiddenToRunIterations);
 
     void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer);
 
@@ -33,11 +32,11 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
     interface IterationResultConsumer { // implemented by LogicLink \\
 
-        @NonNull
-        List<OneIterationResultModel> getOneIterationResultList();
+//        @NonNull
+//        List<OneIterationResultModel> getOneIterationResultList();
 
-        @NonNull
-        Map<String,Long> getOneIterationResultMap();
+//        @NonNull
+//        Map<String, Long> getOneIterationResultMap();
 
         void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
 

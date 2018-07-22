@@ -262,10 +262,10 @@ public final class MainLogic implements MainHub.LogicLink {
     public void onToggleIterationsClick() {
         boolean isEndless = uiLink.isEndless();
         if (isIterationsJobRunning) {
-            systemLink.allowIterationsJob(false);
+            systemLink.forbidIterationsJob(true);
             // IntentService will stop shortly after this \\
         } else {
-            systemLink.allowIterationsJob(true);
+            systemLink.forbidIterationsJob(false);
             startIterationsJob(isEndless);
         }
     }

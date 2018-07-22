@@ -14,6 +14,7 @@ import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "abstract job - not in Service only")
@@ -26,42 +27,45 @@ public final class IterationsMeasurement {
 
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
         final String longStringForTest = dataTransport.getLongStringForTest();
-        final Map<String, Long> oneIterationResults = dataTransport.getInitialEmptyMap();
+        final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
+//        final Map<String, Long> oneIterationResults = dataTransport.getInitialEmptyMap();
 
         // this loop is global - all measurements run inside it \\
         for (int i = 0; i < howManyIterations; i++) {
             // at first checking if it has been marked for stop \\
-            if (!dataTransport.isAllowedToRunIterations()) {
+            if (dataTransport.isForbiddenToRunIterations()) {
                 L.i(CN, "measurePerformanceInLoop ` isMarkedForStop worked -> stopping now");
                 dataTransport.stopIterations();
                 break;
             }
-            oneIterationResults.clear();
-
-            // trying to exclude strange numbers for the first test method by pre-heating it \\
-            runSoutMethod(longStringForTest);
+//            oneIterationResults.clear();
+            /*
+            previously used to try reducing of garbage collector impact =
+            trying to exclude strange numbers for the first test method by pre-heating it \
+            pre-heating all other methods to avoid their slowing down for the first time invoked \
+            */
+//            runSoutMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SOUT, runSoutMethod(longStringForTest));
-            // pre-heating all other methods to avoid their slowing down for the first time invoked \\
 
-            runLogMethod(longStringForTest);
+//            runLogMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_LOG, runLogMethod(longStringForTest));
 
-            runDalMethod(longStringForTest);
+//            runDalMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_DAL, runDalMethod(longStringForTest));
 
-            runVal1Method(longStringForTest);
+//            runVal1Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_1, runVal1Method(longStringForTest));
 
-            runVal2Method(longStringForTest);
+//            runVal2Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_2, runVal2Method(longStringForTest));
 
-            runVal3Method(longStringForTest);
+//            runVal3Method(longStringForTest);
             oneIterationResults.put(C.Key.KEY_VAL_3, runVal3Method(longStringForTest));
 
-            runSLVoidMethod(longStringForTest);
+//            runSLVoidMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SL_VOID, runSLVoidMethod(longStringForTest));
 
-            runSLIntMethod(longStringForTest);
+//            runSLIntMethod(longStringForTest);
             oneIterationResults.put(C.Key.KEY_SL_INT, runSLIntMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\

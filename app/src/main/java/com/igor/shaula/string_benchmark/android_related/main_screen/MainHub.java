@@ -25,7 +25,7 @@ public interface MainHub {
 
         void launchAllMeasurements(int testRepetitionsCount);
 
-        void allowIterationsJob(boolean isAllowedToRunIterations);
+        void forbidIterationsJob(boolean isForbiddenToRunIterations);
 
         void stopTestingService();
 

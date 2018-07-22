@@ -12,6 +12,7 @@ import com.igor.shaula.string_benchmark.utils.U;
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
@@ -21,11 +22,17 @@ public final class IterationResultsAdapterWithMap extends
     private int currentIterationIndex;
     @NonNull
     private Map<String, Long> iterationResultModels;
-    // avoiding nullability annotations here because lifecycle of this adapter provides safe use \\
+
+    @SuppressWarnings("NullableProblems") // lifecycle of this adapter provides safe use \\
+    @NonNull
     private static String[] unitsOfMeasurement; // nanos - micros - millis - seconds \\
 
-    public IterationResultsAdapterWithMap(@NonNull Map<String, Long> iterationResultMap) {
-        this.iterationResultModels = iterationResultMap;
+//    public IterationResultsAdapterWithMap(@NonNull Map<String, Long> iterationResultMap) {
+//        this.iterationResultModels = iterationResultMap;
+//    }
+
+    public IterationResultsAdapterWithMap() {
+        iterationResultModels = new HashMap<>(0);
     }
 
     public void updateIterationsResult(@NonNull Map<String, Long> iterationResultMap,
@@ -70,7 +77,9 @@ public final class IterationResultsAdapterWithMap extends
 
     static final class ViewHolder extends RecyclerView.ViewHolder {
 
+        @NonNull
         private TextView methodName;
+        @NonNull
         private TextView methodResult;
 
         @MeDoc("unitsOfMeasurement created here will be later used in onBindViewHolder")
@@ -79,15 +88,15 @@ public final class IterationResultsAdapterWithMap extends
             methodName = viewGroup.findViewById(R.id.tvMethodName);
             methodResult = viewGroup.findViewById(R.id.tvMethodResult);
             // creation of this string-array should be done only once - at the first invocation \\
-            if (unitsOfMeasurement == null) {
-                final Context context = viewGroup.getContext();
-                unitsOfMeasurement = new String[]{
-                        context.getString(R.string.nanos),
-                        context.getString(R.string.micros),
-                        context.getString(R.string.millis),
-                        context.getString(R.string.seconds)
-                };
-            }
+//            if (unitsOfMeasurement == null) {
+            final Context context = viewGroup.getContext();
+            unitsOfMeasurement = new String[]{
+                    context.getString(R.string.nanos),
+                    context.getString(R.string.micros),
+                    context.getString(R.string.millis),
+                    context.getString(R.string.seconds)
+            };
+//            }
         }
     }
 }

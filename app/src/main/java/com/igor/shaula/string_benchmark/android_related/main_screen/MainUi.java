@@ -421,7 +421,8 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setHasFixedSize(true);
         rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
         // special link to adapter is needed for upcoming update-kind method \\
-        rvAdapter = new IterationResultsAdapterWithMap(logicLink.getInitialEmptyMap());
+        rvAdapter = new IterationResultsAdapterWithMap();
+//        rvAdapter = new IterationResultsAdapterWithMap(logicLink.getInitialEmptyMap());
 //        rvAdapter = new IterationResultsAdapterWithListX(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 

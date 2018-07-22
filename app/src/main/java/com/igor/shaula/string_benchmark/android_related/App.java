@@ -8,16 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.logic_engine.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.logic_engine.DataTransport;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
+import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "13-11-2017", purpose = "" +
@@ -27,7 +24,7 @@ public final class App extends Application implements DataTransport {
 
     private static final String CN = "App";
 
-    private boolean isAllowedToRunIterations;
+    private boolean isForbiddenToRunIterations;
     @Nullable
     private IterationResultConsumer iterationResultConsumer;
     @Nullable
@@ -104,12 +101,12 @@ public final class App extends Application implements DataTransport {
 
     // FROM DataTransport ==========================================================================
 
-    @NonNull
-    @Override
-    public List<OneIterationResultModel> getIterationResultList() {
-        return iterationResultConsumer != null ?
-                iterationResultConsumer.getOneIterationResultList() : new ArrayList<OneIterationResultModel>();
-    }
+//    @NonNull
+//    @Override
+//    public List<OneIterationResultModel> getIterationResultList() {
+//        return iterationResultConsumer != null ?
+//                iterationResultConsumer.getOneIterationResultList() : new ArrayList<OneIterationResultModel>();
+//    }
 
     @NonNull
     @Override
@@ -133,13 +130,13 @@ public final class App extends Application implements DataTransport {
     }
 
     @Override
-    public boolean isAllowedToRunIterations() {
-        return isAllowedToRunIterations;
+    public boolean isForbiddenToRunIterations() {
+        return isForbiddenToRunIterations;
     }
 
     @Override
-    public void allowIterationsJob(boolean isAllowedToRunIterations) {
-        this.isAllowedToRunIterations = isAllowedToRunIterations;
+    public void forbidIterationsJob(boolean isForbiddenToRunIterations) {
+        this.isForbiddenToRunIterations = isForbiddenToRunIterations;
     }
 
     @Override
@@ -172,7 +169,7 @@ public final class App extends Application implements DataTransport {
 
     @Override
     public void stopIterations() {
-//        isAllowedToRunIterations = false; - not needed because we work via older chain \\
+//        isForbiddenToRunIterations = false; - not needed because we work via older chain \\
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(C.Intent.ACTION_JOB_STOPPED));
     }
 }
