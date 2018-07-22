@@ -204,7 +204,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 
     @Override
     public void resetResultViewStates() {
-        rvAdapter.updateIterationsResult(logicLink.getInitialEmptyMap());
+//        rvAdapter.updateIterationsResult(logicLink.getInitialEmptyMap());
         rvAdapter.notifyDataSetChanged();
     }
 

@@ -46,8 +46,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
         logicLink = new MainLogic(this,
                 new MainUi(findViewById(R.id.mainActivityRootView)),
-                (DataTransport) getApplication()
-        );
+                getDataTransport());
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
 
@@ -110,6 +109,12 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @NonNull
     @Override
+    public DataTransport getDataTransport() {
+        return (DataTransport) getApplication();
+    }
+
+    @NonNull
+    @Override
     public Context getContext() {
         return this;
     }
@@ -117,9 +122,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
     @NonNull
     @Override
     public String getLoad() {
-        final DataTransport appLink = (DataTransport) getApplication();
         // longStringForTest may be null - but it's normally processed by all our logging variants \\
-        final String longStringForTest = appLink.getLongStringForTest();
+        final String longStringForTest = getDataTransport().getLongStringForTest();
         if (U.isAnyOneNullOrEmpty(longStringForTest)) {
             return "";
         } else {
@@ -176,7 +180,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
 
     @Override
     public void forbidIterationsJob(boolean isForbiddenToRunIterations) {
-        ((DataTransport) getApplication()).forbidIterationsJob(isForbiddenToRunIterations);
+        getDataTransport().forbidIterationsJob(isForbiddenToRunIterations);
     }
 
     @Override

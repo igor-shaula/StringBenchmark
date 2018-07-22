@@ -3,11 +3,16 @@ package com.igor.shaula.string_benchmark.android_related.main_screen;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.igor.shaula.string_benchmark.logic_engine.DataTransport;
+
 import java.util.Map;
 
 public interface MainHub {
 
     interface SystemLink {
+
+        @NonNull
+        DataTransport getDataTransport();
 
         @NonNull
         Context getContext();
@@ -98,8 +103,8 @@ public interface MainHub {
 //        @NonNull
 //        List<OneIterationResultModel> getIterationResultList();
 
-        @NonNull
-        Map<String, Long> getInitialEmptyMap();
+//        @NonNull
+//        Map<String, Long> getInitialEmptyMap();
 
         boolean isPreparationBlockShown();
 

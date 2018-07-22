@@ -15,7 +15,6 @@ import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "13-11-2017", purpose = "" +
@@ -109,20 +108,20 @@ public final class App extends Application implements DataTransport {
 //                iterationResultConsumer.getOneIterationResultList() : new ArrayList<OneIterationResultModel>();
 //    }
 
-    @NonNull
-    @Override
-    public Map<String, Long> getInitialEmptyMap() {
-        final Map<String, Long> initialEmptyMap = new LinkedHashMap<>();
-        initialEmptyMap.put(C.Key.KEY_SOUT, 0L);
-        initialEmptyMap.put(C.Key.KEY_LOG, 0L);
-        initialEmptyMap.put(C.Key.KEY_DAL, 0L);
-        initialEmptyMap.put(C.Key.KEY_VAL_1, 0L);
-        initialEmptyMap.put(C.Key.KEY_VAL_2, 0L);
-        initialEmptyMap.put(C.Key.KEY_VAL_3, 0L);
-        initialEmptyMap.put(C.Key.KEY_SL_VOID, 0L);
-        initialEmptyMap.put(C.Key.KEY_SL_INT, 0L);
-        return initialEmptyMap;
-    }
+//    @NonNull
+//    @Override
+//    public Map<String, Long> getInitialEmptyMap() {
+//        final Map<String, Long> initialEmptyMap = new LinkedHashMap<>();
+//        initialEmptyMap.put(C.Key.KEY_SOUT, 0L);
+//        initialEmptyMap.put(C.Key.KEY_LOG, 0L);
+//        initialEmptyMap.put(C.Key.KEY_DAL, 0L);
+//        initialEmptyMap.put(C.Key.KEY_VAL_1, 0L);
+//        initialEmptyMap.put(C.Key.KEY_VAL_2, 0L);
+//        initialEmptyMap.put(C.Key.KEY_VAL_3, 0L);
+//        initialEmptyMap.put(C.Key.KEY_SL_VOID, 0L);
+//        initialEmptyMap.put(C.Key.KEY_SL_INT, 0L);
+//        return initialEmptyMap;
+//    }
 
     @Override
     @Nullable

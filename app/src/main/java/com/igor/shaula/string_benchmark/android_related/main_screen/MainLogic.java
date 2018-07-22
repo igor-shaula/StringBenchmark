@@ -7,6 +7,7 @@ import com.igor.shaula.string_benchmark.R;
 import com.igor.shaula.string_benchmark.logic_engine.AssembleStringLoad;
 import com.igor.shaula.string_benchmark.logic_engine.DataTransport;
 import com.igor.shaula.string_benchmark.logic_engine.IterationResultConsumer;
+import com.igor.shaula.string_benchmark.logic_engine.IterationsMeasurement;
 import com.igor.shaula.string_benchmark.logic_engine.TextyTwister;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.utils.C;
@@ -68,11 +69,11 @@ public final class MainLogic implements MainHub.LogicLink {
 //        return dataTransport.getIterationResultList();
 //    }
 
-    @NonNull
-    @Override
-    public Map<String, Long> getInitialEmptyMap() {
-        return dataTransport.getInitialEmptyMap();
-    }
+//    @NonNull
+//    @Override
+//    public Map<String, Long> getInitialEmptyMap() {
+//        return dataTransport.getInitialEmptyMap();
+//    }
 
     @Override
     public boolean isPreparationBlockShown() {
@@ -175,7 +176,8 @@ public final class MainLogic implements MainHub.LogicLink {
                         U.createReadableStringForLong(stringsAmountHint * basicStringLength);
         uiLink.updateStringsAmountHint(altStringRepetitionsHint);
         // 3 \\
-        uiLink.resetResultViewStates();
+//        uiLink.resetResultViewStates();
+        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
         uiLink.resetResultOfPreparation();
     }
 
@@ -193,7 +195,8 @@ public final class MainLogic implements MainHub.LogicLink {
                             );
             uiLink.updateStringsAmountHint(stringRepetitionsHint);
         }
-        uiLink.resetResultViewStates();
+//        uiLink.resetResultViewStates();
+        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
         uiLink.resetResultOfPreparation();
     }
 
@@ -205,7 +208,8 @@ public final class MainLogic implements MainHub.LogicLink {
         } else {
             uiLink.updateIterationAmountHint(systemLink.findStringById(R.string.iterationsAmountHintBusy));
         }
-        uiLink.resetResultViewStates();
+//        uiLink.resetResultViewStates();
+        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
 /*
                 no need to reset shown value of tvResultOfPreparation here because
                 testing loop iterations number has no effect on burden creation time \\

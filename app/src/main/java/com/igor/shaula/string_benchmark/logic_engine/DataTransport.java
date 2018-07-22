@@ -7,8 +7,8 @@ import java.util.Map;
 
 public interface DataTransport { // currently implemented by App as a quickest decision \\
 
-    @NonNull
-    Map<String, Long> getInitialEmptyMap();
+//    @NonNull
+//    Map<String, Long> getInitialEmptyMap();
 
     @Nullable
     String getLongStringForTest();

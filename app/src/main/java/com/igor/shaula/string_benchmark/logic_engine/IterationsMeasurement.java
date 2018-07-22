@@ -30,7 +30,7 @@ public final class IterationsMeasurement {
         final Map<String, Long> oneIterationResults = new LinkedHashMap<>();
 
         // this loop is global - all measurements run inside it \\
-        for (int i = 0; i < howManyIterations; i++) {
+        for (int i = 0; i <= howManyIterations; i++) {
             // at first checking if it has been marked for stop \\
             if (dataTransport.isForbiddenToRunIterations()) {
                 L.i(CN, "measurePerformanceInLoop ` isMarkedForStop worked -> stopping now");
@@ -43,21 +43,29 @@ public final class IterationsMeasurement {
             trying to exclude strange numbers for the first test method by pre-heating it \
             pre-heating all other methods to avoid their slowing down for the first time invoked \
             */
-            oneIterationResults.put(C.Key.KEY_SOUT, runSoutMethod(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_SOUT,
+                    howManyIterations == 0 ? 0L : runSoutMethod(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_LOG, runLogMethod(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_LOG,
+                    howManyIterations == 0 ? 0L : runLogMethod(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_DAL, runDalMethod(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_DAL,
+                    howManyIterations == 0 ? 0L : runDalMethod(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_VAL_1, runVal1Method(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_VAL_1,
+                    howManyIterations == 0 ? 0L : runVal1Method(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_VAL_2, runVal2Method(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_VAL_2,
+                    howManyIterations == 0 ? 0L : runVal2Method(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_VAL_3, runVal3Method(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_VAL_3,
+                    howManyIterations == 0 ? 0L : runVal3Method(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_SL_VOID, runSLVoidMethod(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_SL_VOID,
+                    howManyIterations == 0 ? 0L : runSLVoidMethod(longStringForTest));
 
-            oneIterationResults.put(C.Key.KEY_SL_INT, runSLIntMethod(longStringForTest));
+            oneIterationResults.put(C.Key.KEY_SL_INT,
+                    howManyIterations == 0 ? 0L : runSLIntMethod(longStringForTest));
 /*
             // as this part of code is hot - no need of debug logging here during normal usage \\
             L.w("measurePerformanceInLoop", "i = " + i +

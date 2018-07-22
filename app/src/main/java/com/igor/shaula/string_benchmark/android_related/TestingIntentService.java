@@ -93,7 +93,7 @@ public final class TestingIntentService extends IntentService {
                 L.w(CN, "onHandleIntent ` howManyStrings = " + howManyStrings);
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
-                final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 1);
+                final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 0);
 
                 // the following has rather slight effect in comparison to THREAD_PRIORITY_LOWEST \\
                 Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
