@@ -42,7 +42,7 @@ public final class MainLogic implements MainHub.LogicLink {
     @NonNull
     private final DataTransport dataTransport;
     @NonNull
-    private final DataTransport.IterationResultConsumer resultConsumer;
+    private final IterationResultConsumer resultConsumer;
     @NonNull
     private TextyTwister textyTwister;
 

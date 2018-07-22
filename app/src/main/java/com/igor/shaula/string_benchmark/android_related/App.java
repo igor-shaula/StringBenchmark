@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.igor.shaula.string_benchmark.logic_engine.DataTransport;
+import com.igor.shaula.string_benchmark.logic_engine.IterationResultConsumer;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;

@@ -10,7 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "iterations result processor")
-public final class IterationResultConsumer implements DataTransport.IterationResultConsumer {
+public final class IterationResultConsumer {
+//public final class IterationResultConsumer implements DataTransport.IterationResultConsumer {
 
 //    private static final String CN = "IterationResultConsumer";
 
@@ -25,7 +26,7 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
     }
 
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
-    @Override
+//    @Override
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\
                                      int currentIterationIndex) {
         if (currentIterationIndex == 0) {
@@ -43,7 +44,7 @@ public final class IterationResultConsumer implements DataTransport.IterationRes
 //        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationIndex);
     }
 
-    @Override
+    //    @Override
     public void prepareForNewJob() {
         summarizedResultsMap.clear();
     }

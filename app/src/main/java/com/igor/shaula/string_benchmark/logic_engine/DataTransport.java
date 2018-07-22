@@ -27,10 +27,10 @@ public interface DataTransport { // currently implemented by App as a quickest d
 
     void stopIterations();
 
-    interface IterationResultConsumer { // implemented by LogicLink \\
-
-        void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
-
-        void prepareForNewJob();
-    }
+//    interface IterationResultConsumer { // implemented by LogicLink \\
+//
+//        void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
+//
+//        void prepareForNewJob();
+//    }
 }
