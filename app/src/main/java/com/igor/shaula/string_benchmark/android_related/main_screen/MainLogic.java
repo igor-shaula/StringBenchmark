@@ -59,6 +59,11 @@ public final class MainLogic implements MainHub.LogicLink {
         resultConsumer = new IterationResultConsumer(this);
         dataTransport.setDataConsumer(resultConsumer); // register for receiving portions of result \\
         textyTwister = new TextyTwister();
+        resetIterationsResultViewStates();
+    }
+
+    private void resetIterationsResultViewStates() {
+        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
     }
 
     // FROM LogicLink ==============================================================================
@@ -176,8 +181,7 @@ public final class MainLogic implements MainHub.LogicLink {
                         U.createReadableStringForLong(stringsAmountHint * basicStringLength);
         uiLink.updateStringsAmountHint(altStringRepetitionsHint);
         // 3 \\
-//        uiLink.resetResultViewStates();
-        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
+        resetIterationsResultViewStates();
         uiLink.resetResultOfPreparation();
     }
 
@@ -195,8 +199,7 @@ public final class MainLogic implements MainHub.LogicLink {
                             );
             uiLink.updateStringsAmountHint(stringRepetitionsHint);
         }
-//        uiLink.resetResultViewStates();
-        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
+        resetIterationsResultViewStates();
         uiLink.resetResultOfPreparation();
     }
 
@@ -208,8 +211,7 @@ public final class MainLogic implements MainHub.LogicLink {
         } else {
             uiLink.updateIterationAmountHint(systemLink.findStringById(R.string.iterationsAmountHintBusy));
         }
-//        uiLink.resetResultViewStates();
-        IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
+        resetIterationsResultViewStates();
 /*
                 no need to reset shown value of tvResultOfPreparation here because
                 testing loop iterations number has no effect on burden creation time \\
@@ -283,7 +285,7 @@ public final class MainLogic implements MainHub.LogicLink {
             count = U.convertIntoInt(uiLink.getIterationsAmountText());
         }
         // condition in the main loop will work only for count > 0 but any numbers are safe there \\
-        if (count > 0) {
+        if (count >= 0) {
             systemLink.launchAllMeasurements(count);
             toggleIterationsJobState(true);
             uiLink.showTotalIterationsNumber(count);

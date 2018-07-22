@@ -62,7 +62,7 @@ public interface MainHub {
 
         void toggleAllExplanations(boolean shouldShowExplanations);
 
-        void resetResultViewStates();
+//        void resetResultViewStates();
 
         void resetResultOfPreparation();
 

@@ -202,11 +202,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         ivToggleAppBar.setLayoutParams(parallaxLayoutParams);
     }
 
-    @Override
-    public void resetResultViewStates() {
+//    @Override
+//    public void resetResultViewStates() {
 //        rvAdapter.updateIterationsResult(logicLink.getInitialEmptyMap());
-        rvAdapter.notifyDataSetChanged();
-    }
+//        rvAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void resetResultOfPreparation() {
