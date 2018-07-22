@@ -39,7 +39,6 @@ public final class IterationResultConsumer {
             }
         }
         logicLink.transportIterationsResult(summarizedResultsMap, currentIterationIndex);
-//        logicLink.transportIterationsResult(U.convertIntoList(medianResultMap), currentIterationIndex);
     }
 
     public void prepareForNewJob() {

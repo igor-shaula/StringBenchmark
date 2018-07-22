@@ -3,13 +3,13 @@ package com.igor.shaula.string_benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.igor.shaula.string_benchmark.tested_payload.SwitchingThreads;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.double_args_logger.DAL;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLInt;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_logger.SLVoid;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.var_args_logger_1_safe.VAL1;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.var_args_logger_2_configurable.VAL2;
 import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.var_args_logger_3_objects.VAL3;
+import com.igor.shaula.string_benchmark.tested_payload.threads.SwitchingThreads;
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;

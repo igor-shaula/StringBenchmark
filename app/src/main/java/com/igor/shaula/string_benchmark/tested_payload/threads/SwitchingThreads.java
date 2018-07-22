@@ -1,4 +1,4 @@
-package com.igor.shaula.string_benchmark.tested_payload;
+package com.igor.shaula.string_benchmark.tested_payload.threads;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,20 +41,19 @@ public class SwitchingThreads {
         return instance;
     }
 
-    @NonNull
-    public String iterateThroughArrayListInThisThread() {
+    public void iterateThroughArrayListInThisThread() {
         final StringBuilder resultBuilder = new StringBuilder();
         for (String s : testedArrayList) {
             resultBuilder.append(s);
         }
-        return resultBuilder.toString();
+        callback.delegateResult(resultBuilder.toString());
     }
 
     public void iterateThroughArrayListInNewThread() {
         final Thread workerThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                callback.delegateResult(iterateThroughArrayListInThisThread());
+                iterateThroughArrayListInThisThread();
             }
         });
         workerThread.start();
