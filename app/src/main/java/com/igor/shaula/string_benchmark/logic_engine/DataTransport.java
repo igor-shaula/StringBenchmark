@@ -7,9 +7,6 @@ import java.util.Map;
 
 public interface DataTransport { // currently implemented by App as a quickest decision \\
 
-//    @NonNull
-//    Map<String, Long> getInitialEmptyMap();
-
     @Nullable
     String getLongStringForTest();
 
@@ -26,11 +23,4 @@ public interface DataTransport { // currently implemented by App as a quickest d
     void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
 
     void stopIterations();
-
-//    interface IterationResultConsumer { // implemented by LogicLink \\
-//
-//        void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, int currentIterationNumber);
-//
-//        void prepareForNewJob();
-//    }
 }

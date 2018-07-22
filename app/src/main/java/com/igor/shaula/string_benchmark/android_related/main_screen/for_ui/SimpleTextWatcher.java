@@ -17,9 +17,6 @@ public abstract class SimpleTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-//        L.restore();
-//        L.l("onTextChanged", "s = " + s);
-//        L.silence();
         onTextChanged();
     }
 

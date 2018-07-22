@@ -62,8 +62,6 @@ public interface MainHub {
 
         void toggleAllExplanations(boolean shouldShowExplanations);
 
-//        void resetResultViewStates();
-
         void resetResultOfPreparation();
 
         void updateBasicStringHint(@NonNull String s);
@@ -99,12 +97,6 @@ public interface MainHub {
     }
 
     interface LogicLink {
-
-//        @NonNull
-//        List<OneIterationResultModel> getIterationResultList();
-
-//        @NonNull
-//        Map<String, Long> getInitialEmptyMap();
 
         boolean isPreparationBlockShown();
 

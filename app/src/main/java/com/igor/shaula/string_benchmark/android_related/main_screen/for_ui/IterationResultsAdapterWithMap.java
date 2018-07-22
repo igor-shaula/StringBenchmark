@@ -23,14 +23,6 @@ public final class IterationResultsAdapterWithMap extends
     @NonNull
     private Map<String, Long> iterationResultModels;
 
-    @SuppressWarnings("NullableProblems") // lifecycle of this adapter provides safe use \\
-    @NonNull
-    private static String[] unitsOfMeasurement; // nanos - micros - millis - seconds \\
-
-//    public IterationResultsAdapterWithMap(@NonNull Map<String, Long> iterationResultMap) {
-//        this.iterationResultModels = iterationResultMap;
-//    }
-
     public IterationResultsAdapterWithMap() {
         iterationResultModels = new HashMap<>(0);
     }
@@ -39,11 +31,6 @@ public final class IterationResultsAdapterWithMap extends
                                        int currentIterationIndex) {
         this.iterationResultModels = iterationResultMap;
         this.currentIterationIndex = currentIterationIndex;
-    }
-
-    public void updateIterationsResult(@NonNull Map<String, Long> iterationResultMap) {
-        this.iterationResultModels = iterationResultMap;
-        currentIterationIndex = 0;
     }
 
     @NonNull
@@ -66,7 +53,7 @@ public final class IterationResultsAdapterWithMap extends
         }
         holder.methodName.setText(keyAtPosition);
         holder.methodResult.setText(
-                U.adaptForUser(unitsOfMeasurement,
+                U.adaptForUser(ViewHolder.unitsOfMeasurement,
                         iterationResultModels.get(keyAtPosition) / (currentIterationIndex + 1)));
     }
 
@@ -82,13 +69,17 @@ public final class IterationResultsAdapterWithMap extends
         @NonNull
         private TextView methodResult;
 
+        @SuppressWarnings("NullableProblems")
+        // it's created once the first constructor is invoked \\
+        @NonNull
+        private static String[] unitsOfMeasurement; // nanos - micros - millis - seconds \\
+
         @MeDoc("unitsOfMeasurement created here will be later used in onBindViewHolder")
         private ViewHolder(@NonNull ViewGroup viewGroup) {
             super(viewGroup);
             methodName = viewGroup.findViewById(R.id.tvMethodName);
             methodResult = viewGroup.findViewById(R.id.tvMethodResult);
             // creation of this string-array should be done only once - at the first invocation \\
-//            if (unitsOfMeasurement == null) {
             final Context context = viewGroup.getContext();
             unitsOfMeasurement = new String[]{
                     context.getString(R.string.nanos),
@@ -96,7 +87,6 @@ public final class IterationResultsAdapterWithMap extends
                     context.getString(R.string.millis),
                     context.getString(R.string.seconds)
             };
-//            }
         }
     }
 }

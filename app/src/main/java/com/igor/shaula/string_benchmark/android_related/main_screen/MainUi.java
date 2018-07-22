@@ -72,7 +72,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvIterationsResultHeader;
     private View vIterationsResultHeader;
     private IterationResultsAdapterWithMap rvAdapter;
-//    private IterationResultsAdapterWithListX rvAdapter;
 
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
@@ -122,51 +121,11 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etIterationsAmount.setSelection(C.INITIAL_TEST_ITERATIONS.length());
     }
 
-/*
-    // currently not used \\
-    @Override
-    public void setBusy(boolean isBusy) {
-        L.i(CN, "setBusy = " + isBusy);
-        if (isBusy) {
-            pdWait.show();
-        } else if (!((Activity) rootContext).isFinishing()
-                && pdWait != null
-                && pdWait.isShowing()) {
-            try {
-                pdWait.dismiss();
-            } catch (IllegalArgumentException iae) {
-                L.e(CN, iae.getMessage());
-            }
-        }
-    }
-*/
-
     @Override
     public void toggleLoadPreparationBlock(boolean shouldBeExpanded) {
         appBarLayout.setExpanded(shouldBeExpanded);
         // in fact animation works every time here \\
     }
-
-//    @Override
-//    public void updateIterationsResultOnMainThread(@NonNull final long[] oneIterationResults,
-//                                                   final int currentIterationNumber) {
-//        rootView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                final String currentIterationCounterString =
-//                        "" + C.SPACE + U.createReadableStringForLong(currentIterationNumber);
-//                tvCurrentIterationNumber.setText(currentIterationCounterString);
-//                tvResultForSout.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SOUT]));
-//                tvResultForLog.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_LOG]));
-//                tvResultForDAL.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_DAL]));
-//                tvResultForVAL1.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_1]));
-//                tvResultForVAL2.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_2]));
-//                tvResultForVAL3.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_VAL_3]));
-//                tvResultForSLVoid.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SL_VOID]));
-//                tvResultForSLInt.setText(U.adaptForUser(rootContext, oneIterationResults[C.Order.INDEX_OF_SL_INT]));
-//            }
-//        });
-//    }
 
     @Override
     public void toggleJobActiveUiState(boolean isJobRunning) {
@@ -201,12 +160,6 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         parallaxLayoutParams.setParallaxMultiplier(shouldShowExplanations ? 0.84F : 0.81F);
         ivToggleAppBar.setLayoutParams(parallaxLayoutParams);
     }
-
-//    @Override
-//    public void resetResultViewStates() {
-//        rvAdapter.updateIterationsResult(logicLink.getInitialEmptyMap());
-//        rvAdapter.notifyDataSetChanged();
-//    }
 
     @Override
     public void resetResultOfPreparation() {
@@ -422,15 +375,12 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         rvIterationResults.setLayoutManager(new LinearLayoutManager(rootContext));
         // special link to adapter is needed for upcoming update-kind method \\
         rvAdapter = new IterationResultsAdapterWithMap();
-//        rvAdapter = new IterationResultsAdapterWithMap(logicLink.getInitialEmptyMap());
-//        rvAdapter = new IterationResultsAdapterWithListX(logicLink.getIterationResultList());
         rvIterationResults.setAdapter(rvAdapter);
 
     } // init \\
 
     @Override
     public void updateIterationsResultOnMainThread(@NonNull final Map<String, Long> resultModelMap,
-//    public void updateIterationsResultOnMainThread(@NonNull final List<OneIterationResultModel> resultModelList,
                                                    final int currentIterationIndex) {
         rootView.post(new Runnable() {
             @Override

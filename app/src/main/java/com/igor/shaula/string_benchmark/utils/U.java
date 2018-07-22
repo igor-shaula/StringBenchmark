@@ -270,14 +270,12 @@ public final class U {
                     .append(unitsOfMeasurement[0]);
 
         } else if (nanoTimeValue < 1_000_000) {
-//        } else if (nanoTimeValue >= 1_000 && nanoTimeValue < 1_000_000) {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
                     .append(unitsOfMeasurement[1]);
 
         } else if (nanoTimeValue < 1_000_000_000) {
-//        } else if (nanoTimeValue >= 1_000_000 && nanoTimeValue < 1_000_000_000) {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)

@@ -68,18 +68,6 @@ public final class MainLogic implements MainHub.LogicLink {
 
     // FROM LogicLink ==============================================================================
 
-//    @NonNull
-//    @Override
-//    public List<OneIterationResultModel> getIterationResultList() {
-//        return dataTransport.getIterationResultList();
-//    }
-
-//    @NonNull
-//    @Override
-//    public Map<String, Long> getInitialEmptyMap() {
-//        return dataTransport.getInitialEmptyMap();
-//    }
-
     @Override
     public boolean isPreparationBlockShown() {
         return isAppBarLayoutFullyExpanded;
@@ -337,7 +325,6 @@ public final class MainLogic implements MainHub.LogicLink {
 
     @Override
     public void transportIterationsResult(@NonNull Map<String, Long> resultModelMap,
-//    public void transportIterationsResult(@NonNull List<OneIterationResultModel> resultModelList,
                                           int currentIterationIndex) {
         uiLink.updateIterationsResultOnMainThread(resultModelMap, currentIterationIndex);
     }
