@@ -4,9 +4,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.igor.shaula.string_benchmark.R;
-import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.logic_engine.OneIterationResultModel;
 import com.igor.shaula.string_benchmark.logic_engine.AssembleStringLoad;
 import com.igor.shaula.string_benchmark.logic_engine.DataTransport;
 import com.igor.shaula.string_benchmark.logic_engine.IterationResultConsumer;
@@ -15,11 +12,12 @@ import com.igor.shaula.string_benchmark.tested_payload.log_wrappers.superior_log
 import com.igor.shaula.string_benchmark.utils.C;
 import com.igor.shaula.string_benchmark.utils.L;
 import com.igor.shaula.string_benchmark.utils.U;
+import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
 import org.json.JSONObject;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
 
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "25-11-2017", purpose = "",
@@ -64,11 +62,11 @@ public final class MainLogic implements MainHub.LogicLink {
 
     // FROM LogicLink ==============================================================================
 
-    @NonNull
-    @Override
-    public List<OneIterationResultModel> getIterationResultList() {
-        return dataTransport.getIterationResultList();
-    }
+//    @NonNull
+//    @Override
+//    public List<OneIterationResultModel> getIterationResultList() {
+//        return dataTransport.getIterationResultList();
+//    }
 
     @NonNull
     @Override

@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.igor.shaula.string_benchmark.R;
+import com.igor.shaula.string_benchmark.utils.U;
 import com.igor.shaula.string_benchmark.utils.annotations.MeDoc;
 import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
-import com.igor.shaula.string_benchmark.utils.U;
 
 import java.util.Map;
 
@@ -32,6 +32,11 @@ public final class IterationResultsAdapterWithMap extends
                                        int currentIterationIndex) {
         this.iterationResultModels = iterationResultMap;
         this.currentIterationIndex = currentIterationIndex;
+    }
+
+    public void updateIterationsResult(@NonNull Map<String, Long> iterationResultMap) {
+        this.iterationResultModels = iterationResultMap;
+        currentIterationIndex = 0;
     }
 
     @NonNull
@@ -61,11 +66,6 @@ public final class IterationResultsAdapterWithMap extends
     @Override
     public int getItemCount() {
         return iterationResultModels.size();
-    }
-
-    public void updateIterationsResult(@NonNull Map<String, Long> iterationResultMap) {
-        this.iterationResultModels = iterationResultMap;
-        currentIterationIndex = 0;
     }
 
     static final class ViewHolder extends RecyclerView.ViewHolder {

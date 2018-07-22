@@ -3,9 +3,9 @@ package com.igor.shaula.string_benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 import com.igor.shaula.string_benchmark.android_related.TestingIntentService;
 import com.igor.shaula.string_benchmark.android_related.main_screen.MainHub;
+import com.igor.shaula.string_benchmark.utils.annotations.TypeDoc;
 
 @TypeDoc(createdBy = "shaula", createdOn = "10.07.2018", purpose = "" +
         "abstraction for IntentService, background thread, handler or any other working mechanism")

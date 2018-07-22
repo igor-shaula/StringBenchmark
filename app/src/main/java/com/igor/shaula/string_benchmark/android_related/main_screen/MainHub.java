@@ -3,9 +3,6 @@ package com.igor.shaula.string_benchmark.android_related.main_screen;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.igor.shaula.string_benchmark.logic_engine.OneIterationResultModel;
-
-import java.util.List;
 import java.util.Map;
 
 public interface MainHub {
@@ -98,8 +95,8 @@ public interface MainHub {
 
     interface LogicLink {
 
-        @NonNull
-        List<OneIterationResultModel> getIterationResultList();
+//        @NonNull
+//        List<OneIterationResultModel> getIterationResultList();
 
         @NonNull
         Map<String, Long> getInitialEmptyMap();
