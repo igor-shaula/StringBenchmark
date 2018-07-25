@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.igor.shaula.string_benchmark">
+          package="com.igor.shaula.benchmark">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
 
@@ -39,7 +39,7 @@
             android:parentActivityName=".android_related.main_screen.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.igor.shaula.string_benchmark.android_related.main_screen.MainActivity"/>
+                android:value="com.igor.shaula.benchmark.android_related.main_screen.MainActivity"/>
         </activity>
     </application>
 
