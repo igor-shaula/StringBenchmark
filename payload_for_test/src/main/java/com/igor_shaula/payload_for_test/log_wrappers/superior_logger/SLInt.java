@@ -1,4 +1,4 @@
-package com.igor.shaula.benchmark.tested_payload.log_wrappers.superior_logger;
+package com.igor_shaula.payload_for_test.log_wrappers.superior_logger;
 
 import android.os.Build;
 import android.support.annotation.NonNull;

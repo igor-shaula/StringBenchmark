@@ -1,4 +1,4 @@
-package com.igor.shaula.benchmark.tested_payload.log_wrappers.var_args_logger_1_safe;
+package com.igor_shaula.payload_for_test.log_wrappers.var_args_logger_1_safe;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

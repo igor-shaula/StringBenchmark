@@ -1,4 +1,4 @@
-package com.igor.shaula.benchmark.tested_payload.log_wrappers.var_args_logger_2_configurable;
+package com.igor_shaula.payload_for_test.log_wrappers.var_args_logger_2_configurable;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
