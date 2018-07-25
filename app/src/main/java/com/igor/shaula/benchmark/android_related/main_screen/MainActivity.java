@@ -13,7 +13,6 @@ import android.view.MenuItem;
 
 import com.igor.shaula.benchmark.R;
 import com.igor.shaula.benchmark.android_related.TestingIntentService;
-import com.igor.shaula.benchmark.android_related.additional_screens.SettingsActivity;
 import com.igor.shaula.benchmark.logic_engine.DataTransport;
 import com.igor.shaula.benchmark.logic_engine.JobHolder;
 import com.igor.shaula.benchmark.utils.C;
@@ -94,8 +93,8 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             item.setIcon(logicLink.isPreparationBlockShown() ?
                     R.drawable.ic_close_preparation_block : R.drawable.ic_open_preparation_block);
             return true;
-        } else if (id == R.id.action_showSettingsActivity) {
-            startActivity(new Intent(this, SettingsActivity.class));
+//        } else if (id == R.id.action_showSettingsActivity) {
+//            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.action_toggleExplanations) {
             logicLink.onToggleAllExplanationsAction();
         } else if (id == R.id.action_about) {

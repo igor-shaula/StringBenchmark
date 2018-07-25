@@ -33,14 +33,6 @@
             android:exported="false">
         </service>
 
-        <activity
-            android:name=".android_related.additional_screens.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".android_related.main_screen.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.igor.shaula.benchmark.android_related.main_screen.MainActivity"/>
-        </activity>
     </application>
 
 </manifest>
