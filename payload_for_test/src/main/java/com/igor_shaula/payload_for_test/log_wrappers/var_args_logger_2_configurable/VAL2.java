@@ -5,16 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.igor.shaula.benchmark.BuildConfig;
-import com.igor.shaula.benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.payload_for_test.BuildConfig;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-@TypeDoc(createdBy = "Igor Shaula", createdOn = "28-05-2018", purpose = "" +
-        "the most minimalistic & useful wrapper for local logging," +
-        "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
-        "every method here takes any number of arguments," +
-        "the best name for this class consists of only one letter - L - for briefness in code")
+//@TypeDoc(createdBy = "Igor Shaula", createdOn = "28-05-2018", purpose = "" +
+//        "the most minimalistic & useful wrapper for local logging," +
+//        "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
+//        "every method here takes any number of arguments," +
+//        "the best name for this class consists of only one letter - L - for briefness in code")
 
 public final class VAL2 {
 
@@ -131,7 +129,7 @@ public final class VAL2 {
         }
     }
 
-    @MeDoc("only setting accordance between custom & standard logging levels")
+    //    @MeDoc("only setting accordance between custom & standard logging levels")
     private static void passToStandardLogger(final int logLevel, @NonNull final String logResult) {
         if (logLevel == Log.VERBOSE) { // 2 \\
             Log.v(tag23, logResult);

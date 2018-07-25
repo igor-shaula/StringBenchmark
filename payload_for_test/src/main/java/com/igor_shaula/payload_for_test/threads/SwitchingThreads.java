@@ -3,12 +3,10 @@ package com.igor_shaula.payload_for_test.threads;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
-
 import java.util.ArrayList;
 
-@TypeDoc(createdBy = "shaula", createdOn = "18.07.2018", purpose = "" +
-        "test switching between threads when working with collections")
+//@TypeDoc(createdBy = "shaula", createdOn = "18.07.2018", purpose = "" +
+//        "test switching between threads when working with collections")
 public class SwitchingThreads {
 
     @Nullable

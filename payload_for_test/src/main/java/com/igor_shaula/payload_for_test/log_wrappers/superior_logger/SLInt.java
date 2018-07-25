@@ -5,17 +5,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.igor.shaula.benchmark.BuildConfig;
-import com.igor.shaula.benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.payload_for_test.BuildConfig;
 
 @SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
 
-@TypeDoc(createdBy = "Igor Shaula", createdOn = "30-05-2018", purpose = "" +
-        "the most minimalistic & useful wrapper for local logging," +
-        "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
-        "every method here takes any number of arguments," +
-        "the best name for this class consists of only one letter - L - for briefness in code")
+//@TypeDoc(createdBy = "Igor Shaula", createdOn = "30-05-2018", purpose = "" +
+//        "the most minimalistic & useful wrapper for local logging," +
+//        "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
+//        "every method here takes any number of arguments," +
+//        "the best name for this class consists of only one letter - L - for briefness in code")
 public final class SLInt {
 
     private static final String TAG_SHORTENED_TO_23_SYMBOLS =
@@ -171,7 +169,7 @@ public final class SLInt {
         return USE_LOGGING && isLogAllowed ? Log.wtf(tag23, message) : -1;
     }
 
-    @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
+    //    @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
     public static void o(@Nullable final Object object) { // s - because it is the simplest here \\
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(object);
@@ -217,7 +215,7 @@ public final class SLInt {
         }
     }
 
-    @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
+    //    @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
     private static int passToStandardLogger(final int logLevel, @NonNull final String logResult) {
         switch (logLevel) {
             case Log.VERBOSE:  // 2 \\
