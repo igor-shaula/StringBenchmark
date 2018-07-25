@@ -14,6 +14,7 @@ import com.igor.shaula.benchmark.utils.L;
 import com.igor.shaula.benchmark.utils.U;
 import com.igor.shaula.benchmark.utils.annotations.MeDoc;
 import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.payload_for_test.log_wrappers.superior_logger.SLInt;
 
 import org.json.JSONObject;
 
@@ -24,17 +25,17 @@ import java.util.Map;
         comment = "logic should not have any Android-specific imports & dependencies - only pure Java")
 
 public final class MainLogic implements MainHub.LogicLink {
-
+    
     private static final String CN = "MainLogic";
-
+    
     private boolean backWasPressedOnce;
     private boolean isIterationsJobRunning;
     private boolean shouldShowExplanations;
     private boolean isAppBarLayoutFullyExpanded;
-
+    
     @NonNull
     private String pendingPreparationResult = "";
-
+    
     @NonNull
     private final MainHub.SystemLink systemLink;
     @NonNull
@@ -45,7 +46,7 @@ public final class MainLogic implements MainHub.LogicLink {
     private final IterationResultConsumer resultConsumer;
     @NonNull
     private TextyTwister textyTwister;
-
+    
     MainLogic(@NonNull MainHub.SystemLink systemLink,
               @NonNull MainHub.UiLink uiLink,
               @NonNull DataTransport dataTransport) {
@@ -60,18 +61,18 @@ public final class MainLogic implements MainHub.LogicLink {
         textyTwister = new TextyTwister();
         resetIterationsResultViewStates();
     }
-
+    
     private void resetIterationsResultViewStates() {
         IterationsMeasurement.measurePerformanceInLoop(systemLink.getDataTransport(), 0);
     }
-
+    
     // FROM LogicLink ==============================================================================
-
+    
     @Override
     public boolean isPreparationBlockShown() {
         return isAppBarLayoutFullyExpanded;
     }
-
+    
     @Override
     public void setAppBarLayoutFullyExpanded(boolean isFullyExpanded) {
         isAppBarLayoutFullyExpanded = isFullyExpanded;
@@ -85,7 +86,7 @@ public final class MainLogic implements MainHub.LogicLink {
         }*/
 //        uiLink.invalidateAppBar();
     }
-
+    
     @Override
     public void toggleLoadPreparationJobState(boolean isRunning) {
         uiLink.toggleJobActiveUiState(isRunning);
@@ -93,7 +94,7 @@ public final class MainLogic implements MainHub.LogicLink {
             uiLink.clearFocusFromAllInputFields();
         }
     }
-
+    
     @Override
     public void toggleIterationsJobState(boolean isRunning) {
         isIterationsJobRunning = isRunning;
@@ -105,14 +106,14 @@ public final class MainLogic implements MainHub.LogicLink {
             textyTwister.stopTwisterTimer();
         }
     }
-
+    
     @Override
     public void onLoadPreparationBlockAction() {
         uiLink.toggleLoadPreparationBlock(!isAppBarLayoutFullyExpanded);
         uiLink.clearFocusFromAllInputFields();
         uiLink.hideKeyboard();
     }
-
+    
     @Override
     public void onToggleAllExplanationsAction() {
         uiLink.toggleAllExplanations(shouldShowExplanations);
@@ -124,12 +125,12 @@ public final class MainLogic implements MainHub.LogicLink {
             uiLink.toggleLoadPreparationBlock(false);
         }
     }
-
+    
     @Override
     public void onShowDialogWithBuildInfoAction() {
         uiLink.showBuildInfoDialog();
     }
-
+    
     @Override
     public void onBackPressed() {
         if (backWasPressedOnce) {
@@ -149,7 +150,7 @@ public final class MainLogic implements MainHub.LogicLink {
             }, C.Delay.EXIT_WITH_BACK_MILLIS);
         }
     }
-
+    
     @Override
     public void onBasicStringChanged() {
         final int basicStringLength = uiLink.getBasicStringText().length();
@@ -171,7 +172,7 @@ public final class MainLogic implements MainHub.LogicLink {
         resetIterationsResultViewStates();
         uiLink.resetResultOfPreparation();
     }
-
+    
     @Override
     public void onStringsAmountChanged() {
         // safely parsing here - because inputType is number in layout \\
@@ -189,7 +190,7 @@ public final class MainLogic implements MainHub.LogicLink {
         resetIterationsResultViewStates();
         uiLink.resetResultOfPreparation();
     }
-
+    
     @Override
     public void onIterationsAmountChanged() {
         final int iterationsAmount = U.convertIntoInt(uiLink.getIterationsAmountText());
@@ -204,7 +205,7 @@ public final class MainLogic implements MainHub.LogicLink {
                 testing loop iterations number has no effect on burden creation time \\
 */
     }
-
+    
     @Override
     public void onLoadEmptyChecked(boolean isChecked) {
         if (isChecked) {
@@ -220,13 +221,13 @@ public final class MainLogic implements MainHub.LogicLink {
             uiLink.setStringsAmountText(1);
         }
     }
-
+    
     @Override
     public void onPrepareLoadClick() {
         // now going further - all expected logic branching is inside the following method \\
         runTestLoadPreparation();
     }
-
+    
     private void runTestLoadPreparation() {
         uiLink.clearFocusFromAllInputFields();
         uiLink.hideKeyboard();
@@ -244,13 +245,13 @@ public final class MainLogic implements MainHub.LogicLink {
         }
         L.d(CN, "runTestLoadPreparation() finished");
     }
-
+    
     @Override
     public void onViewLoadClick() {
         final String load = systemLink.getLoad();
         uiLink.showLoadInDialog(load);
     }
-
+    
     @Override
     public void onToggleIterationsClick() {
         boolean isEndless = uiLink.isEndless();
@@ -262,7 +263,7 @@ public final class MainLogic implements MainHub.LogicLink {
             startIterationsJob(isEndless);
         }
     }
-
+    
     private void startIterationsJob(boolean isEndless) {
         resultConsumer.prepareForNewJob();
         int count;
@@ -279,7 +280,7 @@ public final class MainLogic implements MainHub.LogicLink {
         }
         L.d(CN, "startIterationsJob() finished");
     }
-
+    
     @Override
     public void showPreparationsResult(int whatInfoToShow, long resultNanoTime) {
         L.d("showPreparationsResult", "whatInfoToShow = " + whatInfoToShow);
@@ -293,7 +294,7 @@ public final class MainLogic implements MainHub.LogicLink {
                 L.w(CN, "selectInfoToShow ` unknown whatInfoToShow = " + whatInfoToShow);
         }
     }
-
+    
     @Override
     public void updatePreparationResult(@NonNull final String result) {
         if (pendingPreparationResult.isEmpty()) {
@@ -304,32 +305,32 @@ public final class MainLogic implements MainHub.LogicLink {
         }
         uiLink.updateLoadLengthOnMainThread(systemLink.getLoad().length());
     }
-
+    
     @MeDoc("invoked in activity's onStop")
     @Override
     public void linkDataTransport() {
         dataTransport.setDataConsumer(resultConsumer); // for avoiding lost link after app was restored \\
     }
-
+    
     @MeDoc("invoked in activity's onStop")
     @Override
     public void unLinkDataTransport() {
         dataTransport.setDataConsumer(null); // preventing possible memory leak here \\
     }
-
+    
     @Override
     public void interruptPerformanceTest() {
         systemLink.stopTestingService();
     }
-
+    
     @Override
     public void transportIterationsResult(@NonNull Map<String, Long> resultModelMap,
                                           int currentIterationIndex) {
         uiLink.updateIterationsResultOnMainThread(resultModelMap, currentIterationIndex);
     }
-
+    
     // ADDITIONAL TESTING WHILE UNIT_TESTS ARE NOT YET IMPLEMENTED =================================
-
+    
     private void doSingleTesting() {
         // TODO: 02.12.2017 write unit-tests with this kind of content \\
         SLInt.v("");
@@ -353,19 +354,19 @@ public final class MainLogic implements MainHub.LogicLink {
         SLInt.o(null);
         SLInt.pV(null, null);
         SLInt.pV("multiple ps", "_+_");
-
+        
         // android.os.CpuUsageInfo - practically useless \\
         // android.util.DebugUtils - useless here \\
-
+        
         // TODO: 18.11.2017 use android.os.Debug.MemoryInfo \\
 //        android.os.Debug.MemoryInfo memoryInfo = new Debug.MemoryInfo();
 //        memoryInfo.getMemoryStats()
-
+        
         SLInt.isV("this thread's priority", Thread.currentThread().getPriority());
-
+        
         // TODO: 18.11.2017 use android.os.Process - should investigate this more \\
         android.os.Process.setThreadPriority(0);
-
+        
         Enumeration<?> properties = System.getProperties().propertyNames();
         while (properties.hasMoreElements()) {
             SLInt.isV("property", properties.nextElement());
