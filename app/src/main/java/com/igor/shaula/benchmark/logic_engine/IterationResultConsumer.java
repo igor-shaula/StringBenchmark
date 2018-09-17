@@ -3,8 +3,8 @@ package com.igor.shaula.benchmark.logic_engine;
 import android.support.annotation.NonNull;
 
 import com.igor.shaula.benchmark.android_related.main_screen.MainHub;
-import com.igor.shaula.benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.base_utils.annotations.MeDoc;
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

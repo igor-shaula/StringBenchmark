@@ -1,10 +1,10 @@
-package com.igor.shaula.benchmark.utils;
+package com.igor_shaula.base_utils;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "08-2017", modifiedOn = "12-11-2017", purpose = "" +

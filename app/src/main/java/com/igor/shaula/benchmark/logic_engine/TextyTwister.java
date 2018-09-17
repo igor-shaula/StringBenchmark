@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.igor.shaula.benchmark.android_related.main_screen.MainHub;
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 
 import java.util.Timer;
 import java.util.TimerTask;

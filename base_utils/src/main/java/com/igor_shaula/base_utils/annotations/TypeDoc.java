@@ -1,4 +1,4 @@
-package com.igor.shaula.benchmark.utils.annotations;
+package com.igor_shaula.base_utils.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

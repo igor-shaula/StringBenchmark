@@ -14,8 +14,8 @@ import com.igor.shaula.benchmark.logic_engine.DataTransport;
 import com.igor.shaula.benchmark.logic_engine.IterationsMeasurement;
 import com.igor.shaula.benchmark.utils.C;
 import com.igor.shaula.benchmark.utils.L;
-import com.igor.shaula.benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.base_utils.annotations.MeDoc;
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 
 import java.util.Arrays;
 

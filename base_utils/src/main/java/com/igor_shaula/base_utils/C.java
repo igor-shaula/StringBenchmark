@@ -1,6 +1,6 @@
-package com.igor.shaula.benchmark.utils;
+package com.igor_shaula.base_utils;
 
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @TypeDoc(createdBy = "Igor Shaula", createdOn = "31-08-2017",

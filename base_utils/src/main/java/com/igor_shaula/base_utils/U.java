@@ -1,4 +1,4 @@
-package com.igor.shaula.benchmark.utils;
+package com.igor_shaula.base_utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.igor.shaula.benchmark.utils.annotations.MeDoc;
-import com.igor.shaula.benchmark.utils.annotations.TypeDoc;
+import com.igor_shaula.base_utils.annotations.MeDoc;
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 
 import java.util.Collection;
 import java.util.LinkedList;
