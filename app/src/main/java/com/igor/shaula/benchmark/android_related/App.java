@@ -10,8 +10,8 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.igor.shaula.benchmark.logic_engine.DataTransport;
 import com.igor.shaula.benchmark.logic_engine.IterationResultConsumer;
-import com.igor.shaula.benchmark.utils.C;
-import com.igor.shaula.benchmark.utils.L;
+import com.igor_shaula.base_utils.C;
+import com.igor_shaula.base_utils.L;
 import com.igor_shaula.base_utils.annotations.MeDoc;
 import com.igor_shaula.base_utils.annotations.TypeDoc;
 
@@ -21,17 +21,17 @@ import java.util.Map;
         "fastest & easiest way of preserving the load from being destroyed with IntentService")
 
 public final class App extends Application implements DataTransport {
-
+    
     private static final String CN = "App";
-
+    
     private boolean isForbiddenToRunIterations;
     @Nullable
     private IterationResultConsumer iterationResultConsumer;
     @Nullable
     private String longStringForTest = ""; // ma be rather long & heavy \\
-
+    
     // LIFECYCLE ===================================================================================
-
+    
     @Override
     public void onCreate() {
         // the only method calling to super where logging is placed after super-method's invocation \\
@@ -40,7 +40,7 @@ public final class App extends Application implements DataTransport {
         L.w(CN, "onCreate");
         L.silence(); // for avoiding mess in logs in all further places \\
     }
-
+    
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         L.restore();
@@ -48,7 +48,7 @@ public final class App extends Application implements DataTransport {
         L.silence();
         super.onConfigurationChanged(newConfig);
     }
-
+    
     @Override
     public void onTrimMemory(int level) {
         L.restore();
@@ -82,7 +82,7 @@ public final class App extends Application implements DataTransport {
         L.silence();
         super.onTrimMemory(level);
     }
-
+    
     @Override
     public void onLowMemory() {
         L.restore();
@@ -90,7 +90,7 @@ public final class App extends Application implements DataTransport {
         L.silence();
         super.onLowMemory();
     }
-
+    
     @Override
     public void onTerminate() {
         L.restore();
@@ -98,41 +98,41 @@ public final class App extends Application implements DataTransport {
         L.silence();
         super.onTerminate();
     }
-
+    
     // FROM DataTransport ==========================================================================
-
+    
     @Override
     public void delegateResult(@Nullable String result) {
         longStringForTest = result;
     }
-
+    
     @Override
     @Nullable
     public String getLongStringForTest() {
         return longStringForTest;
     }
-
+    
     @Override
     public boolean isForbiddenToRunIterations() {
         return isForbiddenToRunIterations;
     }
-
+    
     @Override
     public void forbidIterationsJob(boolean isForbiddenToRunIterations) {
         this.isForbiddenToRunIterations = isForbiddenToRunIterations;
     }
-
+    
     @Override
     public void setDataConsumer(@Nullable IterationResultConsumer iterationResultConsumer) {
         this.iterationResultConsumer = iterationResultConsumer;
     }
-
+    
     @Override
     @MeDoc("invoked from working IntentService as for now")
     public void setLongStringForTest(@Nullable String longStringForTest) {
         this.longStringForTest = longStringForTest;
     }
-
+    
     @Override
     public void notifyStarterThatLoadIsAssembled(long nanoTimeDelta) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(
@@ -140,7 +140,7 @@ public final class App extends Application implements DataTransport {
                         .putExtra(C.Intent.NAME_PREPARATION_TIME, nanoTimeDelta)
         );
     }
-
+    
     @Override
     @MeDoc("invoked from working IntentService as for now")
     public void transportOneIterationsResult(@NonNull Map<String, Long> oneIterationsResult,
@@ -149,7 +149,7 @@ public final class App extends Application implements DataTransport {
             iterationResultConsumer.onNewIterationResult(oneIterationsResult, currentIterationIndex);
         }
     }
-
+    
     @Override
     public void stopIterations() {
 //        isForbiddenToRunIterations = false; - not needed because we work via older chain \\

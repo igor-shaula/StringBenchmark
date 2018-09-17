@@ -11,14 +11,14 @@ import java.util.TimerTask;
 
 @TypeDoc(createdBy = "shaula", createdOn = "05.06.2018", purpose = "just to lighten MainLogic")
 public final class TextyTwister {
-
+    
     private static final char[] CHARS = {'-', '\\', '|', '/', '-'};
-
+    
     private int twisterCounter;
-
+    
     @Nullable
     private Timer twisterTimer;
-
+    
     public void showTextyTwister(@NonNull final MainHub.LogicLink logicLink) {
         final int[] index = new int[1];
         final String[] textForUI = new String[1];
@@ -35,7 +35,7 @@ public final class TextyTwister {
         twisterTimer = new Timer(true);
         twisterTimer.schedule(twisterTask, 0, 80); // every 5 frames = 12 times per second \\
     }
-
+    
     public void stopTwisterTimer() {
         if (twisterTimer != null) {
             twisterTimer.cancel(); // purge() behaves very strangely - so i decided to avoid it

@@ -208,22 +208,6 @@ public final class U {
         }
     }
 
-    public static void showSnackbar(@NonNull View view, @NonNull String message, int duration) {
-//        L.w(CN, "showSnackbar ` message = " + message);
-        if (duration == 0) {
-            duration = Snackbar.LENGTH_SHORT;
-        } else if (duration > 0) {
-            duration = Snackbar.LENGTH_LONG;
-        } else {
-            duration = Snackbar.LENGTH_INDEFINITE;
-        }
-        final Snackbar snackbar = Snackbar.make(view, message, duration);
-//        TextView textView = (TextView) snackbar.getView()
-//                .findViewById(android.support.design.R.id.snackbar_text);
-//        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        snackbar.show();
-    }
-
     public static void showToast(@NonNull Context context, @NonNull String string, int duration) {
 //        L.w(CN, "showToast ` message = " + message);
         if (duration == 0) {

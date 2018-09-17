@@ -15,21 +15,21 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 
 public @interface TypeDoc {
-
+    
     String noValue = "-";
-
+    
     String createdBy(); // replaces 'Created by ...' in generated standard javadoc \
-
+    
     String createdOn(); // replaces 'Created on ...' in generated standard javadoc \
-
+    
     String purpose(); // required description of the reason for an annotated class creation \
-
+    
     @SuppressWarnings("unused")
     String modifiedBy() default noValue; // who made functional changes \
-
+    
     @SuppressWarnings("unused")
     String modifiedOn() default noValue; // when last functional changes were made \
-
+    
     @SuppressWarnings("unused")
     String comment() default noValue;
 }

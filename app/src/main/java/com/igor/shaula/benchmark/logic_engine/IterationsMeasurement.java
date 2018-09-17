@@ -3,8 +3,8 @@ package com.igor.shaula.benchmark.logic_engine;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.igor.shaula.benchmark.utils.C;
-import com.igor.shaula.benchmark.utils.L;
+import com.igor_shaula.base_utils.C;
+import com.igor_shaula.base_utils.L;
 import com.igor_shaula.base_utils.annotations.MeDoc;
 import com.igor_shaula.base_utils.annotations.TypeDoc;
 import com.igor_shaula.payload_for_test.log_wrappers.double_args_logger.DAL;

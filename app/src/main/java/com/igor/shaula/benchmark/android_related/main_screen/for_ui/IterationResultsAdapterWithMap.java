@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.igor.shaula.benchmark.R;
-import com.igor.shaula.benchmark.utils.U;
+import com.igor_shaula.base_utils.U;
 import com.igor_shaula.base_utils.annotations.MeDoc;
 import com.igor_shaula.base_utils.annotations.TypeDoc;
 
@@ -18,21 +18,21 @@ import java.util.Map;
 @TypeDoc(createdBy = "shaula", createdOn = "23.06.2018", purpose = "")
 public final class IterationResultsAdapterWithMap extends
         RecyclerView.Adapter<IterationResultsAdapterWithMap.ViewHolder> {
-
+    
     private int currentIterationIndex;
     @NonNull
     private Map<String, Long> iterationResultModels;
-
+    
     public IterationResultsAdapterWithMap() {
         iterationResultModels = new HashMap<>(0);
     }
-
+    
     public void updateIterationsResult(@NonNull Map<String, Long> iterationResultMap,
                                        int currentIterationIndex) {
         this.iterationResultModels = iterationResultMap;
         this.currentIterationIndex = currentIterationIndex;
     }
-
+    
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,7 +40,7 @@ public final class IterationResultsAdapterWithMap extends
                 .inflate(R.layout.recycler_item_view, parent, false);
         return new ViewHolder(viewGroup);
     }
-
+    
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int keyPosition = 0;
@@ -56,24 +56,24 @@ public final class IterationResultsAdapterWithMap extends
                 U.adaptForUser(ViewHolder.unitsOfMeasurement,
                         iterationResultModels.get(keyAtPosition) / (currentIterationIndex + 1)));
     }
-
+    
     @Override
     public int getItemCount() {
         return iterationResultModels.size();
     }
-
+    
     static final class ViewHolder extends RecyclerView.ViewHolder {
-
+        
         @NonNull
         private TextView methodName;
         @NonNull
         private TextView methodResult;
-
+        
         @SuppressWarnings("NullableProblems")
         // it's created once the first constructor is invoked \\
         @NonNull
         private static String[] unitsOfMeasurement; // nanos - micros - millis - seconds \\
-
+        
         @MeDoc("unitsOfMeasurement created here will be later used in onBindViewHolder")
         private ViewHolder(@NonNull ViewGroup viewGroup) {
             super(viewGroup);

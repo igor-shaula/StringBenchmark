@@ -26,24 +26,25 @@ import com.igor.shaula.benchmark.BuildConfig;
 import com.igor.shaula.benchmark.R;
 import com.igor.shaula.benchmark.android_related.main_screen.for_ui.IterationResultsAdapterWithMap;
 import com.igor.shaula.benchmark.android_related.main_screen.for_ui.SimpleTextWatcher;
-import com.igor.shaula.benchmark.utils.C;
-import com.igor.shaula.benchmark.utils.L;
-import com.igor.shaula.benchmark.utils.U;
+import com.igor.shaula.benchmark.utils.AppUtils;
+import com.igor_shaula.base_utils.C;
+import com.igor_shaula.base_utils.L;
+import com.igor_shaula.base_utils.U;
 
 import java.util.Map;
 
 public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.OnKeyListener {
-
+    
     private static final String CN = "MainUi";
     @NonNull
     private final Context rootContext;
     @NonNull
     private final View rootView;
-
+    
     @SuppressWarnings("NullableProblems") // invoked in the Logic's constructor \\
     @NonNull
     private MainHub.LogicLink logicLink;
-
+    
     private AppBarLayout appBarLayout;
     private ImageView ivToggleAppBar;
     private ToggleButton tbLoadPreparationBlock;
@@ -58,7 +59,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private CheckBox cbMakeLoadEmpty;
     private TextView tvResultOfPreparation;
     private TextView tvResultForCreatingLoad;
-
+    
     // iterations \\
     private TextView tvIterationsExplanation;
     private View vIterationsExplanation;
@@ -72,45 +73,45 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
     private TextView tvIterationsResultHeader;
     private View vIterationsResultHeader;
     private IterationResultsAdapterWithMap rvAdapter;
-
+    
     MainUi(@NonNull View rootView) {
         this.rootView = rootView;
         rootContext = rootView.getContext();
     }
-
+    
     @Override
     public boolean isEndless() {
         return cbEndlessIterations.isChecked();
     }
-
+    
     @NonNull
     @Override
     public String getBasicStringText() {
         return etBasicString.getText().toString();
     }
-
+    
     @NonNull
     @Override
     public String getStringsAmountText() {
         return etStringsAmount.getText().toString();
     }
-
+    
     @Override
     public void setStringsAmountText(int howManyTimesToRepeatBasicStringInLoad) {
         etStringsAmount.setText(String.valueOf(howManyTimesToRepeatBasicStringInLoad));
     }
-
+    
     @NonNull
     @Override
     public String getIterationsAmountText() {
         return etIterationsAmount.getText().toString();
     }
-
+    
     @Override
     public void setLogicLink(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
     }
-
+    
     @Override
     public void setInitialInputFieldsValues() {
         etBasicString.setText(C.INITIAL_BASIC_STRING);
@@ -120,13 +121,13 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etIterationsAmount.setText(C.INITIAL_TEST_ITERATIONS);
         etIterationsAmount.setSelection(C.INITIAL_TEST_ITERATIONS.length());
     }
-
+    
     @Override
     public void toggleLoadPreparationBlock(boolean shouldBeExpanded) {
         appBarLayout.setExpanded(shouldBeExpanded);
         // in fact animation works every time here \\
     }
-
+    
     @Override
     public void toggleJobActiveUiState(boolean isJobRunning) {
         etBasicString.setEnabled(!isJobRunning);
@@ -137,7 +138,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         bToggleAdjustedIterations.setChecked(isJobRunning);
         cbEndlessIterations.setEnabled(!isJobRunning);
     }
-
+    
     @Override
     public void toggleAllExplanations(boolean shouldShowExplanations) {
         if (shouldShowExplanations) {
@@ -160,27 +161,27 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         parallaxLayoutParams.setParallaxMultiplier(shouldShowExplanations ? 0.84F : 0.81F);
         ivToggleAppBar.setLayoutParams(parallaxLayoutParams);
     }
-
+    
     @Override
     public void resetResultOfPreparation() {
         tvResultOfPreparation.setText(rootContext.getString(R.string.resultOfPreparation));
     }
-
+    
     @Override
     public void updateBasicStringHint(@NonNull String s) {
         tilBasicString.setHint(s);
     }
-
+    
     @Override
     public void updateStringsAmountHint(@NonNull String s) {
         tilStringsAmount.setHint(s);
     }
-
+    
     @Override
     public void updateIterationAmountHint(@NonNull String s) {
         tilIterationsAmount.setHint(s);
     }
-
+    
     @Override
     public void updatePreparationResultOnMainThread(final @NonNull String result) {
         rootView.post(new Runnable() {
@@ -190,7 +191,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             }
         });
     }
-
+    
     @Override
     public void updateLoadLengthOnMainThread(final int length) {
         rootView.post(new Runnable() {
@@ -202,19 +203,19 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             }
         });
     }
-
+    
     @Override
     public void informUser(int typeOfNotification, int stringId, int duration) {
         final String message = rootContext.getString(stringId);
         if (C.Choice.TOAST == typeOfNotification) {
             U.showToast(rootContext, message, duration);
         } else if (C.Choice.SNACKBAR == typeOfNotification) {
-            U.showSnackbar(rootView, message, duration);
+            AppUtils.showSnackbar(rootView, message, duration);
         } else {
             L.w(CN, message);
         }
     }
-
+    
     @Override
     public void showBuildInfoDialog() {
         final String message = rootContext.getString(R.string.application) + C.SPACE
@@ -228,7 +229,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 .create()
                 .show();
     }
-
+    
     @Override
     public void showLoadInDialog(@NonNull String load) {
         L.v(CN, "showLoadInDialog ` load = " + load);
@@ -241,7 +242,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         alertDialog
                 .show();
     }
-
+    
     @Override
     public void showTotalIterationsNumber(final int totalIterationsCount) {
         tvIterationsTotalNumber.post(new Runnable() {
@@ -253,10 +254,10 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             }
         });
     }
-
+    
     @Override
     public void init() {
-
+        
         appBarLayout = rootView.findViewById(R.id.appBarLayout);
         appBarLayout.setOnClickListener(this);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -287,7 +288,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         });
         final Button bAboutTheApp = rootView.findViewById(R.id.bAboutTheApp);
         bAboutTheApp.setOnClickListener(this);
-
+        
         // burden preparation block \\
         tvPrepareLoadExplanation = rootView.findViewById(R.id.tvPrepareLoadExplanation);
         vPrepareLoadExplanation = rootView.findViewById(R.id.vPrepareLoadExplanation);
@@ -322,7 +323,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         bViewLoad.setOnClickListener(this);
         tvResultOfPreparation = rootView.findViewById(R.id.tvResultOfPreparation);
         tvResultForCreatingLoad = rootView.findViewById(R.id.tvResultForCreatingLoad);
-
+        
         // iterations block \\
         tvIterationsExplanation = rootView.findViewById(R.id.tvIterationsExplanation);
         vIterationsExplanation = rootView.findViewById(R.id.vIterationsExplanation);
@@ -368,7 +369,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         tvIterationsTotalNumber = rootView.findViewById(R.id.tvIterationsTotalNumber);
         tvIterationsResultHeader = rootView.findViewById(R.id.tvIterationsResultHeader);
         vIterationsResultHeader = rootView.findViewById(R.id.vIterationsResultHeader);
-
+        
         final RecyclerView rvIterationResults = rootView.findViewById(R.id.rvIterationResults);
         // as inner changes in content should not affect the RecyclerView size \\
         rvIterationResults.setHasFixedSize(true);
@@ -376,9 +377,9 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         // special link to adapter is needed for upcoming update-kind method \\
         rvAdapter = new IterationResultsAdapterWithMap();
         rvIterationResults.setAdapter(rvAdapter);
-
+        
     } // init \\
-
+    
     @Override
     public void updateIterationsResultOnMainThread(@NonNull final Map<String, Long> resultModelMap,
                                                    final int currentIterationIndex) {
@@ -393,7 +394,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
             }
         });
     }
-
+    
     @Override
     public void clearFocusFromAllInputFields() {
         etBasicString.clearFocus();
@@ -401,7 +402,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
         etIterationsAmount.clearFocus();
 //        tvWorkaroundForKeepingFocus.requestFocus(); // this action is not obvious but needed in fact \\
     }
-
+    
     @Override
     public void toggleAppBarExpansionIcon(boolean isFullyExpanded) {
         ivToggleAppBar.setImageResource(isFullyExpanded ?
@@ -412,12 +413,12 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
 //    public void togglePreparationTButton(boolean isFullyExpanded) {
 //        tbLoadPreparationBlock.setChecked(!isFullyExpanded);
 //    }
-
+    
     @Override
     public void hideKeyboard() {
         U.hideKeyboard(rootView);
     }
-
+    
     @Override
     public void onClick(@NonNull View v) {
         switch (v.getId()) {
@@ -439,7 +440,7 @@ public final class MainUi implements MainHub.UiLink, View.OnClickListener, View.
                 break;
         }
     }
-
+    
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         L.v(CN, "onKey ` keyCode = " + keyCode);

@@ -10,15 +10,15 @@ import com.igor_shaula.base_utils.annotations.TypeDoc;
 @TypeDoc(createdBy = "shaula", createdOn = "10.07.2018", purpose = "" +
         "abstraction for IntentService, background thread, handler or any other working mechanism")
 public final class JobHolder {
-
+    
     private int implementation;
     @Nullable
     private static JobHolder thisInstance;
-
+    
     private JobHolder(int implementation) {
         this.implementation = implementation;
     }
-
+    
     @NonNull
     public static JobHolder getInstance(int implementation) {
         if (thisInstance == null) {
@@ -28,7 +28,7 @@ public final class JobHolder {
         }
         return thisInstance;
     }
-
+    
     public void launchAllMeasurements(@NonNull MainHub.SystemLink systemLink, int testRepetitionsCount) {
         // TODO: 10.07.2018 later add other variants here \\
         switch (implementation) {

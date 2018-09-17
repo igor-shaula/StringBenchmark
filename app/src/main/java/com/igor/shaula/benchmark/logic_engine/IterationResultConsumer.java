@@ -13,17 +13,17 @@ import java.util.Map;
 public final class IterationResultConsumer {
 
 //    private static final String CN = "IterationResultConsumer";
-
+    
     @NonNull
     private MainHub.LogicLink logicLink;
-
+    
     @NonNull
     private Map<String, Long> summarizedResultsMap = new LinkedHashMap<>();
-
+    
     public IterationResultConsumer(@NonNull MainHub.LogicLink logicLink) {
         this.logicLink = logicLink;
     }
-
+    
     @MeDoc("decision made inside here is the reason to be proud about myself for now")
     public void onNewIterationResult(@NonNull Map<String, Long> oneIterationsResult, // LinkedHashMap in fact \\
                                      int currentIterationIndex) {
@@ -40,7 +40,7 @@ public final class IterationResultConsumer {
         }
         logicLink.transportIterationsResult(summarizedResultsMap, currentIterationIndex);
     }
-
+    
     public void prepareForNewJob() {
         summarizedResultsMap.clear();
     }

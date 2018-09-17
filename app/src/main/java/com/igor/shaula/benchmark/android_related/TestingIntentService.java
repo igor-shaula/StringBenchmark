@@ -12,8 +12,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.igor.shaula.benchmark.logic_engine.AssembleStringLoad;
 import com.igor.shaula.benchmark.logic_engine.DataTransport;
 import com.igor.shaula.benchmark.logic_engine.IterationsMeasurement;
-import com.igor.shaula.benchmark.utils.C;
-import com.igor.shaula.benchmark.utils.L;
+import com.igor_shaula.base_utils.C;
+import com.igor_shaula.base_utils.L;
 import com.igor_shaula.base_utils.annotations.MeDoc;
 import com.igor_shaula.base_utils.annotations.TypeDoc;
 
@@ -23,13 +23,13 @@ import java.util.Arrays;
         "simplest way of performing heavy jobs queue on the separate thread")
 
 public final class TestingIntentService extends IntentService {
-
+    
     private static final String CN = "TestingIntentService";
-
+    
     public TestingIntentService() {
         super(CN);
     }
-
+    
     public static void prepareTheLoadForTest(@NonNull Context context,
                                              final @NonNull String basicString,
                                              final int count) {
@@ -40,29 +40,29 @@ public final class TestingIntentService extends IntentService {
                 .putExtra(C.Intent.NAME_COUNT, count)
         );
     }
-
+    
     public static void launchAllMeasurements(@NonNull Context context, int howManyIterations) {
         context.startService(new Intent(context, TestingIntentService.class)
                 .setAction(C.Intent.ACTION_START_ALL_TESTS)
                 .putExtra(C.Intent.NAME_ITERATIONS, howManyIterations)
         );
     }
-
+    
     // SYSTEM CALLBACKS ============================================================================
-
+    
     @Override
     public void onCreate() {
         L.d(CN, "onCreate");
         super.onCreate();
     }
-
+    
     @Override
     public void onStart(@Nullable Intent intent, int startId) {
         L.d(CN, "onStart ` intent = " + intent);
         L.d(CN, "onStart ` startId = " + startId);
         super.onStart(intent, startId);
     }
-
+    
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         L.d(CN, "onStartCommand ` intent = " + intent);
@@ -70,7 +70,7 @@ public final class TestingIntentService extends IntentService {
         L.d(CN, "onStartCommand ` startId = " + startId);
         return super.onStartCommand(intent, flags, startId);
     }
-
+    
     @Override
     protected void onHandleIntent(Intent intent) {
         L.d(CN, "onHandleIntent ` intent = " + intent);
@@ -94,12 +94,12 @@ public final class TestingIntentService extends IntentService {
                 break;
             case C.Intent.ACTION_START_ALL_TESTS:
                 final int howManyIterations = intent.getIntExtra(C.Intent.NAME_ITERATIONS, 0);
-
+                
                 // the following has rather slight effect in comparison to THREAD_PRIORITY_LOWEST \\
                 Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
                 // setting Java Thread priority does noticeably affect performance \\
                 Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-
+                
                 IterationsMeasurement.measurePerformanceInLoop(
                         (DataTransport) getApplication(), howManyIterations);
                 L.w(CN, "onHandleIntent ` howManyIterations = " + howManyIterations);
@@ -108,40 +108,40 @@ public final class TestingIntentService extends IntentService {
                 L.w(CN, "onHandleIntent ` unknown intentAction: " + intentAction);
         }
     }
-
+    
     @Override
     public void onDestroy() {
         L.d(CN, "onDestroy");
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(C.Intent.ACTION_ON_SERVICE_STOPPED));
         super.onDestroy();
     }
-
+    
     @Override
     public void onLowMemory() {
         L.d(CN, "onLowMemory");
         super.onLowMemory();
     }
-
+    
     @Override
     public void onTrimMemory(int level) {
         L.d(CN, "onTrimMemory ` level = " + level);
         super.onTrimMemory(level);
     }
-
+    
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         L.d(CN, "onConfigurationChanged ` newConfig = " + newConfig);
         super.onConfigurationChanged(newConfig);
     }
-
+    
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         L.d(CN, "onTaskRemoved ` rootIntent = " + rootIntent);
         super.onTaskRemoved(rootIntent);
     }
-
+    
     // PRIVATE PAYLOAD =============================================================================
-
+    
     @SuppressWarnings("unused")
     @MeDoc("actually iterative passing data via intent works very strange - we cannot rely on it")
     private void sendInfoToUI(@NonNull long[] oneIterationResults, int i) {

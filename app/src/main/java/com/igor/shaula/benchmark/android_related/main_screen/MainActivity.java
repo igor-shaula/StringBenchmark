@@ -15,12 +15,12 @@ import com.igor.shaula.benchmark.R;
 import com.igor.shaula.benchmark.android_related.TestingIntentService;
 import com.igor.shaula.benchmark.logic_engine.DataTransport;
 import com.igor.shaula.benchmark.logic_engine.JobHolder;
-import com.igor.shaula.benchmark.utils.C;
-import com.igor.shaula.benchmark.utils.L;
-import com.igor.shaula.benchmark.utils.U;
+import com.igor_shaula.base_utils.C;
+import com.igor_shaula.base_utils.L;
+import com.igor_shaula.base_utils.U;
 
 public final class MainActivity extends AppCompatActivity implements MainHub.SystemLink {
-
+    
     private static final String CN = "MainActivity";
     @SuppressWarnings("NullableProblems") // initialized in OnCreate & lasts all the lifetime \\
     @NonNull
@@ -33,22 +33,22 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             selectInfoToShow(intent);
         }
     };
-
+    
     // LIFECYCLE ===================================================================================
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 //        setContentView(R.layout.main_activity_root_with_top_toolbar);
         setContentView(R.layout.main_activity_root);
-
+        
         logicLink = new MainLogic(this,
                 new MainUi(findViewById(R.id.mainActivityRootView)),
                 getDataTransport());
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
-
+    
     @Override
     protected void onStart() {
         super.onStart();
@@ -60,27 +60,27 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(C.Intent.ACTION_ON_SERVICE_STOPPED));
         logicLink.linkDataTransport();
     }
-
+    
     @Override
     public void onBackPressed() {
         logicLink.onBackPressed();
     }
-
+    
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
         // possibly launched test is meant to continue running in this case \\
     }
-
+    
     @Override
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
         logicLink.unLinkDataTransport();
     }
-
+    
     // MENU ========================================================================================
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -103,21 +103,21 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
     // FROM SystemLink =============================================================================
-
+    
     @NonNull
     @Override
     public DataTransport getDataTransport() {
         return (DataTransport) getApplication();
     }
-
+    
     @NonNull
     @Override
     public Context getContext() {
         return this;
     }
-
+    
     @NonNull
     @Override
     public String getLoad() {
@@ -130,7 +130,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
             return longStringForTest;
         }
     }
-
+    
     @NonNull
     @Override
     public String getAdaptedString(long resultNanoTime) {
@@ -142,7 +142,7 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         };
         return U.adaptForUser(unitsOfMeasurements, resultNanoTime);
     }
-
+    
     @NonNull
     @Override
     public String findStringById(int stringId) {
@@ -166,35 +166,35 @@ public final class MainActivity extends AppCompatActivity implements MainHub.Sys
         // TODO: 14.06.2018 protect after W/View: requestLayout() improperly called by android.support.design.widget.CollapsingToolbarLayout
     }
 */
-
+    
     @Override
     public void launchPreparation(@NonNull String basicString, int basicStringsCount) {
         TestingIntentService.prepareTheLoadForTest(this, basicString, basicStringsCount);
     }
-
+    
     @Override
     public void launchAllMeasurements(int testRepetitionsCount) {
         JobHolder.getInstance(0).launchAllMeasurements(this, testRepetitionsCount);
     }
-
+    
     @Override
     public void forbidIterationsJob(boolean isForbiddenToRunIterations) {
         getDataTransport().forbidIterationsJob(isForbiddenToRunIterations);
     }
-
+    
     @Override
     public void stopTestingService() {
         stopService(new Intent(this, TestingIntentService.class));
     }
-
+    
     @Override
     public void finishItself() {
         L.w(CN, "finishItself");
         finish();
     }
-
+    
     // PRIVATE =====================================================================================
-
+    
     private void selectInfoToShow(@NonNull Intent intent) {
         final String intentAction = intent.getAction();
         if (intentAction == null) {
