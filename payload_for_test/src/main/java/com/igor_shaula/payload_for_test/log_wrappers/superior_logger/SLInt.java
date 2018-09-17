@@ -5,30 +5,31 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.igor_shaula.base_utils.annotations.TypeDoc;
 import com.igor_shaula.payload_for_test.BuildConfig;
 
 @SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
 
-//@TypeDoc(createdBy = "Igor Shaula", createdOn = "30-05-2018", purpose = "" +
-//        "the most minimalistic & useful wrapper for local logging," +
-//        "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
-//        "every method here takes any number of arguments," +
-//        "the best name for this class consists of only one letter - L - for briefness in code")
+@TypeDoc(createdBy = "Igor Shaula", createdOn = "30-05-2018", purpose = "" +
+        "the most minimalistic & useful wrapper for local logging," +
+        "helps to eliminate the 23-symbol in original TAG restriction", comment = "" +
+        "every method here takes any number of arguments," +
+        "the best name for this class consists of only one letter - L - for briefness in code")
 public final class SLInt {
-
+    
     private static final String TAG_SHORTENED_TO_23_SYMBOLS =
             "given TAG was shortened to first 23 symbols to avoid IllegalArgumentException";
     private static final String DIVIDER_SHORTENED_TO_10_SYMBOLS =
             "given divider was shortened to first 10 symbols to keep separation reasonable";
     private static final String CONNECTOR_SHORTENED_TO_10_SYMBOLS =
             "given connector was shortened to first 10 symbols to keep separation reasonable";
-
+    
     // global constant switcher to be touched from this class only \\
     private static final boolean USE_LOGGING = BuildConfig.DEBUG;
-
+    
     // dynamic local switcher - can be helpful to toggle logging from other classes \\
     private static boolean isLogAllowed = true;
-
+    
     @NonNull
     private static String tag23 = "SLInt";
     @NonNull
@@ -43,26 +44,26 @@ public final class SLInt {
     private static String stubForNullElement = "{null}";
     @NonNull
     private static String stubForEmptyElement = "{empty}";
-
+    
     private SLInt() {
         // should not create any instances of this class \\
     }
-
+    
     // CONFIGURATION ===============================================================================
-
+    
     public static void silence() {
         isLogAllowed = false;
     }
-
+    
     public static void restore() {
         isLogAllowed = true;
     }
-
+    
     @NonNull
     public static String getTag23() {
         return tag23;
     }
-
+    
     public static void setTag23(@NonNull String tag23) {
         /*
         the following is taken from developers.android.com -> Log-related documentation \\
@@ -78,12 +79,12 @@ public final class SLInt {
             SLInt.tag23 = tag23;
         }
     }
-
+    
     @NonNull
     public static String getDivider() {
         return divider;
     }
-
+    
     public static void setDivider(@NonNull String divider) {
         // i decided to restrict divider's length to reasonable limit (to avoid too long inner separators) \\
         if (divider.length() > 10) {
@@ -92,12 +93,12 @@ public final class SLInt {
         }
         SLInt.divider = divider;
     }
-
+    
     @NonNull
     public static String getConnector() {
         return connector;
     }
-
+    
     public static void setConnector(@NonNull String connector) {
         // i decided to restrict connector's length to reasonable limit (to avoid too long inner connectors) \\
         if (connector.length() > 10) {
@@ -106,115 +107,115 @@ public final class SLInt {
         }
         SLInt.connector = connector;
     }
-
+    
     @NonNull
     public static String getStubForNullContainer() {
         return stubForNullContainer;
     }
-
+    
     public static void setStubForNullContainer(@NonNull String stubForNullContainer) {
         SLInt.stubForNullContainer = stubForNullContainer; // currently unprotected concerning length \\
     }
-
+    
     @NonNull
     public static String getStubForEmptyContainer() {
         return stubForEmptyContainer;
     }
-
+    
     public static void setStubForEmptyContainer(@NonNull String stubForEmptyContainer) {
         SLInt.stubForEmptyContainer = stubForEmptyContainer; // currently unprotected concerning length \\
     }
-
+    
     @NonNull
     public static String getStubForNullElement() {
         return stubForNullElement;
     }
-
+    
     public static void setStubForNullElement(@NonNull String stubForNullElement) {
         SLInt.stubForNullElement = stubForNullElement; // currently unprotected concerning length \\
     }
-
+    
     @NonNull
     public static String getStubForEmptyElement() {
         return stubForEmptyElement;
     }
-
+    
     public static void setStubForEmptyElement(@NonNull String stubForEmptyElement) {
         SLInt.stubForEmptyElement = stubForEmptyElement; // currently unprotected concerning length \\
     }
-
+    
     // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
-
+    
     public static int v(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.v(tag23, message) : -1;
     }
-
+    
     public static int d(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.d(tag23, message) : -1;
     }
-
+    
     public static int i(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.i(tag23, message) : -1;
     }
-
+    
     public static int w(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.w(tag23, message) : -1;
     }
-
+    
     public static int e(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.e(tag23, message) : -1;
     }
-
+    
     public static int a(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.wtf(tag23, message) : -1;
     }
-
+    
     //    @MeDoc("this is suitable addition here - just wrapped log invocation to have control over it")
     public static void o(@Nullable final Object object) { // s - because it is the simplest here \\
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(object);
         }
     }
-
+    
     // FASTEST & SIMPLEST VARIABLE_ARGUMENT API ====================================================
-
+    
     public static int v(@Nullable final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.VERBOSE, assembleResultString(objects)) : -1;
     }
-
+    
     public static int d(@Nullable final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.DEBUG, assembleResultString(objects)) : -1;
     }
-
+    
     public static int i(@Nullable final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.INFO, assembleResultString(objects)) : -1;
     }
-
+    
     public static int w(@Nullable final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.WARN, assembleResultString(objects)) : -1;
     }
-
+    
     public static int e(@Nullable final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.ERROR, assembleResultString(objects)) : -1;
     }
-
+    
     public static int a(@Nullable final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.ASSERT, assembleResultString(objects)) : -1;
     }
-
+    
     // simplest and fastest - even without tag23 - may be used to measure speed of doing job \
     public static void o(@NonNull final Object... objects) {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(assembleResultString(objects));
         }
     }
-
+    
     //    @MeDoc("actually the main method - setting accordance between custom & standard logging levels")
     private static int passToStandardLogger(final int logLevel, @NonNull final String logResult) {
         switch (logLevel) {
@@ -234,9 +235,9 @@ public final class SLInt {
                 return -1;
         }
     }
-
+    
     // HOT METHODS FOR CONSTRUCTING MESSAGES TO BE SHOWN ===========================================
-
+    
     @NonNull
     private static String assembleResultString(@Nullable final Object... objects) {
         final String logResult; // logResult = VarArgsResult \\
@@ -261,7 +262,7 @@ public final class SLInt {
         }
         return logResult;
     }
-
+    
     @NonNull
     private static String processOneObject(@Nullable final Object theObject) {
         final String result;
@@ -274,81 +275,81 @@ public final class SLInt {
         }
         return result;
     }
-
+    
     private static int getStringLength(@Nullable Object string) {
         return string != null ? string.toString().length() : 0;
     }
-
+    
     // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
-
+    
     public static int pV(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.VERBOSE, tag23, assembleResultString(objects)) : -1;
     }
-
+    
     public static int pD(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.DEBUG, tag23, assembleResultString(objects)) : -1;
     }
-
+    
     public static int pI(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.INFO, tag23, assembleResultString(objects)) : -1;
     }
-
+    
     public static int pW(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.WARN, tag23, assembleResultString(objects)) : -1;
     }
-
+    
     public static int pE(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.ERROR, tag23, assembleResultString(objects)) : -1;
     }
-
+    
     public static int pA(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.ASSERT, tag23, assembleResultString(objects)) : -1;
     }
-
+    
     // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
-
+    
     public static int isV(@Nullable Object someInstance, @Nullable Object someValue) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.VERBOSE, createJointMessage(someInstance, someValue)) : -1;
     }
-
+    
     public static int isD(@Nullable Object someInstance, @Nullable Object someValue) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.DEBUG, createJointMessage(someInstance, someValue)) : -1;
     }
-
+    
     public static int isI(@Nullable Object someInstance, @Nullable Object someValue) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.INFO, createJointMessage(someInstance, someValue)) : -1;
     }
-
+    
     public static int isW(@Nullable Object someInstance, @Nullable Object someValue) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.WARN, createJointMessage(someInstance, someValue)) : -1;
     }
-
+    
     public static int isE(@Nullable Object someInstance, @Nullable Object someValue) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.ERROR, createJointMessage(someInstance, someValue)) : -1;
     }
-
+    
     public static int isA(@Nullable Object someInstance, @Nullable Object someValue) {
         return USE_LOGGING && isLogAllowed ?
                 passToStandardLogger(Log.ASSERT, createJointMessage(someInstance, someValue)) : -1;
     }
-
+    
     public static void isO(@Nullable Object someInstance, @Nullable Object someValue) {
         if (USE_LOGGING && isLogAllowed) {
             System.out.println(createJointMessage(someInstance, someValue));
         }
     }
-
+    
     @NonNull
     private static String createJointMessage(@Nullable Object instanceToLog, @Nullable Object value) {
         String result;
@@ -359,14 +360,14 @@ public final class SLInt {
         }
         return result + connector + value; // no need to use StringBuilder here for only 1 operation \\
     }
-
+    
     // REMAINING STAFF TO BE WRAPPED FOR HAVING COMPLETE FUNCTIONALITY =============================
-
+    
     @NonNull
     public static String getStackTrace(@NonNull final Throwable throwable) {
         return Log.getStackTraceString(throwable);
     }
-
+    
     public static boolean isLoggable(int priority) {
         return Log.isLoggable(tag23, priority);
     }
