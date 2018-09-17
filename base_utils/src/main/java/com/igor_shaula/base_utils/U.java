@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -29,22 +28,22 @@ import java.util.List;
         comment = "former PSUtils = Public Static Utility methods")
 
 public final class U {
-
+    
     private static final String CN = "U";
-
+    
     @Nullable
     private static Toast toast; // needed to enable cancellation for the previous toast \
-
+    
     private U() {
         // should not create any instances of this class \
     }
-
+    
     public static boolean isTablet(@NonNull Context context) {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
-
+    
     @MeDoc("crazy simple magic method - it finds my already launched service among others")
     public static boolean isMyServiceRunning(@NonNull Context context, @NonNull Class<?> serviceClass) {
         final ActivityManager activityManager =
@@ -61,7 +60,7 @@ public final class U {
         }
         return false;
     }
-
+    
     public static boolean hasPermissions(@Nullable Context context, @Nullable String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // may be <= !!!
             return true;
@@ -78,7 +77,7 @@ public final class U {
         return false;
 //        return true;
     }
-
+    
     public static boolean isAnyOneNullOrEmpty(@Nullable String... strings) {
         if (strings == null) {
             return true;
@@ -91,7 +90,7 @@ public final class U {
         }
         return isNullOrEmpty;
     }
-
+    
     @MeDoc("safe conversion - without crashes")
     public static int convertIntoInt(@Nullable String string) {
         if (string == null || string.isEmpty()) {
@@ -106,7 +105,7 @@ public final class U {
             return result;
         }
     }
-
+    
     @MeDoc("provides with device info")
     @NonNull
     public static String getDeviceName() {
@@ -118,7 +117,7 @@ public final class U {
             return capitalize(manufacturer) + C.SPACE + model;
         }
     }
-
+    
     @NonNull
     private static String capitalize(@Nullable String s) {
         if (s == null || s.length() == 0) {
@@ -131,7 +130,7 @@ public final class U {
             return Character.toUpperCase(first) + s.substring(1);
         }
     }
-
+    
     @NonNull
     public static String getCommandFromIntent(@Nullable Intent intent) {
         String command = null;
@@ -149,15 +148,15 @@ public final class U {
             return C.Intent.NO_COMMAND;
         }
     }
-
+    
     @NonNull
     public static String makeNonNullStringFrom(@Nullable String input) {
         return input == null ? "" : input;
     }
-
+    
     @NonNull
     public static Collection<String> parseForSeparator(@NonNull String rawString, char separator) {
-
+        
         final List<String> resultList = new LinkedList<>();
         if (rawString.isEmpty()) {
             return resultList;
@@ -180,7 +179,7 @@ public final class U {
         }
         return resultList;
     }
-
+    
     @NonNull
     public static long[] convertIntoArray(@NonNull List<Long> list) {
         final int size = list.size();
@@ -190,7 +189,7 @@ public final class U {
         }
         return array;
     }
-
+    
     public static void printLogFor(@Nullable Intent intent) {
         if (intent == null) {
             Log.i(CN, "printLogFor ` intent == null");
@@ -207,7 +206,7 @@ public final class U {
             Log.i(CN, "printLogFor ` bundle == null");
         }
     }
-
+    
     public static void showToast(@NonNull Context context, @NonNull String string, int duration) {
 //        L.w(CN, "showToast ` message = " + message);
         if (duration == 0) {
@@ -219,40 +218,40 @@ public final class U {
         toast = Toast.makeText(context.getApplicationContext(), string, duration);
         toast.show();
     }
-
+    
     public static void immediatelyDisableToast() {
         if (toast != null) {
             toast.cancel();
             toast = null;
         }
     }
-
+    
     @NonNull
     public static String adaptForUser(@NonNull String[] unitsOfMeasurement, long nanoTimeValue) {
 //    public static String adaptForUser(@NonNull Context context, long nanoTimeValue) {
         final StringBuilder stringBuilder = new StringBuilder();
-
+        
         if (nanoTimeValue <= 0) {
             stringBuilder.append(C.STAR);
-
+            
         } else if (nanoTimeValue < 1_000) {
             stringBuilder
                     .append(nanoTimeValue)
                     .append(C.SPACE)
                     .append(unitsOfMeasurement[0]);
-
+            
         } else if (nanoTimeValue < 1_000_000) {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
                     .append(unitsOfMeasurement[1]);
-
+            
         } else if (nanoTimeValue < 1_000_000_000) {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
                     .append(C.SPACE)
                     .append(unitsOfMeasurement[2]);
-
+            
         } else {
             stringBuilder
                     .append(createReadableStringForTime(nanoTimeValue))
@@ -261,21 +260,21 @@ public final class U {
         }
         return stringBuilder.toString();
     }
-
+    
     // TODO: 03.12.2017 check all numeric-related methods with using negative values \\
-
+    
     @MeDoc("converts long number into the specially formatted string for showing test results")
     @NonNull
     static String createReadableStringForTime(long l) {
         return replaceFirstDotWithComma(createReadableStringForLong(l));
     }
-
+    
     @MeDoc("replaces only the first met dot with comma - of course if this dot exists in the string")
     @NonNull
     static String replaceFirstDotWithComma(@NonNull String s) {
         return s.replaceFirst(C.REGEX_NOT_DIGIT, String.valueOf(C.COMMA));
     }
-
+    
     @MeDoc("converts positive integer number into formatted string for showing quantities")
     public static String createReadableStringForLong(long l) {
         // as we need special format with dots & zeroes - standard Java formatters won't fit here \\
@@ -306,7 +305,7 @@ public final class U {
         }
         return reduceStartingZeroes(stringBuilder.toString());
     }
-
+    
     @MeDoc("counts the number of needed separators between digits divided by three per group")
     static int defineSeparatorsCount(long l) {
         int separatorsCount = 0;
@@ -319,7 +318,7 @@ public final class U {
         } while (howManyThousands > 999);
         return separatorsCount;
     }
-
+    
     @MeDoc("eliminates all possible excess zeroes at the beginning of the string to a single zero")
     @NonNull
     static String reduceStartingZeroes(@NonNull String s) {
@@ -330,7 +329,7 @@ public final class U {
         }
         return s;
     }
-
+    
     public static boolean hideKeyboard(@NonNull View view) {
         final InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -7,7 +7,7 @@ import com.igor_shaula.base_utils.annotations.TypeDoc;
         purpose = "unified all constants keeper")
 
 public final class C {
-
+    
     public static final char SPACE = ' ';
     public static final char SLASH = '/';
     public static final char DOT = '.';
@@ -23,17 +23,17 @@ public final class C {
     public static final String NULL = "null";
     public static final String TRUE = "true";
     public static final String FALSE = "false";
-
+    
     public static final String INITIAL_BASIC_STRING = "1234567890";
     public static final String INITIAL_STRING_REPETITIONS = "100";
     public static final String INITIAL_TEST_ITERATIONS = "1000";
-
+    
     private C() {
         // should not create any instances of this class \
     }
-
+    
     public static class Key {
-
+        
         public static final String READ_ARRAY_LIST_IN_THIS_THREAD = "read 10 strings ArrayList in current thread";
         public static final String READ_ARRAY_LIST_IN_NEW_THREAD = "read 10 strings ArrayList - new thread each time";
         public static final String GOOD_OLD_SYSTEM_OUT_PRINTLN = "Good old System.out.println(…):";
@@ -45,25 +45,25 @@ public final class C {
         public static final String MY_SUPERIOR_VOID_LOG_WRAPPER = "My superior-void Log wrapper:";
         public static final String MY_SUPERIOR_INT_LOG_WRAPPER = "My superior-int Log wrapper:";
     }
-
+    
     public static final class Choice {
-
+        
         public static final int TOAST = 1000;
         public static final int SNACKBAR = 1001;
         public static final int PREPARATION = 1;
         public static final int STOPPED = 2;
     }
-
+    
     public static final class Prefs {
-
+        
         public static final String KEY_PREFERENCES = "preferences for com.autoxloo.simulcast";
         public static final String KEY_DOMAIN = "domain to work with";
         public static final String KEY_LOGIN = "login for webView's content";
         public static final String KEY_PASSWORD = "password for webView's content";
     }
-
+    
     public static final class Intent {
-
+        
         public static final String ACTION_START_LOAD_PREPARATION = "from activity to intent-service";
         public static final String ACTION_GET_PREPARATION_RESULT = "from intent-service to activity";
         public static final String ACTION_START_ALL_TESTS = "start all tests moving on one-by-one";
@@ -86,9 +86,9 @@ public final class C {
         static final String NO_COMMAND = "no_command";
         public static final String ACTION_JOB_STOPPED = "iterations job was interrupted";
     }
-
+    
     public static final class Delay {
-
+        
         public static final int EXIT_WITH_BACK_MILLIS = 2_000;
         public static final int SPLASH_ACTIVITY_MILLIS = 2_000;
     }
