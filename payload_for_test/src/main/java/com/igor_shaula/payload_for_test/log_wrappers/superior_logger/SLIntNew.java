@@ -46,8 +46,14 @@ public final class SLIntNew {
     @NonNull
     private static String stubForEmptyElement = "{empty}";
     
-    private SLIntNew() {
-        // should not create any instances of this class \\
+    @Nullable
+    private String message;
+    @Nullable
+    private static SLIntNew thisClassInstance;
+    
+    private SLIntNew(@Nullable String message) {
+        // should not create any instances of this class from outside \\
+        this.message = message;
     }
     
     // CONFIGURATION ===============================================================================
@@ -157,6 +163,30 @@ public final class SLIntNew {
     
     // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
     
+    // L.p("x").is(3).v(); - for getting x = 3 in output \\
+    @Nullable
+    public static SLIntNew p(@Nullable final String message) {
+        return USE_LOGGING && isLogAllowed ? thisClassInstance = new SLIntNew(message) : null;
+    }
+    
+    // TODO: 19.09.2018 this method should be used & work only after p(...) - not alone or before \\
+    public static SLIntNew is(@Nullable Object someValue) {
+        if (thisClassInstance != null) { // USE_LOGGING && isLogAllowed are in fact not needed here \\
+            thisClassInstance.message = createJointMessage(thisClassInstance.message, someValue);
+        }
+        return thisClassInstance;
+    }
+    
+    // TODO: 19.09.2018 this method should be used & work only after is(...) - not alone or before \\
+    public static int v() {
+        return thisClassInstance != null ? Log.v(tag23, thisClassInstance.message) : -1;
+    }
+
+//    @NonNull
+//    private static SLIntNew createThisClassInstance(@Nullable String message) {
+//        return thisClassInstance = new SLIntNew(message);
+//    }
+    
     public static int v(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.v(tag23, message) : -1;
     }
@@ -228,6 +258,12 @@ public final class SLIntNew {
     }
     
     // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
+    
+    @MeDoc("this method is experimental & should be tested for performance")
+    public static int p(int logLevel, @NonNull final Object... objects) {
+        return USE_LOGGING && isLogAllowed ?
+                Log.println(logLevel, tag23, assembleResultString(objects)) : -1;
+    }
     
     public static int pV(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
