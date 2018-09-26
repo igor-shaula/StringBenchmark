@@ -161,7 +161,7 @@ public final class SLIntNew {
         return Log.isLoggable(tag23, priority);
     }
     
-    // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
+    // NEW ATTEMPTS TO WRITE LOG METHODS IN CHAIN ==================================================
     
     // L.p("x").is(3).v(); - for getting x = 3 in output \\
     @Nullable
@@ -169,7 +169,7 @@ public final class SLIntNew {
         return USE_LOGGING && isLogAllowed ? thisClassInstance = new SLIntNew(message) : null;
     }
     
-    // TODO: 19.09.2018 this method should be used & work only after p(...) - not alone or before \\
+    @MeDoc("this method should be used & work only after p(...) - not alone or before")
     public static SLIntNew is(@Nullable Object someValue) {
         if (thisClassInstance != null) { // USE_LOGGING && isLogAllowed are in fact not needed here \\
             thisClassInstance.message = createJointMessage(thisClassInstance.message, someValue);
@@ -177,15 +177,37 @@ public final class SLIntNew {
         return thisClassInstance;
     }
     
-    // TODO: 19.09.2018 this method should be used & work only after is(...) - not alone or before \\
+    @MeDoc("this method should be used & work only after is(...) - not alone or before")
     public static int v() {
         return thisClassInstance != null ? Log.v(tag23, thisClassInstance.message) : -1;
     }
-
-//    @NonNull
-//    private static SLIntNew createThisClassInstance(@Nullable String message) {
-//        return thisClassInstance = new SLIntNew(message);
-//    }
+    
+    @MeDoc("this method should be used & work only after is(...) - not alone or before")
+    public static int d() {
+        return thisClassInstance != null ? Log.d(tag23, thisClassInstance.message) : -1;
+    }
+    
+    @MeDoc("this method should be used & work only after is(...) - not alone or before")
+    public static int i() {
+        return thisClassInstance != null ? Log.i(tag23, thisClassInstance.message) : -1;
+    }
+    
+    @MeDoc("this method should be used & work only after is(...) - not alone or before")
+    public static int w() {
+        return thisClassInstance != null ? Log.w(tag23, thisClassInstance.message) : -1;
+    }
+    
+    @MeDoc("this method should be used & work only after is(...) - not alone or before")
+    public static int e() {
+        return thisClassInstance != null ? Log.e(tag23, thisClassInstance.message) : -1;
+    }
+    
+    @MeDoc("this method should be used & work only after is(...) - not alone or before")
+    public static int a() {
+        return thisClassInstance != null ? Log.wtf(tag23, thisClassInstance.message) : -1;
+    }
+    
+    // FASTEST & SIMPLEST ONE_ARGUMENT API =========================================================
     
     public static int v(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? Log.v(tag23, message) : -1;
