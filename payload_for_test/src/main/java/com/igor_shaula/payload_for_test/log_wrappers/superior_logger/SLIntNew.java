@@ -165,7 +165,7 @@ public final class SLIntNew {
     
     // L.p("x").is(3).v(); - for getting x = 3 in output \\
     @Nullable
-    public static SLIntNew p(@Nullable final String message) {
+    public static SLIntNew o(@Nullable final String message) {
         return USE_LOGGING && isLogAllowed ? thisClassInstance = new SLIntNew(message) : null;
     }
     
@@ -281,12 +281,6 @@ public final class SLIntNew {
     
     // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
     
-//    @MeDoc("this method is experimental & should be tested for performance")
-//    public static int p(int logLevel, @NonNull final Object... objects) {
-//        return USE_LOGGING && isLogAllowed ?
-//                Log.println(logLevel, tag23, assembleResultString(objects)) : -1;
-//    }
-    
     public static int pV(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.VERBOSE, tag23, assembleResultString(objects)) : -1;
@@ -315,44 +309,6 @@ public final class SLIntNew {
     public static int pA(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
                 Log.println(Log.ASSERT, tag23, assembleResultString(objects)) : -1;
-    }
-    
-    // ADDITIONAL API FOR SHOWING CURRENT VALUES ===================================================
-    
-    public static int isV(@Nullable Object someInstance, @Nullable Object someValue) {
-        return USE_LOGGING && isLogAllowed ?
-                passToStandardLogger(Log.VERBOSE, createJointMessage(someInstance, someValue)) : -1;
-    }
-    
-    public static int isD(@Nullable Object someInstance, @Nullable Object someValue) {
-        return USE_LOGGING && isLogAllowed ?
-                passToStandardLogger(Log.DEBUG, createJointMessage(someInstance, someValue)) : -1;
-    }
-    
-    public static int isI(@Nullable Object someInstance, @Nullable Object someValue) {
-        return USE_LOGGING && isLogAllowed ?
-                passToStandardLogger(Log.INFO, createJointMessage(someInstance, someValue)) : -1;
-    }
-    
-    public static int isW(@Nullable Object someInstance, @Nullable Object someValue) {
-        return USE_LOGGING && isLogAllowed ?
-                passToStandardLogger(Log.WARN, createJointMessage(someInstance, someValue)) : -1;
-    }
-    
-    public static int isE(@Nullable Object someInstance, @Nullable Object someValue) {
-        return USE_LOGGING && isLogAllowed ?
-                passToStandardLogger(Log.ERROR, createJointMessage(someInstance, someValue)) : -1;
-    }
-    
-    public static int isA(@Nullable Object someInstance, @Nullable Object someValue) {
-        return USE_LOGGING && isLogAllowed ?
-                passToStandardLogger(Log.ASSERT, createJointMessage(someInstance, someValue)) : -1;
-    }
-    
-    public static void isO(@Nullable Object someInstance, @Nullable Object someValue) {
-        if (USE_LOGGING && isLogAllowed) {
-            System.out.println(createJointMessage(someInstance, someValue));
-        }
     }
     
     // ALL PRIVATE =================================================================================
