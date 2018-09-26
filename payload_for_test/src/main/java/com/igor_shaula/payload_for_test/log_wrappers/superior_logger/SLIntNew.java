@@ -281,11 +281,11 @@ public final class SLIntNew {
     
     // INT_RESULT PRINTLN ADDITIONAL PART ==========================================================
     
-    @MeDoc("this method is experimental & should be tested for performance")
-    public static int p(int logLevel, @NonNull final Object... objects) {
-        return USE_LOGGING && isLogAllowed ?
-                Log.println(logLevel, tag23, assembleResultString(objects)) : -1;
-    }
+//    @MeDoc("this method is experimental & should be tested for performance")
+//    public static int p(int logLevel, @NonNull final Object... objects) {
+//        return USE_LOGGING && isLogAllowed ?
+//                Log.println(logLevel, tag23, assembleResultString(objects)) : -1;
+//    }
     
     public static int pV(@NonNull final Object... objects) {
         return USE_LOGGING && isLogAllowed ?
