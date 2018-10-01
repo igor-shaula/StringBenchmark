@@ -1,1 +1,1 @@
-include ':app', ':payload_for_test', ':base_utils'
+include ':base_utils', ':payload_for_test', ':app'
