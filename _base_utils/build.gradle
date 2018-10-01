@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation fileTree(dir: 'libs', include: ['*.jar']) - libs folder was empty & deleted \\
     // android support annotations for nullability are here \\
     implementation 'com.android.support:appcompat-v7:27.1.1'
     // for testing \\

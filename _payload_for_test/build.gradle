@@ -21,8 +21,8 @@ android {
 }
 
 dependencies {
+//    implementation fileTree(dir: 'libs', include: ['*.jar']) - libs folder was empty & deleted \\
     api project(':_base_utils')
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // for some reason support annotations are not linked from base_utils module - so i link them here \\
     implementation 'com.android.support:appcompat-v7:27.1.1'
 //    testImplementation 'junit:junit:4.12'
