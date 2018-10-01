@@ -16,12 +16,12 @@ buildscript {
 
 ext {
     // general compiling info - used for all modules \\
-    compileSdkVersion = 27
+    compileSdkVersion = 28
     buildToolsVersion = '28.0.2'
     minSdkVersion = 19
-    targetSdkVersion = 27
-    versionCode = 53
-    versionName = "0.1.11"
+    targetSdkVersion = 28
+    versionCode = 54
+    versionName = "0.1.12"
 }
 
 allprojects {
