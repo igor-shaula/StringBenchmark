@@ -21,8 +21,8 @@ android {
 }
 
 dependencies {
-    api project(':base_utils')
-    api project(':payload_for_test')
+    api project(':_base_utils')
+    api project(':_payload_for_test')
     // for testing \\
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
