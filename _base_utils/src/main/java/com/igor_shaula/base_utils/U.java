@@ -209,9 +209,7 @@ public final class U {
     
     public static void showToast(@NonNull Context context, @NonNull String string, int duration) {
 //        L.w(CN, "showToast ` message = " + message);
-        if (duration == 0) {
-            duration = Toast.LENGTH_SHORT;
-        } else {
+        if (duration != 0) { // anything except Toast.LENGTH_SHORT
             duration = Toast.LENGTH_LONG;
         }
         immediatelyDisableToast();
@@ -265,13 +263,13 @@ public final class U {
     
     @MeDoc("converts long number into the specially formatted string for showing test results")
     @NonNull
-    static String createReadableStringForTime(long l) {
+    private static String createReadableStringForTime(long l) {
         return replaceFirstDotWithComma(createReadableStringForLong(l));
     }
     
     @MeDoc("replaces only the first met dot with comma - of course if this dot exists in the string")
     @NonNull
-    static String replaceFirstDotWithComma(@NonNull String s) {
+    private static String replaceFirstDotWithComma(@NonNull String s) {
         return s.replaceFirst(C.REGEX_NOT_DIGIT, String.valueOf(C.COMMA));
     }
     
@@ -292,7 +290,7 @@ public final class U {
                 stringBuilder.insert(0, C.TWO_ZEROES + String.valueOf(divisionsModulo));
             } else if (10 <= divisionsModulo && divisionsModulo < 100) {
                 stringBuilder.insert(0, C.ZERO + String.valueOf(divisionsModulo));
-            } else if (100 <= divisionsModulo && divisionsModulo < 1000) {
+            } else if (100 <= divisionsModulo) { // cannot be > 1000 because of division by 1000 beforehand \\
                 stringBuilder.insert(0, String.valueOf(divisionsModulo));
             }
             // updating the number's tail for the next possible iteration \\
@@ -307,7 +305,7 @@ public final class U {
     }
     
     @MeDoc("counts the number of needed separators between digits divided by three per group")
-    static int defineSeparatorsCount(long l) {
+    private static int defineSeparatorsCount(long l) {
         int separatorsCount = 0;
         long howManyThousands = l; // we just need to start from something \\
         do {
@@ -321,7 +319,7 @@ public final class U {
     
     @MeDoc("eliminates all possible excess zeroes at the beginning of the string to a single zero")
     @NonNull
-    static String reduceStartingZeroes(@NonNull String s) {
+    private static String reduceStartingZeroes(@NonNull String s) {
         if (s.startsWith(C.TWO_ZEROES)) {
             s = s.replaceFirst(C.TWO_ZEROES, "");
         } else if (s.startsWith(String.valueOf(C.ZERO))) {
